@@ -145,18 +145,28 @@ class MediaViewerFragment : Fragment(
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
-            val selection = (
-                    "("
-                            + MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                            + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
-                            + " OR "
-                            + MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                            + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
-                            + ")"
-                            + (album?.let {
-                        (" AND " + MediaStore.Files.FileColumns.BUCKET_ID + " = ?")
-                    } ?: "")
+            val selection = buildString {
+                append("(")
+                append(buildString {
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                    append("=")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
+                    append(" OR ")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                    append("=")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+                })
+                append(")")
+                album?.let {
+                    append(
+                        buildString {
+                            append(" AND ")
+                            append(MediaStore.Files.FileColumns.BUCKET_ID)
+                            append(" = ?")
+                        }
                     )
+                }
+            }
             CursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),

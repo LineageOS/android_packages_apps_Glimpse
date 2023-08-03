@@ -125,16 +125,23 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
-            val selection = (
-                    "("
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
-                    + " OR "
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
-                    + ")"
-                    + " AND " + MediaStore.Files.FileColumns.BUCKET_ID + " = " + album.id
-            )
+            val selection = buildString {
+                append("(")
+                append(buildString {
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                    append("=")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
+                    append(" OR ")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                    append("=")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+                })
+                append(")")
+                append(" AND ")
+                append(MediaStore.Files.FileColumns.BUCKET_ID)
+                append(" = ")
+                append(album.id)
+            }
             CursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),

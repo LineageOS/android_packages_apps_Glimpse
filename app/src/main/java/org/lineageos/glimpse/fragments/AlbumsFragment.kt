@@ -88,11 +88,15 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
-            val selection = (MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
-                    + " OR "
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+            val selection = buildString {
+                append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                append("=")
+                append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
+                append(" OR ")
+                append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                append("=")
+                append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+            }
             val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             CursorLoader(
                 requireContext(),
