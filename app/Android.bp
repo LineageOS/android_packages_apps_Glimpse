@@ -24,7 +24,8 @@ android_app {
         "Glimpse_androidx.media3_media3-ui",
         "Glimpse_androidx.navigation_navigation-fragment-ktx",
         "Glimpse_androidx.navigation_navigation-ui-ktx",
-        "Glimpse_com.github.bumptech.glide_glide",
+        "Glimpse_io.coil-kt_coil",
+        "Glimpse_io.coil-kt_coil-video",
     ],
 
     optimize: {

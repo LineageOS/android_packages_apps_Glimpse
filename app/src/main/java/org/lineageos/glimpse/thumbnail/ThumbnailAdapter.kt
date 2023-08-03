@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
@@ -157,10 +157,9 @@ class ThumbnailAdapter(
             this.media = media
             this.position = position
 
-            Glide.with(view)
-                .load(media.externalContentUri)
-                .placeholder(R.drawable.thumbnail_placeholder)
-                .into(thumbnailImageView)
+            thumbnailImageView.load(media.externalContentUri) {
+                placeholder(R.drawable.thumbnail_placeholder)
+            }
         }
     }
 

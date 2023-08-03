@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.fragments.AlbumFragment
 import org.lineageos.glimpse.models.Album
@@ -57,7 +57,8 @@ class AlbumThumbnailAdapter(
         private val navController: NavController,
     ) : RecyclerView.ViewHolder(itemView) {
         // Views
-        private val descriptionTextView = itemView.findViewById<TextView>(R.id.descriptionTextView)!!
+        private val descriptionTextView =
+            itemView.findViewById<TextView>(R.id.descriptionTextView)!!
         private val itemsCountTextView = itemView.findViewById<TextView>(R.id.itemsCountTextView)!!
         private val thumbnailImageView = itemView.findViewById<ImageView>(R.id.thumbnailImageView)!!
 
@@ -67,10 +68,9 @@ class AlbumThumbnailAdapter(
                 R.plurals.album_thumbnail_items, album.size, album.size
             )
 
-            Glide.with(itemView)
-                .load(album.thumbnail)
-                .placeholder(R.drawable.thumbnail_placeholder)
-                .into(thumbnailImageView)
+            thumbnailImageView.load(album.thumbnail) {
+                placeholder(R.drawable.thumbnail_placeholder)
+            }
 
             itemView.setOnClickListener {
                 navController.navigate(
