@@ -27,7 +27,13 @@ class ThumbnailAdapter(
 
     private var recyclerView: RecyclerView? = null
 
+    init {
+        setHasStableIds(true)
+    }
+
     override fun getItemCount() = super.getItemCount() + headersPositions.size
+
+    override fun getItemId(position: Int) = getIdFromMediaStore(position)
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -119,6 +125,13 @@ class ThumbnailAdapter(
         headersPositions.add(position)
         val newItemCount = itemCount
         recyclerView?.post { notifyItemInserted(newItemCount) }
+    }
+
+    private fun getIdFromMediaStore(position: Int): Long {
+        val cursor = cursor ?: return 0
+        val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
+        cursor.moveToPosition(getTruePosition(position))
+        return cursor.getLong(idIndex)
     }
 
     private fun getMediaFromMediaStore(position: Int): Media? {

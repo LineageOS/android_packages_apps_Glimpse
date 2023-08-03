@@ -23,6 +23,10 @@ class AlbumThumbnailAdapter(
 ) : RecyclerView.Adapter<AlbumThumbnailAdapter.AlbumViewHolder>() {
     private var albums: Array<Album>? = null
 
+    init {
+        setHasStableIds(true)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
@@ -32,6 +36,8 @@ class AlbumThumbnailAdapter(
     }
 
     override fun getItemCount() = albums?.size ?: 0
+
+    override fun getItemId(position: Int) = (albums?.let { it[position].id } ?: 0).toLong()
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         albums?.let {
