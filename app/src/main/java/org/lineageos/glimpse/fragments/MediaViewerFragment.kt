@@ -154,7 +154,7 @@ class MediaViewerFragment : Fragment(
                             + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
                             + ")"
                             + (album?.let {
-                        (" AND " + MediaStore.Files.FileColumns.BUCKET_ID + " = " + it.id)
+                        (" AND " + MediaStore.Files.FileColumns.BUCKET_ID + " = ?")
                     } ?: "")
                     )
             CursorLoader(
@@ -162,7 +162,7 @@ class MediaViewerFragment : Fragment(
                 MediaStore.Files.getContentUri("external"),
                 projection,
                 selection,
-                null,
+                album?.let { arrayOf(it.id.toString()) },
                 MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             )
         }
