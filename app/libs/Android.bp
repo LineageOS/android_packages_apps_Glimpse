@@ -380,7 +380,7 @@ android_library_import {
         "androidx.lifecycle_lifecycle-viewmodel-ktx",
         "androidx.lifecycle_lifecycle-viewmodel-savedstate",
         "androidx.profileinstaller_profileinstaller",
-        "androidx.savedstate_savedstate-ktx",
+        "Glimpse_androidx.savedstate_savedstate-ktx",
         "kotlin-stdlib",
     ],
 }
@@ -403,7 +403,7 @@ android_library {
         "androidx.lifecycle_lifecycle-viewmodel-ktx",
         "androidx.lifecycle_lifecycle-viewmodel-savedstate",
         "androidx.profileinstaller_profileinstaller",
-        "androidx.savedstate_savedstate-ktx",
+        "Glimpse_androidx.savedstate_savedstate-ktx",
         "kotlin-stdlib",
     ],
     java_version: "1.7",
@@ -619,6 +619,72 @@ android_library {
         "Glimpse_androidx.navigation_navigation-runtime",
         "androidx.transition_transition",
         "Glimpse_com.google.android.material_material",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_androidx.savedstate_savedstate-ktx-nodeps",
+    aars: ["androidx/savedstate/savedstate-ktx/1.2.1/savedstate-ktx-1.2.1.aar"],
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_androidx.savedstate_savedstate",
+        "kotlin-stdlib",
+    ],
+}
+
+android_library {
+    name: "Glimpse_androidx.savedstate_savedstate-ktx",
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "androidx/savedstate/savedstate-ktx/1.2.1/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_androidx.savedstate_savedstate-ktx-nodeps",
+        "Glimpse_androidx.savedstate_savedstate",
+        "kotlin-stdlib",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_androidx.savedstate_savedstate-nodeps",
+    aars: ["androidx/savedstate/savedstate/1.2.1/savedstate-1.2.1.aar"],
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "androidx.arch.core_core-common",
+        "Glimpse_androidx.lifecycle_lifecycle-common",
+        "kotlin-stdlib",
+    ],
+}
+
+android_library {
+    name: "Glimpse_androidx.savedstate_savedstate",
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "androidx/savedstate/savedstate/1.2.1/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_androidx.savedstate_savedstate-nodeps",
+        "androidx.arch.core_core-common",
+        "Glimpse_androidx.lifecycle_lifecycle-common",
+        "kotlin-stdlib",
     ],
     java_version: "1.7",
 }

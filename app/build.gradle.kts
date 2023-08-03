@@ -132,10 +132,11 @@ tasks.register("generateBp") {
     val isAvailableInAosp = { group: String, artifactId: String ->
         when {
             group.startsWith("androidx") -> {
-                // We provide our own androidx.{media3,navigation} & lifecycle-common
+                // We provide our own androidx.{media3,navigation,savedstate} & lifecycle-common
                 !group.startsWith("androidx.media3") &&
                         !group.startsWith("androidx.multidex") &&
                         !group.startsWith("androidx.navigation") &&
+                        !group.startsWith("androidx.savedstate") &&
                         artifactId != "lifecycle-common"
             }
 
