@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Base application theme -->
+    <style name="Theme.Glimpse" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- Collapsing toolbar style -->
+    <style name="Theme.Glimpse.ToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Theme.Glimpse.ToolbarExpanded" parent="Theme.Glimpse.ToolbarCollapsed">
+        <item name="android:textSize">36sp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
+    <!-- Top app bar option -->
+    <style name="Theme.Glimpse.TopAppBarOption">
+        <item name="iconTint">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- Bottom app bar option -->
+    <style name="Theme.Glimpse.BottomAppBarOption">
+        <item name="iconTint">?attr/colorOnSurface</item>
+        <item name="showAsAction">ifRoom</item>
+    </style>
+
+    <!-- Media viewer -->
+    <style name="Theme.Glimpse.MediaViewer" />
+
+    <!-- Media viewer top sheet -->
+    <style name="Theme.Glimpse.MediaViewer.TopSheet" />
+
+    <!-- Media viewer top sheet date/time text -->
+    <style name="Theme.Glimpse.MediaViewer.DateTimeText">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <!-- Media viewer bottom sheet -->
+    <style name="Theme.Glimpse.MediaViewer.BottomSheet" />
+
+    <!-- Media viewer bottom sheet buttons -->
+    <style name="Theme.Glimpse.MediaViewer.BottomSheet.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">28dp</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="tint">?attr/colorOnSurface</item>
+    </style>
+</resources>

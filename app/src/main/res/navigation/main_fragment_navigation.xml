@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_fragment_navigation"
+    app:startDestination="@id/reelsFragment">
+
+    <fragment
+        android:id="@+id/reelsFragment"
+        android:name="org.lineageos.glimpse.fragments.ReelsFragment"
+        android:label=""
+        tools:layout="@layout/fragment_reels" />
+
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="org.lineageos.glimpse.fragments.AlbumsFragment"
+        android:label="@string/albums_title"
+        tools:layout="@layout/fragment_albums" />
+</navigation>
