@@ -15,18 +15,16 @@ abstract class BaseCursorAdapter<T : RecyclerView.ViewHolder> : RecyclerView.Ada
     override fun getItemCount() = cursor?.count ?: 0
 
     fun changeCursor(cursor: Cursor?) {
-        val oldCursor = swapCursor(cursor)
-        oldCursor?.close()
-
+        swapCursor(cursor)
         onChangedCursor(cursor)
     }
 
     protected open fun onChangedCursor(cursor: Cursor?) {}
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun swapCursor(cursor: Cursor?): Cursor? {
+    private fun swapCursor(cursor: Cursor?) {
         if (this.cursor == cursor) {
-            return null
+            return
         }
 
         val oldCursor = this.cursor
@@ -36,6 +34,6 @@ abstract class BaseCursorAdapter<T : RecyclerView.ViewHolder> : RecyclerView.Ada
             notifyDataSetChanged()
         }
 
-        return oldCursor
+        oldCursor?.close()
     }
 }
