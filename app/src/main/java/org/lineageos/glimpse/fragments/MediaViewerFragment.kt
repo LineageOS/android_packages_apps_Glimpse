@@ -29,6 +29,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.navigation.fragment.findNavController
+import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
@@ -220,7 +221,7 @@ class MediaViewerFragment : Fragment(
 
             when (media.mediaType) {
                 MediaType.IMAGE -> {
-                    imageView.setImageURI(media.externalContentUri)
+                    imageView.load(media.externalContentUri)
                 }
 
                 MediaType.VIDEO -> {
