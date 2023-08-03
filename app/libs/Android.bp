@@ -872,6 +872,42 @@ android_library {
 }
 
 android_library_import {
+    name: "Glimpse_io.coil-kt_coil-gif-nodeps",
+    aars: ["io/coil-kt/coil-gif/2.4.0/coil-gif-2.4.0.aar"],
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_io.coil-kt_coil-base",
+        "kotlin-stdlib-jdk8",
+        "androidx.core_core-ktx",
+        "androidx.vectordrawable_vectordrawable-animated",
+    ],
+}
+
+android_library {
+    name: "Glimpse_io.coil-kt_coil-gif",
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/coil-kt/coil-gif/2.4.0/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_io.coil-kt_coil-gif-nodeps",
+        "Glimpse_io.coil-kt_coil-base",
+        "kotlin-stdlib-jdk8",
+        "androidx.core_core-ktx",
+        "androidx.vectordrawable_vectordrawable-animated",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
     name: "Glimpse_io.coil-kt_coil-video-nodeps",
     aars: ["io/coil-kt/coil-video/2.4.0/coil-video-2.4.0.aar"],
     sdk_version: "33",

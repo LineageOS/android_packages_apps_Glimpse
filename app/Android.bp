@@ -25,6 +25,7 @@ android_app {
         "Glimpse_androidx.navigation_navigation-fragment-ktx",
         "Glimpse_androidx.navigation_navigation-ui-ktx",
         "Glimpse_io.coil-kt_coil",
+        "Glimpse_io.coil-kt_coil-gif",
         "Glimpse_io.coil-kt_coil-video",
     ],
 
