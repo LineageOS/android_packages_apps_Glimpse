@@ -11,7 +11,6 @@ import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -19,27 +18,23 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import androidx.navigation.fragment.findNavController
-import coil.load
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
-import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.thumbnail.MediaViewerAdapter
 import org.lineageos.glimpse.utils.CommonNavigationArguments
 import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
 import java.text.SimpleDateFormat
-import java.util.Date
 
 /**
  * A fragment showing a media that supports scrolling before and after it.
@@ -56,14 +51,10 @@ class MediaViewerFragment : Fragment(
     private val dateTextView by getViewProperty<TextView>(R.id.dateTextView)
     private val deleteButton by getViewProperty<ImageButton>(R.id.deleteButton)
     private val favoriteButton by getViewProperty<ImageButton>(R.id.favoriteButton)
-    private val imageView by getViewProperty<ImageView>(R.id.imageView)
-    private val playerView by getViewProperty<PlayerView>(R.id.playerView)
     private val shareButton by getViewProperty<ImageButton>(R.id.shareButton)
     private val timeTextView by getViewProperty<TextView>(R.id.timeTextView)
     private val topSheetConstraintLayout by getViewProperty<ConstraintLayout>(R.id.topSheetConstraintLayout)
-
-    // ExoPlayer
-    private var exoPlayer: ExoPlayer? = null
+    private val viewPager by getViewProperty<ViewPager2>(R.id.viewPager)
 
     // Permissions
     private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
@@ -82,27 +73,29 @@ class MediaViewerFragment : Fragment(
         }
     }
 
+    // Adapter
+    private val mediaViewerAdapter by lazy { MediaViewerAdapter() }
+
     // MediaStore
     private val loaderManagerInstance by lazy { LoaderManager.getInstance(this) }
 
-    private var album: Album? = null
-    private lateinit var media: Media
+    // Arguments
+    private val position by lazy { arguments?.getInt(KEY_POSITION, -1)!! }
+    private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
 
-    private var cursor: Cursor? = null
-    private var position: Int = -1
+    private val onPageChangeCallback = object : OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
 
-    private var idIndex = -1
-    private var mediaTypeIndex = -1
-    private var dateAddedIndex = -1
+            val media = mediaViewerAdapter.getMediaFromMediaStore(position) ?: return
+
+            dateTextView.text = dateFormatter.format(media.dateAdded)
+            timeTextView.text = timeFormatter.format(media.dateAdded)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        arguments?.let {
-            position = it.getInt(KEY_POSITION, -1)
-            album = it.getParcelable(KEY_ALBUM, Album::class)
-            media = it.getParcelable(KEY_MEDIA, Media::class)!!
-        }
 
         backButton.setOnClickListener {
             findNavController().popBackStack()
@@ -125,6 +118,9 @@ class MediaViewerFragment : Fragment(
             windowInsets
         }
 
+        viewPager.adapter = mediaViewerAdapter
+        viewPager.registerOnPageChangeCallback(onPageChangeCallback)
+
         if (!permissionsUtils.mainPermissionsGranted()) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
@@ -133,10 +129,9 @@ class MediaViewerFragment : Fragment(
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
 
-        exoPlayer?.release()
-        exoPlayer = null
+        super.onDestroyView()
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
@@ -182,69 +177,18 @@ class MediaViewerFragment : Fragment(
     }
 
     override fun onLoaderReset(loader: Loader<Cursor>) {
-        cursor = null
-
-        idIndex = -1
-        mediaTypeIndex = -1
-        dateAddedIndex = -1
-
-        loadMedia()
+        mediaViewerAdapter.changeCursor(null)
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-        cursor = data
-
-        cursor?.let {
-            idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
-            mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
-            dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
-        }
-
-        loadMedia()
+        mediaViewerAdapter.changeCursor(data)
+        viewPager.setCurrentItem(position, false)
     }
 
     private fun initCursorLoader() {
         loaderManagerInstance.initLoader(
             MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal, null, this
         )
-    }
-
-    private fun loadMedia() {
-        cursor?.also { cursor ->
-            cursor.moveToPosition(position)
-
-            media = Media(
-                cursor.getLong(idIndex),
-                MediaType.fromMediaStoreValue(cursor.getInt(mediaTypeIndex)),
-                Date(cursor.getLong(dateAddedIndex) * 1000),
-            )
-
-            when (media.mediaType) {
-                MediaType.IMAGE -> {
-                    imageView.load(media.externalContentUri)
-                }
-
-                MediaType.VIDEO -> {
-                    exoPlayer = ExoPlayer.Builder(requireContext())
-                        .build()
-                        .also {
-                            playerView.player = it
-
-                            it.setMediaItem(MediaItem.fromUri(media.externalContentUri))
-
-                            it.playWhenReady = true
-                            it.seekTo(0)
-                            it.prepare()
-                        }
-                }
-            }
-
-            dateTextView.text = dateFormatter.format(media.dateAdded)
-            timeTextView.text = timeFormatter.format(media.dateAdded)
-
-            imageView.isVisible = media.mediaType == MediaType.IMAGE
-            playerView.isVisible = media.mediaType == MediaType.VIDEO
-        }
     }
 
     companion object {
