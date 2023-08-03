@@ -143,7 +143,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
     }
 
     companion object {
-        fun createBundle() = CommonNavigationArguments().toBundle()
+        private fun createBundle() = CommonNavigationArguments().toBundle()
 
         /**
          * Use this factory method to create a new instance of
