@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.fragments
 
+import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.MediaStore
@@ -120,6 +121,13 @@ class MediaViewerFragment : Fragment(
 
         viewPager.adapter = mediaViewerAdapter
         viewPager.registerOnPageChangeCallback(onPageChangeCallback)
+
+        shareButton.setOnClickListener {
+            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+                val intent = Intent().shareIntent(it.externalContentUri)
+                startActivity(Intent.createChooser(intent, null))
+            }
+        }
 
         if (!permissionsUtils.mainPermissionsGranted()) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
