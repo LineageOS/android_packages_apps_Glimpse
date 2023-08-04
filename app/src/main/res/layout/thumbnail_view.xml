@@ -19,4 +19,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/videoOverlayImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_play_circle_outline"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/thumbnailImageView"
+        app:layout_constraintEnd_toEndOf="@+id/thumbnailImageView"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintStart_toStartOf="@+id/thumbnailImageView"
+        app:layout_constraintTop_toTopOf="@+id/thumbnailImageView"
+        app:layout_constraintWidth_percent="0.5"
+        app:tint="@android:color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

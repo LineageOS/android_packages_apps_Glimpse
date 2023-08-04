@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
@@ -155,6 +156,8 @@ class ThumbnailAdapter(
         private val onItemSelected: (media: Media, position: Int) -> Unit,
     ) : RecyclerView.ViewHolder(view) {
         // Views
+        private val videoOverlayImageView =
+            view.findViewById<ImageView>(R.id.videoOverlayImageView)!!
         private val thumbnailImageView = view.findViewById<ImageView>(R.id.thumbnailImageView)!!
 
         private lateinit var media: Media
@@ -173,6 +176,7 @@ class ThumbnailAdapter(
             thumbnailImageView.load(media.externalContentUri) {
                 placeholder(R.drawable.thumbnail_placeholder)
             }
+            videoOverlayImageView.isVisible = media.mediaType == MediaType.VIDEO
         }
     }
 
