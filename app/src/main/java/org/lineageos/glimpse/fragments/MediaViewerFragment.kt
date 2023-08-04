@@ -126,6 +126,14 @@ class MediaViewerFragment : Fragment(
 
             this@MediaViewerFragment.position = position
 
+            if (mediaViewerAdapter.itemCount <= 0) {
+                // No medias, bail out
+                // TODO: Do better once we support showing a specific album
+                //       from intents (dialog and such)
+                findNavController().popBackStack()
+                return
+            }
+
             val media = mediaViewerAdapter.getMediaFromMediaStore(position) ?: return
 
             dateTextView.text = dateFormatter.format(media.dateAdded)
