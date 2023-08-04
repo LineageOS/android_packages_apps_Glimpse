@@ -35,6 +35,9 @@ class PermissionsUtils(private val context: Context) {
             } else {
                 add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                add(Manifest.permission.ACCESS_MEDIA_LOCATION)
+            }
         }.toTypedArray()
     }
 }
