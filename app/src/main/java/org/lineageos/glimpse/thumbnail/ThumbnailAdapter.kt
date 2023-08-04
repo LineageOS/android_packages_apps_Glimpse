@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.thumbnail
 
+import android.database.Cursor
 import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -119,6 +120,12 @@ class ThumbnailAdapter(
         }
 
         return ViewTypes.ITEM.ordinal
+    }
+
+    override fun onChangedCursor(cursor: Cursor?) {
+        super.onChangedCursor(cursor)
+
+        headersPositions.clear()
     }
 
     private fun getTruePosition(position: Int) =
