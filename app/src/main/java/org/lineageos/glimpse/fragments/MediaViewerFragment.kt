@@ -81,12 +81,14 @@ class MediaViewerFragment : Fragment(
     private val loaderManagerInstance by lazy { LoaderManager.getInstance(this) }
 
     // Arguments
-    private val position by lazy { arguments?.getInt(KEY_POSITION, -1)!! }
+    private var position = -1
     private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
 
     private val onPageChangeCallback = object : OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
+
+            this@MediaViewerFragment.position = position
 
             val media = mediaViewerAdapter.getMediaFromMediaStore(position) ?: return
 
@@ -97,6 +99,8 @@ class MediaViewerFragment : Fragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        position = arguments?.getInt(KEY_POSITION, -1)!!
 
         backButton.setOnClickListener {
             findNavController().popBackStack()
