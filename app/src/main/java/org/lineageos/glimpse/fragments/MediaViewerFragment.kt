@@ -21,9 +21,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -74,14 +76,28 @@ class MediaViewerFragment : Fragment(
         }
     }
 
+    // Player
+    private val exoPlayer by lazy {
+        ExoPlayer.Builder(requireContext()).build().apply {
+            repeatMode = ExoPlayer.REPEAT_MODE_ONE
+        }
+    }
+
     // Adapter
-    private val mediaViewerAdapter by lazy { MediaViewerAdapter() }
+    private val mediaViewerAdapter by lazy {
+        MediaViewerAdapter(exoPlayer, currentPositionLiveData)
+    }
 
     // MediaStore
     private val loaderManagerInstance by lazy { LoaderManager.getInstance(this) }
 
     // Arguments
-    private var position = -1
+    private val currentPositionLiveData = MutableLiveData(-1)
+    private var position: Int
+        get() = currentPositionLiveData.value!!
+        set(value) {
+            currentPositionLiveData.value = value
+        }
     private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
 
     private val onPageChangeCallback = object : OnPageChangeCallback() {
@@ -95,6 +111,12 @@ class MediaViewerFragment : Fragment(
             dateTextView.text = dateFormatter.format(media.dateAdded)
             timeTextView.text = timeFormatter.format(media.dateAdded)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        exoPlayer.play()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -143,7 +165,21 @@ class MediaViewerFragment : Fragment(
     override fun onDestroyView() {
         viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
 
+        exoPlayer.stop()
+
         super.onDestroyView()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        exoPlayer.pause()
+    }
+
+    override fun onDestroy() {
+        exoPlayer.release()
+
+        super.onDestroy()
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {

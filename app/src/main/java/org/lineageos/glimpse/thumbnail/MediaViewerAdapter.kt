@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.isVisible
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -22,7 +24,10 @@ import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import java.util.Date
 
-class MediaViewerAdapter : BaseCursorAdapter<MediaViewerAdapter.MediaViewHolder>() {
+class MediaViewerAdapter(
+    private val exoPlayer: ExoPlayer,
+    private val currentPositionLiveData: LiveData<Int>,
+) : BaseCursorAdapter<MediaViewerAdapter.MediaViewHolder>() {
     init {
         setHasStableIds(true)
     }
@@ -30,21 +35,22 @@ class MediaViewerAdapter : BaseCursorAdapter<MediaViewerAdapter.MediaViewHolder>
     override fun getItemId(position: Int) = getIdFromMediaStore(position)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
+        exoPlayer, currentPositionLiveData,
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
-        getMediaFromMediaStore(position)?.let { holder.bind(it) }
-    }
-
-    override fun onViewDetachedFromWindow(holder: MediaViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.stopPlayer()
+        getMediaFromMediaStore(position)?.let { holder.bind(it, position) }
     }
 
     override fun onViewAttachedToWindow(holder: MediaViewHolder) {
         super.onViewAttachedToWindow(holder)
-        holder.preparePlayer()
+        holder.onViewAttachedToWindow()
+    }
+
+    override fun onViewDetachedFromWindow(holder: MediaViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.onViewDetachedFromWindow()
     }
 
     fun getMediaFromMediaStore(position: Int): Media? {
@@ -71,52 +77,54 @@ class MediaViewerAdapter : BaseCursorAdapter<MediaViewerAdapter.MediaViewHolder>
     }
 
     class MediaViewHolder(
-        view: View,
+        private val view: View,
+        private val exoPlayer: ExoPlayer,
+        private val currentPositionLiveData: LiveData<Int>,
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val imageView = view.findViewById<ImageView>(R.id.imageView)
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
 
         private lateinit var media: Media
-        private val exoPlayer by lazy {
-            ExoPlayer.Builder(view.context).build().apply {
-                repeatMode = ExoPlayer.REPEAT_MODE_ONE
+        private var position = -1
+
+        private val observer = { currentPosition: Int ->
+            if (media.mediaType == MediaType.VIDEO && currentPosition == position) {
+                playerView.player = exoPlayer
+                exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
+                exoPlayer.seekTo(C.TIME_UNSET)
+                exoPlayer.prepare()
+                exoPlayer.playWhenReady = true
+            } else {
+                exoPlayer.stop()
+                playerView.player = null
             }
         }
 
-        fun bind(media: Media) {
+        fun bind(media: Media, position: Int) {
             this.media = media
+            this.position = position
 
             when (media.mediaType) {
                 MediaType.IMAGE -> {
                     imageView.load(media.externalContentUri)
                 }
 
-                MediaType.VIDEO -> {
-                    exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
-                }
+                MediaType.VIDEO -> {}
             }
 
             imageView.isVisible = media.mediaType == MediaType.IMAGE
             playerView.isVisible = media.mediaType == MediaType.VIDEO
         }
 
-        fun preparePlayer() {
-            if (media.mediaType == MediaType.VIDEO) {
-                playerView.player = exoPlayer
-                exoPlayer.seekTo(C.TIME_UNSET)
-                exoPlayer.prepare()
-                exoPlayer.playWhenReady = true
+        fun onViewAttachedToWindow() {
+            view.findViewTreeLifecycleOwner()?.let {
+                currentPositionLiveData.observe(it, observer)
             }
         }
 
-        fun stopPlayer() {
-            if (media.mediaType == MediaType.VIDEO) {
-                playerView.player = null
-            }
-            if (exoPlayer.isPlaying && media.mediaType == MediaType.VIDEO) {
-                exoPlayer.stop()
-            }
+        fun onViewDetachedFromWindow() {
+            currentPositionLiveData.removeObserver(observer)
         }
     }
 }
