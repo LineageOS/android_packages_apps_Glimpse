@@ -89,13 +89,19 @@ class MediaViewerAdapter(
         private var position = -1
 
         private val observer = { currentPosition: Int ->
-            if (media.mediaType == MediaType.VIDEO && currentPosition == position) {
-                playerView.player = exoPlayer
-                exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
-                exoPlayer.seekTo(C.TIME_UNSET)
-                exoPlayer.prepare()
-                exoPlayer.playWhenReady = true
+            if (currentPosition == position) {
+                imageView.isVisible = media.mediaType == MediaType.IMAGE
+                playerView.isVisible = media.mediaType == MediaType.VIDEO
+                if (media.mediaType == MediaType.VIDEO) {
+                    playerView.player = exoPlayer
+                    exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
+                    exoPlayer.seekTo(C.TIME_UNSET)
+                    exoPlayer.prepare()
+                    exoPlayer.playWhenReady = true
+                }
             } else {
+                imageView.isVisible = true
+                playerView.isVisible = false
                 exoPlayer.stop()
                 playerView.player = null
             }
@@ -104,17 +110,7 @@ class MediaViewerAdapter(
         fun bind(media: Media, position: Int) {
             this.media = media
             this.position = position
-
-            when (media.mediaType) {
-                MediaType.IMAGE -> {
-                    imageView.load(media.externalContentUri)
-                }
-
-                MediaType.VIDEO -> {}
-            }
-
-            imageView.isVisible = media.mediaType == MediaType.IMAGE
-            playerView.isVisible = media.mediaType == MediaType.VIDEO
+            imageView.load(media.externalContentUri)
         }
 
         fun onViewAttachedToWindow() {
