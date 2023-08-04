@@ -6,6 +6,7 @@
 package org.lineageos.glimpse.thumbnail
 
 import android.provider.MediaStore
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,6 @@ import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
-import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Date
@@ -187,7 +187,11 @@ class ThumbnailAdapter(
         private val textView = view as TextView
 
         fun bind(date: Date) {
-            textView.text = dateFormatter.format(date)
+            textView.text = DateUtils.getRelativeTimeSpanString(
+                date.time,
+                System.currentTimeMillis(),
+                DateUtils.DAY_IN_MILLIS
+            )
         }
     }
 
@@ -196,7 +200,5 @@ class ThumbnailAdapter(
             ITEM,
             HEADER,
         }
-
-        private val dateFormatter = SimpleDateFormat.getDateInstance()
     }
 }
