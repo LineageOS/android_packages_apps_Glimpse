@@ -18,8 +18,9 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import java.text.SimpleDateFormat
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import java.util.Date
-import java.util.concurrent.TimeUnit
 
 class ThumbnailAdapter(
     private val onItemSelected: (media: Media, position: Int) -> Unit,
@@ -108,10 +109,11 @@ class ThumbnailAdapter(
         val currentMedia = getMediaFromMediaStore(truePosition)!!
         val previousMedia = getMediaFromMediaStore(previousTruePosition)!!
 
-        val diff = previousMedia.dateAdded.time - currentMedia.dateAdded.time
-        val days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
+        val before = previousMedia.dateAdded.toInstant().atZone(ZoneId.systemDefault())
+        val after = currentMedia.dateAdded.toInstant().atZone(ZoneId.systemDefault())
+        val days = ChronoUnit.DAYS.between(after, before)
 
-        if (days >= 1) {
+        if (days >= 1 || before.dayOfMonth != after.dayOfMonth) {
             addHeaderOffset(position)
             return ViewTypes.HEADER.ordinal
         }
