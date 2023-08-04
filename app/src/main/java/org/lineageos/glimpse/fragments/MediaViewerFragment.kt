@@ -5,8 +5,10 @@
 
 package org.lineageos.glimpse.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.database.Cursor
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -29,6 +31,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.google.android.material.snackbar.Snackbar
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
@@ -100,6 +103,23 @@ class MediaViewerFragment : Fragment(
         }
     private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
 
+    // Contracts
+    private val deleteUriContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            Snackbar.make(
+                bottomSheetLinearLayout,
+                resources.getQuantityString(
+                    if (it.resultCode == Activity.RESULT_CANCELED) {
+                        R.plurals.file_deletion_unsuccessful
+                    } else {
+                        R.plurals.file_deletion_successful
+                    },
+                    1, 1
+                ),
+                Snackbar.LENGTH_LONG,
+            ).show()
+        }
+
     private val onPageChangeCallback = object : OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
@@ -126,6 +146,18 @@ class MediaViewerFragment : Fragment(
 
         backButton.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        deleteButton.setOnClickListener {
+            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    deleteUriContract.launch(
+                        requireContext().contentResolver.createDeleteRequest(it.externalContentUri)
+                    )
+                } else {
+                    it.delete(requireContext().contentResolver)
+                }
+            }
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->

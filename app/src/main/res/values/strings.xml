@@ -20,4 +20,14 @@
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>
     </plurals>
+
+    <!-- File deletion -->
+    <plurals name="file_deletion_successful">
+        <item quantity="one">File deleted</item>
+        <item quantity="many">%d files deleted</item>
+    </plurals>
+    <plurals name="file_deletion_unsuccessful">
+        <item quantity="one">File couldn\'t be deleted</item>
+        <item quantity="many">%d files couldn\'t be deleted</item>
+    </plurals>
 </resources>

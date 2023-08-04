@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.models
 
+import android.content.ContentResolver
 import android.content.ContentUris
 import android.os.Parcel
 import android.os.Parcelable
@@ -33,6 +34,10 @@ data class Media(
         dest.writeLong(id)
         dest.writeInt(mediaType.ordinal)
         dest.writeLong(dateAdded.time)
+    }
+
+    fun delete(contentResolver: ContentResolver) {
+        contentResolver.delete(externalContentUri, null, null)
     }
 
     companion object CREATOR : Parcelable.Creator<Media> {
