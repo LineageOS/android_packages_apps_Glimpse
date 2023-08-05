@@ -7,6 +7,7 @@ package org.lineageos.glimpse.fragments
 
 import android.content.ContentUris
 import android.database.Cursor
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -152,7 +153,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 } ?: run {
                     albums[bucketId] = Album(
                         bucketId,
-                        cursor.getString(bucketDisplayNameIndex),
+                        cursor.getString(bucketDisplayNameIndex) ?: Build.MODEL,
                         ContentUris.withAppendedId(contentUri, cursor.getLong(idIndex)),
                     ).apply { size += 1 }
                 }
