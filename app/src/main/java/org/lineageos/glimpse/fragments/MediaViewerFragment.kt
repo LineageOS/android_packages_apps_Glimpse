@@ -41,6 +41,7 @@ import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.thumbnail.MediaViewerAdapter
+import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
 import java.text.SimpleDateFormat
@@ -276,9 +277,15 @@ class MediaViewerFragment : Fragment(
                 album?.let {
                     append(
                         buildString {
-                            append(" AND ")
-                            append(MediaStore.Files.FileColumns.BUCKET_ID)
-                            append(" = ?")
+                            if (it.id == MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id) {
+                                append(" AND ")
+                                append(MediaStore.Files.FileColumns.IS_FAVORITE)
+                                append(" = 1")
+                            } else {
+                                append(" AND ")
+                                append(MediaStore.Files.FileColumns.BUCKET_ID)
+                                append(" = ?")
+                            }
                         }
                     )
                 }
@@ -288,7 +295,9 @@ class MediaViewerFragment : Fragment(
                 MediaStore.Files.getContentUri("external"),
                 projection,
                 selection,
-                album?.let { arrayOf(it.id.toString()) },
+                album?.takeIf {
+                    it.id != MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id
+                }?.let { arrayOf(it.id.toString()) },
                 MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             )
         }

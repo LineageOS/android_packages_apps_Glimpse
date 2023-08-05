@@ -35,6 +35,7 @@ import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
 import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
+import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
 
@@ -148,9 +149,14 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
                 })
                 append(")")
                 append(" AND ")
-                append(MediaStore.Files.FileColumns.BUCKET_ID)
-                append(" = ")
-                append(album.id)
+                if (album.id == MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id) {
+                    append(MediaStore.Files.FileColumns.IS_FAVORITE)
+                    append(" = 1")
+                } else {
+                    append(MediaStore.Files.FileColumns.BUCKET_ID)
+                    append(" = ")
+                    append(album.id)
+                }
             }
             CursorLoader(
                 requireContext(),

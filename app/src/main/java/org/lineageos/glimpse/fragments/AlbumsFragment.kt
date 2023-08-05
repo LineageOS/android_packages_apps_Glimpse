@@ -30,6 +30,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.thumbnail.AlbumThumbnailAdapter
+import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.MediaStoreRequests
 
 /**
@@ -128,6 +129,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
             }
 
             val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
+            val isFavoriteIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
             val mediaTypeIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
             val bucketIdIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_ID)
             val bucketDisplayNameIndex =
@@ -146,16 +148,27 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                     else -> return@let
                 }
 
-                val bucketId = cursor.getInt(bucketIdIndex)
+                val bucketIds = listOfNotNull(
+                    cursor.getInt(bucketIdIndex),
+                    MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id.takeIf {
+                        cursor.getInt(isFavoriteIndex) == 1
+                    }
+                )
 
-                albums[bucketId]?.also {
-                    it.size += 1
-                } ?: run {
-                    albums[bucketId] = Album(
-                        bucketId,
-                        cursor.getString(bucketDisplayNameIndex) ?: Build.MODEL,
-                        ContentUris.withAppendedId(contentUri, cursor.getLong(idIndex)),
-                    ).apply { size += 1 }
+                for (bucketId in bucketIds) {
+                    albums[bucketId]?.also {
+                        it.size += 1
+                    } ?: run {
+                        albums[bucketId] = Album(
+                            bucketId,
+                            if (bucketId == MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id) {
+                                getString(R.string.album_favorites)
+                            } else {
+                                cursor.getString(bucketDisplayNameIndex) ?: Build.MODEL
+                            },
+                            ContentUris.withAppendedId(contentUri, cursor.getLong(idIndex)),
+                        ).apply { size += 1 }
+                    }
                 }
 
                 cursor.moveToNext()
