@@ -7,25 +7,27 @@ package org.lineageos.glimpse.thumbnail
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 class ThumbnailLayoutManager(
     context: Context,
-    adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
-    spanCount: Int,
-) : GridLayoutManager(context, spanCount) {
+    adapter: ThumbnailAdapter,
+) : GridLayoutManager(context, SPAN_COUNT) {
     init {
-        spanSizeLookup = ThumbnailSpanSizeLookup(adapter, spanCount)
+        spanSizeLookup = ThumbnailSpanSizeLookup(adapter, SPAN_COUNT)
     }
 
     private class ThumbnailSpanSizeLookup(
-        private val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
+        private val adapter: ThumbnailAdapter,
         private val spanCount: Int,
     ) : SpanSizeLookup() {
         override fun getSpanSize(position: Int) = when (adapter.getItemViewType(position)) {
-            ThumbnailAdapter.Companion.ViewTypes.ITEM.ordinal -> 1
-            ThumbnailAdapter.Companion.ViewTypes.HEADER.ordinal -> spanCount
+            ThumbnailAdapter.ViewTypes.ITEM.ordinal -> 1
+            ThumbnailAdapter.ViewTypes.HEADER.ordinal -> spanCount
             else -> throw Exception("Unknown view type")
         }
+    }
+
+    companion object {
+        private const val SPAN_COUNT = 3
     }
 }

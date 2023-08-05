@@ -78,7 +78,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
         super.onViewCreated(view, savedInstanceState)
 
         reelsRecyclerView.layoutManager = ThumbnailLayoutManager(
-            requireContext(), thumbnailAdapter, 3
+            requireContext(), thumbnailAdapter
         )
         reelsRecyclerView.adapter = thumbnailAdapter
 

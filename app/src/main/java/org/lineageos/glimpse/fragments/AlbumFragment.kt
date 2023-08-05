@@ -95,7 +95,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         albumRecyclerView.layoutManager = ThumbnailLayoutManager(
-            requireContext(), thumbnailAdapter, 3
+            requireContext(), thumbnailAdapter
         )
         albumRecyclerView.adapter = thumbnailAdapter
 

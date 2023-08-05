@@ -202,10 +202,8 @@ class ThumbnailAdapter(
         }
     }
 
-    companion object {
-        enum class ViewTypes {
-            ITEM,
-            HEADER,
-        }
+    enum class ViewTypes {
+        ITEM,
+        HEADER,
     }
 }
