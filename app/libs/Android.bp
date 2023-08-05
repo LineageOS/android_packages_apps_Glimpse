@@ -418,7 +418,7 @@ java_library_static {
 
 java_import {
     name: "Glimpse_com.squareup.okhttp3_okhttp-nodeps",
-    jars: ["com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.jar"],
+    jars: ["com/squareup/okhttp3/okhttp/4.10.0/okhttp-4.10.0.jar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -437,15 +437,15 @@ java_library_static {
     ],
     static_libs: [
         "Glimpse_com.squareup.okhttp3_okhttp-nodeps",
+        "Glimpse_com.squareup.okio_okio-jvm",
         "kotlin-stdlib",
-        "kotlin-stdlib-jdk8",
     ],
     java_version: "1.7",
 }
 
 java_import {
     name: "Glimpse_com.squareup.okio_okio-jvm-nodeps",
-    jars: ["com/squareup/okio/okio-jvm/3.3.0/okio-jvm-3.3.0.jar"],
+    jars: ["com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.jar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -471,7 +471,7 @@ java_library_static {
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-base-nodeps",
-    aars: ["io/coil-kt/coil-base/2.4.0/coil-base-2.4.0.aar"],
+    aars: ["io/coil-kt/coil-base/2.2.2/coil-base-2.2.2.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -481,13 +481,12 @@ android_library_import {
     static_libs: [
         "androidx.lifecycle_lifecycle-runtime",
         "kotlinx-coroutines-android",
-        "kotlin-stdlib",
+        "kotlin-stdlib-jdk8",
         "Glimpse_com.squareup.okhttp3_okhttp",
         "androidx.appcompat_appcompat-resources",
         "androidx.collection_collection",
         "androidx.core_core-ktx",
         "androidx.exifinterface_exifinterface",
-        "androidx.profileinstaller_profileinstaller",
     ],
 }
 
@@ -499,25 +498,24 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-base/2.4.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-base/2.2.2/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-base-nodeps",
         "androidx.lifecycle_lifecycle-runtime",
         "kotlinx-coroutines-android",
-        "kotlin-stdlib",
+        "kotlin-stdlib-jdk8",
         "Glimpse_com.squareup.okhttp3_okhttp",
         "androidx.appcompat_appcompat-resources",
         "androidx.collection_collection",
         "androidx.core_core-ktx",
         "androidx.exifinterface_exifinterface",
-        "androidx.profileinstaller_profileinstaller",
     ],
     java_version: "1.7",
 }
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-gif-nodeps",
-    aars: ["io/coil-kt/coil-gif/2.4.0/coil-gif-2.4.0.aar"],
+    aars: ["io/coil-kt/coil-gif/2.2.2/coil-gif-2.2.2.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -526,7 +524,6 @@ android_library_import {
     ],
     static_libs: [
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
         "androidx.core_core-ktx",
         "androidx.vectordrawable_vectordrawable-animated",
     ],
@@ -540,11 +537,10 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-gif/2.4.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-gif/2.2.2/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-gif-nodeps",
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
         "androidx.core_core-ktx",
         "androidx.vectordrawable_vectordrawable-animated",
     ],
@@ -553,7 +549,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-video-nodeps",
-    aars: ["io/coil-kt/coil-video/2.4.0/coil-video-2.4.0.aar"],
+    aars: ["io/coil-kt/coil-video/2.2.2/coil-video-2.2.2.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -562,7 +558,6 @@ android_library_import {
     ],
     static_libs: [
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
         "androidx.core_core-ktx",
     ],
 }
@@ -575,11 +570,10 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-video/2.4.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-video/2.2.2/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-video-nodeps",
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
         "androidx.core_core-ktx",
     ],
     java_version: "1.7",
@@ -587,7 +581,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-nodeps",
-    aars: ["io/coil-kt/coil/2.4.0/coil-2.4.0.aar"],
+    aars: ["io/coil-kt/coil/2.2.2/coil-2.2.2.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -596,7 +590,6 @@ android_library_import {
     ],
     static_libs: [
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
     ],
 }
 
@@ -608,11 +601,10 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil/2.4.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil/2.2.2/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-nodeps",
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
     ],
     java_version: "1.7",
 }
