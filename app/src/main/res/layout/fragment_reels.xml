@@ -10,13 +10,11 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ReelsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <include
         android:id="@+id/reelsRecyclerView"
+        layout="@layout/thumbnails_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingHorizontal="12dp"
-        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
