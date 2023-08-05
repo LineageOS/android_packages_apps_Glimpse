@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.fragments
 
+import android.content.res.Configuration
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.MediaStore
@@ -99,6 +100,14 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
         } else {
             initCursorLoader()
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        reelsRecyclerView.layoutManager = ThumbnailLayoutManager(
+            requireContext(), thumbnailAdapter
+        )
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {

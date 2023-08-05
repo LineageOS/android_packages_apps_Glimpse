@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.fragments
 
+import android.content.res.Configuration
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.MediaStore
@@ -116,6 +117,14 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
         } else {
             initCursorLoader()
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        albumRecyclerView.layoutManager = ThumbnailLayoutManager(
+            requireContext(), thumbnailAdapter
+        )
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
