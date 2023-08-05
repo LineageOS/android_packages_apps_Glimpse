@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -37,7 +38,6 @@ import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.thumbnail.MediaViewerAdapter
-import org.lineageos.glimpse.utils.CommonNavigationArguments
 import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
 import java.text.SimpleDateFormat
@@ -311,11 +311,11 @@ class MediaViewerFragment : Fragment(
             album: Album?,
             media: Media,
             position: Int,
-        ) = CommonNavigationArguments().toBundle().apply {
-            putParcelable(KEY_ALBUM, album)
-            putParcelable(KEY_MEDIA, media)
-            putInt(KEY_POSITION, position)
-        }
+        ) = bundleOf(
+            KEY_ALBUM to album,
+            KEY_MEDIA to media,
+            KEY_POSITION to position,
+        )
 
         /**
          * Use this factory method to create a new instance of

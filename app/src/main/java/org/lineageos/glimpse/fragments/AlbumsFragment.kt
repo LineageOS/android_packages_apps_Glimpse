@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -29,7 +30,6 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.thumbnail.AlbumThumbnailAdapter
-import org.lineageos.glimpse.utils.CommonNavigationArguments
 import org.lineageos.glimpse.utils.MediaStoreRequests
 
 /**
@@ -166,7 +166,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     companion object {
-        private fun createBundle() = CommonNavigationArguments().toBundle()
+        private fun createBundle() = bundleOf()
 
         /**
          * Use this factory method to create a new instance of

@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -27,7 +28,6 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
 import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
-import org.lineageos.glimpse.utils.CommonNavigationArguments
 import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
 
@@ -155,7 +155,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
     }
 
     companion object {
-        private fun createBundle() = CommonNavigationArguments().toBundle()
+        private fun createBundle() = bundleOf()
 
         /**
          * Use this factory method to create a new instance of

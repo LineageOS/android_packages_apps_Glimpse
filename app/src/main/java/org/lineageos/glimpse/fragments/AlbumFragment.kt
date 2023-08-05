@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -34,7 +35,6 @@ import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
 import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
-import org.lineageos.glimpse.utils.CommonNavigationArguments
 import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
 
@@ -184,9 +184,9 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
 
         fun createBundle(
             album: Album,
-        ) = CommonNavigationArguments().toBundle().apply {
-            putParcelable(KEY_ALBUM_ID, album)
-        }
+        ) = bundleOf(
+            KEY_ALBUM_ID to album,
+        )
 
         /**
          * Use this factory method to create a new instance of
