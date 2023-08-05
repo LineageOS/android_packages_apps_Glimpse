@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.thumbnail
 
+import android.database.Cursor
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,12 @@ class MediaViewerAdapter(
     private val exoPlayer: ExoPlayer,
     private val currentPositionLiveData: LiveData<Int>,
 ) : BaseCursorAdapter<MediaViewerAdapter.MediaViewHolder>() {
+    // Cursor indexes
+    private var idIndex = -1
+    private var isFavoriteIndex = -1
+    private var mediaTypeIndex = -1
+    private var dateAddedIndex = -1
+
     init {
         setHasStableIds(true)
     }
@@ -50,13 +57,19 @@ class MediaViewerAdapter(
         holder.onViewDetachedFromWindow()
     }
 
+    override fun onChangedCursor(cursor: Cursor?) {
+        super.onChangedCursor(cursor)
+
+        cursor?.let {
+            idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
+            isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
+            mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
+            dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
+        }
+    }
+
     fun getMediaFromMediaStore(position: Int): Media? {
         val cursor = cursor ?: return null
-
-        val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
-        val isFavoriteIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
-        val mediaTypeIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
-        val dateAddedIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
 
         cursor.moveToPosition(position)
 
@@ -75,7 +88,6 @@ class MediaViewerAdapter(
 
     private fun getIdFromMediaStore(position: Int): Long {
         val cursor = cursor ?: return 0
-        val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
         cursor.moveToPosition(position)
         return cursor.getLong(idIndex)
     }

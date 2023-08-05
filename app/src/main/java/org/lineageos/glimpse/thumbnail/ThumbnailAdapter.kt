@@ -30,6 +30,12 @@ class ThumbnailAdapter(
 
     private var recyclerView: RecyclerView? = null
 
+    // Cursor indexes
+    private var idIndex = -1
+    private var isFavoriteIndex = -1
+    private var mediaTypeIndex = -1
+    private var dateAddedIndex = -1
+
     init {
         setHasStableIds(true)
     }
@@ -126,6 +132,13 @@ class ThumbnailAdapter(
         super.onChangedCursor(cursor)
 
         headersPositions.clear()
+
+        cursor?.let {
+            idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
+            isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
+            mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
+            dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
+        }
     }
 
     private fun getTruePosition(position: Int) =
@@ -139,18 +152,12 @@ class ThumbnailAdapter(
 
     private fun getIdFromMediaStore(position: Int): Long {
         val cursor = cursor ?: return 0
-        val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
         cursor.moveToPosition(getTruePosition(position))
         return cursor.getLong(idIndex)
     }
 
     private fun getMediaFromMediaStore(position: Int): Media? {
         val cursor = cursor ?: return null
-
-        val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
-        val isFavoriteIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
-        val mediaTypeIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
-        val dateAddedIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
 
         cursor.moveToPosition(position)
 
