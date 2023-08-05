@@ -13,8 +13,6 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.media3.common.C
-import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.RecyclerView
@@ -96,21 +94,14 @@ class MediaViewerAdapter(
         private var position = -1
 
         private val observer = { currentPosition: Int ->
-            if (currentPosition == position) {
-                imageView.isVisible = media.mediaType == MediaType.IMAGE
-                playerView.isVisible = media.mediaType == MediaType.VIDEO
-                if (media.mediaType == MediaType.VIDEO) {
-                    playerView.player = exoPlayer
-                    exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
-                    exoPlayer.seekTo(C.TIME_UNSET)
-                    exoPlayer.prepare()
-                    exoPlayer.playWhenReady = true
-                }
-            } else {
-                imageView.isVisible = true
-                playerView.isVisible = false
-                exoPlayer.stop()
-                playerView.player = null
+            val isNowVideoPlayer = currentPosition == position && media.mediaType == MediaType.VIDEO
+
+            imageView.isVisible = !isNowVideoPlayer
+            playerView.isVisible = isNowVideoPlayer
+
+            playerView.player = when (isNowVideoPlayer) {
+                true -> exoPlayer
+                false -> null
             }
         }
 

@@ -28,6 +28,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -37,6 +39,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.thumbnail.MediaViewerAdapter
 import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
@@ -141,6 +144,15 @@ class MediaViewerFragment : Fragment(
             dateTextView.text = dateFormatter.format(media.dateAdded)
             timeTextView.text = timeFormatter.format(media.dateAdded)
             favoriteButton.isSelected = media.isFavorite
+
+            if (media.mediaType == MediaType.VIDEO) {
+                exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
+                exoPlayer.seekTo(C.TIME_UNSET)
+                exoPlayer.prepare()
+                exoPlayer.playWhenReady = true
+            } else {
+                exoPlayer.stop()
+            }
         }
     }
 
