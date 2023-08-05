@@ -126,8 +126,6 @@ class MediaViewerFragment : Fragment(
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
 
-            this@MediaViewerFragment.position = position
-
             if (mediaViewerAdapter.itemCount <= 0) {
                 // No medias, bail out
                 // TODO: Do better once we support showing a specific album
@@ -135,6 +133,8 @@ class MediaViewerFragment : Fragment(
                 findNavController().popBackStack()
                 return
             }
+
+            this@MediaViewerFragment.position = position
 
             val media = mediaViewerAdapter.getMediaFromMediaStore(position) ?: return
 
