@@ -16,3 +16,9 @@ import androidx.annotation.RequiresApi
 fun ContentResolver.createDeleteRequest(vararg uris: Uri) = IntentSenderRequest.Builder(
     MediaStore.createDeleteRequest(this, uris.toCollection(ArrayList()))
 ).build()
+
+@RequiresApi(Build.VERSION_CODES.R)
+fun ContentResolver.createFavoriteRequest(value: Boolean, vararg uris: Uri) =
+    IntentSenderRequest.Builder(
+        MediaStore.createFavoriteRequest(this, uris.toCollection(ArrayList()), value)
+    ).build()

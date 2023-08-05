@@ -119,6 +119,8 @@ class MediaViewerFragment : Fragment(
                 Snackbar.LENGTH_LONG,
             ).show()
         }
+    private val noopContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
 
     private val onPageChangeCallback = object : OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -172,6 +174,28 @@ class MediaViewerFragment : Fragment(
                     )
                 } else {
                     it.delete(requireContext().contentResolver)
+                }
+            }
+        }
+
+        favoriteButton.setOnClickListener {
+            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+                favoriteButton.setImageResource(
+                    if (!it.isFavorite) {
+                        R.drawable.ic_star
+                    } else {
+                        R.drawable.ic_star_border
+                    }
+                )
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    noopContract.launch(
+                        requireContext().contentResolver.createFavoriteRequest(
+                            !it.isFavorite, it.externalContentUri
+                        )
+                    )
+                } else {
+                    it.favorite(requireContext().contentResolver, !it.isFavorite)
                 }
             }
         }

@@ -45,6 +45,12 @@ data class Media(
         contentResolver.delete(externalContentUri, null, null)
     }
 
+    fun favorite(contentResolver: ContentResolver, value: Boolean) {
+        contentResolver.update(externalContentUri, ContentValues().apply {
+            put(MediaStore.MediaColumns.IS_FAVORITE, value)
+        }, null, null)
+    }
+
     companion object CREATOR : Parcelable.Creator<Media> {
         override fun createFromParcel(parcel: Parcel) = Media(parcel)
 
