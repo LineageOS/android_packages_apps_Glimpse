@@ -138,6 +138,14 @@ class MediaViewerFragment : Fragment(
 
             dateTextView.text = dateFormatter.format(media.dateAdded)
             timeTextView.text = timeFormatter.format(media.dateAdded)
+
+            favoriteButton.setImageResource(
+                if (media.isFavorite) {
+                    R.drawable.ic_star
+                } else {
+                    R.drawable.ic_star_border
+                }
+            )
         }
     }
 
@@ -226,6 +234,7 @@ class MediaViewerFragment : Fragment(
         MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal -> {
             val projection = arrayOf(
                 MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.IS_FAVORITE,
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )

@@ -105,6 +105,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
         MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal -> {
             val projection = arrayOf(
                 MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.IS_FAVORITE,
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )

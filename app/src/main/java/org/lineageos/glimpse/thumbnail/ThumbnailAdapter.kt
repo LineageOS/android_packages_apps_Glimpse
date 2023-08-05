@@ -148,16 +148,23 @@ class ThumbnailAdapter(
         val cursor = cursor ?: return null
 
         val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
+        val isFavoriteIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
         val mediaTypeIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
         val dateAddedIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
 
         cursor.moveToPosition(position)
 
         val id = cursor.getLong(idIndex)
+        val isFavorite = cursor.getInt(isFavoriteIndex) == 1
         val mediaType = cursor.getInt(mediaTypeIndex)
         val dateAdded = cursor.getLong(dateAddedIndex)
 
-        return Media(id, MediaType.fromMediaStoreValue(mediaType), Date(dateAdded * 1000))
+        return Media(
+            id,
+            isFavorite,
+            MediaType.fromMediaStoreValue(mediaType),
+            Date(dateAdded * 1000)
+        )
     }
 
     class ThumbnailViewHolder(

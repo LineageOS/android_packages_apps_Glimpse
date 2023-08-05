@@ -7,12 +7,15 @@ package org.lineageos.glimpse.models
 
 import android.content.ContentResolver
 import android.content.ContentUris
+import android.content.ContentValues
 import android.os.Parcel
 import android.os.Parcelable
+import android.provider.MediaStore
 import java.util.Date
 
 data class Media(
     val id: Long,
+    val isFavorite: Boolean,
     val mediaType: MediaType,
     val dateAdded: Date,
 ) : Parcelable {
@@ -20,6 +23,7 @@ data class Media(
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
+        parcel.readInt() == 1,
         when (parcel.readInt()) {
             MediaType.IMAGE.ordinal -> MediaType.IMAGE
             MediaType.VIDEO.ordinal -> MediaType.VIDEO
@@ -32,6 +36,7 @@ data class Media(
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeLong(id)
+        dest.writeInt(if (isFavorite) 1 else 0)
         dest.writeInt(mediaType.ordinal)
         dest.writeLong(dateAdded.time)
     }

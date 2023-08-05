@@ -85,6 +85,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 MediaStore.Files.FileColumns.BUCKET_ID,
                 MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
                 MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.IS_FAVORITE,
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
