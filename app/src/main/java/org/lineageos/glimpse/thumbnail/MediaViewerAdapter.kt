@@ -20,7 +20,6 @@ import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
-import java.util.Date
 
 class MediaViewerAdapter(
     private val exoPlayer: ExoPlayer,
@@ -62,15 +61,15 @@ class MediaViewerAdapter(
         cursor.moveToPosition(position)
 
         val id = cursor.getLong(idIndex)
-        val isFavorite = cursor.getInt(isFavoriteIndex) == 1
+        val isFavorite = cursor.getInt(isFavoriteIndex)
         val mediaType = cursor.getInt(mediaTypeIndex)
         val dateAdded = cursor.getLong(dateAddedIndex)
 
-        return Media(
+        return Media.fromMediaStore(
             id,
             isFavorite,
-            MediaType.fromMediaStoreValue(mediaType),
-            Date(dateAdded * 1000)
+            mediaType,
+            dateAdded,
         )
     }
 

@@ -55,5 +55,17 @@ data class Media(
         override fun createFromParcel(parcel: Parcel) = Media(parcel)
 
         override fun newArray(size: Int) = arrayOfNulls<Media>(size)
+
+        fun fromMediaStore(
+            id: Long,
+            isFavorite: Int,
+            mediaType: Int,
+            dateAdded: Long,
+        ) = Media(
+            id,
+            isFavorite == 1,
+            MediaType.fromMediaStoreValue(mediaType),
+            Date(dateAdded * 1000),
+        )
     }
 }

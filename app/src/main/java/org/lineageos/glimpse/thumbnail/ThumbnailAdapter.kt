@@ -155,15 +155,15 @@ class ThumbnailAdapter(
         cursor.moveToPosition(position)
 
         val id = cursor.getLong(idIndex)
-        val isFavorite = cursor.getInt(isFavoriteIndex) == 1
+        val isFavorite = cursor.getInt(isFavoriteIndex)
         val mediaType = cursor.getInt(mediaTypeIndex)
         val dateAdded = cursor.getLong(dateAddedIndex)
 
-        return Media(
+        return Media.fromMediaStore(
             id,
             isFavorite,
-            MediaType.fromMediaStoreValue(mediaType),
-            Date(dateAdded * 1000)
+            mediaType,
+            dateAdded,
         )
     }
 
