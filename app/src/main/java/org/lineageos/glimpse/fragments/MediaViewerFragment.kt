@@ -140,14 +140,7 @@ class MediaViewerFragment : Fragment(
 
             dateTextView.text = dateFormatter.format(media.dateAdded)
             timeTextView.text = timeFormatter.format(media.dateAdded)
-
-            favoriteButton.setImageResource(
-                if (media.isFavorite) {
-                    R.drawable.ic_star
-                } else {
-                    R.drawable.ic_star_border
-                }
-            )
+            favoriteButton.isSelected = media.isFavorite
         }
     }
 
@@ -180,13 +173,7 @@ class MediaViewerFragment : Fragment(
 
         favoriteButton.setOnClickListener {
             mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
-                favoriteButton.setImageResource(
-                    if (!it.isFavorite) {
-                        R.drawable.ic_star
-                    } else {
-                        R.drawable.ic_star_border
-                    }
-                )
+                favoriteButton.isSelected = !it.isFavorite
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     noopContract.launch(

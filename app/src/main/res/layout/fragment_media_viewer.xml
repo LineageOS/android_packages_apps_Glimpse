@@ -78,7 +78,7 @@
         <ImageButton
             android:id="@+id/favoriteButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-            android:src="@drawable/ic_star_border" />
+            android:src="@drawable/ic_star_toggle" />
 
         <ImageButton
             android:id="@+id/shareButton"
