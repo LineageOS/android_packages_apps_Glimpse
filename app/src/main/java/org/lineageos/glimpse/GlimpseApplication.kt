@@ -6,6 +6,7 @@
 package org.lineageos.glimpse
 
 import android.app.Application
+import android.os.Build
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.GifDecoder
@@ -22,7 +23,9 @@ class GlimpseApplication : Application(), ImageLoaderFactory {
     }
 
     override fun newImageLoader() = ImageLoader.Builder(this).components {
-        add(ImageDecoderDecoder.Factory())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            add(ImageDecoderDecoder.Factory())
+        }
         add(GifDecoder.Factory())
         add(VideoFrameDecoder.Factory())
     }.build()
