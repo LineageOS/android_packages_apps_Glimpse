@@ -53,6 +53,7 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
             it?.use {
                 val idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
                 val bucketIdIndex = it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_ID)
+                val displayNameIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
                 val isFavoriteIndex =
                     it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
                 val isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
@@ -84,6 +85,7 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                             album.size += 1
                         } ?: run {
                             val id = it.getLong(idIndex)
+                            val displayName = it.getString(displayNameIndex)
                             val isFavorite = it.getInt(isFavoriteIndex)
                             val isTrashed = it.getInt(isTrashedIndex)
                             val mediaType = it.getInt(mediaTypeIndex)
@@ -107,6 +109,7 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                                 Media.fromMediaStore(
                                     id,
                                     bucketId,
+                                    displayName,
                                     isFavorite,
                                     isTrashed,
                                     mediaType,

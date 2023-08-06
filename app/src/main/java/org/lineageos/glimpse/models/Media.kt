@@ -17,6 +17,7 @@ import kotlin.reflect.safeCast
 data class Media(
     val id: Long,
     val bucketId: Int,
+    val displayName: String,
     val isFavorite: Boolean,
     val isTrashed: Boolean,
     val mediaType: MediaType,
@@ -28,6 +29,7 @@ data class Media(
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
         parcel.readInt(),
+        parcel.readString()!!,
         parcel.readInt() == 1,
         parcel.readInt() == 1,
         when (parcel.readInt()) {
@@ -62,6 +64,7 @@ data class Media(
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeLong(id)
         dest.writeInt(bucketId)
+        dest.writeString(displayName)
         dest.writeInt(if (isFavorite) 1 else 0)
         dest.writeInt(if (isTrashed) 1 else 0)
         dest.writeInt(mediaType.ordinal)
@@ -93,6 +96,7 @@ data class Media(
         fun fromMediaStore(
             id: Long,
             bucketId: Int,
+            displayName: String,
             isFavorite: Int,
             isTrashed: Int,
             mediaType: Int,
@@ -101,6 +105,7 @@ data class Media(
         ) = Media(
             id,
             bucketId,
+            displayName,
             isFavorite == 1,
             isTrashed == 1,
             MediaType.fromMediaStoreValue(mediaType),
