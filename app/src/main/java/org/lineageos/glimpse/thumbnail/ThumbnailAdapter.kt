@@ -33,6 +33,7 @@ class ThumbnailAdapter(
     // Cursor indexes
     private var idIndex = -1
     private var isFavoriteIndex = -1
+    private var isTrashedIndex = -1
     private var mediaTypeIndex = -1
     private var dateAddedIndex = -1
 
@@ -136,6 +137,7 @@ class ThumbnailAdapter(
         cursor?.let {
             idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
             isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
+            isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
             mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
             dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
         }
@@ -163,12 +165,14 @@ class ThumbnailAdapter(
 
         val id = cursor.getLong(idIndex)
         val isFavorite = cursor.getInt(isFavoriteIndex)
+        val isTrashed = cursor.getInt(isTrashedIndex)
         val mediaType = cursor.getInt(mediaTypeIndex)
         val dateAdded = cursor.getLong(dateAddedIndex)
 
         return Media.fromMediaStore(
             id,
             isFavorite,
+            isTrashed,
             mediaType,
             dateAdded,
         )

@@ -16,6 +16,7 @@ import java.util.Date
 data class Media(
     val id: Long,
     val isFavorite: Boolean,
+    val isTrashed: Boolean,
     val mediaType: MediaType,
     val dateAdded: Date,
 ) : Parcelable {
@@ -23,6 +24,7 @@ data class Media(
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
+        parcel.readInt() == 1,
         parcel.readInt() == 1,
         when (parcel.readInt()) {
             MediaType.IMAGE.ordinal -> MediaType.IMAGE
@@ -37,6 +39,7 @@ data class Media(
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeLong(id)
         dest.writeInt(if (isFavorite) 1 else 0)
+        dest.writeInt(if (isTrashed) 1 else 0)
         dest.writeInt(mediaType.ordinal)
         dest.writeLong(dateAdded.time)
     }
@@ -59,11 +62,13 @@ data class Media(
         fun fromMediaStore(
             id: Long,
             isFavorite: Int,
+            isTrashed: Int,
             mediaType: Int,
             dateAdded: Long,
         ) = Media(
             id,
             isFavorite == 1,
+            isTrashed == 1,
             MediaType.fromMediaStoreValue(mediaType),
             Date(dateAdded * 1000),
         )
