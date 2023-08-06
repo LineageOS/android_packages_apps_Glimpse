@@ -296,7 +296,7 @@ class MediaViewerFragment : Fragment(
                 projection,
                 selection,
                 album?.takeIf {
-                    it.id != MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id
+                    MediaStoreBuckets.values().any { bucket -> it.id == bucket.id }
                 }?.let { arrayOf(it.id.toString()) },
                 MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             )
