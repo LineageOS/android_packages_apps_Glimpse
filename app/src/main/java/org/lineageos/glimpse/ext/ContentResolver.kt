@@ -22,3 +22,9 @@ fun ContentResolver.createFavoriteRequest(value: Boolean, vararg uris: Uri) =
     IntentSenderRequest.Builder(
         MediaStore.createFavoriteRequest(this, uris.toCollection(ArrayList()), value)
     ).build()
+
+@RequiresApi(Build.VERSION_CODES.R)
+fun ContentResolver.createTrashRequest(value: Boolean, vararg uris: Uri) =
+    IntentSenderRequest.Builder(
+        MediaStore.createTrashRequest(this, uris.toCollection(ArrayList()), value)
+    ).build()

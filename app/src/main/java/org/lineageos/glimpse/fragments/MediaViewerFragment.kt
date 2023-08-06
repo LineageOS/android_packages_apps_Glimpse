@@ -123,6 +123,36 @@ class MediaViewerFragment : Fragment(
                 Snackbar.LENGTH_LONG,
             ).show()
         }
+    private val trashUriContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            Snackbar.make(
+                bottomSheetLinearLayout,
+                resources.getQuantityString(
+                    if (it.resultCode == Activity.RESULT_CANCELED) {
+                        R.plurals.file_trashing_unsuccessful
+                    } else {
+                        R.plurals.file_trashing_successful
+                    },
+                    1, 1
+                ),
+                Snackbar.LENGTH_LONG,
+            ).show()
+        }
+    private val restoreUriFromTrashContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            Snackbar.make(
+                bottomSheetLinearLayout,
+                resources.getQuantityString(
+                    if (it.resultCode == Activity.RESULT_CANCELED) {
+                        R.plurals.file_restoring_from_trash_unsuccessful
+                    } else {
+                        R.plurals.file_restoring_from_trash_successful
+                    },
+                    1, 1
+                ),
+                Snackbar.LENGTH_LONG,
+            ).show()
+        }
     private val noopContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
 
@@ -145,6 +175,12 @@ class MediaViewerFragment : Fragment(
             dateTextView.text = dateFormatter.format(media.dateAdded)
             timeTextView.text = timeFormatter.format(media.dateAdded)
             favoriteButton.isSelected = media.isFavorite
+            deleteButton.setImageResource(
+                when (media.isTrashed) {
+                    true -> R.drawable.ic_restore_from_trash
+                    false -> R.drawable.ic_delete
+                }
+            )
 
             if (media.mediaType == MediaType.VIDEO) {
                 exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
@@ -175,13 +211,34 @@ class MediaViewerFragment : Fragment(
         deleteButton.setOnClickListener {
             mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    val contract = when (it.isTrashed) {
+                        true -> restoreUriFromTrashContract
+                        false -> trashUriContract
+                    }
+                    contract.launch(
+                        requireContext().contentResolver.createTrashRequest(
+                            !it.isTrashed, it.externalContentUri
+                        )
+                    )
+                } else {
+                    it.trash(requireContext().contentResolver, !it.isTrashed)
+                }
+            }
+        }
+        deleteButton.setOnLongClickListener {
+            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     deleteUriContract.launch(
                         requireContext().contentResolver.createDeleteRequest(it.externalContentUri)
                     )
                 } else {
                     it.delete(requireContext().contentResolver)
                 }
+
+                true
             }
+
+            false
         }
 
         favoriteButton.setOnClickListener {

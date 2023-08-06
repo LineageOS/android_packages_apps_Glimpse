@@ -34,4 +34,24 @@
         <item quantity="one">File couldn\'t be deleted</item>
         <item quantity="many">%d files couldn\'t be deleted</item>
     </plurals>
+
+    <!-- File trashing -->
+    <plurals name="file_trashing_successful">
+        <item quantity="one">File trashed</item>
+        <item quantity="many">%d files trashed</item>
+    </plurals>
+    <plurals name="file_trashing_unsuccessful">
+        <item quantity="one">File couldn\'t be trashed</item>
+        <item quantity="many">%d files couldn\'t be trashed</item>
+    </plurals>
+
+    <!-- File restoring from trash -->
+    <plurals name="file_restoring_from_trash_successful">
+        <item quantity="one">File restored from trash</item>
+        <item quantity="many">%d files restored from trash</item>
+    </plurals>
+    <plurals name="file_restoring_from_trash_unsuccessful">
+        <item quantity="one">File couldn\'t be restored from trash</item>
+        <item quantity="many">%d files couldn\'t be restored from trash</item>
+    </plurals>
 </resources>

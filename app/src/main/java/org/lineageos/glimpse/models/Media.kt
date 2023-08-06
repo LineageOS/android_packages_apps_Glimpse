@@ -54,6 +54,12 @@ data class Media(
         }, null, null)
     }
 
+    fun trash(contentResolver: ContentResolver, value: Boolean) {
+        contentResolver.update(externalContentUri, ContentValues().apply {
+            put(MediaStore.MediaColumns.IS_TRASHED, value)
+        }, null, null)
+    }
+
     companion object CREATOR : Parcelable.Creator<Media> {
         override fun createFromParcel(parcel: Parcel) = Media(parcel)
 
