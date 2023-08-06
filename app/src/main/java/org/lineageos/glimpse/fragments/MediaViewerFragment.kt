@@ -378,6 +378,7 @@ class MediaViewerFragment : Fragment(
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         mediaViewerAdapter.changeCursor(data)
         viewPager.setCurrentItem(position, false)
+        onPageChangeCallback.onPageSelected(position)
     }
 
     private fun initCursorLoader() {
