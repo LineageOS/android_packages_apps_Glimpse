@@ -344,6 +344,7 @@ class MediaViewerFragment : Fragment(
                 }
             }
             val selection = albumFilter?.let { imageOrVideo and it } ?: imageOrVideo
+            val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
@@ -352,7 +353,7 @@ class MediaViewerFragment : Fragment(
                 album?.takeIf {
                     MediaStoreBuckets.values().none { bucket -> it.id == bucket.id }
                 }?.let { arrayOf(it.id.toString()) },
-                MediaStore.Files.FileColumns.DATE_ADDED + " DESC",
+                sortOrder,
                 args
             )
         }

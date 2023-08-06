@@ -131,13 +131,14 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
             } else {
                 imageOrVideo
             }
+            val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             CursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
                 projection,
                 selection.build(),
                 null,
-                MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+                sortOrder
             )
         }
 
