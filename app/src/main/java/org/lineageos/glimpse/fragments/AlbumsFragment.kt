@@ -78,9 +78,12 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
         loaderManagerInstance.initLoader(
             MediaStoreRequests.MEDIA_STORE_ALBUMS_LOADER_ID.ordinal,
-            bundleOf(
-                MediaStore.QUERY_ARG_MATCH_TRASHED to MediaStore.MATCH_INCLUDE,
-            ), this
+            bundleOf().apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_INCLUDE)
+                }
+            },
+            this
         )
     }
 
