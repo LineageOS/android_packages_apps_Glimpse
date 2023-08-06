@@ -34,6 +34,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getParcelable
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
+import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
 import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.MediaStoreBuckets
@@ -138,44 +139,32 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
-            val selection = buildString {
-                append("(")
-                append(buildString {
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                    append("=")
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
-                    append(" OR ")
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                    append("=")
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-                })
-                append(")")
+            val imageOrVideo =
+                (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
+                        (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+            val albumFilter = when (album.id) {
+                MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> {
+                    MediaStore.Files.FileColumns.IS_FAVORITE eq 1
+                }
 
-                when (album.id) {
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> {
-                        append(" AND ")
-                        append(MediaStore.Files.FileColumns.IS_FAVORITE)
-                        append(" = 1")
-                    }
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                            append(" AND ")
-                            append(MediaStore.Files.FileColumns.IS_TRASHED)
-                            append(" = 1")
-                        }
-                    }
-                    else -> {
-                        append(" AND ")
-                        append(MediaStore.Files.FileColumns.BUCKET_ID)
-                        append(" = ?")
+                MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                        MediaStore.Files.FileColumns.IS_TRASHED eq 1
+                    } else {
+                        null
                     }
                 }
+
+                else -> {
+                    MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
+                }
             }
+            val selection = albumFilter?.let { imageOrVideo and it } ?: imageOrVideo
             GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
                 projection,
-                selection,
+                selection.build(),
                 album.takeIf {
                     MediaStoreBuckets.values().none { bucket -> it.id == bucket.id }
                 }?.let { arrayOf(it.id.toString()) },

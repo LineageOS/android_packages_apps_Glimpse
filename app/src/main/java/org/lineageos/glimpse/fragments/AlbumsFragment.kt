@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
+import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.thumbnail.AlbumThumbnailAdapter
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.MediaStoreRequests
@@ -98,21 +99,15 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
-            val selection = buildString {
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                append("=")
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
-                append(" OR ")
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                append("=")
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-            }
+            val imageOrVideo =
+                (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
+                        (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
             val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
                 projection,
-                selection,
+                imageOrVideo.build(),
                 null,
                 sortOrder,
                 args

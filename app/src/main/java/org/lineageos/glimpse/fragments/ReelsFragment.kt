@@ -27,6 +27,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
+import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
 import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.MediaStoreRequests
@@ -120,31 +121,21 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
-            val selection = buildString {
-                append("(")
-                append(buildString {
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                    append("=")
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
-                    append(" OR ")
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                    append("=")
-                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-                })
-                append(")")
-
+            val imageOrVideo =
+                (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
+                        (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+            val isNotTrashed = MediaStore.Files.FileColumns.IS_TRASHED eq 0
+            val selection = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
                 // Exclude trashed medias
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                    append(" AND ")
-                    append(MediaStore.Files.FileColumns.IS_TRASHED)
-                    append(" = 0")
-                }
+                imageOrVideo and isNotTrashed
+            } else {
+                imageOrVideo
             }
             CursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
                 projection,
-                selection,
+                selection.build(),
                 null,
                 MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
             )
