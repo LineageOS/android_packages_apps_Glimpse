@@ -7,6 +7,7 @@ package org.lineageos.glimpse.fragments
 
 import android.content.res.Configuration
 import android.database.Cursor
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -119,13 +120,24 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
             val selection = buildString {
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                append("=")
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
-                append(" OR ")
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                append("=")
-                append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+                append("(")
+                append(buildString {
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                    append("=")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
+                    append(" OR ")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                    append("=")
+                    append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+                })
+                append(")")
+
+                // Exclude trashed medias
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                    append(" AND ")
+                    append(MediaStore.Files.FileColumns.IS_TRASHED)
+                    append(" = 0")
+                }
             }
             CursorLoader(
                 requireContext(),
@@ -150,7 +162,14 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
 
     private fun initCursorLoader() {
         loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal, null, this
+            MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal,
+            bundleOf().apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    // Exclude trashed media
+                    putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_EXCLUDE)
+                }
+            },
+            this
         )
     }
 

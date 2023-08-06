@@ -26,7 +26,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
+import androidx.loader.content.GlimpseCursorLoader
 import androidx.loader.content.Loader
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -259,6 +259,7 @@ class MediaViewerFragment : Fragment(
             val projection = arrayOf(
                 MediaStore.Files.FileColumns._ID,
                 MediaStore.Files.FileColumns.IS_FAVORITE,
+                MediaStore.Files.FileColumns.IS_TRASHED,
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
@@ -274,31 +275,39 @@ class MediaViewerFragment : Fragment(
                     append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
                 })
                 append(")")
+
                 album?.let {
-                    append(
-                        buildString {
-                            if (it.id == MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id) {
+                    when (it.id) {
+                        MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> {
+                            append(" AND ")
+                            append(MediaStore.Files.FileColumns.IS_FAVORITE)
+                            append(" = 1")
+                        }
+                        MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
                                 append(" AND ")
-                                append(MediaStore.Files.FileColumns.IS_FAVORITE)
+                                append(MediaStore.Files.FileColumns.IS_TRASHED)
                                 append(" = 1")
-                            } else {
-                                append(" AND ")
-                                append(MediaStore.Files.FileColumns.BUCKET_ID)
-                                append(" = ?")
                             }
                         }
-                    )
+                        else -> {
+                            append(" AND ")
+                            append(MediaStore.Files.FileColumns.BUCKET_ID)
+                            append(" = ?")
+                        }
+                    }
                 }
             }
-            CursorLoader(
+            GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
                 projection,
                 selection,
                 album?.takeIf {
-                    MediaStoreBuckets.values().any { bucket -> it.id == bucket.id }
+                    MediaStoreBuckets.values().none { bucket -> it.id == bucket.id }
                 }?.let { arrayOf(it.id.toString()) },
-                MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+                MediaStore.Files.FileColumns.DATE_ADDED + " DESC",
+                args
             )
         }
 
@@ -316,7 +325,18 @@ class MediaViewerFragment : Fragment(
 
     private fun initCursorLoader() {
         loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal, null, this
+            MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal,
+            bundleOf().apply {
+                album?.let {
+                    when (it.id) {
+                        MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_ONLY)
+                            }
+                        }
+                    }
+                }
+            }, this
         )
     }
 

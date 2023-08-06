@@ -21,7 +21,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
+import androidx.loader.content.GlimpseCursorLoader
 import androidx.loader.content.Loader
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -77,7 +77,10 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         }
 
         loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_ALBUMS_LOADER_ID.ordinal, null, this
+            MediaStoreRequests.MEDIA_STORE_ALBUMS_LOADER_ID.ordinal,
+            bundleOf(
+                MediaStore.QUERY_ARG_MATCH_TRASHED to MediaStore.MATCH_INCLUDE,
+            ), this
         )
     }
 
@@ -88,6 +91,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
                 MediaStore.Files.FileColumns._ID,
                 MediaStore.Files.FileColumns.IS_FAVORITE,
+                MediaStore.Files.FileColumns.IS_TRASHED,
                 MediaStore.Files.FileColumns.DATE_ADDED,
                 MediaStore.Files.FileColumns.MEDIA_TYPE,
             )
@@ -101,13 +105,14 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
             }
             val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
-            CursorLoader(
+            GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
                 projection,
                 selection,
                 null,
-                sortOrder
+                sortOrder,
+                args
             )
         }
 
@@ -130,6 +135,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
             val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
             val isFavoriteIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
+            val isTrashedIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
             val mediaTypeIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
             val bucketIdIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_ID)
             val bucketDisplayNameIndex =
@@ -152,6 +158,9 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                     cursor.getInt(bucketIdIndex),
                     MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id.takeIf {
                         cursor.getInt(isFavoriteIndex) == 1
+                    },
+                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id.takeIf {
+                        cursor.getInt(isTrashedIndex) == 1
                     }
                 )
 
@@ -161,10 +170,12 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                     } ?: run {
                         albums[bucketId] = Album(
                             bucketId,
-                            if (bucketId == MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id) {
-                                getString(R.string.album_favorites)
-                            } else {
-                                cursor.getString(bucketDisplayNameIndex) ?: Build.MODEL
+                            when (bucketId) {
+                                MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id ->
+                                    getString(R.string.album_favorites)
+                                MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
+                                    getString(R.string.album_trash)
+                                else -> cursor.getString(bucketDisplayNameIndex) ?: Build.MODEL
                             },
                             ContentUris.withAppendedId(contentUri, cursor.getLong(idIndex)),
                         ).apply { size += 1 }

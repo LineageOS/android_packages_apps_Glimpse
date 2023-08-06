@@ -7,6 +7,7 @@ package org.lineageos.glimpse.fragments
 
 import android.content.res.Configuration
 import android.database.Cursor
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -20,7 +21,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
+import androidx.loader.content.GlimpseCursorLoader
 import androidx.loader.content.Loader
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -148,23 +149,37 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
                     append(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
                 })
                 append(")")
-                append(" AND ")
-                if (album.id == MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id) {
-                    append(MediaStore.Files.FileColumns.IS_FAVORITE)
-                    append(" = 1")
-                } else {
-                    append(MediaStore.Files.FileColumns.BUCKET_ID)
-                    append(" = ")
-                    append(album.id)
+
+                when (album.id) {
+                    MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> {
+                        append(" AND ")
+                        append(MediaStore.Files.FileColumns.IS_FAVORITE)
+                        append(" = 1")
+                    }
+                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                            append(" AND ")
+                            append(MediaStore.Files.FileColumns.IS_TRASHED)
+                            append(" = 1")
+                        }
+                    }
+                    else -> {
+                        append(" AND ")
+                        append(MediaStore.Files.FileColumns.BUCKET_ID)
+                        append(" = ?")
+                    }
                 }
             }
-            CursorLoader(
+            GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
                 projection,
                 selection,
-                null,
-                MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+                album.takeIf {
+                    MediaStoreBuckets.values().none { bucket -> it.id == bucket.id }
+                }?.let { arrayOf(it.id.toString()) },
+                MediaStore.Files.FileColumns.DATE_ADDED + " DESC",
+                args
             )
         }
 
@@ -181,7 +196,16 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
 
     private fun initCursorLoader() {
         loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal, null, this
+            MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal,
+            bundleOf().apply {
+                when (album.id) {
+                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_ONLY)
+                        }
+                    }
+                }
+            }, this
         )
     }
 

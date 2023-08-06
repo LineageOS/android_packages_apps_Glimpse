@@ -15,8 +15,9 @@
     <string name="albums_title">Albums</string>
     <string name="search_title">Search</string>
 
-    <!-- Album favorites -->
+    <!-- Album buckets -->
     <string name="album_favorites">Favorites</string>
+    <string name="album_trash">Trash</string>
 
     <!-- Album thumbnail -->
     <plurals name="album_thumbnail_items">
