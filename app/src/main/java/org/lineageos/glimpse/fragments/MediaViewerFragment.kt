@@ -280,7 +280,7 @@ class MediaViewerFragment : Fragment(
 
         shareButton.setOnClickListener {
             mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
-                val intent = Intent().shareIntent(it.externalContentUri)
+                val intent = Intent().shareIntent(it)
                 startActivity(Intent.createChooser(intent, null))
             }
         }
