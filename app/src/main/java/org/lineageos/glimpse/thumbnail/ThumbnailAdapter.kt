@@ -28,8 +28,6 @@ class ThumbnailAdapter(
 ) : BaseCursorAdapter<RecyclerView.ViewHolder>() {
     private val headersPositions = sortedSetOf<Int>()
 
-    private var recyclerView: RecyclerView? = null
-
     // Cursor indexes
     private var idIndex = -1
     private var isFavoriteIndex = -1
@@ -41,21 +39,12 @@ class ThumbnailAdapter(
         setHasStableIds(true)
     }
 
-    override fun getItemCount() = super.getItemCount() + headersPositions.size
+    override fun getItemCount() =
+        super.getItemCount().takeIf { it > 0 }
+            ?.let { it + (headersPositions.size.takeIf { headerCount -> headerCount > 0 } ?: 1) }
+            ?: 0
 
     override fun getItemId(position: Int) = getIdFromMediaStore(position)
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-
-        this.recyclerView = recyclerView
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-
-        this.recyclerView = null
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).let { layoutInflater ->
@@ -148,8 +137,6 @@ class ThumbnailAdapter(
 
     private fun addHeaderOffset(position: Int) {
         headersPositions.add(position)
-        val newItemCount = itemCount
-        recyclerView?.post { notifyItemInserted(newItemCount) }
     }
 
     private fun getIdFromMediaStore(position: Int): Long {
