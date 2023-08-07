@@ -90,16 +90,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
         MediaStoreRequests.MEDIA_STORE_ALBUMS_LOADER_ID.ordinal -> {
-            val projection = arrayOf(
-                MediaStore.Files.FileColumns.BUCKET_ID,
-                MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
-                MediaStore.Files.FileColumns._ID,
-                MediaStore.Files.FileColumns.IS_FAVORITE,
-                MediaStore.Files.FileColumns.IS_TRASHED,
-                MediaStore.Files.FileColumns.DATE_ADDED,
-                MediaStore.Files.FileColumns.MEDIA_TYPE,
-                MediaStore.Files.FileColumns.MIME_TYPE,
-            )
+            val projection = MediaQuery.AlbumsProjection
             val imageOrVideo =
                 (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
                         (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)

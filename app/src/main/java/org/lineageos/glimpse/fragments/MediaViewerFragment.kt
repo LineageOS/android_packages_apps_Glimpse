@@ -321,14 +321,7 @@ class MediaViewerFragment : Fragment(
 
     override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
         MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal -> {
-            val projection = arrayOf(
-                MediaStore.Files.FileColumns._ID,
-                MediaStore.Files.FileColumns.IS_FAVORITE,
-                MediaStore.Files.FileColumns.IS_TRASHED,
-                MediaStore.Files.FileColumns.DATE_ADDED,
-                MediaStore.Files.FileColumns.MEDIA_TYPE,
-                MediaStore.Files.FileColumns.MIME_TYPE,
-            )
+            val projection = MediaQuery.MediaProjection
             val imageOrVideo =
                 (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
                         (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
