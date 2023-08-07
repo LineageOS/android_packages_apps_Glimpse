@@ -7,7 +7,6 @@ package org.lineageos.glimpse.thumbnail
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import org.lineageos.glimpse.ext.px
 
 class ThumbnailLayoutManager(
@@ -16,13 +15,6 @@ class ThumbnailLayoutManager(
 ) : GridLayoutManager(context, getSpanCount(context)) {
     init {
         spanSizeLookup = ThumbnailSpanSizeLookup(adapter, spanCount)
-    }
-
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
-        try {
-            super.onLayoutChildren(recycler, state)
-        } catch (_: IndexOutOfBoundsException) {
-        }
     }
 
     private class ThumbnailSpanSizeLookup(
