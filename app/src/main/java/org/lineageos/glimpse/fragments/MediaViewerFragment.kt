@@ -285,6 +285,13 @@ class MediaViewerFragment : Fragment(
             }
         }
 
+        adjustButton.setOnClickListener {
+            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+                val intent = Intent().editIntent(it)
+                startActivity(Intent.createChooser(intent, null))
+            }
+        }
+
         if (!permissionsUtils.mainPermissionsGranted()) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
