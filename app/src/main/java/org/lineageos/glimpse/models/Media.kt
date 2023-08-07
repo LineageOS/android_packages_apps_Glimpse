@@ -18,6 +18,7 @@ data class Media(
     val isFavorite: Boolean,
     val isTrashed: Boolean,
     val mediaType: MediaType,
+    val mimeType: String,
     val dateAdded: Date,
 ) : Parcelable {
     val externalContentUri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
@@ -31,6 +32,7 @@ data class Media(
             MediaType.VIDEO.ordinal -> MediaType.VIDEO
             else -> throw Exception("Invalid media type")
         },
+        parcel.readString()!!,
         Date(parcel.readLong()),
     )
 
@@ -41,6 +43,7 @@ data class Media(
         dest.writeInt(if (isFavorite) 1 else 0)
         dest.writeInt(if (isTrashed) 1 else 0)
         dest.writeInt(mediaType.ordinal)
+        dest.writeString(mimeType)
         dest.writeLong(dateAdded.time)
     }
 
@@ -70,12 +73,14 @@ data class Media(
             isFavorite: Int,
             isTrashed: Int,
             mediaType: Int,
+            mimeType: String,
             dateAdded: Long,
         ) = Media(
             id,
             isFavorite == 1,
             isTrashed == 1,
             MediaType.fromMediaStoreValue(mediaType),
+            mimeType,
             Date(dateAdded * 1000),
         )
     }

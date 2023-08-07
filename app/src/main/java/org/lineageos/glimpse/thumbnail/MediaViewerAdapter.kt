@@ -31,6 +31,7 @@ class MediaViewerAdapter(
     private var isFavoriteIndex = -1
     private var isTrashedIndex = -1
     private var mediaTypeIndex = -1
+    private var mimeTypeIndex = -1
     private var dateAddedIndex = -1
 
     init {
@@ -66,6 +67,7 @@ class MediaViewerAdapter(
             isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
             isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
             mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
+            mimeTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
             dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
         }
     }
@@ -79,6 +81,7 @@ class MediaViewerAdapter(
         val isFavorite = cursor.getInt(isFavoriteIndex)
         val isTrashed = cursor.getInt(isTrashedIndex)
         val mediaType = cursor.getInt(mediaTypeIndex)
+        val mimeType = cursor.getString(mimeTypeIndex)
         val dateAdded = cursor.getLong(dateAddedIndex)
 
         return Media.fromMediaStore(
@@ -86,6 +89,7 @@ class MediaViewerAdapter(
             isFavorite,
             isTrashed,
             mediaType,
+            mimeType,
             dateAdded,
         )
     }
