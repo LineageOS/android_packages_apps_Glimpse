@@ -339,7 +339,7 @@ class MediaViewerFragment : Fragment(
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
-        MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal -> {
+        MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal -> {
             val projection = MediaQuery.MediaProjection
             val imageOrVideo =
                 (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
@@ -394,7 +394,7 @@ class MediaViewerFragment : Fragment(
 
     private fun initCursorLoader() {
         loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_REELS_LOADER_ID.ordinal,
+            MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal,
             bundleOf().apply {
                 album?.let {
                     when (it.id) {

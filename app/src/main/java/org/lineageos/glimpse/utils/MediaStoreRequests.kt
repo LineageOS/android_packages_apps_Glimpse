@@ -6,6 +6,6 @@
 package org.lineageos.glimpse.utils
 
 enum class MediaStoreRequests {
-    MEDIA_STORE_REELS_LOADER_ID,
+    MEDIA_STORE_MEDIA_LOADER_ID,
     MEDIA_STORE_ALBUMS_LOADER_ID,
 }
