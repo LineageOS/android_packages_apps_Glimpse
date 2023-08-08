@@ -113,7 +113,7 @@ class MediaViewerFragment : Fragment(
     private val deleteUriContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             Snackbar.make(
-                bottomSheetLinearLayout,
+                requireView(),
                 resources.getQuantityString(
                     if (it.resultCode == Activity.RESULT_CANCELED) {
                         R.plurals.file_deletion_unsuccessful
@@ -123,12 +123,12 @@ class MediaViewerFragment : Fragment(
                     1, 1
                 ),
                 Snackbar.LENGTH_LONG,
-            ).show()
+            ).setAnchorView(bottomSheetLinearLayout).show()
         }
     private val trashUriContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             Snackbar.make(
-                bottomSheetLinearLayout,
+                requireView(),
                 resources.getQuantityString(
                     if (it.resultCode == Activity.RESULT_CANCELED) {
                         R.plurals.file_trashing_unsuccessful
@@ -138,12 +138,12 @@ class MediaViewerFragment : Fragment(
                     1, 1
                 ),
                 Snackbar.LENGTH_LONG,
-            ).show()
+            ).setAnchorView(bottomSheetLinearLayout).show()
         }
     private val restoreUriFromTrashContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             Snackbar.make(
-                bottomSheetLinearLayout,
+                requireView(),
                 resources.getQuantityString(
                     if (it.resultCode == Activity.RESULT_CANCELED) {
                         R.plurals.file_restoring_from_trash_unsuccessful
@@ -153,7 +153,7 @@ class MediaViewerFragment : Fragment(
                     1, 1
                 ),
                 Snackbar.LENGTH_LONG,
-            ).show()
+            ).setAnchorView(bottomSheetLinearLayout).show()
         }
     private val noopContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
