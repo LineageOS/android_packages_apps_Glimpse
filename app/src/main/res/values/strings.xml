@@ -67,4 +67,11 @@
     <!-- Manage media permission -->
     <string name="manage_media_permission_title">Manage media permission</string>
     <string name="manage_media_permission_message">To better manage your images and videos, allow the app to manage your media files</string>
+
+    <!-- Media info bottom sheet dialog -->
+    <string name="media_info_unknown">Unknown</string>
+    <string name="media_info_add_description_hint">Add a description</string>
+    <string name="media_info_write_description_failed">Failed to change media description</string>
+    <string name="media_info_location_loading_placeholder">Loading…</string>
+    <string name="media_info_location_open_with">View the location with</string>
 </resources>

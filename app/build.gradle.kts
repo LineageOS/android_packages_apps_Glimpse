@@ -65,6 +65,9 @@ dependencies {
     implementation("androidx.preference:preference:1.2.1")
     implementation("com.google.android.material:material:1.9.0")
 
+    // EXIF
+    implementation("androidx.exifinterface:exifinterface:1.3.6")
+
     // Media3
     implementation("androidx.media3:media3-exoplayer:1.1.1")
     implementation("androidx.media3:media3-ui:1.1.1")

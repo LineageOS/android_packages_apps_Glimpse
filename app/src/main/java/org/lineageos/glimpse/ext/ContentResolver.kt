@@ -39,6 +39,12 @@ fun ContentResolver.createTrashRequest(value: Boolean, vararg uris: Uri) =
         MediaStore.createTrashRequest(this, uris.toCollection(ArrayList()), value)
     ).build()
 
+@RequiresApi(Build.VERSION_CODES.R)
+fun ContentResolver.createWriteRequest(vararg uris: Uri) =
+    IntentSenderRequest.Builder(
+        MediaStore.createWriteRequest(this, uris.toCollection(ArrayList()))
+    ).build()
+
 fun ContentResolver.uriFlow(uri: Uri) = callbackFlow {
     val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean) {

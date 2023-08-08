@@ -42,6 +42,7 @@ import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.thumbnail.MediaViewerAdapter
+import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 import java.text.SimpleDateFormat
@@ -62,6 +63,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     private val dateTextView by getViewProperty<TextView>(R.id.dateTextView)
     private val deleteButton by getViewProperty<ImageButton>(R.id.deleteButton)
     private val favoriteButton by getViewProperty<ImageButton>(R.id.favoriteButton)
+    private val infoButton by getViewProperty<ImageButton>(R.id.infoButton)
     private val shareButton by getViewProperty<ImageButton>(R.id.shareButton)
     private val timeTextView by getViewProperty<TextView>(R.id.timeTextView)
     private val topSheetConstraintLayout by getViewProperty<ConstraintLayout>(R.id.topSheetConstraintLayout)
@@ -210,6 +212,9 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         }
     }
 
+    private val mediaInfoBottomSheetDialogCallbacks =
+        MediaInfoBottomSheetDialog.Callbacks(this)
+
     override fun onResume() {
         super.onResume()
 
@@ -305,6 +310,14 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 val intent = Intent().editIntent(it)
                 startActivity(Intent.createChooser(intent, null))
+            }
+        }
+
+        infoButton.setOnClickListener {
+            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
+                MediaInfoBottomSheetDialog(
+                    requireContext(), it, mediaInfoBottomSheetDialogCallbacks
+                ).show()
             }
         }
 

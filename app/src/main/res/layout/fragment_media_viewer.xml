@@ -86,6 +86,11 @@
             android:src="@drawable/ic_share" />
 
         <ImageButton
+            android:id="@+id/infoButton"
+            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:src="@drawable/ic_info" />
+
+        <ImageButton
             android:id="@+id/adjustButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
             android:src="@drawable/ic_tune" />
