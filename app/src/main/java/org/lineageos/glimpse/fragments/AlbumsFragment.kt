@@ -145,13 +145,13 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 }
 
                 val bucketIds = listOfNotNull(
-                    cursor.getInt(bucketIdIndex),
+                    when (cursor.getInt(isTrashedIndex)) {
+                        1 -> MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id
+                        else -> cursor.getInt(bucketIdIndex)
+                    },
                     MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id.takeIf {
                         cursor.getInt(isFavoriteIndex) == 1
                     },
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id.takeIf {
-                        cursor.getInt(isTrashedIndex) == 1
-                    }
                 )
 
                 for (bucketId in bucketIds) {
