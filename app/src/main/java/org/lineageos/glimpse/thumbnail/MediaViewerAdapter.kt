@@ -28,6 +28,7 @@ class MediaViewerAdapter(
 ) : BaseCursorAdapter<MediaViewerAdapter.MediaViewHolder>() {
     // Cursor indexes
     private var idIndex = -1
+    private var bucketIdIndex = -1
     private var isFavoriteIndex = -1
     private var isTrashedIndex = -1
     private var mediaTypeIndex = -1
@@ -64,6 +65,7 @@ class MediaViewerAdapter(
 
         cursor?.let {
             idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
+            bucketIdIndex = it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_ID)
             isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
             isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
             mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
@@ -78,6 +80,7 @@ class MediaViewerAdapter(
         cursor.moveToPosition(position)
 
         val id = cursor.getLong(idIndex)
+        val bucketId = cursor.getInt(bucketIdIndex)
         val isFavorite = cursor.getInt(isFavoriteIndex)
         val isTrashed = cursor.getInt(isTrashedIndex)
         val mediaType = cursor.getInt(mediaTypeIndex)
@@ -86,6 +89,7 @@ class MediaViewerAdapter(
 
         return Media.fromMediaStore(
             id,
+            bucketId,
             isFavorite,
             isTrashed,
             mediaType,

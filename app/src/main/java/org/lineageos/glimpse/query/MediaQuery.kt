@@ -10,6 +10,7 @@ import android.provider.MediaStore
 object MediaQuery {
     val MediaProjection = arrayOf(
         MediaStore.Files.FileColumns._ID,
+        MediaStore.Files.FileColumns.BUCKET_ID,
         MediaStore.Files.FileColumns.IS_FAVORITE,
         MediaStore.Files.FileColumns.IS_TRASHED,
         MediaStore.Files.FileColumns.MEDIA_TYPE,

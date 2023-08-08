@@ -15,6 +15,7 @@ import java.util.Date
 
 data class Media(
     val id: Long,
+    val bucketId: Int,
     val isFavorite: Boolean,
     val isTrashed: Boolean,
     val mediaType: MediaType,
@@ -25,6 +26,7 @@ data class Media(
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
+        parcel.readInt(),
         parcel.readInt() == 1,
         parcel.readInt() == 1,
         when (parcel.readInt()) {
@@ -40,6 +42,7 @@ data class Media(
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeLong(id)
+        dest.writeInt(bucketId)
         dest.writeInt(if (isFavorite) 1 else 0)
         dest.writeInt(if (isTrashed) 1 else 0)
         dest.writeInt(mediaType.ordinal)
@@ -70,6 +73,7 @@ data class Media(
 
         fun fromMediaStore(
             id: Long,
+            bucketId: Int,
             isFavorite: Int,
             isTrashed: Int,
             mediaType: Int,
@@ -77,6 +81,7 @@ data class Media(
             dateAdded: Long,
         ) = Media(
             id,
+            bucketId,
             isFavorite == 1,
             isTrashed == 1,
             MediaType.fromMediaStoreValue(mediaType),
