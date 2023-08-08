@@ -16,10 +16,5 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        val windowInsetsController =
-            WindowCompat.getInsetsController(window, window.decorView)
-
-        windowInsetsController.isAppearanceLightNavigationBars = true
     }
 }
