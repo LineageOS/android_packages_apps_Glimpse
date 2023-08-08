@@ -52,6 +52,7 @@
         <item quantity="one">File couldn\'t be trashed</item>
         <item quantity="many">%d files couldn\'t be trashed</item>
     </plurals>
+    <string name="file_trashing_undo">Undo</string>
 
     <!-- File restoring from trash -->
     <plurals name="file_restoring_from_trash_successful">

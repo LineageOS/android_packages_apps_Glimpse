@@ -68,6 +68,8 @@ class MediaViewerFragment : Fragment(
     private val topSheetConstraintLayout by getViewProperty<ConstraintLayout>(R.id.topSheetConstraintLayout)
     private val viewPager by getViewProperty<ViewPager2>(R.id.viewPager)
 
+    private var restoreLastTrashedMediaFromTrash: (() -> Unit)? = null
+
     // Permissions
     private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
     private val mainPermissionsRequestLauncher = registerForActivityResult(
@@ -127,18 +129,26 @@ class MediaViewerFragment : Fragment(
         }
     private val trashUriContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            val succeeded = it.resultCode != Activity.RESULT_CANCELED
+
             Snackbar.make(
                 requireView(),
                 resources.getQuantityString(
-                    if (it.resultCode == Activity.RESULT_CANCELED) {
-                        R.plurals.file_trashing_unsuccessful
-                    } else {
+                    if (succeeded) {
                         R.plurals.file_trashing_successful
+                    } else {
+                        R.plurals.file_trashing_unsuccessful
                     },
                     1, 1
                 ),
                 Snackbar.LENGTH_LONG,
-            ).setAnchorView(bottomSheetLinearLayout).show()
+            ).setAnchorView(bottomSheetLinearLayout).also {
+                restoreLastTrashedMediaFromTrash?.takeIf { succeeded }?.let { unit ->
+                    it.setAction(R.string.file_trashing_undo) { unit() }
+                }
+            }.show()
+
+            restoreLastTrashedMediaFromTrash = null
         }
     private val restoreUriFromTrashContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
@@ -216,19 +226,7 @@ class MediaViewerFragment : Fragment(
 
         deleteButton.setOnClickListener {
             mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    val contract = when (it.isTrashed) {
-                        true -> restoreUriFromTrashContract
-                        false -> trashUriContract
-                    }
-                    contract.launch(
-                        requireContext().contentResolver.createTrashRequest(
-                            !it.isTrashed, it.externalContentUri
-                        )
-                    )
-                } else {
-                    it.trash(requireContext().contentResolver, !it.isTrashed)
-                }
+                trashMedia(it)
             }
         }
 
@@ -407,6 +405,26 @@ class MediaViewerFragment : Fragment(
                 }
             }, this
         )
+    }
+
+    private fun trashMedia(media: Media, trash: Boolean = !media.isTrashed) {
+        if (trash) {
+            restoreLastTrashedMediaFromTrash = { trashMedia(media, false) }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val contract = when (trash) {
+                true -> trashUriContract
+                false -> restoreUriFromTrashContract
+            }
+            contract.launch(
+                requireContext().contentResolver.createTrashRequest(
+                    trash, media.externalContentUri
+                )
+            )
+        } else {
+            media.trash(requireContext().contentResolver, trash)
+        }
     }
 
     companion object {
