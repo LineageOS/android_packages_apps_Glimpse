@@ -95,6 +95,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
                         (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
             val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+            val queryArgs = args ?: Bundle()
             GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
@@ -102,7 +103,7 @@ class AlbumsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 imageOrVideo.build(),
                 null,
                 sortOrder,
-                args
+                queryArgs
             )
         }
 

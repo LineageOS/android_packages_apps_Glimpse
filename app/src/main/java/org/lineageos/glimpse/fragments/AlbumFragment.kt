@@ -155,6 +155,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
             }
             val selection = albumFilter?.let { imageOrVideo and it } ?: imageOrVideo
             val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+            val queryArgs = args ?: Bundle()
             GlimpseCursorLoader(
                 requireContext(),
                 MediaStore.Files.getContentUri("external"),
@@ -164,7 +165,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
                     MediaStoreBuckets.values().none { bucket -> it.id == bucket.id }
                 }?.let { arrayOf(it.id.toString()) },
                 sortOrder,
-                args
+                queryArgs
             )
         }
 

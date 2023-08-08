@@ -25,10 +25,10 @@ class GlimpseCursorLoader(
     selection: String?,
     selectionArgs: Array<out String>?,
     sortOrder: String?,
-    private val queryArgs: Bundle?
+    private val queryArgs: Bundle = Bundle()
 ) : CursorLoader(context, uri, projection, selection, selectionArgs, sortOrder) {
     init {
-        queryArgs?.putAll(
+        queryArgs.putAll(
             bundleOf(
                 ContentResolver.QUERY_ARG_SQL_SELECTION to selection,
                 ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS to selectionArgs,
