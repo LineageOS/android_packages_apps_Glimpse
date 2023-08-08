@@ -6,10 +6,7 @@
 package org.lineageos.glimpse.fragments
 
 import android.content.res.Configuration
-import android.database.Cursor
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -20,9 +17,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.GlimpseCursorLoader
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -30,23 +26,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.shape.MaterialShapeDrawable
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getParcelable
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
-import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
 import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
-import org.lineageos.glimpse.utils.MediaStoreBuckets
-import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
+import org.lineageos.glimpse.viewmodels.MediaViewModel
 
 /**
  * A fragment showing a list of media from a specific album with thumbnails.
  * Use the [AlbumFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCallbacks<Cursor> {
+class AlbumFragment : Fragment(R.layout.fragment_album) {
+    // View models
+    private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
+
     // Views
     private val albumRecyclerView by getViewProperty<RecyclerView>(R.id.albumRecyclerView)
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
@@ -64,13 +63,17 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
                 ).show()
                 requireActivity().finish()
             } else {
-                initCursorLoader()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    mediaViewModel.setBucketId(album.id)
+                    mediaViewModel.mediaForAlbum.collectLatest { data ->
+                        thumbnailAdapter.data = data.toTypedArray()
+                    }
+                }
             }
         }
     }
 
     // MediaStore
-    private val loaderManagerInstance by lazy { LoaderManager.getInstance(this) }
     private val thumbnailAdapter by lazy {
         ThumbnailAdapter { media, position ->
             findNavController().navigate(
@@ -118,7 +121,12 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
         if (!permissionsUtils.mainPermissionsGranted()) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
-            initCursorLoader()
+            mediaViewModel.setBucketId(album.id)
+            viewLifecycleOwner.lifecycleScope.launch {
+                mediaViewModel.mediaForAlbum.collectLatest { data ->
+                    thumbnailAdapter.data = data.toTypedArray()
+                }
+            }
         }
     }
 
@@ -127,71 +135,6 @@ class AlbumFragment : Fragment(R.layout.fragment_album), LoaderManager.LoaderCal
 
         albumRecyclerView.layoutManager = ThumbnailLayoutManager(
             requireContext(), thumbnailAdapter
-        )
-    }
-
-    override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
-        MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal -> {
-            val projection = MediaQuery.MediaProjection
-            val imageOrVideo =
-                (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
-                        (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-            val albumFilter = when (album.id) {
-                MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> {
-                    MediaStore.Files.FileColumns.IS_FAVORITE eq 1
-                }
-
-                MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                        MediaStore.Files.FileColumns.IS_TRASHED eq 1
-                    } else {
-                        null
-                    }
-                }
-
-                else -> {
-                    MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
-                }
-            }
-            val selection = albumFilter?.let { imageOrVideo and it } ?: imageOrVideo
-            val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
-            val queryArgs = args ?: Bundle()
-            GlimpseCursorLoader(
-                requireContext(),
-                MediaStore.Files.getContentUri("external"),
-                projection,
-                selection.build(),
-                album.takeIf {
-                    MediaStoreBuckets.values().none { bucket -> it.id == bucket.id }
-                }?.let { arrayOf(it.id.toString()) },
-                sortOrder,
-                queryArgs
-            )
-        }
-
-        else -> throw Exception("Unknown ID $id")
-    }
-
-    override fun onLoaderReset(loader: Loader<Cursor>) {
-        thumbnailAdapter.changeCursor(null)
-    }
-
-    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-        thumbnailAdapter.changeCursor(data)
-    }
-
-    private fun initCursorLoader() {
-        loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal,
-            bundleOf().apply {
-                when (album.id) {
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_ONLY)
-                        }
-                    }
-                }
-            }, this
         )
     }
 

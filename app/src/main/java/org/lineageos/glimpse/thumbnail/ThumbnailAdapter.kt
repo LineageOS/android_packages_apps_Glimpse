@@ -5,8 +5,6 @@
 
 package org.lineageos.glimpse.thumbnail
 
-import android.database.Cursor
-import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -26,35 +24,40 @@ import java.util.Date
 
 class ThumbnailAdapter(
     private val onItemSelected: (media: Media, position: Int) -> Unit,
-) : BaseCursorAdapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val headersPositions = sortedSetOf<Int>()
 
-    // Cursor indexes
-    private var idIndex = -1
-    private var bucketIdIndex = -1
-    private var isFavoriteIndex = -1
-    private var isTrashedIndex = -1
-    private var mediaTypeIndex = -1
-    private var mimeTypeIndex = -1
-    private var dateAddedIndex = -1
+    var data: Array<Media> = arrayOf()
+        set(value) {
+            if (value.contentEquals(field)) {
+                return
+            }
+
+            field = value
+
+            field.let {
+                @Suppress("NotifyDataSetChanged") notifyDataSetChanged()
+            }
+        }
 
     init {
         setHasStableIds(true)
     }
 
-    override fun getItemCount() =
-        super.getItemCount().takeIf { it > 0 }
-            ?.let { it + (headersPositions.size.takeIf { headerCount -> headerCount > 0 } ?: 1) }
-            ?: 0
+    override fun getItemCount() = data.size.takeIf { it > 0 }
+        ?.let { it + (headersPositions.size.takeIf { headerCount -> headerCount > 0 } ?: 1) } ?: 0
 
-    override fun getItemId(position: Int) = getIdFromMediaStore(position)
+    override fun getItemId(position: Int) = if (headersPositions.contains(position)) {
+        position.toLong()
+    } else {
+        data[getTruePosition(position)].id
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).let { layoutInflater ->
             when (viewType) {
                 ViewTypes.ITEM.ordinal -> ThumbnailViewHolder(
-                    layoutInflater.inflate(R.layout.thumbnail_view, parent, false),
-                    onItemSelected
+                    layoutInflater.inflate(R.layout.thumbnail_view, parent, false), onItemSelected
                 )
 
                 ViewTypes.HEADER.ordinal -> DateHeaderViewHolder(
@@ -71,16 +74,12 @@ class ThumbnailAdapter(
         when (holder.itemViewType) {
             ViewTypes.ITEM.ordinal -> {
                 val thumbnailViewHolder = holder as ThumbnailViewHolder
-                getMediaFromMediaStore(truePosition)?.let {
-                    thumbnailViewHolder.bind(it, truePosition)
-                }
+                thumbnailViewHolder.bind(data[truePosition], truePosition)
             }
 
             ViewTypes.HEADER.ordinal -> {
                 val dateHeaderViewHolder = holder as DateHeaderViewHolder
-                getMediaFromMediaStore(truePosition)?.let {
-                    dateHeaderViewHolder.bind(it.dateAdded)
-                }
+                dateHeaderViewHolder.bind(data[truePosition].dateAdded)
             }
         }
     }
@@ -106,8 +105,8 @@ class ThumbnailAdapter(
         val truePosition = getTruePosition(position)
         val previousTruePosition = truePosition - 1
 
-        val currentMedia = getMediaFromMediaStore(truePosition)!!
-        val previousMedia = getMediaFromMediaStore(previousTruePosition)!!
+        val currentMedia = data[truePosition]
+        val previousMedia = data[previousTruePosition]
 
         val before = previousMedia.dateAdded.toInstant().atZone(ZoneId.systemDefault())
         val after = currentMedia.dateAdded.toInstant().atZone(ZoneId.systemDefault())
@@ -121,57 +120,11 @@ class ThumbnailAdapter(
         return ViewTypes.ITEM.ordinal
     }
 
-    override fun onChangedCursor(cursor: Cursor?) {
-        super.onChangedCursor(cursor)
-
-        headersPositions.clear()
-
-        cursor?.let {
-            idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
-            bucketIdIndex = it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_ID)
-            isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
-            isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
-            mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
-            mimeTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
-            dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
-        }
-    }
-
     private fun getTruePosition(position: Int) =
         position - headersPositions.filter { it < position }.size
 
     private fun addHeaderOffset(position: Int) {
         headersPositions.add(position)
-    }
-
-    private fun getIdFromMediaStore(position: Int): Long {
-        val cursor = cursor ?: return 0
-        cursor.moveToPosition(getTruePosition(position))
-        return cursor.getLong(idIndex)
-    }
-
-    private fun getMediaFromMediaStore(position: Int): Media? {
-        val cursor = cursor ?: return null
-
-        cursor.moveToPosition(position)
-
-        val id = cursor.getLong(idIndex)
-        val bucketId = cursor.getInt(bucketIdIndex)
-        val isFavorite = cursor.getInt(isFavoriteIndex)
-        val isTrashed = cursor.getInt(isTrashedIndex)
-        val mediaType = cursor.getInt(mediaTypeIndex)
-        val mimeType = cursor.getString(mimeTypeIndex)
-        val dateAdded = cursor.getLong(dateAddedIndex)
-
-        return Media.fromMediaStore(
-            id,
-            bucketId,
-            isFavorite,
-            isTrashed,
-            mediaType,
-            mimeType,
-            dateAdded,
-        )
     }
 
     class ThumbnailViewHolder(

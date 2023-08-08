@@ -13,8 +13,11 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import com.google.android.material.color.DynamicColors
+import org.lineageos.glimpse.repository.MediaRepository
 
 class GlimpseApplication : Application(), ImageLoaderFactory {
+    val mediaRepository = MediaRepository(this)
+
     override fun onCreate() {
         super.onCreate()
 

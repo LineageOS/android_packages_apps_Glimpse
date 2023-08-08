@@ -7,10 +7,8 @@ package org.lineageos.glimpse.fragments
 
 import android.app.Activity
 import android.content.Intent
-import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -24,10 +22,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.GlimpseCursorLoader
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -36,16 +32,16 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.thumbnail.MediaViewerAdapter
-import org.lineageos.glimpse.utils.MediaStoreBuckets
-import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
+import org.lineageos.glimpse.viewmodels.MediaViewModel
 import java.text.SimpleDateFormat
 
 /**
@@ -53,9 +49,10 @@ import java.text.SimpleDateFormat
  * Use the [MediaViewerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MediaViewerFragment : Fragment(
-    R.layout.fragment_media_viewer
-), LoaderManager.LoaderCallbacks<Cursor> {
+class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
+    // View models
+    private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
+
     // Views
     private val adjustButton by getViewProperty<ImageButton>(R.id.adjustButton)
     private val backButton by getViewProperty<ImageButton>(R.id.backButton)
@@ -82,7 +79,10 @@ class MediaViewerFragment : Fragment(
                 ).show()
                 requireActivity().finish()
             } else {
-                initCursorLoader()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    mediaViewModel.setBucketId(album?.id)
+                    mediaViewModel.mediaForAlbum.collectLatest(::initData)
+                }
             }
         }
     }
@@ -96,19 +96,10 @@ class MediaViewerFragment : Fragment(
 
     // Adapter
     private val mediaViewerAdapter by lazy {
-        MediaViewerAdapter(exoPlayer, currentPositionLiveData)
+        MediaViewerAdapter(exoPlayer, mediaViewModel.mediaPositionLiveData)
     }
 
-    // MediaStore
-    private val loaderManagerInstance by lazy { LoaderManager.getInstance(this) }
-
     // Arguments
-    private val currentPositionLiveData = MutableLiveData(-1)
-    private var position: Int
-        get() = currentPositionLiveData.value!!
-        set(value) {
-            currentPositionLiveData.value = value
-        }
     private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
 
     // Contracts
@@ -167,7 +158,7 @@ class MediaViewerFragment : Fragment(
         }
     private val favoriteContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 favoriteButton.isSelected = it.isFavorite
             }
         }
@@ -184,9 +175,9 @@ class MediaViewerFragment : Fragment(
                 return
             }
 
-            this@MediaViewerFragment.position = position
+            this@MediaViewerFragment.mediaViewModel.mediaPosition = position
 
-            val media = mediaViewerAdapter.getMediaFromMediaStore(position) ?: return
+            val media = mediaViewerAdapter.getItemAtPosition(position)
 
             dateTextView.text = dateFormatter.format(media.dateAdded)
             timeTextView.text = timeFormatter.format(media.dateAdded)
@@ -218,28 +209,24 @@ class MediaViewerFragment : Fragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        position = arguments?.getInt(KEY_POSITION, -1)!!
+        mediaViewModel.mediaPosition = arguments?.getInt(KEY_POSITION, -1)!!
 
         backButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
         deleteButton.setOnClickListener {
-            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
-                trashMedia(it)
-            }
+            trashMedia(mediaViewerAdapter.getItemAtPosition(viewPager.currentItem))
         }
 
         deleteButton.setOnLongClickListener {
-            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(R.string.file_deletion_confirm_title)
+            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
+                MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.file_deletion_confirm_title)
                     .setMessage(
                         resources.getQuantityString(
                             R.plurals.file_deletion_confirm_message, 1, 1
                         )
-                    )
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                    ).setPositiveButton(android.R.string.ok) { _, _ ->
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                             deleteUriContract.launch(
                                 requireContext().contentResolver.createDeleteRequest(
@@ -262,7 +249,7 @@ class MediaViewerFragment : Fragment(
         }
 
         favoriteButton.setOnClickListener {
-            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     favoriteContract.launch(
                         requireContext().contentResolver.createFavoriteRequest(
@@ -298,14 +285,14 @@ class MediaViewerFragment : Fragment(
         viewPager.registerOnPageChangeCallback(onPageChangeCallback)
 
         shareButton.setOnClickListener {
-            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 val intent = Intent().shareIntent(it)
                 startActivity(Intent.createChooser(intent, null))
             }
         }
 
         adjustButton.setOnClickListener {
-            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 val intent = Intent().editIntent(it)
                 startActivity(Intent.createChooser(intent, null))
             }
@@ -314,7 +301,10 @@ class MediaViewerFragment : Fragment(
         if (!permissionsUtils.mainPermissionsGranted()) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
-            initCursorLoader()
+            viewLifecycleOwner.lifecycleScope.launch {
+                mediaViewModel.setBucketId(album?.id)
+                mediaViewModel.mediaForAlbum.collectLatest(::initData)
+            }
         }
     }
 
@@ -338,75 +328,10 @@ class MediaViewerFragment : Fragment(
         super.onDestroy()
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
-        MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal -> {
-            val projection = MediaQuery.MediaProjection
-            val imageOrVideo =
-                (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
-                        (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-            val albumFilter = album?.let {
-                when (it.id) {
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> {
-                        MediaStore.Files.FileColumns.IS_FAVORITE eq 1
-                    }
-
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                            MediaStore.Files.FileColumns.IS_TRASHED eq 1
-                        } else {
-                            null
-                        }
-                    }
-
-                    else -> {
-                        MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
-                    }
-                }
-            }
-            val selection = albumFilter?.let { imageOrVideo and it } ?: imageOrVideo
-            val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
-            val queryArgs = args ?: Bundle()
-            GlimpseCursorLoader(
-                requireContext(),
-                MediaStore.Files.getContentUri("external"),
-                projection,
-                selection.build(),
-                album?.takeIf {
-                    MediaStoreBuckets.values().none { bucket -> it.id == bucket.id }
-                }?.let { arrayOf(it.id.toString()) },
-                sortOrder,
-                queryArgs
-            )
-        }
-
-        else -> throw Exception("Unknown ID $id")
-    }
-
-    override fun onLoaderReset(loader: Loader<Cursor>) {
-        mediaViewerAdapter.changeCursor(null)
-    }
-
-    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-        mediaViewerAdapter.changeCursor(data)
-        viewPager.setCurrentItem(position, false)
-        onPageChangeCallback.onPageSelected(position)
-    }
-
-    private fun initCursorLoader() {
-        loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal,
-            bundleOf().apply {
-                album?.let {
-                    when (it.id) {
-                        MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_ONLY)
-                            }
-                        }
-                    }
-                }
-            }, this
-        )
+    private fun initData(data: List<Media>) {
+        mediaViewerAdapter.data = data.toTypedArray()
+        viewPager.setCurrentItem(mediaViewModel.mediaPosition, false)
+        onPageChangeCallback.onPageSelected(mediaViewModel.mediaPosition)
     }
 
     private fun trashMedia(media: Media, trash: Boolean = !media.isTrashed) {

@@ -6,10 +6,7 @@
 package org.lineageos.glimpse.fragments
 
 import android.content.res.Configuration
-import android.database.Cursor
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -20,25 +17,28 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.CursorLoader
-import androidx.loader.content.Loader
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
 import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
-import org.lineageos.glimpse.utils.MediaStoreRequests
 import org.lineageos.glimpse.utils.PermissionsUtils
+import org.lineageos.glimpse.viewmodels.MediaViewModel
 
 /**
  * A fragment showing a list of media with thumbnails.
  * Use the [ReelsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCallbacks<Cursor> {
+class ReelsFragment : Fragment(R.layout.fragment_reels) {
+    // View models
+    private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
+
     // Views
     private val reelsRecyclerView by getViewProperty<RecyclerView>(R.id.reelsRecyclerView)
 
@@ -59,14 +59,17 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
                 ).show()
                 requireActivity().finish()
             } else {
-                initCursorLoader()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    mediaViewModel.media.collectLatest { data ->
+                        thumbnailAdapter.data = data.toTypedArray()
+                    }
+                }
                 permissionsUtils.showManageMediaPermissionDialogIfNeeded()
             }
         }
     }
 
     // MediaStore
-    private val loaderManagerInstance by lazy { LoaderManager.getInstance(this) }
     private val thumbnailAdapter by lazy {
         ThumbnailAdapter { media, position ->
             parentNavController.navigate(
@@ -101,7 +104,11 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
         if (!permissionsUtils.mainPermissionsGranted()) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
-            initCursorLoader()
+            viewLifecycleOwner.lifecycleScope.launch {
+                mediaViewModel.media.collectLatest { data ->
+                    thumbnailAdapter.data = data.toTypedArray()
+                }
+            }
             permissionsUtils.showManageMediaPermissionDialogIfNeeded()
         }
     }
@@ -114,53 +121,6 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
         )
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?) = when (id) {
-        MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal -> {
-            val projection = MediaQuery.MediaProjection
-            val imageOrVideo =
-                (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
-                        (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-            val isNotTrashed = MediaStore.Files.FileColumns.IS_TRASHED eq 0
-            val selection = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                // Exclude trashed medias
-                imageOrVideo and isNotTrashed
-            } else {
-                imageOrVideo
-            }
-            val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
-            CursorLoader(
-                requireContext(),
-                MediaStore.Files.getContentUri("external"),
-                projection,
-                selection.build(),
-                null,
-                sortOrder
-            )
-        }
-
-        else -> throw Exception("Unknown ID $id")
-    }
-
-    override fun onLoaderReset(loader: Loader<Cursor>) {
-        thumbnailAdapter.changeCursor(null)
-    }
-
-    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-        thumbnailAdapter.changeCursor(data)
-    }
-
-    private fun initCursorLoader() {
-        loaderManagerInstance.initLoader(
-            MediaStoreRequests.MEDIA_STORE_MEDIA_LOADER_ID.ordinal,
-            bundleOf().apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    // Exclude trashed media
-                    putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_EXCLUDE)
-                }
-            },
-            this
-        )
-    }
 
     companion object {
         private fun createBundle() = bundleOf()
