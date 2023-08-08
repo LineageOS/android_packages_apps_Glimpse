@@ -60,6 +60,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
                 requireActivity().finish()
             } else {
                 initCursorLoader()
+                permissionsUtils.showManageMediaPermissionDialogIfNeeded()
             }
         }
     }
@@ -101,6 +102,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
             initCursorLoader()
+            permissionsUtils.showManageMediaPermissionDialogIfNeeded()
         }
     }
 
