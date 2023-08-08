@@ -155,8 +155,12 @@ class MediaViewerFragment : Fragment(
                 Snackbar.LENGTH_LONG,
             ).setAnchorView(bottomSheetLinearLayout).show()
         }
-    private val noopContract =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
+    private val favoriteContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
+                favoriteButton.isSelected = it.isFavorite
+            }
+        }
 
     private val onPageChangeCallback = object : OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -261,16 +265,15 @@ class MediaViewerFragment : Fragment(
 
         favoriteButton.setOnClickListener {
             mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
-                favoriteButton.isSelected = !it.isFavorite
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    noopContract.launch(
+                    favoriteContract.launch(
                         requireContext().contentResolver.createFavoriteRequest(
                             !it.isFavorite, it.externalContentUri
                         )
                     )
                 } else {
                     it.favorite(requireContext().contentResolver, !it.isFavorite)
+                    favoriteButton.isSelected = !it.isFavorite
                 }
             }
         }
