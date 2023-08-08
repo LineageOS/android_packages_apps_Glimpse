@@ -19,7 +19,10 @@ fun Intent.shareIntent(vararg medias: Media) = apply {
     type = when {
         medias.all { it.mediaType == IMAGE } -> "image/*"
         medias.all { it.mediaType == VIDEO } -> "video/*"
-        else -> "*/*"
+        else -> {
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
+            "*/*"
+        }
     }
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
