@@ -55,7 +55,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels), LoaderManager.LoaderCal
         if (it.isNotEmpty()) {
             if (!permissionsUtils.mainPermissionsGranted()) {
                 Toast.makeText(
-                    requireContext(), "No main permissions", Toast.LENGTH_SHORT
+                    requireContext(), R.string.app_permissions_toast, Toast.LENGTH_SHORT
                 ).show()
                 requireActivity().finish()
             } else {

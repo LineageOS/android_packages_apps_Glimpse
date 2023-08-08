@@ -6,6 +6,9 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Gallery</string>
 
+    <!-- Toast messages -->
+    <string name="app_permissions_toast">Permissions not granted by the user.</string>
+
     <!-- Top app bar -->
     <string name="top_app_bar_edit">Edit</string>
     <string name="top_app_bar_more">More</string>
