@@ -34,6 +34,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
@@ -226,15 +227,31 @@ class MediaViewerFragment : Fragment(
                 }
             }
         }
+
         deleteButton.setOnLongClickListener {
             mediaViewerAdapter.getMediaFromMediaStore(viewPager.currentItem)?.let {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    deleteUriContract.launch(
-                        requireContext().contentResolver.createDeleteRequest(it.externalContentUri)
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.file_deletion_confirm_title)
+                    .setMessage(
+                        resources.getQuantityString(
+                            R.plurals.file_deletion_confirm_message, 1, 1
+                        )
                     )
-                } else {
-                    it.delete(requireContext().contentResolver)
-                }
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            deleteUriContract.launch(
+                                requireContext().contentResolver.createDeleteRequest(
+                                    it.externalContentUri
+                                )
+                            )
+                        } else {
+                            it.delete(requireContext().contentResolver)
+                        }
+                    }
+                    .setNegativeButton(android.R.string.cancel) { _, _ ->
+                        // Do nothing
+                    }
+                    .show()
 
                 true
             }
