@@ -29,7 +29,14 @@ data class Album(
 
     override fun equals(other: Any?): Boolean {
         val obj = Album::class.safeCast(other) ?: return false
-        return id == obj.id
+        return compareValuesBy(
+            this,
+            obj,
+            { it.id },
+            { it.name },
+            { it.thumbnail },
+            { it.size },
+        ) == 0
     }
 
     override fun hashCode() = id.hashCode()
