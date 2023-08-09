@@ -294,6 +294,7 @@ class MediaViewerFragment : Fragment(
         }
 
         viewPager.adapter = mediaViewerAdapter
+        viewPager.offscreenPageLimit = 2
         viewPager.registerOnPageChangeCallback(onPageChangeCallback)
 
         shareButton.setOnClickListener {
