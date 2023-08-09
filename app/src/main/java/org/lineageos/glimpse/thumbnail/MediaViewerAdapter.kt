@@ -93,7 +93,9 @@ class MediaViewerAdapter(
         fun bind(media: Media, position: Int) {
             this.media = media
             this.position = position
-            imageView.load(media.externalContentUri)
+            imageView.load(media.externalContentUri) {
+                memoryCacheKey("full_${media.id}")
+            }
         }
 
         fun onViewAttachedToWindow() {

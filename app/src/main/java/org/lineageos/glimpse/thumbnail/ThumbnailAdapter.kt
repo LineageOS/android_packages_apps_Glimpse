@@ -150,6 +150,7 @@ class ThumbnailAdapter(
             this.position = position
 
             thumbnailImageView.load(media.externalContentUri) {
+                memoryCacheKey("thumbnail_${media.id}")
                 size(ThumbnailLayoutManager.MAX_THUMBNAIL_SIZE.px)
                 placeholder(R.drawable.thumbnail_placeholder)
             }
