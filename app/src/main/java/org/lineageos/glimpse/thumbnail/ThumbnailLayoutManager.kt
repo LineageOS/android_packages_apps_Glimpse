@@ -43,7 +43,7 @@ class ThumbnailLayoutManager(
         /**
          * Maximum thumbnail size, useful for high density screens.
          */
-        private const val MAX_THUMBNAIL_SIZE = 128
+        const val MAX_THUMBNAIL_SIZE = 128
 
         private enum class Orientation {
             VERTICAL,

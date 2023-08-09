@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
+import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import java.time.ZoneId
@@ -192,6 +193,7 @@ class ThumbnailAdapter(
             this.position = position
 
             thumbnailImageView.load(media.externalContentUri) {
+                size(ThumbnailLayoutManager.MAX_THUMBNAIL_SIZE.px)
                 placeholder(R.drawable.thumbnail_placeholder)
             }
             videoOverlayImageView.isVisible = media.mediaType == MediaType.VIDEO
