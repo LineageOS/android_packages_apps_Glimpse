@@ -95,6 +95,7 @@ class MediaViewerAdapter(
             this.position = position
             imageView.load(media.externalContentUri) {
                 memoryCacheKey("full_${media.id}")
+                placeholderMemoryCacheKey("thumbnail_${media.id}")
             }
         }
 
