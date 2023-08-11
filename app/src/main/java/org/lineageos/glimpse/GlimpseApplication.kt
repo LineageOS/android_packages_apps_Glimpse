@@ -12,6 +12,7 @@ import coil.ImageLoaderFactory
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
+import coil.memory.MemoryCache
 import com.google.android.material.color.DynamicColors
 import org.lineageos.glimpse.repository.MediaRepository
 
@@ -31,5 +32,7 @@ class GlimpseApplication : Application(), ImageLoaderFactory {
         }
         add(GifDecoder.Factory())
         add(VideoFrameDecoder.Factory())
+    }.memoryCache {
+        MemoryCache.Builder(this).maxSizePercent(0.25).build()
     }.build()
 }
