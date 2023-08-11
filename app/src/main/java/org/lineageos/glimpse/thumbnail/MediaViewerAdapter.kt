@@ -21,7 +21,7 @@ import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 
 class MediaViewerAdapter(
-    private val exoPlayer: ExoPlayer,
+    private val exoPlayer: Lazy<ExoPlayer>,
     private val currentPositionLiveData: LiveData<Int>,
 ) : RecyclerView.Adapter<MediaViewerAdapter.MediaViewHolder>() {
     var data: Array<Media> = arrayOf()
@@ -68,7 +68,7 @@ class MediaViewerAdapter(
 
     class MediaViewHolder(
         private val view: View,
-        private val exoPlayer: ExoPlayer,
+        private val exoPlayer: Lazy<ExoPlayer>,
         private val currentPositionLiveData: LiveData<Int>,
     ) : RecyclerView.ViewHolder(view) {
         // Views
@@ -85,7 +85,7 @@ class MediaViewerAdapter(
             playerView.isVisible = isNowVideoPlayer
 
             playerView.player = when (isNowVideoPlayer) {
-                true -> exoPlayer
+                true -> exoPlayer.value
                 false -> null
             }
         }

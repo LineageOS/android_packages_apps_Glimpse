@@ -92,15 +92,21 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     }
 
     // Player
-    private val exoPlayer by lazy {
+    private val exoPlayerLazy = lazy {
         ExoPlayer.Builder(requireContext()).build().apply {
             repeatMode = ExoPlayer.REPEAT_MODE_ONE
         }
     }
+    private val exoPlayer
+        get() = if (exoPlayerLazy.isInitialized()) {
+            exoPlayerLazy.value
+        } else {
+            null
+        }
 
     // Adapter
     private val mediaViewerAdapter by lazy {
-        MediaViewerAdapter(exoPlayer, mediaViewModel.mediaPositionLiveData)
+        MediaViewerAdapter(exoPlayerLazy, mediaViewModel.mediaPositionLiveData)
     }
 
     // Arguments
@@ -194,12 +200,12 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             )
 
             if (media.mediaType == MediaType.VIDEO) {
-                exoPlayer.setMediaItem(MediaItem.fromUri(media.externalContentUri))
-                exoPlayer.seekTo(C.TIME_UNSET)
-                exoPlayer.prepare()
-                exoPlayer.playWhenReady = true
+                exoPlayer?.setMediaItem(MediaItem.fromUri(media.externalContentUri))
+                exoPlayer?.seekTo(C.TIME_UNSET)
+                exoPlayer?.prepare()
+                exoPlayer?.playWhenReady = true
             } else {
-                exoPlayer.stop()
+                exoPlayer?.stop()
             }
         }
     }
@@ -207,7 +213,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     override fun onResume() {
         super.onResume()
 
-        exoPlayer.play()
+        exoPlayer?.play()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -317,7 +323,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     override fun onDestroyView() {
         viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
 
-        exoPlayer.stop()
+        exoPlayer?.stop()
 
         super.onDestroyView()
     }
@@ -325,11 +331,11 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     override fun onPause() {
         super.onPause()
 
-        exoPlayer.pause()
+        exoPlayer?.pause()
     }
 
     override fun onDestroy() {
-        exoPlayer.release()
+        exoPlayer?.release()
 
         super.onDestroy()
     }
