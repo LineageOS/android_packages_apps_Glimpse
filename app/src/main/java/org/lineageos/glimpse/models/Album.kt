@@ -5,7 +5,6 @@
 
 package org.lineageos.glimpse.models
 
-import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import org.lineageos.glimpse.ext.*
@@ -17,29 +16,30 @@ import kotlin.reflect.safeCast
 data class Album(
     val id: Int,
     val name: String,
-    val thumbnail: Uri,
+    val thumbnail: Media,
     var size: Int = 0,
-) : Parcelable {
+) : Comparable<Album>, Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,
-        parcel.readParcelable(Uri::class)!!,
+        parcel.readParcelable(Media::class)!!,
         parcel.readInt()
     )
 
     override fun equals(other: Any?): Boolean {
         val obj = Album::class.safeCast(other) ?: return false
-        return compareValuesBy(
-            this,
-            obj,
-            { it.id },
-            { it.name },
-            { it.thumbnail },
-            { it.size },
-        ) == 0
+        return compareTo(obj) == 0
     }
 
     override fun hashCode() = id.hashCode()
+
+    override fun compareTo(other: Album) = compareValuesBy(
+        this, other,
+        { it.id },
+        { it.name },
+        { it.thumbnail },
+        { it.size },
+    )
 
     override fun describeContents() = 0
 

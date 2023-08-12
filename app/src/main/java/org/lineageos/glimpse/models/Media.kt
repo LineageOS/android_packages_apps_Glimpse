@@ -12,6 +12,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.provider.MediaStore
 import java.util.Date
+import kotlin.reflect.safeCast
 
 data class Media(
     val id: Long,
@@ -21,7 +22,7 @@ data class Media(
     val mediaType: MediaType,
     val mimeType: String,
     val dateAdded: Date,
-) : Parcelable {
+) : Comparable<Media>, Parcelable {
     val externalContentUri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
 
     constructor(parcel: Parcel) : this(
@@ -36,6 +37,24 @@ data class Media(
         },
         parcel.readString()!!,
         Date(parcel.readLong()),
+    )
+
+    override fun equals(other: Any?): Boolean {
+        val obj = Media::class.safeCast(other) ?: return false
+        return compareTo(obj) == 0
+    }
+
+    override fun hashCode() = id.hashCode()
+
+    override fun compareTo(other: Media) = compareValuesBy(
+        this, other,
+        { it.id },
+        { it.bucketId },
+        { it.isFavorite },
+        { it.isTrashed },
+        { it.mediaType },
+        { it.mimeType },
+        { it.dateAdded },
     )
 
     override fun describeContents() = 0

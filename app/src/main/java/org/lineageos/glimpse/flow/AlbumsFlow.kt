@@ -6,7 +6,6 @@
 package org.lineageos.glimpse.flow
 
 import android.content.ContentResolver
-import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.os.Build
@@ -18,6 +17,7 @@ import kotlinx.coroutines.flow.map
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.queryFlow
 import org.lineageos.glimpse.models.Album
+import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
@@ -52,11 +52,13 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
         mutableMapOf<Int, Album>().apply {
             it?.use {
                 val idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
+                val bucketIdIndex = it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_ID)
                 val isFavoriteIndex =
                     it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
                 val isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
                 val mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
-                val bucketIdIndex = it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_ID)
+                val mimeTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
+                val dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
                 val bucketDisplayNameIndex =
                     it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)
 
@@ -65,13 +67,7 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                 }
 
                 while (!it.isAfterLast) {
-                    val contentUri = when (it.getInt(mediaTypeIndex)) {
-                        MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-
-                        MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-
-                        else -> continue
-                    }
+                    val bucketId = it.getInt(bucketIdIndex)
 
                     val bucketIds = listOfNotNull(
                         when (it.getInt(isTrashedIndex)) {
@@ -83,13 +79,21 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                         },
                     )
 
-                    for (bucketId in bucketIds) {
-                        this[bucketId]?.also { album ->
+                    for (displayedBucketId in bucketIds) {
+                        this[displayedBucketId]?.also { album ->
                             album.size += 1
                         } ?: run {
-                            this[bucketId] = Album(
-                                bucketId,
-                                when (bucketId) {
+                            val id = it.getLong(idIndex)
+                            val isFavorite = it.getInt(isFavoriteIndex)
+                            val isTrashed = it.getInt(isTrashedIndex)
+                            val mediaType = it.getInt(mediaTypeIndex)
+                            val mimeType = it.getString(mimeTypeIndex)
+                            val dateAdded = it.getLong(dateAddedIndex)
+                            val bucketDisplayName = it.getString(bucketDisplayNameIndex)
+
+                            this[displayedBucketId] = Album(
+                                displayedBucketId,
+                                when (displayedBucketId) {
                                     MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> context.getString(
                                         R.string.album_favorites
                                     )
@@ -98,9 +102,17 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                                         R.string.album_trash
                                     )
 
-                                    else -> it.getString(bucketDisplayNameIndex) ?: Build.MODEL
+                                    else -> bucketDisplayName ?: Build.MODEL
                                 },
-                                ContentUris.withAppendedId(contentUri, it.getLong(idIndex)),
+                                Media.fromMediaStore(
+                                    id,
+                                    bucketId,
+                                    isFavorite,
+                                    isTrashed,
+                                    mediaType,
+                                    mimeType,
+                                    dateAdded,
+                                )
                             ).apply { size += 1 }
                         }
                     }
