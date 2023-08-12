@@ -19,6 +19,8 @@ object MediaQuery {
         MediaStore.Files.FileColumns.MEDIA_TYPE,
         MediaStore.Files.FileColumns.MIME_TYPE,
         MediaStore.Files.FileColumns.DATE_ADDED,
+        MediaStore.Files.FileColumns.DATE_MODIFIED,
+        MediaStore.Files.FileColumns.ORIENTATION,
     )
     val AlbumsProjection = arrayOf(
         MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
