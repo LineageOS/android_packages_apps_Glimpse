@@ -75,7 +75,7 @@ class AlbumsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             mediaViewModel.albums.collectLatest {
-                albumThumbnailAdapter.changeArray(it.toTypedArray())
+                albumThumbnailAdapter.data = it.toTypedArray()
             }
         }
     }

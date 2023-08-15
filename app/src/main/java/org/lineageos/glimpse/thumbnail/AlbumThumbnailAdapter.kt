@@ -5,7 +5,6 @@
 
 package org.lineageos.glimpse.thumbnail
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,18 @@ import org.lineageos.glimpse.models.Album
 class AlbumThumbnailAdapter(
     private val navController: NavController,
 ) : RecyclerView.Adapter<AlbumThumbnailAdapter.AlbumViewHolder>() {
-    private var albums: Array<Album>? = null
+    var data: Array<Album> = arrayOf()
+        set(value) {
+            if (value.contentEquals(field)) {
+                return
+            }
+
+            field = value
+
+            field.let {
+                @Suppress("NotifyDataSetChanged") notifyDataSetChanged()
+            }
+        }
 
     init {
         setHasStableIds(true)
@@ -36,27 +46,12 @@ class AlbumThumbnailAdapter(
         return AlbumViewHolder(view, navController)
     }
 
-    override fun getItemCount() = albums?.size ?: 0
+    override fun getItemCount() = data.size
 
-    override fun getItemId(position: Int) = (albums?.let { it[position].id } ?: 0).toLong()
+    override fun getItemId(position: Int) = data[position].id.toLong()
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        albums?.let {
-            holder.bind(it[position])
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun changeArray(array: Array<Album>?) {
-        if (albums.contentEquals(array)) {
-            return
-        }
-
-        albums = array
-
-        array?.let {
-            notifyDataSetChanged()
-        }
+        holder.bind(data[position])
     }
 
     class AlbumViewHolder(
