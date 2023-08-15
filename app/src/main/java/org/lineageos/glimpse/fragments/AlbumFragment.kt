@@ -18,7 +18,9 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -64,9 +66,11 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                 requireActivity().finish()
             } else {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    mediaViewModel.setBucketId(album.id)
-                    mediaViewModel.mediaForAlbum.collectLatest { data ->
-                        thumbnailAdapter.data = data.toTypedArray()
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                        mediaViewModel.setBucketId(album.id)
+                        mediaViewModel.mediaForAlbum.collectLatest { data ->
+                            thumbnailAdapter.data = data.toTypedArray()
+                        }
                     }
                 }
             }
@@ -123,8 +127,10 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         } else {
             mediaViewModel.setBucketId(album.id)
             viewLifecycleOwner.lifecycleScope.launch {
-                mediaViewModel.mediaForAlbum.collectLatest { data ->
-                    thumbnailAdapter.data = data.toTypedArray()
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    mediaViewModel.mediaForAlbum.collectLatest { data ->
+                        thumbnailAdapter.data = data.toTypedArray()
+                    }
                 }
             }
         }

@@ -18,7 +18,9 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.collectLatest
@@ -60,8 +62,10 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
                 requireActivity().finish()
             } else {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    mediaViewModel.media.collectLatest { data ->
-                        thumbnailAdapter.data = data.toTypedArray()
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                        mediaViewModel.media.collectLatest { data ->
+                            thumbnailAdapter.data = data.toTypedArray()
+                        }
                     }
                 }
                 permissionsUtils.showManageMediaPermissionDialogIfNeeded()
@@ -105,8 +109,10 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
             viewLifecycleOwner.lifecycleScope.launch {
-                mediaViewModel.media.collectLatest { data ->
-                    thumbnailAdapter.data = data.toTypedArray()
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    mediaViewModel.media.collectLatest { data ->
+                        thumbnailAdapter.data = data.toTypedArray()
+                    }
                 }
             }
             permissionsUtils.showManageMediaPermissionDialogIfNeeded()

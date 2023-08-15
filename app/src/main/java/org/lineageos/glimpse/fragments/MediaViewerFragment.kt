@@ -23,7 +23,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -80,8 +82,10 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
                 requireActivity().finish()
             } else {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    mediaViewModel.setBucketId(album?.id)
-                    mediaViewModel.mediaForAlbum.collectLatest(::initData)
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                        mediaViewModel.setBucketId(album?.id)
+                        mediaViewModel.mediaForAlbum.collectLatest(::initData)
+                    }
                 }
             }
         }
@@ -302,8 +306,10 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         } else {
             viewLifecycleOwner.lifecycleScope.launch {
-                mediaViewModel.setBucketId(album?.id)
-                mediaViewModel.mediaForAlbum.collectLatest(::initData)
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    mediaViewModel.setBucketId(album?.id)
+                    mediaViewModel.mediaForAlbum.collectLatest(::initData)
+                }
             }
         }
     }

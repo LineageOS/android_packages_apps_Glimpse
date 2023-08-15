@@ -17,7 +17,9 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,8 +76,10 @@ class AlbumsFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            mediaViewModel.albums.collectLatest {
-                albumThumbnailAdapter.data = it.toTypedArray()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                mediaViewModel.albums.collectLatest {
+                    albumThumbnailAdapter.data = it.toTypedArray()
+                }
             }
         }
     }
