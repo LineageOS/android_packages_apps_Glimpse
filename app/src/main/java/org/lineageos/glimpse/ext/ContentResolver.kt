@@ -18,6 +18,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map
 
 @RequiresApi(Build.VERSION_CODES.R)
@@ -50,7 +51,7 @@ fun ContentResolver.uriFlow(uri: Uri) = callbackFlow {
     awaitClose {
         unregisterContentObserver(observer)
     }
-}
+}.conflate()
 
 fun ContentResolver.queryFlow(
     uri: Uri,
