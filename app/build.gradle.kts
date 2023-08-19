@@ -66,8 +66,8 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
 
     // Media3
-    implementation("androidx.media3:media3-exoplayer:1.1.0")
-    implementation("androidx.media3:media3-ui:1.1.0")
+    implementation("androidx.media3:media3-exoplayer:1.1.1")
+    implementation("androidx.media3:media3-ui:1.1.1")
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
@@ -135,9 +135,8 @@ tasks.register("generateBp") {
     val isAvailableInAosp = { group: String, artifactId: String ->
         when {
             group.startsWith("androidx") -> {
-                // We provide our own androidx.{media3,multidex} & lifecycle-common
+                // We provide our own androidx.media3 & lifecycle-common
                 !group.startsWith("androidx.media3") &&
-                        !group.startsWith("androidx.multidex") &&
                         artifactId != "lifecycle-common"
             }
 

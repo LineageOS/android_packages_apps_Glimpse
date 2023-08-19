@@ -28,7 +28,7 @@ java_library_static {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-common-nodeps",
-    aars: ["androidx/media3/media3-common/1.1.0/media3-common-1.1.0.aar"],
+    aars: ["androidx/media3/media3-common/1.1.1/media3-common-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -38,7 +38,6 @@ android_library_import {
     static_libs: [
         "guava",
         "androidx.annotation_annotation-experimental",
-        "Glimpse_androidx.multidex_multidex",
     ],
 }
 
@@ -50,19 +49,18 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-common/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-common/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-common-nodeps",
         "guava",
         "androidx.annotation_annotation-experimental",
-        "Glimpse_androidx.multidex_multidex",
     ],
     java_version: "1.7",
 }
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-container-nodeps",
-    aars: ["androidx/media3/media3-container/1.1.0/media3-container-1.1.0.aar"],
+    aars: ["androidx/media3/media3-container/1.1.1/media3-container-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -70,7 +68,6 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
     ],
 }
@@ -83,10 +80,9 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-container/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-container/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-container-nodeps",
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
     ],
     java_version: "1.7",
@@ -94,7 +90,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-database-nodeps",
-    aars: ["androidx/media3/media3-database/1.1.0/media3-database-1.1.0.aar"],
+    aars: ["androidx/media3/media3-database/1.1.1/media3-database-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -102,7 +98,6 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
     ],
 }
@@ -115,10 +110,9 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-database/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-database/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-database-nodeps",
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
     ],
     java_version: "1.7",
@@ -126,7 +120,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-datasource-nodeps",
-    aars: ["androidx/media3/media3-datasource/1.1.0/media3-datasource-1.1.0.aar"],
+    aars: ["androidx/media3/media3-datasource/1.1.1/media3-datasource-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -134,7 +128,6 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-database",
     ],
@@ -148,10 +141,9 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-datasource/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-datasource/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-datasource-nodeps",
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-database",
     ],
@@ -160,7 +152,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-decoder-nodeps",
-    aars: ["androidx/media3/media3-decoder/1.1.0/media3-decoder-1.1.0.aar"],
+    aars: ["androidx/media3/media3-decoder/1.1.1/media3-decoder-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -168,7 +160,6 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
     ],
 }
@@ -181,10 +172,9 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-decoder/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-decoder/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-decoder-nodeps",
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
     ],
     java_version: "1.7",
@@ -192,7 +182,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-nodeps",
-    aars: ["androidx/media3/media3-exoplayer/1.1.0/media3-exoplayer-1.1.0.aar"],
+    aars: ["androidx/media3/media3-exoplayer/1.1.1/media3-exoplayer-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -206,7 +196,6 @@ android_library_import {
         "Glimpse_androidx.media3_media3-decoder",
         "Glimpse_androidx.media3_media3-extractor",
         "Glimpse_androidx.media3_media3-database",
-        "Glimpse_androidx.multidex_multidex",
         "androidx.core_core",
     ],
 }
@@ -219,7 +208,7 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-exoplayer/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-exoplayer/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-exoplayer-nodeps",
         "Glimpse_androidx.media3_media3-common",
@@ -228,7 +217,6 @@ android_library {
         "Glimpse_androidx.media3_media3-decoder",
         "Glimpse_androidx.media3_media3-extractor",
         "Glimpse_androidx.media3_media3-database",
-        "Glimpse_androidx.multidex_multidex",
         "androidx.core_core",
     ],
     java_version: "1.7",
@@ -236,7 +224,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-extractor-nodeps",
-    aars: ["androidx/media3/media3-extractor/1.1.0/media3-extractor-1.1.0.aar"],
+    aars: ["androidx/media3/media3-extractor/1.1.1/media3-extractor-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -244,7 +232,6 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-container",
         "Glimpse_androidx.media3_media3-decoder",
@@ -259,10 +246,9 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-extractor/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-extractor/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-extractor-nodeps",
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-container",
         "Glimpse_androidx.media3_media3-decoder",
@@ -272,7 +258,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-ui-nodeps",
-    aars: ["androidx/media3/media3-ui/1.1.0/media3-ui-1.1.0.aar"],
+    aars: ["androidx/media3/media3-ui/1.1.1/media3-ui-1.1.1.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -280,7 +266,6 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
         "androidx.media_media",
         "androidx.recyclerview_recyclerview",
@@ -295,40 +280,12 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "androidx/media3/media3-ui/1.1.0/AndroidManifest.xml",
+    manifest: "androidx/media3/media3-ui/1.1.1/AndroidManifest.xml",
     static_libs: [
         "Glimpse_androidx.media3_media3-ui-nodeps",
-        "Glimpse_androidx.multidex_multidex",
         "Glimpse_androidx.media3_media3-common",
         "androidx.media_media",
         "androidx.recyclerview_recyclerview",
-    ],
-    java_version: "1.7",
-}
-
-android_library_import {
-    name: "Glimpse_androidx.multidex_multidex-nodeps",
-    aars: ["androidx/multidex/multidex/2.0.1/multidex-2.0.1.aar"],
-    sdk_version: "33",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    static_libs: [],
-}
-
-android_library {
-    name: "Glimpse_androidx.multidex_multidex",
-    sdk_version: "33",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    manifest: "androidx/multidex/multidex/2.0.1/AndroidManifest.xml",
-    static_libs: [
-        "Glimpse_androidx.multidex_multidex-nodeps",
     ],
     java_version: "1.7",
 }
