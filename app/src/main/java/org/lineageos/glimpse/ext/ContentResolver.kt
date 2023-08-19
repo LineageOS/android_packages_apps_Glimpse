@@ -20,6 +20,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.isActive
 
 @RequiresApi(Build.VERSION_CODES.R)
 fun ContentResolver.createDeleteRequest(vararg uris: Uri) = IntentSenderRequest.Builder(
@@ -41,7 +42,9 @@ fun ContentResolver.createTrashRequest(value: Boolean, vararg uris: Uri) =
 fun ContentResolver.uriFlow(uri: Uri) = callbackFlow {
     val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean) {
-            trySend(Unit)
+            if (isActive) {
+                trySend(Unit)
+            }
         }
     }
     registerContentObserver(uri, true, observer)
