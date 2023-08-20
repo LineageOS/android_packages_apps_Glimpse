@@ -9,8 +9,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -36,7 +34,7 @@ import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
-import org.lineageos.glimpse.utils.PermissionsUtils
+import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 
 /**
@@ -54,24 +52,12 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Permissions
-    private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
-    private val mainPermissionsRequestLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        if (it.isNotEmpty()) {
-            if (!permissionsUtils.mainPermissionsGranted()) {
-                Toast.makeText(
-                    requireContext(), R.string.app_permissions_toast, Toast.LENGTH_SHORT
-                ).show()
-                requireActivity().finish()
-            } else {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                        mediaViewModel.setBucketId(album.id)
-                        mediaViewModel.mediaForAlbum.collectLatest { data ->
-                            thumbnailAdapter.data = data.toTypedArray()
-                        }
-                    }
+    private val permissionsGatedCallback = PermissionsGatedCallback(this) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                mediaViewModel.setBucketId(album.id)
+                mediaViewModel.mediaForAlbum.collectLatest { data ->
+                    thumbnailAdapter.data = data.toTypedArray()
                 }
             }
         }
@@ -122,18 +108,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             windowInsets
         }
 
-        if (!permissionsUtils.mainPermissionsGranted()) {
-            mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
-        } else {
-            mediaViewModel.setBucketId(album.id)
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    mediaViewModel.mediaForAlbum.collectLatest { data ->
-                        thumbnailAdapter.data = data.toTypedArray()
-                    }
-                }
-            }
-        }
+        permissionsGatedCallback.runAfterPermissionsCheck()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

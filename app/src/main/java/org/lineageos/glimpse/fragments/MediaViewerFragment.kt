@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
@@ -43,7 +42,7 @@ import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
-import org.lineageos.glimpse.utils.PermissionsUtils
+import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 import java.text.SimpleDateFormat
 
@@ -72,23 +71,11 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     private var restoreLastTrashedMediaFromTrash: (() -> Unit)? = null
 
     // Permissions
-    private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
-    private val mainPermissionsRequestLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        if (it.isNotEmpty()) {
-            if (!permissionsUtils.mainPermissionsGranted()) {
-                Toast.makeText(
-                    requireContext(), R.string.app_permissions_toast, Toast.LENGTH_SHORT
-                ).show()
-                requireActivity().finish()
-            } else {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                        mediaViewModel.setBucketId(album?.id)
-                        mediaViewModel.mediaForAlbum.collectLatest(::initData)
-                    }
-                }
+    private val permissionsGatedCallback = PermissionsGatedCallback(this) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                mediaViewModel.setBucketId(album?.id)
+                mediaViewModel.mediaForAlbum.collectLatest(::initData)
             }
         }
     }
@@ -321,16 +308,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             }
         }
 
-        if (!permissionsUtils.mainPermissionsGranted()) {
-            mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
-        } else {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    mediaViewModel.setBucketId(album?.id)
-                    mediaViewModel.mediaForAlbum.collectLatest(::initData)
-                }
-            }
-        }
+        permissionsGatedCallback.runAfterPermissionsCheck()
     }
 
     override fun onDestroyView() {

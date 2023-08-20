@@ -9,8 +9,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -32,6 +30,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
+import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 
@@ -56,26 +55,15 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
 
     // Permissions
     private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
-    private val mainPermissionsRequestLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        if (it.isNotEmpty()) {
-            if (!permissionsUtils.mainPermissionsGranted()) {
-                Toast.makeText(
-                    requireContext(), R.string.app_permissions_toast, Toast.LENGTH_SHORT
-                ).show()
-                requireActivity().finish()
-            } else {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                        mediaViewModel.media.collectLatest { data ->
-                            thumbnailAdapter.data = data.toTypedArray()
-                        }
-                    }
+    private val permissionsGatedCallback = PermissionsGatedCallback(this) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                mediaViewModel.media.collectLatest { data ->
+                    thumbnailAdapter.data = data.toTypedArray()
                 }
-                permissionsUtils.showManageMediaPermissionDialogIfNeeded()
             }
         }
+        permissionsUtils.showManageMediaPermissionDialogIfNeeded()
     }
 
     // MediaStore
@@ -114,18 +102,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
             windowInsets
         }
 
-        if (!permissionsUtils.mainPermissionsGranted()) {
-            mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
-        } else {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    mediaViewModel.media.collectLatest { data ->
-                        thumbnailAdapter.data = data.toTypedArray()
-                    }
-                }
-            }
-            permissionsUtils.showManageMediaPermissionDialogIfNeeded()
-        }
+        permissionsGatedCallback.runAfterPermissionsCheck()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

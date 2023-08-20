@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
+import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 
 /**
@@ -50,6 +51,17 @@ class AlbumsFragment : Fragment() {
     // Fragments
     private val parentNavController by lazy {
         requireParentFragment().requireParentFragment().findNavController()
+    }
+
+    // Permissions
+    private val permissionsGatedCallback = PermissionsGatedCallback(this) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                mediaViewModel.albums.collectLatest {
+                    albumThumbnailAdapter.data = it.toTypedArray()
+                }
+            }
+        }
     }
 
     // MediaStore
@@ -82,13 +94,7 @@ class AlbumsFragment : Fragment() {
             windowInsets
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                mediaViewModel.albums.collectLatest {
-                    albumThumbnailAdapter.data = it.toTypedArray()
-                }
-            }
-        }
+        permissionsGatedCallback.runAfterPermissionsCheck()
     }
 
     companion object {
