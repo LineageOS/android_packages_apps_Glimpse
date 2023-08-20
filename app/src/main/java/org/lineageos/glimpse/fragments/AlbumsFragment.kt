@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
@@ -29,8 +29,9 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.ext.getViewProperty
+import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
+import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 
@@ -79,7 +80,7 @@ class AlbumsFragment : Fragment() {
 
         appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(context)
 
-        albumsRecyclerView.layoutManager = GridLayoutManager(context, 2)
+        albumsRecyclerView.layoutManager = AlbumThumbnailLayoutManager(context)
         albumsRecyclerView.adapter = albumThumbnailAdapter
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
@@ -95,6 +96,12 @@ class AlbumsFragment : Fragment() {
         }
 
         permissionsGatedCallback.runAfterPermissionsCheck()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        albumsRecyclerView.layoutManager = AlbumThumbnailLayoutManager(requireContext())
     }
 
     companion object {
