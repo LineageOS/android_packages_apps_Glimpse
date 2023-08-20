@@ -73,7 +73,7 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                     val bucketIds = listOfNotNull(
                         when (it.getInt(isTrashedIndex)) {
                             1 -> MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id
-                            else -> it.getInt(bucketIdIndex)
+                            else -> bucketId
                         },
                         MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id.takeIf { _ ->
                             it.getInt(isFavoriteIndex) == 1
