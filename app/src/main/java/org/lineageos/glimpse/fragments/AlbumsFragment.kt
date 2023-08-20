@@ -23,6 +23,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
@@ -41,6 +44,8 @@ class AlbumsFragment : Fragment() {
 
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
+    private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
+    private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Fragments
     private val parentNavController by lazy {
@@ -59,6 +64,8 @@ class AlbumsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val context = requireContext()
+
+        appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(context)
 
         albumsRecyclerView.layoutManager = GridLayoutManager(context, 2)
         albumsRecyclerView.adapter = albumThumbnailAdapter

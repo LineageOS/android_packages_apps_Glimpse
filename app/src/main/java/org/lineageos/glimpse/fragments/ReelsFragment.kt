@@ -23,6 +23,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
@@ -42,7 +45,9 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
     private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
 
     // Views
+    private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
     private val reelsRecyclerView by getViewProperty<RecyclerView>(R.id.reelsRecyclerView)
+    private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Fragments
     private val parentNavController by lazy {
@@ -87,6 +92,10 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val context = requireContext()
+
+        appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(context)
 
         reelsRecyclerView.layoutManager = ThumbnailLayoutManager(
             requireContext(), thumbnailAdapter
