@@ -41,7 +41,7 @@ import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.thumbnail.MediaViewerAdapter
+import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.MediaViewModel

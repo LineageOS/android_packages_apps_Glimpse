@@ -30,8 +30,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.thumbnail.ThumbnailAdapter
-import org.lineageos.glimpse.thumbnail.ThumbnailLayoutManager
+import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
+import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 
