@@ -74,13 +74,13 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
 
     override fun flowData() = flowCursor().mapEachRow {
         val idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
+        val bucketIdIndex = it.getColumnIndex(MediaStore.MediaColumns.BUCKET_ID)
         val displayNameIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
         val isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
         val isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
         val mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
         val mimeTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
         val dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
-        val bucketIdIndex = it.getColumnIndex(MediaStore.MediaColumns.BUCKET_ID)
 
         val id = it.getLong(idIndex)
         val bucketId = it.getInt(bucketIdIndex)
