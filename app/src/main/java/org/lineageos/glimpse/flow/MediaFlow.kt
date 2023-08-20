@@ -83,7 +83,7 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
         val bucketIdIndex = it.getColumnIndex(MediaStore.MediaColumns.BUCKET_ID)
 
         val id = it.getLong(idIndex)
-        val buckedId = it.getInt(bucketIdIndex)
+        val bucketId = it.getInt(bucketIdIndex)
         val displayName = it.getString(displayNameIndex)
         val isFavorite = it.getInt(isFavoriteIndex)
         val isTrashed = it.getInt(isTrashedIndex)
@@ -93,7 +93,7 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
 
         Media.fromMediaStore(
             id,
-            buckedId,
+            bucketId,
             displayName,
             isFavorite,
             isTrashed,
