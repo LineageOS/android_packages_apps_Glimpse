@@ -189,10 +189,12 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             )
 
             if (media.mediaType == MediaType.VIDEO) {
-                exoPlayer?.setMediaItem(MediaItem.fromUri(media.externalContentUri))
-                exoPlayer?.seekTo(C.TIME_UNSET)
-                exoPlayer?.prepare()
-                exoPlayer?.playWhenReady = true
+                with(exoPlayerLazy.value) {
+                    setMediaItem(MediaItem.fromUri(media.externalContentUri))
+                    seekTo(C.TIME_UNSET)
+                    prepare()
+                    playWhenReady = true
+                }
             } else {
                 exoPlayer?.stop()
             }
