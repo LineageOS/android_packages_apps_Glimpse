@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Media3: Remove color overlay on visible player controls -->
+    <color name="exo_bottom_bar_background" tools:override="true">@android:color/transparent</color>
+    <color name="exo_black_opacity_60" tools:override="true">@android:color/transparent</color>
+</resources>

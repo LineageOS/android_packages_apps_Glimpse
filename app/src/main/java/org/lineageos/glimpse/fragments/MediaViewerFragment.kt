@@ -7,10 +7,11 @@ package org.lineageos.glimpse.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
+import android.view.View.MeasureSpec
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -19,14 +20,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -43,7 +46,7 @@ import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
-import org.lineageos.glimpse.viewmodels.MediaViewModel
+import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
 import java.text.SimpleDateFormat
 
 /**
@@ -51,9 +54,10 @@ import java.text.SimpleDateFormat
  * Use the [MediaViewerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@androidx.media3.common.util.UnstableApi
 class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     // View models
-    private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
+    private val mediaViewModel: MediaViewerViewModel by viewModels { MediaViewerViewModel.Factory }
 
     // Views
     private val adjustButton by getViewProperty<ImageButton>(R.id.adjustButton)
@@ -81,9 +85,19 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     }
 
     // Player
+    private val exoPlayerListener = object : Player.Listener {
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            super.onIsPlayingChanged(isPlaying)
+
+            view?.keepScreenOn = isPlaying
+        }
+    }
+
     private val exoPlayerLazy = lazy {
         ExoPlayer.Builder(requireContext()).build().apply {
             repeatMode = ExoPlayer.REPEAT_MODE_ONE
+
+            addListener(exoPlayerListener)
         }
     }
     private val exoPlayer
@@ -95,7 +109,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
     // Adapter
     private val mediaViewerAdapter by lazy {
-        MediaViewerAdapter(exoPlayerLazy, mediaViewModel.mediaPositionLiveData)
+        MediaViewerAdapter(exoPlayerLazy, mediaViewModel)
     }
 
     // Arguments
@@ -208,6 +222,9 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         super.onResume()
 
         exoPlayer?.play()
+
+        // Force status bar icons to be light
+        requireActivity().window.isAppearanceLightStatusBars = false
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -270,15 +287,22 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
-            topSheetConstraintLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = insets.left
-                rightMargin = insets.right
-                topMargin = insets.top
-            }
-            bottomSheetLinearLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = insets.bottom
-                leftMargin = insets.left
-                rightMargin = insets.right
+            // Avoid updating the sheets height when they're hidden.
+            // Once the system bars will be made visible again, this function
+            // will be called again.
+            if (mediaViewModel.fullscreenModeLiveData.value != true) {
+                topSheetConstraintLayout.updatePadding(
+                    left = insets.left,
+                    right = insets.right,
+                    top = insets.top,
+                )
+                bottomSheetLinearLayout.updatePadding(
+                    bottom = insets.bottom,
+                    left = insets.left,
+                    right = insets.right,
+                )
+
+                updateSheetsHeight()
             }
 
             windowInsets
@@ -310,6 +334,22 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             }
         }
 
+        view.findViewTreeLifecycleOwner()?.let {
+            mediaViewModel.fullscreenModeLiveData.observe(it) { fullscreenMode ->
+                topSheetConstraintLayout.fade(!fullscreenMode)
+                bottomSheetLinearLayout.fade(!fullscreenMode)
+
+                requireActivity().window.setBarsVisibility(systemBars = !fullscreenMode)
+
+                // If the sheets are being made visible again, update the values
+                if (!fullscreenMode) {
+                    updateSheetsHeight()
+                }
+            }
+        }
+
+        updateSheetsHeight()
+
         permissionsGatedCallback.runAfterPermissionsCheck()
     }
 
@@ -325,12 +365,24 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         super.onPause()
 
         exoPlayer?.pause()
+
+        // Restore status bar icons appearance
+        requireActivity().window.resetStatusBarAppearance()
+
+        // Restore system bars visibility
+        requireActivity().window.setBarsVisibility(systemBars = true)
     }
 
     override fun onDestroy() {
         exoPlayer?.release()
 
         super.onDestroy()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        updateSheetsHeight()
     }
 
     private fun initData(data: List<Media>) {
@@ -357,6 +409,16 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         } else {
             media.trash(requireContext().contentResolver, trash)
         }
+    }
+
+    private fun updateSheetsHeight() {
+        topSheetConstraintLayout.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+        bottomSheetLinearLayout.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+
+        mediaViewModel.sheetsHeightLiveData.value = Pair(
+            topSheetConstraintLayout.measuredHeight,
+            bottomSheetLinearLayout.measuredHeight,
+        )
     }
 
     companion object {

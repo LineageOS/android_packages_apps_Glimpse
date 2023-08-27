@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import org.lineageos.glimpse.GlimpseApplication
 import org.lineageos.glimpse.repository.MediaRepository
 
-class MediaViewModel(
+open class MediaViewModel(
     private val savedStateHandle: SavedStateHandle, private val mediaRepository: MediaRepository
 ) : ViewModel() {
     private val mediaPositionInternal = savedStateHandle.getLiveData<Int>(MEDIA_POSITION_KEY)
