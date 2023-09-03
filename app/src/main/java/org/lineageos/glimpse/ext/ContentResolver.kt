@@ -8,38 +8,32 @@ package org.lineageos.glimpse.ext
 import android.content.ContentResolver
 import android.database.ContentObserver
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import androidx.activity.result.IntentSenderRequest
-import androidx.annotation.RequiresApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 
-@RequiresApi(Build.VERSION_CODES.R)
 fun ContentResolver.createDeleteRequest(vararg uris: Uri) = IntentSenderRequest.Builder(
     MediaStore.createDeleteRequest(this, uris.toCollection(ArrayList()))
 ).build()
 
-@RequiresApi(Build.VERSION_CODES.R)
 fun ContentResolver.createFavoriteRequest(value: Boolean, vararg uris: Uri) =
     IntentSenderRequest.Builder(
         MediaStore.createFavoriteRequest(this, uris.toCollection(ArrayList()), value)
     ).build()
 
-@RequiresApi(Build.VERSION_CODES.R)
 fun ContentResolver.createTrashRequest(value: Boolean, vararg uris: Uri) =
     IntentSenderRequest.Builder(
         MediaStore.createTrashRequest(this, uris.toCollection(ArrayList()), value)
     ).build()
 
-@RequiresApi(Build.VERSION_CODES.R)
 fun ContentResolver.createWriteRequest(vararg uris: Uri) =
     IntentSenderRequest.Builder(
         MediaStore.createWriteRequest(this, uris.toCollection(ArrayList()))
