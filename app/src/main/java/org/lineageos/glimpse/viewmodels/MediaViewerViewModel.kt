@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,14 @@ class MediaViewerViewModel(
     savedStateHandle: SavedStateHandle,
     mediaRepository: MediaRepository,
 ) : MediaViewModel(savedStateHandle, mediaRepository) {
+    private val mediaPositionInternal = savedStateHandle.getLiveData<Int>(MEDIA_POSITION_KEY)
+    val mediaPositionLiveData: LiveData<Int> = mediaPositionInternal
+    var mediaPosition: Int
+        set(value) {
+            mediaPositionInternal.value = value
+        }
+        get() = mediaPositionInternal.value!!
+
     /**
      * The current height of top and bottom sheets, used to apply padding to media view UI.
      */
@@ -40,6 +49,8 @@ class MediaViewerViewModel(
     }
 
     companion object {
+        private const val MEDIA_POSITION_KEY = "position"
+
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 MediaViewerViewModel(
