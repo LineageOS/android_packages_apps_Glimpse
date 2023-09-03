@@ -15,7 +15,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -89,7 +88,6 @@ class AlbumsFragment : Fragment() {
                 leftMargin = insets.left
                 rightMargin = insets.right
             }
-            albumsRecyclerView.updatePadding(bottom = insets.bottom)
 
             windowInsets
         }
