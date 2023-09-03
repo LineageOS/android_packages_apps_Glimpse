@@ -22,7 +22,7 @@ import java.time.temporal.ChronoUnit
 import java.util.Date
 
 class ThumbnailAdapter(
-    private val onItemSelected: (media: Media, position: Int) -> Unit,
+    private val onItemSelected: (media: Media) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val headersPositions = sortedSetOf<Int>()
 
@@ -73,7 +73,7 @@ class ThumbnailAdapter(
         when (holder.itemViewType) {
             ViewTypes.ITEM.ordinal -> {
                 val thumbnailViewHolder = holder as ThumbnailViewHolder
-                thumbnailViewHolder.bind(data[truePosition], truePosition)
+                thumbnailViewHolder.bind(data[truePosition])
             }
 
             ViewTypes.HEADER.ordinal -> {
@@ -128,7 +128,7 @@ class ThumbnailAdapter(
 
     class ThumbnailViewHolder(
         view: View,
-        private val onItemSelected: (media: Media, position: Int) -> Unit,
+        private val onItemSelected: (media: Media) -> Unit,
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val videoOverlayImageView =
@@ -136,14 +136,12 @@ class ThumbnailAdapter(
         private val thumbnailImageView = itemView.findViewById<ImageView>(R.id.thumbnailImageView)!!
 
         private lateinit var media: Media
-        private var position = -1
 
-        fun bind(media: Media, position: Int) {
+        fun bind(media: Media) {
             this.media = media
-            this.position = position
 
             itemView.setOnClickListener {
-                onItemSelected(media, position)
+                onItemSelected(media)
             }
 
             thumbnailImageView.load(media.externalContentUri) {

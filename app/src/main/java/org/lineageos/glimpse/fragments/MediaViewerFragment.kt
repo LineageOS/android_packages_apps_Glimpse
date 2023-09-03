@@ -40,7 +40,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
-import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
@@ -77,7 +76,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                mediaViewModel.setBucketId(album?.id)
+                mediaViewModel.setBucketId(albumId)
                 mediaViewModel.mediaForAlbum.collectLatest(::initData)
             }
         }
@@ -112,7 +111,8 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     }
 
     // Arguments
-    private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
+    private val media by lazy { arguments?.getParcelable(KEY_MEDIA, Media::class) }
+    private val albumId by lazy { arguments?.getInt(KEY_ALBUM_ID, -1).takeUnless { it == -1 } }
 
     // Contracts
     private val deleteUriContract =
@@ -229,7 +229,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mediaViewModel.mediaPosition = arguments?.getInt(KEY_POSITION, -1)!!
+        mediaViewModel.mediaPosition = -1
 
         backButton.setOnClickListener {
             findNavController().popBackStack()
@@ -377,6 +377,19 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
     private fun initData(data: List<Media>) {
         mediaViewerAdapter.data = data.toTypedArray()
+
+        // If we already have a position, keep that, else get one from
+        // the passed media, else go to the first one
+        mediaViewModel.mediaPosition = mediaViewModel.mediaPosition.takeUnless {
+            it == -1
+        } ?: media?.let { media ->
+            mediaViewerAdapter.data.indexOfFirst {
+                it.id == media.id
+            }.takeUnless {
+                it == -1
+            }
+        } ?: 0
+
         viewPager.setCurrentItem(mediaViewModel.mediaPosition, false)
         onPageChangeCallback.onPageSelected(mediaViewModel.mediaPosition)
     }
@@ -409,39 +422,41 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     }
 
     companion object {
-        private const val KEY_ALBUM = "album"
         private const val KEY_MEDIA = "media"
-        private const val KEY_POSITION = "position"
+        private const val KEY_ALBUM_ID = "album_id"
 
         private val dateFormatter = SimpleDateFormat.getDateInstance()
         private val timeFormatter = SimpleDateFormat.getTimeInstance()
 
+        /**
+         * Create a bundle with proper arguments for this fragment.
+         *
+         * @param media The media to show, if null, the first media found will be shown.
+         * @param albumId The album to show, defaults to [media]'s bucket ID. If null, this instance
+         *                will show all medias in the device.
+         */
         fun createBundle(
-            album: Album?,
-            media: Media,
-            position: Int,
+            media: Media? = null,
+            albumId: Int? = media?.bucketId,
         ) = bundleOf(
-            KEY_ALBUM to album,
             KEY_MEDIA to media,
-            KEY_POSITION to position,
+            KEY_ALBUM_ID to albumId,
         )
 
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param album Album.
+         * @see createBundle
          * @return A new instance of fragment ReelsFragment.
          */
         fun newInstance(
-            album: Album?,
-            media: Media,
-            position: Int,
+            media: Media? = null,
+            albumId: Int? = media?.bucketId,
         ) = MediaViewerFragment().apply {
             arguments = createBundle(
-                album,
                 media,
-                position,
+                albumId,
             )
         }
     }

@@ -65,12 +65,10 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
 
     // MediaStore
     private val thumbnailAdapter by lazy {
-        ThumbnailAdapter { media, position ->
+        ThumbnailAdapter { media ->
             parentNavController.navigate(
                 R.id.action_mainFragment_to_mediaViewerFragment,
-                MediaViewerFragment.createBundle(
-                    null, media, position
-                )
+                MediaViewerFragment.createBundle(media, null)
             )
         }
     }

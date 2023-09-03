@@ -65,12 +65,10 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
 
     // MediaStore
     private val thumbnailAdapter by lazy {
-        ThumbnailAdapter { media, position ->
+        ThumbnailAdapter { media ->
             findNavController().navigate(
                 R.id.action_albumFragment_to_mediaViewerFragment,
-                MediaViewerFragment.createBundle(
-                    album, media, position
-                )
+                MediaViewerFragment.createBundle(media, album.id)
             )
         }
     }
