@@ -40,7 +40,7 @@ class ListItem @JvmOverloads constructor(
             leadingIconImageView.setImageDrawable(value)
             leadingIconImageView.isVisible = leadingIconImageView.drawable != null
         }
-    var showDivider: Boolean = true
+    private var showDivider: Boolean = true
         set(value) {
             field = value
             divider.isVisible = value
@@ -51,7 +51,7 @@ class ListItem @JvmOverloads constructor(
             supportingTextView.text = value
             supportingTextView.isVisible = !supportingText.isNullOrEmpty()
         }
-    var trailingSupportingText: CharSequence?
+    private var trailingSupportingText: CharSequence?
         get() = trailingSupportingTextView.text
         set(value) {
             trailingSupportingTextView.text = value
