@@ -128,14 +128,11 @@ class MediaInfoBottomSheetDialog(
                 cameraInfoListItem.supportingText,
             ).any { !it.isNullOrBlank() && it != unknownString }
 
-            mediaInfoListItem.supportingText = mutableListOf(
+            mediaInfoListItem.supportingText = listOf(
                 media.mimeType,
-            ).apply {
-                exifInterface.size?.let {
-                    add("${((it.width.toDouble() * it.height) / 1024000).round(1)}MP")
-                    add("${it.width} x ${it.height}")
-                }
-            }.joinToString(SEPARATOR)
+                "${((media.width.toDouble() * media.height) / 1024000).round(1)}MP",
+                "${media.width} x ${media.height}",
+            ).joinToString(SEPARATOR)
 
             exifInterface.latLong?.let {
                 val (lat, long) = it
