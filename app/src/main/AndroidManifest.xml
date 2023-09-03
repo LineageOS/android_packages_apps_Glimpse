@@ -19,6 +19,7 @@
 
     <application
         android:name="org.lineageos.glimpse.GlimpseApplication"
+        android:appCategory="image"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
