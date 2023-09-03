@@ -47,7 +47,6 @@ class AlbumsFragment : Fragment() {
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
-    private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Fragments
     private val parentNavController by lazy {

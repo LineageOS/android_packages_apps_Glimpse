@@ -46,7 +46,6 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
     // Views
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
     private val reelsRecyclerView by getViewProperty<RecyclerView>(R.id.reelsRecyclerView)
-    private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Fragments
     private val parentNavController by lazy {
