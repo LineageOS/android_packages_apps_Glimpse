@@ -77,6 +77,8 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
         val mimeTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
         val dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
         val dateModifiedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)
+        val widthIndex = it.getColumnIndex(MediaStore.Files.FileColumns.WIDTH)
+        val heightIndex = it.getColumnIndex(MediaStore.Files.FileColumns.HEIGHT)
         val orientationIndex = it.getColumnIndex(MediaStore.Files.FileColumns.ORIENTATION)
 
         val id = it.getLong(idIndex)
@@ -88,6 +90,8 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
         val mimeType = it.getString(mimeTypeIndex)
         val dateAdded = it.getLong(dateAddedIndex)
         val dateModified = it.getLong(dateModifiedIndex)
+        val width = it.getInt(widthIndex)
+        val height = it.getInt(heightIndex)
         val orientation = it.getInt(orientationIndex)
 
         Media.fromMediaStore(
@@ -100,6 +104,8 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
             mimeType,
             dateAdded,
             dateModified,
+            width,
+            height,
             orientation,
         )
     }

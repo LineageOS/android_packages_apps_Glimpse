@@ -21,6 +21,8 @@ data class Media(
     val mimeType: String,
     val dateAdded: Date,
     val dateModified: Date,
+    val width: Int,
+    val height: Int,
     val orientation: Int,
 ) : Comparable<Media>, Parcelable {
     val externalContentUri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
@@ -39,6 +41,8 @@ data class Media(
         parcel.readString()!!,
         Date(parcel.readLong()),
         Date(parcel.readLong()),
+        parcel.readInt(),
+        parcel.readInt(),
         parcel.readInt(),
     )
 
@@ -59,6 +63,8 @@ data class Media(
         { it.mimeType },
         { it.dateAdded },
         { it.dateModified },
+        { it.width },
+        { it.height },
         { it.orientation },
     )
 
@@ -74,6 +80,8 @@ data class Media(
         dest.writeString(mimeType)
         dest.writeLong(dateAdded.time)
         dest.writeLong(dateModified.time)
+        dest.writeInt(width)
+        dest.writeInt(height)
         dest.writeInt(orientation)
     }
 
@@ -92,6 +100,8 @@ data class Media(
             mimeType: String,
             dateAdded: Long,
             dateModified: Long,
+            width: Int,
+            height: Int,
             orientation: Int,
         ) = Media(
             id,
@@ -103,6 +113,8 @@ data class Media(
             mimeType,
             Date(dateAdded * 1000),
             Date(dateModified * 1000),
+            width,
+            height,
             orientation,
         )
     }

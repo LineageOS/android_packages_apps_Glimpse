@@ -60,6 +60,8 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                 val dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
                 val dateModifiedIndex =
                     it.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)
+                val widthIndex = it.getColumnIndex(MediaStore.Files.FileColumns.WIDTH)
+                val heightIndex = it.getColumnIndex(MediaStore.Files.FileColumns.HEIGHT)
                 val orientationIndex =
                     it.getColumnIndex(MediaStore.Files.FileColumns.ORIENTATION)
                 val bucketDisplayNameIndex =
@@ -94,6 +96,8 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                             val mimeType = it.getString(mimeTypeIndex)
                             val dateAdded = it.getLong(dateAddedIndex)
                             val dateModified = it.getLong(dateModifiedIndex)
+                            val width = it.getInt(widthIndex)
+                            val height = it.getInt(heightIndex)
                             val orientation = it.getInt(orientationIndex)
                             val bucketDisplayName = it.getString(bucketDisplayNameIndex)
 
@@ -120,6 +124,8 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                                     mimeType,
                                     dateAdded,
                                     dateModified,
+                                    width,
+                                    height,
                                     orientation,
                                 )
                             ).apply { size += 1 }
