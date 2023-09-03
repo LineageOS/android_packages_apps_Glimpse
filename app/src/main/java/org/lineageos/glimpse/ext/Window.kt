@@ -20,7 +20,7 @@ var Window.isAppearanceLightStatusBars
 
 fun Window.resetStatusBarAppearance() {
     windowInsetsController.isAppearanceLightStatusBars =
-        context.resources.configuration.isNightMode != true
+        !context.resources.configuration.isNightModeActive
 }
 
 fun Window.setBarsVisibility(

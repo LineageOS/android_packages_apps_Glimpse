@@ -248,15 +248,11 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
                             R.plurals.file_deletion_confirm_message, 1, 1
                         )
                     ).setPositiveButton(android.R.string.ok) { _, _ ->
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            deleteUriContract.launch(
-                                requireContext().contentResolver.createDeleteRequest(
-                                    it.externalContentUri
-                                )
+                        deleteUriContract.launch(
+                            requireContext().contentResolver.createDeleteRequest(
+                                it.externalContentUri
                             )
-                        } else {
-                            it.delete(requireContext().contentResolver)
-                        }
+                        )
                     }
                     .setNegativeButton(android.R.string.cancel) { _, _ ->
                         // Do nothing
@@ -271,16 +267,11 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
         favoriteButton.setOnClickListener {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    favoriteContract.launch(
-                        requireContext().contentResolver.createFavoriteRequest(
-                            !it.isFavorite, it.externalContentUri
-                        )
+                favoriteContract.launch(
+                    requireContext().contentResolver.createFavoriteRequest(
+                        !it.isFavorite, it.externalContentUri
                     )
-                } else {
-                    it.favorite(requireContext().contentResolver, !it.isFavorite)
-                    favoriteButton.isSelected = !it.isFavorite
-                }
+                )
             }
         }
 
@@ -396,19 +387,16 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             restoreLastTrashedMediaFromTrash = { trashMedia(media, false) }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val contract = when (trash) {
-                true -> trashUriContract
-                false -> restoreUriFromTrashContract
-            }
-            contract.launch(
-                requireContext().contentResolver.createTrashRequest(
-                    trash, media.externalContentUri
-                )
-            )
-        } else {
-            media.trash(requireContext().contentResolver, trash)
+        val contract = when (trash) {
+            true -> trashUriContract
+            false -> restoreUriFromTrashContract
         }
+
+        contract.launch(
+            requireContext().contentResolver.createTrashRequest(
+                trash, media.externalContentUri
+            )
+        )
     }
 
     private fun updateSheetsHeight() {

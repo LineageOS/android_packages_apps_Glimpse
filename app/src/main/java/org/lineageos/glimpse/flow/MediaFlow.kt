@@ -8,7 +8,6 @@ package org.lineageos.glimpse.flow
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.core.os.bundleOf
@@ -30,11 +29,8 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
             when (it) {
                 MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> MediaStore.Files.FileColumns.IS_FAVORITE eq 1
 
-                MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
                     MediaStore.Files.FileColumns.IS_TRASHED eq 1
-                } else {
-                    null
-                }
 
                 else -> MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
             }
@@ -52,16 +48,15 @@ class MediaFlow(private val context: Context, private val bucketId: Int?) : Quer
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
                 )
             )
-            // Exclude trashed media unless we want data for the trashed album
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                putInt(
-                    MediaStore.QUERY_ARG_MATCH_TRASHED, when (bucketId) {
-                        MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> MediaStore.MATCH_ONLY
 
-                        else -> MediaStore.MATCH_EXCLUDE
-                    }
-                )
-            }
+            // Exclude trashed media unless we want data for the trashed album
+            putInt(
+                MediaStore.QUERY_ARG_MATCH_TRASHED, when (bucketId) {
+                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> MediaStore.MATCH_ONLY
+
+                    else -> MediaStore.MATCH_EXCLUDE
+                }
+            )
         }
 
         return context.contentResolver.queryFlow(

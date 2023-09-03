@@ -5,12 +5,9 @@
 
 package org.lineageos.glimpse.models
 
-import android.content.ContentResolver
 import android.content.ContentUris
-import android.content.ContentValues
 import android.os.Parcel
 import android.os.Parcelable
-import android.provider.MediaStore
 import java.util.Date
 import kotlin.reflect.safeCast
 
@@ -70,22 +67,6 @@ data class Media(
         dest.writeInt(mediaType.ordinal)
         dest.writeString(mimeType)
         dest.writeLong(dateAdded.time)
-    }
-
-    fun delete(contentResolver: ContentResolver) {
-        contentResolver.delete(externalContentUri, null, null)
-    }
-
-    fun favorite(contentResolver: ContentResolver, value: Boolean) {
-        contentResolver.update(externalContentUri, ContentValues().apply {
-            put(MediaStore.MediaColumns.IS_FAVORITE, value)
-        }, null, null)
-    }
-
-    fun trash(contentResolver: ContentResolver, value: Boolean) {
-        contentResolver.update(externalContentUri, ContentValues().apply {
-            put(MediaStore.MediaColumns.IS_TRASHED, value)
-        }, null, null)
     }
 
     companion object CREATOR : Parcelable.Creator<Media> {

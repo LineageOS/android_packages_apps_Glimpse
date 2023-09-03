@@ -221,13 +221,9 @@ class MediaInfoBottomSheetDialog(
 
             val contentResolver = fragment.requireContext().contentResolver
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                editDescriptionCallback.launch(
-                    contentResolver.createWriteRequest(media.externalContentUri)
-                )
-            } else {
-                editDescription(media, description)
-            }
+            editDescriptionCallback.launch(
+                contentResolver.createWriteRequest(media.externalContentUri)
+            )
         }
 
         private fun editDescription(media: Media, description: String) {

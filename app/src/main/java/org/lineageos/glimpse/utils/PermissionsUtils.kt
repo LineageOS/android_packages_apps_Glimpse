@@ -79,11 +79,10 @@ class PermissionsUtils(private val context: Context) {
                 add(Manifest.permission.READ_MEDIA_IMAGES)
                 add(Manifest.permission.READ_MEDIA_VIDEO)
             } else {
-                add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                add(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                add(Manifest.permission.ACCESS_MEDIA_LOCATION)
-            }
+
+            add(Manifest.permission.ACCESS_MEDIA_LOCATION)
         }.toTypedArray()
     }
 }

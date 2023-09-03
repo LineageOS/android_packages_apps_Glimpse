@@ -36,9 +36,7 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
                 )
             )
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_INCLUDE)
-            }
+            putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_INCLUDE)
         }
 
         return context.contentResolver.queryFlow(
