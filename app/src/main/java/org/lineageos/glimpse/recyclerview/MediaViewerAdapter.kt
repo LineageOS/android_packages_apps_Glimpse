@@ -23,7 +23,6 @@ import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
 
-@androidx.media3.common.util.UnstableApi
 class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
     private val mediaViewerViewModel: MediaViewerViewModel,
@@ -58,11 +57,13 @@ class MediaViewerAdapter(
         holder.bind(data[position], position)
     }
 
+    @androidx.media3.common.util.UnstableApi
     override fun onViewAttachedToWindow(holder: MediaViewHolder) {
         super.onViewAttachedToWindow(holder)
         holder.onViewAttachedToWindow()
     }
 
+    @androidx.media3.common.util.UnstableApi
     override fun onViewDetachedFromWindow(holder: MediaViewHolder) {
         super.onViewDetachedFromWindow(holder)
         holder.onViewDetachedFromWindow()
@@ -83,6 +84,7 @@ class MediaViewerAdapter(
         private lateinit var media: Media
         private var position = -1
 
+        @androidx.media3.common.util.UnstableApi
         private val mediaPositionObserver = { currentPosition: Int ->
             val isNowVideoPlayer = currentPosition == position && media.mediaType == MediaType.VIDEO
 
@@ -116,6 +118,7 @@ class MediaViewerAdapter(
             }
         }
 
+        @androidx.media3.common.util.UnstableApi
         private val fullscreenModeObserver = { fullscreenMode: Boolean ->
             if (media.mediaType == MediaType.VIDEO) {
                 playerControlView.fade(!fullscreenMode)
@@ -140,6 +143,7 @@ class MediaViewerAdapter(
             }
         }
 
+        @androidx.media3.common.util.UnstableApi
         fun onViewAttachedToWindow() {
             view.findViewTreeLifecycleOwner()?.let {
                 mediaViewerViewModel.mediaPositionLiveData.observe(it, mediaPositionObserver)
@@ -148,6 +152,7 @@ class MediaViewerAdapter(
             }
         }
 
+        @androidx.media3.common.util.UnstableApi
         fun onViewDetachedFromWindow() {
             mediaViewerViewModel.mediaPositionLiveData.removeObserver(mediaPositionObserver)
             mediaViewerViewModel.sheetsHeightLiveData.removeObserver(sheetsHeightObserver)

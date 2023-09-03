@@ -54,7 +54,6 @@ import java.text.SimpleDateFormat
  * Use the [MediaViewerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-@androidx.media3.common.util.UnstableApi
 class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     // View models
     private val mediaViewModel: MediaViewerViewModel by viewModels { MediaViewerViewModel.Factory }
