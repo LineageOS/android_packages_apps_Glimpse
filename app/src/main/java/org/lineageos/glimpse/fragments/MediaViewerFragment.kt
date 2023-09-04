@@ -117,6 +117,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     private val media by lazy { arguments?.getParcelable(KEY_MEDIA, Media::class) }
     private val albumId by lazy { arguments?.getInt(KEY_ALBUM_ID, -1).takeUnless { it == -1 } }
     private val mediaUri by lazy { arguments?.getParcelable(KEY_MEDIA_URI, MediaUri::class) }
+    private val secure by lazy { arguments?.getBoolean(KEY_SECURE) == true }
 
     // Contracts
     private val deleteUriContract =
@@ -194,14 +195,6 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             this@MediaViewerFragment.mediaViewModel.mediaPosition = position
 
             mediaUri?.also {
-                dateTextView.isVisible = false
-                timeTextView.isVisible = false
-
-                favoriteButton.isVisible = false
-                infoButton.isVisible = false
-                adjustButton.isVisible = false
-                deleteButton.isVisible = false
-
                 if (it.mediaType == MediaType.VIDEO) {
                     with(exoPlayerLazy.value) {
                         setMediaItem(MediaItem.fromUri(it.externalContentUri))
@@ -366,6 +359,18 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             }
         }
 
+        // Set UI elements visibility based on initial arguments
+        val shouldShowMediaButtons = mediaUri == null && !secure
+
+        dateTextView.isVisible = shouldShowMediaButtons
+        timeTextView.isVisible = shouldShowMediaButtons
+
+        favoriteButton.isVisible = shouldShowMediaButtons
+        shareButton.isVisible = !secure
+        infoButton.isVisible = shouldShowMediaButtons
+        adjustButton.isVisible = shouldShowMediaButtons
+        deleteButton.isVisible = shouldShowMediaButtons
+
         updateSheetsHeight()
 
         permissionsGatedCallback.runAfterPermissionsCheck()
@@ -460,6 +465,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         private const val KEY_MEDIA = "media"
         private const val KEY_ALBUM_ID = "album_id"
         private const val KEY_MEDIA_URI = "media_uri"
+        private const val KEY_SECURE = "secure"
 
         private val dateFormatter = SimpleDateFormat.getDateInstance()
         private val timeFormatter = SimpleDateFormat.getTimeInstance()
@@ -472,15 +478,18 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
          *                will show all medias in the device.
          * @param mediaUri The [MediaUri] to display, setting this will disable any kind of
          *                 interaction to [MediaStore] and UI will be stripped down.
+         * @param secure Whether this should be considered a secure session (no edit, no share, etc)
          */
         fun createBundle(
             media: Media? = null,
             albumId: Int? = media?.bucketId,
             mediaUri: MediaUri? = null,
+            secure: Boolean = false,
         ) = bundleOf(
             KEY_MEDIA to media,
             KEY_ALBUM_ID to albumId,
             KEY_MEDIA_URI to mediaUri,
+            KEY_SECURE to secure,
         )
 
         /**
@@ -494,11 +503,13 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
             media: Media? = null,
             albumId: Int? = media?.bucketId,
             mediaUri: MediaUri? = null,
+            secure: Boolean = false,
         ) = MediaViewerFragment().apply {
             arguments = createBundle(
                 media,
                 albumId,
                 mediaUri,
+                secure,
             )
         }
     }

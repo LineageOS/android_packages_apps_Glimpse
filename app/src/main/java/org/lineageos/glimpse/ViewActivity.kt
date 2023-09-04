@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse
 
+import android.app.KeyguardManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -35,6 +36,9 @@ class ViewActivity : AppCompatActivity() {
     // okhttp
     private val httpClient = OkHttpClient()
 
+    // System services
+    private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,6 +47,12 @@ class ViewActivity : AppCompatActivity() {
         // Setup edge-to-edge
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        // We only want to show this activity on top of the keyguard if we're being launched with
+        // the ACTION_REVIEW_SECURE intent and the system is currently locked.
+        if (keyguardManager.isKeyguardLocked && intent.action == MediaStore.ACTION_REVIEW_SECURE) {
+            setShowWhenLocked(true)
+        }
+
         handleIntent(intent)
     }
 
@@ -50,8 +60,8 @@ class ViewActivity : AppCompatActivity() {
         ioScope.launch {
             when (intent.action) {
                 Intent.ACTION_VIEW -> handleView(intent)
-                MediaStore.ACTION_REVIEW,
-                MediaStore.ACTION_REVIEW_SECURE -> handleReview(intent)
+                MediaStore.ACTION_REVIEW -> handleReview(intent)
+                MediaStore.ACTION_REVIEW_SECURE -> handleReview(intent, true)
                 else -> runOnUiThread {
                     Toast.makeText(
                         this@ViewActivity,
@@ -68,8 +78,9 @@ class ViewActivity : AppCompatActivity() {
      * Handle a [Intent.ACTION_VIEW] intent (view a single media, controls also read-only).
      * Must be executed on [ioScope].
      * @param intent The received intent
+     * @param secure Whether we should show this media in a secure manner
      */
-    private fun handleView(intent: Intent) {
+    private fun handleView(intent: Intent, secure: Boolean = false) {
         val uri = intent.data ?: run {
             runOnUiThread {
                 Toast.makeText(
@@ -114,7 +125,7 @@ class ViewActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(
                     R.id.navHostFragment, MediaViewerFragment.newInstance(
-                        null, null, MediaUri(uri, uriType, dataType)
+                        null, null, MediaUri(uri, uriType, dataType), secure
                     )
                 )
                 .commit()
@@ -127,20 +138,21 @@ class ViewActivity : AppCompatActivity() {
      * If uri parsing from [MediaStore] fails, fallback to [handleView].
      * Must be executed on [ioScope].
      * @param intent The received intent
+     * @param secure Whether we should review this media in a secure manner
      */
-    private fun handleReview(intent: Intent) {
+    private fun handleReview(intent: Intent, secure: Boolean = false) {
         intent.data?.let { getMediaStoreMedia(it) }?.also {
             runOnUiThread {
                 supportFragmentManager
                     .beginTransaction()
                     .replace(
                         R.id.navHostFragment, MediaViewerFragment.newInstance(
-                            it, it.bucketId, null
+                            it, it.bucketId, null, secure
                         )
                     )
                     .commit()
             }
-        } ?: handleView(intent)
+        } ?: handleView(intent, secure)
     }
 
     /**
