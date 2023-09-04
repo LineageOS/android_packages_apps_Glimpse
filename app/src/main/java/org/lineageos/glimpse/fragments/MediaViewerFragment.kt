@@ -304,14 +304,14 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
         shareButton.setOnClickListener {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                val intent = Intent().shareIntent(it)
+                val intent = buildShareIntent(it)
                 startActivity(Intent.createChooser(intent, null))
             }
         }
 
         adjustButton.setOnClickListener {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                val intent = Intent().editIntent(it)
+                val intent = buildEditIntent(it)
                 startActivity(Intent.createChooser(intent, null))
             }
         }

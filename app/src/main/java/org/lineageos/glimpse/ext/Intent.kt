@@ -10,7 +10,7 @@ import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType.IMAGE
 import org.lineageos.glimpse.models.MediaType.VIDEO
 
-fun Intent.shareIntent(vararg medias: Media) = apply {
+fun buildShareIntent(vararg medias: Media) = Intent().apply {
     assert(medias.isNotEmpty()) { "No media" }
 
     if (medias.size == 1) {
@@ -37,7 +37,7 @@ fun Intent.shareIntent(vararg medias: Media) = apply {
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
 
-fun Intent.editIntent(media: Media) = apply {
+fun buildEditIntent(media: Media) = Intent().apply {
     action = Intent.ACTION_EDIT
     setDataAndType(media.externalContentUri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
