@@ -70,6 +70,10 @@ dependencies {
 
     // Media3
     implementation("androidx.media3:media3-exoplayer:1.1.1")
+    implementation("androidx.media3:media3-exoplayer-dash:1.1.1")
+    implementation("androidx.media3:media3-exoplayer-hls:1.1.1")
+    implementation("androidx.media3:media3-exoplayer-rtsp:1.1.1")
+    implementation("androidx.media3:media3-exoplayer-smoothstreaming:1.1.1")
     implementation("androidx.media3:media3-ui:1.1.1")
 
     // Navigation

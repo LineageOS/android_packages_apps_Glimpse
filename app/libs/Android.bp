@@ -181,6 +181,126 @@ android_library {
 }
 
 android_library_import {
+    name: "Glimpse_androidx.media3_media3-exoplayer-dash-nodeps",
+    aars: ["androidx/media3/media3-exoplayer-dash/1.1.1/media3-exoplayer-dash-1.1.1.aar"],
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+}
+
+android_library {
+    name: "Glimpse_androidx.media3_media3-exoplayer-dash",
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "androidx/media3/media3-exoplayer-dash/1.1.1/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer-dash-nodeps",
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_androidx.media3_media3-exoplayer-hls-nodeps",
+    aars: ["androidx/media3/media3-exoplayer-hls/1.1.1/media3-exoplayer-hls-1.1.1.aar"],
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+}
+
+android_library {
+    name: "Glimpse_androidx.media3_media3-exoplayer-hls",
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "androidx/media3/media3-exoplayer-hls/1.1.1/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer-hls-nodeps",
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_androidx.media3_media3-exoplayer-rtsp-nodeps",
+    aars: ["androidx/media3/media3-exoplayer-rtsp/1.1.1/media3-exoplayer-rtsp-1.1.1.aar"],
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+}
+
+android_library {
+    name: "Glimpse_androidx.media3_media3-exoplayer-rtsp",
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "androidx/media3/media3-exoplayer-rtsp/1.1.1/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer-rtsp-nodeps",
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_androidx.media3_media3-exoplayer-smoothstreaming-nodeps",
+    aars: ["androidx/media3/media3-exoplayer-smoothstreaming/1.1.1/media3-exoplayer-smoothstreaming-1.1.1.aar"],
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+}
+
+android_library {
+    name: "Glimpse_androidx.media3_media3-exoplayer-smoothstreaming",
+    sdk_version: "33",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "androidx/media3/media3-exoplayer-smoothstreaming/1.1.1/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_androidx.media3_media3-exoplayer-smoothstreaming-nodeps",
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-nodeps",
     aars: ["androidx/media3/media3-exoplayer/1.1.1/media3-exoplayer-1.1.1.aar"],
     sdk_version: "33",

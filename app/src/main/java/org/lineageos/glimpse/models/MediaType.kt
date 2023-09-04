@@ -20,5 +20,12 @@ enum class MediaType(
             MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO -> VIDEO
             else -> throw Exception("Unknown value $value")
         }
+
+        fun fromMimeType(mimeType: String) = when {
+            mimeType.startsWith("image/") -> IMAGE
+            mimeType.startsWith("video/") -> VIDEO
+            mimeType == "application/vnd.apple.mpegurl" -> VIDEO // HLS
+            else -> null
+        }
     }
 }

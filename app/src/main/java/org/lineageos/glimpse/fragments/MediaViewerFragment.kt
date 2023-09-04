@@ -8,7 +8,6 @@ package org.lineageos.glimpse.fragments
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.View.MeasureSpec
@@ -20,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -42,6 +42,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.MediaUri
 import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
@@ -75,7 +76,9 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     // Permissions
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            mediaUri?.also {
+                initData(it)
+            } ?: viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 mediaViewModel.setBucketId(albumId)
                 mediaViewModel.mediaForAlbum.collectLatest(::initData)
             }
@@ -113,6 +116,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     // Arguments
     private val media by lazy { arguments?.getParcelable(KEY_MEDIA, Media::class) }
     private val albumId by lazy { arguments?.getInt(KEY_ALBUM_ID, -1).takeUnless { it == -1 } }
+    private val mediaUri by lazy { arguments?.getParcelable(KEY_MEDIA_URI, MediaUri::class) }
 
     // Contracts
     private val deleteUriContract =
@@ -189,27 +193,48 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
             this@MediaViewerFragment.mediaViewModel.mediaPosition = position
 
-            val media = mediaViewerAdapter.getItemAtPosition(position)
+            mediaUri?.also {
+                dateTextView.isVisible = false
+                timeTextView.isVisible = false
 
-            dateTextView.text = dateFormatter.format(media.dateAdded)
-            timeTextView.text = timeFormatter.format(media.dateAdded)
-            favoriteButton.isSelected = media.isFavorite
-            deleteButton.setImageResource(
-                when (media.isTrashed) {
-                    true -> R.drawable.ic_restore_from_trash
-                    false -> R.drawable.ic_delete
-                }
-            )
+                favoriteButton.isVisible = false
+                infoButton.isVisible = false
+                adjustButton.isVisible = false
+                deleteButton.isVisible = false
 
-            if (media.mediaType == MediaType.VIDEO) {
-                with(exoPlayerLazy.value) {
-                    setMediaItem(MediaItem.fromUri(media.externalContentUri))
-                    seekTo(C.TIME_UNSET)
-                    prepare()
-                    playWhenReady = true
+                if (it.mediaType == MediaType.VIDEO) {
+                    with(exoPlayerLazy.value) {
+                        setMediaItem(MediaItem.fromUri(it.externalContentUri))
+                        seekTo(C.TIME_UNSET)
+                        prepare()
+                        playWhenReady = true
+                    }
+                } else {
+                    exoPlayer?.stop()
                 }
-            } else {
-                exoPlayer?.stop()
+            } ?: run {
+                val media = mediaViewerAdapter.getItemAtPosition(position)
+
+                dateTextView.text = dateFormatter.format(media.dateAdded)
+                timeTextView.text = timeFormatter.format(media.dateAdded)
+                favoriteButton.isSelected = media.isFavorite
+                deleteButton.setImageResource(
+                    when (media.isTrashed) {
+                        true -> R.drawable.ic_restore_from_trash
+                        false -> R.drawable.ic_delete
+                    }
+                )
+
+                if (media.mediaType == MediaType.VIDEO) {
+                    with(exoPlayerLazy.value) {
+                        setMediaItem(MediaItem.fromUri(media.externalContentUri))
+                        seekTo(C.TIME_UNSET)
+                        prepare()
+                        playWhenReady = true
+                    }
+                } else {
+                    exoPlayer?.stop()
+                }
             }
         }
     }
@@ -303,7 +328,10 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         viewPager.registerOnPageChangeCallback(onPageChangeCallback)
 
         shareButton.setOnClickListener {
-            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
+            mediaUri?.also {
+                val intent = buildShareIntent(it)
+                startActivity(Intent.createChooser(intent, null))
+            } ?: mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 val intent = buildShareIntent(it)
                 startActivity(Intent.createChooser(intent, null))
             }
@@ -394,6 +422,13 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         onPageChangeCallback.onPageSelected(mediaViewModel.mediaPosition)
     }
 
+    private fun initData(mediaUri: MediaUri) {
+        mediaViewerAdapter.mediaUri = mediaUri
+
+        viewPager.setCurrentItem(0, false)
+        onPageChangeCallback.onPageSelected(0)
+    }
+
     private fun trashMedia(media: Media, trash: Boolean = !media.isTrashed) {
         if (trash) {
             restoreLastTrashedMediaFromTrash = { trashMedia(media, false) }
@@ -424,6 +459,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     companion object {
         private const val KEY_MEDIA = "media"
         private const val KEY_ALBUM_ID = "album_id"
+        private const val KEY_MEDIA_URI = "media_uri"
 
         private val dateFormatter = SimpleDateFormat.getDateInstance()
         private val timeFormatter = SimpleDateFormat.getTimeInstance()
@@ -434,13 +470,17 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
          * @param media The media to show, if null, the first media found will be shown.
          * @param albumId The album to show, defaults to [media]'s bucket ID. If null, this instance
          *                will show all medias in the device.
+         * @param mediaUri The [MediaUri] to display, setting this will disable any kind of
+         *                 interaction to [MediaStore] and UI will be stripped down.
          */
         fun createBundle(
             media: Media? = null,
             albumId: Int? = media?.bucketId,
+            mediaUri: MediaUri? = null,
         ) = bundleOf(
             KEY_MEDIA to media,
             KEY_ALBUM_ID to albumId,
+            KEY_MEDIA_URI to mediaUri,
         )
 
         /**
@@ -453,10 +493,12 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         fun newInstance(
             media: Media? = null,
             albumId: Int? = media?.bucketId,
+            mediaUri: MediaUri? = null,
         ) = MediaViewerFragment().apply {
             arguments = createBundle(
                 media,
                 albumId,
+                mediaUri,
             )
         }
     }

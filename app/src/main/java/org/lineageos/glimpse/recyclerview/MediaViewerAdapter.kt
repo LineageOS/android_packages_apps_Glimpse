@@ -21,6 +21,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.MediaUri
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
 
 class MediaViewerAdapter(
@@ -40,13 +41,26 @@ class MediaViewerAdapter(
             }
         }
 
+    var mediaUri: MediaUri? = null
+        set(value) {
+            if (value == field) {
+                return
+            }
+
+            field = value
+
+            value?.let {
+                @Suppress("NotifyDataSetChanged") notifyDataSetChanged()
+            }
+        }
+
     init {
         setHasStableIds(true)
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = mediaUri?.let { 1 } ?: data.size
 
-    override fun getItemId(position: Int) = data[position].id
+    override fun getItemId(position: Int) = mediaUri?.let { 0 } ?: data[position].id
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
@@ -54,7 +68,9 @@ class MediaViewerAdapter(
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
-        holder.bind(data[position], position)
+        mediaUri?.let {
+            holder.bind(it, position)
+        } ?: holder.bind(data[position], position)
     }
 
     @androidx.media3.common.util.UnstableApi
@@ -69,7 +85,9 @@ class MediaViewerAdapter(
         holder.onViewDetachedFromWindow()
     }
 
-    fun getItemAtPosition(position: Int) = data[position]
+    fun getItemAtPosition(position: Int) = mediaUri?.let {
+        throw Exception("Called while Uri is used")
+    } ?: data[position]
 
     class MediaViewHolder(
         private val view: View,
@@ -81,12 +99,14 @@ class MediaViewerAdapter(
         private val playerControlView = view.findViewById<PlayerControlView>(R.id.exo_controller)
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
 
-        private lateinit var media: Media
+        private var media: Media? = null
+        private var mediaUri: MediaUri? = null
         private var position = -1
 
         @androidx.media3.common.util.UnstableApi
-        private val mediaPositionObserver = { currentPosition: Int ->
-            val isNowVideoPlayer = currentPosition == position && media.mediaType == MediaType.VIDEO
+        private val mediaPositionObserver: (Int) -> Unit = { currentPosition: Int ->
+            val isNowVideoPlayer = mediaUri?.let { it.mediaType == MediaType.VIDEO }
+                ?: (currentPosition == position && media?.mediaType == MediaType.VIDEO)
 
             imageView.isVisible = !isNowVideoPlayer
             playerView.isVisible = isNowVideoPlayer
@@ -120,7 +140,7 @@ class MediaViewerAdapter(
 
         @androidx.media3.common.util.UnstableApi
         private val fullscreenModeObserver = { fullscreenMode: Boolean ->
-            if (media.mediaType == MediaType.VIDEO) {
+            if ((mediaUri?.mediaType ?: media?.mediaType) == MediaType.VIDEO) {
                 playerControlView.fade(!fullscreenMode)
             }
         }
@@ -141,6 +161,12 @@ class MediaViewerAdapter(
                 memoryCacheKey("full_${media.id}")
                 placeholderMemoryCacheKey("thumbnail_${media.id}")
             }
+        }
+
+        fun bind(mediaUri: MediaUri, position: Int) {
+            this.mediaUri = mediaUri
+            this.position = position
+            imageView.load(mediaUri.externalContentUri)
         }
 
         @androidx.media3.common.util.UnstableApi
