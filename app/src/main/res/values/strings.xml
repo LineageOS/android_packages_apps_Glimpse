@@ -76,6 +76,7 @@
     <string name="media_info_location_open_with">View the location with</string>
 
     <!-- View activity -->
+    <string name="intent_action_not_supported">Action not supported</string>
     <string name="intent_media_not_found">Media not found</string>
     <string name="intent_media_type_not_found">Media type not found</string>
     <string name="intent_media_type_not_supported">Media type not supported</string>

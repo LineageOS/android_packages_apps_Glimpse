@@ -10,15 +10,20 @@ import android.provider.MediaStore
 
 enum class MediaType(
     val externalContentUri: Uri,
+    val mediaStoreValue: Int,
 ) {
-    IMAGE(MediaStore.Images.Media.EXTERNAL_CONTENT_URI),
-    VIDEO(MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+    IMAGE(
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE,
+    ),
+    VIDEO(
+        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+        MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO,
+    );
 
     companion object {
-        fun fromMediaStoreValue(value: Int) = when (value) {
-            MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE -> IMAGE
-            MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO -> VIDEO
-            else -> throw Exception("Unknown value $value")
+        fun fromMediaStoreValue(value: Int) = values().first {
+            value == it.mediaStoreValue
         }
 
         fun fromMimeType(mimeType: String) = when {
