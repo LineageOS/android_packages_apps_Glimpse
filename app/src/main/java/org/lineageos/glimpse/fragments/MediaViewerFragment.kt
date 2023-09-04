@@ -78,10 +78,24 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         viewLifecycleOwner.lifecycleScope.launch {
             mediaUri?.also {
                 initData(it)
-            } ?: viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                mediaViewModel.setBucketId(albumId)
-                mediaViewModel.mediaForAlbum.collectLatest(::initData)
-            }
+            } ?: additionalMedias?.also { additionalMedias ->
+                val medias = media?.let {
+                    arrayOf(it) + additionalMedias
+                } ?: additionalMedias
+
+                initData(medias.toSet().sortedByDescending { it.dateAdded })
+            } ?: secure.takeIf { !it }?.let {
+                albumId?.also {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                        mediaViewModel.setBucketId(it)
+                        mediaViewModel.mediaForAlbum.collectLatest(::initData)
+                    }
+                } ?: viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    mediaViewModel.media.collectLatest(::initData)
+                }
+            } ?: media?.also {
+                initData(listOf(it))
+            } ?: initData(listOf())
         }
     }
 
@@ -116,8 +130,17 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     // Arguments
     private val media by lazy { arguments?.getParcelable(KEY_MEDIA, Media::class) }
     private val albumId by lazy { arguments?.getInt(KEY_ALBUM_ID, -1).takeUnless { it == -1 } }
+    private val additionalMedias by lazy {
+        arguments?.getParcelableArray(KEY_ADDITIONAL_MEDIAS, Media::class)?.takeIf { it.isNotEmpty() }
+    }
     private val mediaUri by lazy { arguments?.getParcelable(KEY_MEDIA_URI, MediaUri::class) }
     private val secure by lazy { arguments?.getBoolean(KEY_SECURE) == true }
+
+    /**
+     * Check if we're showing a static set of medias.
+     */
+    private val readOnly
+        get() = mediaUri != null || additionalMedias != null || secure
 
     // Contracts
     private val deleteUriContract =
@@ -360,16 +383,17 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         }
 
         // Set UI elements visibility based on initial arguments
-        val shouldShowMediaButtons = mediaUri == null && !secure
+        val readOnly = readOnly
+        val shouldShowMediaButtons = mediaUri == null
 
         dateTextView.isVisible = shouldShowMediaButtons
         timeTextView.isVisible = shouldShowMediaButtons
 
-        favoriteButton.isVisible = shouldShowMediaButtons
+        favoriteButton.isVisible = !readOnly
         shareButton.isVisible = !secure
         infoButton.isVisible = shouldShowMediaButtons
-        adjustButton.isVisible = shouldShowMediaButtons
-        deleteButton.isVisible = shouldShowMediaButtons
+        adjustButton.isVisible = !readOnly
+        deleteButton.isVisible = !readOnly
 
         updateSheetsHeight()
 
@@ -464,6 +488,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     companion object {
         private const val KEY_MEDIA = "media"
         private const val KEY_ALBUM_ID = "album_id"
+        private const val KEY_ADDITIONAL_MEDIAS = "additional_medias"
         private const val KEY_MEDIA_URI = "media_uri"
         private const val KEY_SECURE = "secure"
 
@@ -475,7 +500,9 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
          *
          * @param media The media to show, if null, the first media found will be shown.
          * @param albumId The album to show, defaults to [media]'s bucket ID. If null, this instance
-         *                will show all medias in the device.
+         *                will show all medias in the device unless [additionalMedias].
+         * @param additionalMedias Additional [Media] to show alongside [media]. [albumId]
+         *                         must be null for this array to be used.
          * @param mediaUri The [MediaUri] to display, setting this will disable any kind of
          *                 interaction to [MediaStore] and UI will be stripped down.
          * @param secure Whether this should be considered a secure session (no edit, no share, etc)
@@ -483,11 +510,13 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         fun createBundle(
             media: Media? = null,
             albumId: Int? = media?.bucketId,
+            additionalMedias: List<Media>? = null,
             mediaUri: MediaUri? = null,
             secure: Boolean = false,
         ) = bundleOf(
             KEY_MEDIA to media,
             KEY_ALBUM_ID to albumId,
+            KEY_ADDITIONAL_MEDIAS to additionalMedias,
             KEY_MEDIA_URI to mediaUri,
             KEY_SECURE to secure,
         )
@@ -502,12 +531,14 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         fun newInstance(
             media: Media? = null,
             albumId: Int? = media?.bucketId,
+            additionalMedias: List<Media>? = null,
             mediaUri: MediaUri? = null,
             secure: Boolean = false,
         ) = MediaViewerFragment().apply {
             arguments = createBundle(
                 media,
                 albumId,
+                additionalMedias,
                 mediaUri,
                 secure,
             )

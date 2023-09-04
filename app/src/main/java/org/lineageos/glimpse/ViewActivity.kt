@@ -21,6 +21,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.fragments.MediaViewerFragment
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
@@ -125,7 +126,7 @@ class ViewActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(
                     R.id.navHostFragment, MediaViewerFragment.newInstance(
-                        null, null, MediaUri(uri, uriType, dataType), secure
+                        null, null, null, MediaUri(uri, uriType, dataType), secure
                     )
                 )
                 .commit()
@@ -142,12 +143,19 @@ class ViewActivity : AppCompatActivity() {
      */
     private fun handleReview(intent: Intent, secure: Boolean = false) {
         intent.data?.let { getMediaStoreMedia(it) }?.also {
+            val additionalMedias = intent.clipData?.asArray()?.mapNotNull {
+                getMediaStoreMedia(it.uri)
+            }
             runOnUiThread {
                 supportFragmentManager
                     .beginTransaction()
                     .replace(
                         R.id.navHostFragment, MediaViewerFragment.newInstance(
-                            it, it.bucketId, null, secure
+                            it,
+                            it.bucketId.takeUnless { secure },
+                            additionalMedias,
+                            null,
+                            secure
                         )
                     )
                     .commit()
