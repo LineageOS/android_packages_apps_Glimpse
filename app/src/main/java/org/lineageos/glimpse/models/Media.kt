@@ -8,6 +8,7 @@ package org.lineageos.glimpse.models
 import android.content.ContentUris
 import android.os.Parcel
 import android.os.Parcelable
+import org.lineageos.glimpse.ext.*
 import java.util.Date
 import kotlin.reflect.safeCast
 
@@ -33,11 +34,7 @@ data class Media(
         parcel.readString()!!,
         parcel.readInt() == 1,
         parcel.readInt() == 1,
-        when (parcel.readInt()) {
-            MediaType.IMAGE.ordinal -> MediaType.IMAGE
-            MediaType.VIDEO.ordinal -> MediaType.VIDEO
-            else -> throw Exception("Invalid media type")
-        },
+        parcel.readSerializable(MediaType::class)!!,
         parcel.readString()!!,
         Date(parcel.readLong()),
         Date(parcel.readLong()),
@@ -76,7 +73,7 @@ data class Media(
         dest.writeString(displayName)
         dest.writeInt(if (isFavorite) 1 else 0)
         dest.writeInt(if (isTrashed) 1 else 0)
-        dest.writeInt(mediaType.ordinal)
+        dest.writeSerializable(mediaType)
         dest.writeString(mimeType)
         dest.writeLong(dateAdded.time)
         dest.writeLong(dateModified.time)
