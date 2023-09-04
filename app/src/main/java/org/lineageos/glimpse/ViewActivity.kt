@@ -44,10 +44,6 @@ class ViewActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         handleIntent(intent)
-
-        addOnNewIntentListener {
-            handleIntent(it)
-        }
     }
 
     private fun handleIntent(intent: Intent) {

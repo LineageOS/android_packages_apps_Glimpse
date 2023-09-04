@@ -45,8 +45,7 @@
         <activity
             android:name=".ViewActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
-            android:exported="true"
-            android:launchMode="singleTop">
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
