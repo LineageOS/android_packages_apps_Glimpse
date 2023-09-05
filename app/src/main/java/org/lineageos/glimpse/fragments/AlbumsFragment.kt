@@ -31,7 +31,7 @@ import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
-import org.lineageos.glimpse.viewmodels.MediaViewModel
+import org.lineageos.glimpse.viewmodels.AlbumsViewModel
 
 /**
  * An albums list visualizer.
@@ -40,7 +40,7 @@ import org.lineageos.glimpse.viewmodels.MediaViewModel
  */
 class AlbumsFragment : Fragment() {
     // View models
-    private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
+    private val albumsViewModel: AlbumsViewModel by viewModels { AlbumsViewModel.Factory }
 
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
@@ -55,7 +55,7 @@ class AlbumsFragment : Fragment() {
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                mediaViewModel.albums.collectLatest {
+                albumsViewModel.albums.collectLatest {
                     albumThumbnailAdapter.data = it.toTypedArray()
                 }
             }
