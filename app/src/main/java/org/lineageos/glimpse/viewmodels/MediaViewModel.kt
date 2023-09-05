@@ -5,11 +5,9 @@
 
 package org.lineageos.glimpse.viewmodels
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +18,7 @@ import org.lineageos.glimpse.repository.MediaRepository
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 open class MediaViewModel(
-    private val savedStateHandle: SavedStateHandle, private val mediaRepository: MediaRepository
+    private val mediaRepository: MediaRepository
 ) : ViewModel() {
     val media = mediaRepository.media(MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id)
     val albums = mediaRepository.albums()
@@ -37,7 +35,6 @@ open class MediaViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 MediaViewModel(
-                    savedStateHandle = createSavedStateHandle(),
                     mediaRepository = (this[APPLICATION_KEY] as GlimpseApplication).mediaRepository,
                 )
             }

@@ -19,7 +19,7 @@ import org.lineageos.glimpse.repository.MediaRepository
 class MediaViewerViewModel(
     savedStateHandle: SavedStateHandle,
     mediaRepository: MediaRepository,
-) : MediaViewModel(savedStateHandle, mediaRepository) {
+) : MediaViewModel(mediaRepository) {
     private val mediaPositionInternal = savedStateHandle.getLiveData<Int>(MEDIA_POSITION_KEY)
     val mediaPositionLiveData: LiveData<Int> = mediaPositionInternal
     var mediaPosition: Int
