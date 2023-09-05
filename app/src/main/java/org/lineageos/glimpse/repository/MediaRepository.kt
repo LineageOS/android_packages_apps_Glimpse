@@ -13,8 +13,8 @@ import org.lineageos.glimpse.flow.MediaFlow
 
 @Suppress("Unused")
 class MediaRepository(private val context: Context) {
-    fun media(bucketId: Int? = null) = MediaFlow(context, bucketId).flowData().flowOn(Dispatchers.IO)
-    fun mediaCursor(bucketId: Int? = null) = MediaFlow(context, bucketId).flowCursor().flowOn(Dispatchers.IO)
+    fun media(bucketId: Int) = MediaFlow(context, bucketId).flowData().flowOn(Dispatchers.IO)
+    fun mediaCursor(bucketId: Int) = MediaFlow(context, bucketId).flowCursor().flowOn(Dispatchers.IO)
     fun albums() = AlbumsFlow(context).flowData().flowOn(Dispatchers.IO)
     fun albumsCursor() = AlbumsFlow(context).flowCursor().flowOn(Dispatchers.IO)
 }

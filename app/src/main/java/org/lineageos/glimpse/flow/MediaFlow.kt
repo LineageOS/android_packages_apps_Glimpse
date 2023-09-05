@@ -18,25 +18,25 @@ import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
-class MediaFlow(private val context: Context, private val bucketId: Int?) : QueryFlow<Media>() {
+class MediaFlow(private val context: Context, private val bucketId: Int) : QueryFlow<Media>() {
     override fun flowCursor(): Flow<Cursor?> {
         val uri = MediaQuery.MediaStoreFileUri
         val projection = MediaQuery.MediaProjection
         val imageOrVideo =
             (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
                     (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
-        val albumFilter = bucketId?.let {
-            when (it) {
-                MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> MediaStore.Files.FileColumns.IS_FAVORITE eq 1
+        val albumFilter = when (bucketId) {
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> MediaStore.Files.FileColumns.IS_FAVORITE eq 1
 
-                MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
-                    MediaStore.Files.FileColumns.IS_TRASHED eq 1
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
+                MediaStore.Files.FileColumns.IS_TRASHED eq 1
 
-                else -> MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
-            }
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id -> null
+
+            else -> MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
         }
         val selection = albumFilter?.let { imageOrVideo and it } ?: imageOrVideo
-        val selectionArgs = bucketId?.takeIf {
+        val selectionArgs = bucketId.takeIf {
             MediaStoreBuckets.values().none { bucket -> it == bucket.id }
         }?.let { arrayOf(it.toString()) }
         val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"

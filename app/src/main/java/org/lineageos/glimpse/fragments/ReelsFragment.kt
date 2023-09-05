@@ -28,6 +28,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
+import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.MediaViewModel
@@ -68,7 +69,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
         ThumbnailAdapter { media ->
             parentNavController.navigate(
                 R.id.action_mainFragment_to_mediaViewerFragment,
-                MediaViewerFragment.createBundle(media, null)
+                MediaViewerFragment.createBundle(media, MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id)
             )
         }
     }

@@ -84,14 +84,10 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
                 } ?: additionalMedias
 
                 initData(medias.toSet().sortedByDescending { it.dateAdded })
-            } ?: secure.takeIf { !it }?.let {
-                albumId?.also {
-                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                        mediaViewModel.setBucketId(it)
-                        mediaViewModel.mediaForAlbum.collectLatest(::initData)
-                    }
-                } ?: viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    mediaViewModel.media.collectLatest(::initData)
+            } ?: albumId?.also {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                    mediaViewModel.setBucketId(it)
+                    mediaViewModel.mediaForAlbum.collectLatest(::initData)
                 }
             } ?: media?.also {
                 initData(listOf(it))
@@ -140,7 +136,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
      * Check if we're showing a static set of medias.
      */
     private val readOnly
-        get() = mediaUri != null || additionalMedias != null || secure
+        get() = mediaUri != null || additionalMedias != null || albumId == null || secure
 
     // Contracts
     private val deleteUriContract =
@@ -498,11 +494,12 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         /**
          * Create a bundle with proper arguments for this fragment.
          *
-         * @param media The media to show, if null, the first media found will be shown.
+         * @param media The first media to show, if null, the first media found will be shown.
          * @param albumId The album to show, defaults to [media]'s bucket ID. If null, this instance
-         *                will show all medias in the device unless [additionalMedias].
-         * @param additionalMedias Additional [Media] to show alongside [media]. [albumId]
-         *                         must be null for this array to be used.
+         *                will only show [media] plus [additionalMedias] if set.
+         * @param additionalMedias Additional [Media] to show alongside [media], setting this
+         *                         will disable any kind of interaction to [MediaStore]
+         *                         and UI will be stripped down.
          * @param mediaUri The [MediaUri] to display, setting this will disable any kind of
          *                 interaction to [MediaStore] and UI will be stripped down.
          * @param secure Whether this should be considered a secure session (no edit, no share, etc)

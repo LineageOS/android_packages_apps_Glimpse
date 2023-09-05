@@ -17,15 +17,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import org.lineageos.glimpse.GlimpseApplication
 import org.lineageos.glimpse.repository.MediaRepository
+import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 open class MediaViewModel(
     private val savedStateHandle: SavedStateHandle, private val mediaRepository: MediaRepository
 ) : ViewModel() {
-    val media = mediaRepository.media(null)
+    val media = mediaRepository.media(MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id)
     val albums = mediaRepository.albums()
 
-    private val bucketId = MutableStateFlow<Int?>(null)
-    fun setBucketId(bucketId: Int?) {
+    private val bucketId = MutableStateFlow(MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id)
+    fun setBucketId(bucketId: Int) {
         this.bucketId.value = bucketId
     }
 
