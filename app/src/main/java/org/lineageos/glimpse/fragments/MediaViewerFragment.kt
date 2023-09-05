@@ -359,7 +359,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
         infoButton.setOnClickListener {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 MediaInfoBottomSheetDialog(
-                    requireContext(), it, mediaInfoBottomSheetDialogCallbacks
+                    requireContext(), it, mediaInfoBottomSheetDialogCallbacks, secure
                 ).show()
             }
         }

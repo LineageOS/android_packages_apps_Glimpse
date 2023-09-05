@@ -37,6 +37,7 @@ class MediaInfoBottomSheetDialog(
     context: Context,
     media: Media,
     callbacks: Callbacks,
+    secure: Boolean = false,
 ) : BottomSheetDialog(context) {
     // Views
     private val artistInfoListItem by lazy { findViewById<ListItem>(R.id.artistInfoListItem)!! }
@@ -90,7 +91,7 @@ class MediaInfoBottomSheetDialog(
                 it.isNotBlank()
             }
             val isSupportedFormatForSavingAttributes =
-                exifInterface.isSupportedFormatForSavingAttributes
+                exifInterface.isSupportedFormatForSavingAttributes && !secure
             descriptionEditText.setText(userComment ?: "")
             descriptionEditText.inputType = when (isSupportedFormatForSavingAttributes) {
                 true -> InputType.TYPE_CLASS_TEXT
