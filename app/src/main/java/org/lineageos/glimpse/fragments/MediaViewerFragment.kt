@@ -56,7 +56,11 @@ import java.text.SimpleDateFormat
  */
 class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     // View models
-    private val mediaViewModel: MediaViewerViewModel by viewModels { MediaViewerViewModel.Factory }
+    private val mediaViewModel: MediaViewerViewModel by viewModels {
+        albumId?.let {
+            MediaViewerViewModel.factory(lifecycleScope, it)
+        } ?: MediaViewerViewModel.factory(lifecycleScope)
+    }
 
     // Views
     private val adjustButton by getViewProperty<ImageButton>(R.id.adjustButton)
@@ -85,9 +89,8 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
                 initData(medias.toSet().sortedByDescending { it.dateAdded })
             } ?: albumId?.also {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                    mediaViewModel.setBucketId(it)
-                    mediaViewModel.mediaForAlbum.collectLatest(::initData)
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    mediaViewModel.media.collectLatest(::initData)
                 }
             } ?: media?.also {
                 initData(listOf(it))

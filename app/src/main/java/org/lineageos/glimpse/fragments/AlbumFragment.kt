@@ -44,7 +44,9 @@ import org.lineageos.glimpse.viewmodels.MediaViewModel
  */
 class AlbumFragment : Fragment(R.layout.fragment_album) {
     // View models
-    private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
+    private val mediaViewModel: MediaViewModel by viewModels {
+        MediaViewModel.factory(lifecycleScope, album.id)
+    }
 
     // Views
     private val albumRecyclerView by getViewProperty<RecyclerView>(R.id.albumRecyclerView)
@@ -54,10 +56,9 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     // Permissions
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                mediaViewModel.setBucketId(album.id)
-                mediaViewModel.mediaForAlbum.collectLatest { data ->
-                    thumbnailAdapter.data = data.toTypedArray()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mediaViewModel.media.collectLatest {
+                    thumbnailAdapter.data = it.toTypedArray()
                 }
             }
         }

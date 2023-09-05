@@ -40,7 +40,9 @@ import org.lineageos.glimpse.viewmodels.MediaViewModel
  */
 class ReelsFragment : Fragment(R.layout.fragment_reels) {
     // View models
-    private val mediaViewModel: MediaViewModel by viewModels { MediaViewModel.Factory }
+    private val mediaViewModel: MediaViewModel by viewModels {
+        MediaViewModel.factory(lifecycleScope)
+    }
 
     // Views
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
@@ -55,9 +57,9 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
     private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                mediaViewModel.media.collectLatest { data ->
-                    thumbnailAdapter.data = data.toTypedArray()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mediaViewModel.media.collectLatest {
+                    thumbnailAdapter.data = it.toTypedArray()
                 }
             }
         }
