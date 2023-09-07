@@ -63,7 +63,6 @@ class MediaFlow(private val context: Context, private val bucketId: Int) : Query
             uri,
             projection,
             queryArgs,
-            null,
         )
     }
 
