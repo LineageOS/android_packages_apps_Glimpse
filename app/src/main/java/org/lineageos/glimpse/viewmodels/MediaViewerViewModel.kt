@@ -5,24 +5,20 @@
 
 package org.lineageos.glimpse.viewmodels
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import org.lineageos.glimpse.GlimpseApplication
-import org.lineageos.glimpse.repository.MediaRepository
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 class MediaViewerViewModel(
+    application: Application,
     savedStateHandle: SavedStateHandle,
-    mediaRepository: MediaRepository,
-    externalScope: CoroutineScope,
     bucketId: Int,
-) : MediaViewModel(mediaRepository, externalScope, bucketId) {
+) : MediaViewModel(application, bucketId) {
     private val mediaPositionInternal = savedStateHandle.getLiveData<Int>(MEDIA_POSITION_KEY)
     val mediaPositionLiveData: LiveData<Int> = mediaPositionInternal
     var mediaPosition: Int
@@ -55,18 +51,16 @@ class MediaViewerViewModel(
         private const val MEDIA_POSITION_KEY = "position"
 
         fun factory(
-            externalScope: CoroutineScope,
+            application: Application,
             bucketId: Int = MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id
-        ) =
-            viewModelFactory {
-                initializer {
-                    MediaViewerViewModel(
-                        savedStateHandle = createSavedStateHandle(),
-                        mediaRepository = (this[APPLICATION_KEY] as GlimpseApplication).mediaRepository,
-                        externalScope = externalScope,
-                        bucketId = bucketId,
-                    )
-                }
+        ) = viewModelFactory {
+            initializer {
+                MediaViewerViewModel(
+                    application = application,
+                    savedStateHandle = createSavedStateHandle(),
+                    bucketId = bucketId,
+                )
             }
+        }
     }
 }

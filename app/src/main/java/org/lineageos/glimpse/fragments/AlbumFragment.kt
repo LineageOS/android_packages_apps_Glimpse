@@ -45,7 +45,7 @@ import org.lineageos.glimpse.viewmodels.MediaViewModel
 class AlbumFragment : Fragment(R.layout.fragment_album) {
     // View models
     private val mediaViewModel: MediaViewModel by viewModels {
-        MediaViewModel.factory(lifecycleScope, album.id)
+        MediaViewModel.factory(requireActivity().application, album.id)
     }
 
     // Views

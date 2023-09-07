@@ -5,34 +5,18 @@
 
 package org.lineageos.glimpse.viewmodels
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.CoroutineScope
+import android.app.Application
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.shareIn
-import org.lineageos.glimpse.GlimpseApplication
 import org.lineageos.glimpse.repository.MediaRepository
 
 open class AlbumsViewModel(
-    private val mediaRepository: MediaRepository,
-    private val externalScope: CoroutineScope,
-) : ViewModel() {
-    val albums = mediaRepository.albums().shareIn(
-        externalScope,
+    application: Application,
+) : GlimpseViewModel(application) {
+    val albums = MediaRepository.albums(context).shareIn(
+        viewModelScope,
         replay = 1,
         started = SharingStarted.WhileSubscribed()
     )
-
-    companion object {
-        fun factory(externalScope: CoroutineScope) = viewModelFactory {
-            initializer {
-                AlbumsViewModel(
-                    mediaRepository = (this[APPLICATION_KEY] as GlimpseApplication).mediaRepository,
-                    externalScope = externalScope,
-                )
-            }
-        }
-    }
 }

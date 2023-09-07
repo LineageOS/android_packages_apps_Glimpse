@@ -5,41 +5,36 @@
 
 package org.lineageos.glimpse.viewmodels
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import android.app.Application
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.shareIn
-import org.lineageos.glimpse.GlimpseApplication
 import org.lineageos.glimpse.repository.MediaRepository
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 open class MediaViewModel(
-    private val mediaRepository: MediaRepository,
-    private val externalScope: CoroutineScope,
+    application: Application,
     private val bucketId: Int
-) : ViewModel() {
-    val media = mediaRepository.media(bucketId).shareIn(
-        externalScope,
+) : GlimpseViewModel(application) {
+    val media = MediaRepository.media(context, bucketId).shareIn(
+        viewModelScope,
         replay = 1,
         started = SharingStarted.WhileSubscribed()
     )
 
     companion object {
         fun factory(
-            externalScope: CoroutineScope,
+            application: Application,
             bucketId: Int = MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id
-        ) =
-            viewModelFactory {
-                initializer {
-                    MediaViewModel(
-                        mediaRepository = (this[APPLICATION_KEY] as GlimpseApplication).mediaRepository,
-                        externalScope = externalScope,
-                        bucketId = bucketId,
-                    )
-                }
+        ) = viewModelFactory {
+            initializer {
+                MediaViewModel(
+                    application = application,
+                    bucketId = bucketId,
+                )
             }
+        }
     }
 }

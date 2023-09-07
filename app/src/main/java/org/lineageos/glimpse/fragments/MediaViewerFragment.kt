@@ -58,8 +58,8 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     // View models
     private val mediaViewModel: MediaViewerViewModel by viewModels {
         albumId?.let {
-            MediaViewerViewModel.factory(lifecycleScope, it)
-        } ?: MediaViewerViewModel.factory(lifecycleScope)
+            MediaViewerViewModel.factory(requireActivity().application, it)
+        } ?: MediaViewerViewModel.factory(requireActivity().application)
     }
 
     // Views

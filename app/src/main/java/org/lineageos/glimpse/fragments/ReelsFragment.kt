@@ -41,7 +41,7 @@ import org.lineageos.glimpse.viewmodels.MediaViewModel
 class ReelsFragment : Fragment(R.layout.fragment_reels) {
     // View models
     private val mediaViewModel: MediaViewModel by viewModels {
-        MediaViewModel.factory(lifecycleScope)
+        MediaViewModel.factory(requireActivity().application)
     }
 
     // Views

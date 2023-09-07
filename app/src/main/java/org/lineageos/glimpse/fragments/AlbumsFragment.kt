@@ -40,9 +40,7 @@ import org.lineageos.glimpse.viewmodels.AlbumsViewModel
  */
 class AlbumsFragment : Fragment() {
     // View models
-    private val albumsViewModel: AlbumsViewModel by viewModels {
-        AlbumsViewModel.factory(lifecycleScope)
-    }
+    private val albumsViewModel: AlbumsViewModel by viewModels()
 
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
