@@ -54,7 +54,7 @@ fun ContentResolver.uriFlow(uri: Uri) = callbackFlow {
     awaitClose {
         unregisterContentObserver(observer)
     }
-}.conflate()
+}
 
 fun ContentResolver.queryFlow(
     uri: Uri,
@@ -65,4 +65,4 @@ fun ContentResolver.queryFlow(
     query(
         uri, projection, queryArgs, cancellationSignal
     )
-}
+}.conflate()
