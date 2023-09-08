@@ -77,7 +77,8 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
     private val topSheetConstraintLayout by getViewProperty<ConstraintLayout>(R.id.topSheetConstraintLayout)
     private val viewPager by getViewProperty<ViewPager2>(R.id.viewPager)
 
-    private var restoreLastTrashedMediaFromTrash: (() -> Unit)? = null
+    private var lastTrashedMedia: Media? = null
+    private var undoTrashSnackbar: Snackbar? = null
 
     // Permissions
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
@@ -179,13 +180,17 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
                     1, 1
                 ),
                 Snackbar.LENGTH_LONG,
-            ).setAnchorView(bottomSheetLinearLayout).also {
-                restoreLastTrashedMediaFromTrash?.takeIf { succeeded }?.let { unit ->
-                    it.setAction(R.string.file_trashing_undo) { unit() }
+            ).apply {
+                setAnchorView(bottomSheetLinearLayout)
+                lastTrashedMedia?.takeIf { succeeded }?.let { trashedMedia ->
+                    setAction(R.string.file_trashing_undo) {
+                        trashMedia(trashedMedia, false)
+                    }
                 }
+                undoTrashSnackbar = this
             }.show()
 
-            restoreLastTrashedMediaFromTrash = null
+            lastTrashedMedia = null
         }
     private val restoreUriFromTrashContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
@@ -411,6 +416,9 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
         exoPlayer?.stop()
 
+        // Dismiss any snackbar open
+        undoTrashSnackbar?.dismiss()
+
         super.onDestroyView()
     }
 
@@ -466,7 +474,7 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
 
     private fun trashMedia(media: Media, trash: Boolean = !media.isTrashed) {
         if (trash) {
-            restoreLastTrashedMediaFromTrash = { trashMedia(media, false) }
+            lastTrashedMedia = media
         }
 
         val contract = when (trash) {
