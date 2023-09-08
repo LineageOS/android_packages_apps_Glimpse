@@ -10,7 +10,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import org.lineageos.glimpse.repository.MediaRepository
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
@@ -18,10 +19,12 @@ open class MediaViewModel(
     application: Application,
     private val bucketId: Int
 ) : GlimpseViewModel(application) {
-    val media = MediaRepository.media(context, bucketId).shareIn(
+    val media = MediaRepository.media(context, bucketId).map {
+        QueryResult.Data(it)
+    }.stateIn(
         viewModelScope,
-        replay = 1,
-        started = SharingStarted.WhileSubscribed()
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = QueryResult.Empty(),
     )
 
     companion object {

@@ -36,6 +36,8 @@ import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewModel
+import org.lineageos.glimpse.viewmodels.QueryResult.Data
+import org.lineageos.glimpse.viewmodels.QueryResult.Empty
 
 /**
  * A fragment showing a list of media from a specific album with thumbnails.
@@ -58,7 +60,10 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mediaViewModel.media.collectLatest {
-                    thumbnailAdapter.data = it.toTypedArray()
+                    when (it) {
+                        is Data -> thumbnailAdapter.data = it.values.toTypedArray()
+                        is Empty -> Unit
+                    }
                 }
             }
         }

@@ -8,15 +8,18 @@ package org.lineageos.glimpse.viewmodels
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import org.lineageos.glimpse.repository.MediaRepository
 
 open class AlbumsViewModel(
     application: Application,
 ) : GlimpseViewModel(application) {
-    val albums = MediaRepository.albums(context).shareIn(
+    val albums = MediaRepository.albums(context).map {
+        QueryResult.Data(it)
+    }.stateIn(
         viewModelScope,
-        replay = 1,
-        started = SharingStarted.WhileSubscribed()
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = QueryResult.Empty()
     )
 }

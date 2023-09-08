@@ -32,6 +32,8 @@ import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.AlbumsViewModel
+import org.lineageos.glimpse.viewmodels.QueryResult.Data
+import org.lineageos.glimpse.viewmodels.QueryResult.Empty
 
 /**
  * An albums list visualizer.
@@ -56,7 +58,10 @@ class AlbumsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 albumsViewModel.albums.collectLatest {
-                    albumThumbnailAdapter.data = it.toTypedArray()
+                    when (it) {
+                        is Data -> albumThumbnailAdapter.data = it.values.toTypedArray()
+                        is Empty -> Unit
+                    }
                 }
             }
         }

@@ -32,6 +32,8 @@ import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.MediaViewModel
+import org.lineageos.glimpse.viewmodels.QueryResult.Data
+import org.lineageos.glimpse.viewmodels.QueryResult.Empty
 
 /**
  * A fragment showing a list of media with thumbnails.
@@ -59,7 +61,10 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mediaViewModel.media.collectLatest {
-                    thumbnailAdapter.data = it.toTypedArray()
+                    when (it) {
+                        is Data -> thumbnailAdapter.data = it.values.toTypedArray()
+                        is Empty -> Unit
+                    }
                 }
             }
         }

@@ -47,6 +47,8 @@ import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
+import org.lineageos.glimpse.viewmodels.QueryResult.Data
+import org.lineageos.glimpse.viewmodels.QueryResult.Empty
 import java.text.SimpleDateFormat
 
 /**
@@ -90,7 +92,12 @@ class MediaViewerFragment : Fragment(R.layout.fragment_media_viewer) {
                 initData(medias.toSet().sortedByDescending { it.dateAdded })
             } ?: albumId?.also {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    mediaViewModel.media.collectLatest(::initData)
+                    mediaViewModel.media.collectLatest {
+                        when (it) {
+                            is Data -> initData(it.values)
+                            is Empty -> Unit
+                        }
+                    }
                 }
             } ?: media?.also {
                 initData(listOf(it))
