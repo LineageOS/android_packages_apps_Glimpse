@@ -12,8 +12,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.core.os.bundleOf
 import kotlinx.coroutines.flow.Flow
-import org.lineageos.glimpse.ext.mapEachRow
-import org.lineageos.glimpse.ext.queryFlow
+import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.utils.MediaStoreBuckets
@@ -39,7 +38,12 @@ class MediaFlow(private val context: Context, private val bucketId: Int) : Query
         val selectionArgs = bucketId.takeIf {
             MediaStoreBuckets.values().none { bucket -> it == bucket.id }
         }?.let { arrayOf(it.toString()) }
-        val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+        val sortOrder = when (bucketId) {
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
+                "${MediaStore.Files.FileColumns.DATE_EXPIRES} DESC"
+
+            else -> "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+        }
         val queryArgs = Bundle().apply {
             putAll(
                 bundleOf(

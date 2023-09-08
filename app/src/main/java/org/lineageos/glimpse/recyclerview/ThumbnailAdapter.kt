@@ -22,6 +22,7 @@ import java.time.temporal.ChronoUnit
 import java.util.Date
 
 class ThumbnailAdapter(
+    private val allowHeaders: Boolean = true,
     private val onItemSelected: (media: Media) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val headersPositions = sortedSetOf<Int>()
@@ -43,8 +44,21 @@ class ThumbnailAdapter(
         setHasStableIds(true)
     }
 
-    override fun getItemCount() = data.size.takeIf { it > 0 }
-        ?.let { it + (headersPositions.size.takeIf { headerCount -> headerCount > 0 } ?: 1) } ?: 0
+    override fun getItemCount() = when {
+        // If there isn't media to show there won't be headers.
+        data.isEmpty() -> 0
+
+        // If we're not requesting headers there will only be data.
+        !allowHeaders -> data.size
+
+        // If there's some data there will always be at least an header in the future.
+        data.isNotEmpty() && headersPositions.size == 0 -> data.size + 1
+
+        // If there's some data and some headers the item count is their sum.
+        data.isNotEmpty() && headersPositions.isNotEmpty() -> data.size + headersPositions.size
+
+        else -> throw Exception("`when` not covering all possible values")
+    }
 
     override fun getItemId(position: Int) = if (headersPositions.contains(position)) {
         position.toLong()
@@ -84,6 +98,10 @@ class ThumbnailAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (!allowHeaders) {
+            return ViewTypes.ITEM.ordinal
+        }
+
         if (headersPositions.contains(position)) {
             return ViewTypes.HEADER.ordinal
         }

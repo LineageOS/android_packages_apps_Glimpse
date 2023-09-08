@@ -29,11 +29,11 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.ext.getParcelable
-import org.lineageos.glimpse.ext.getViewProperty
+import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
+import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
@@ -71,7 +71,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
 
     // MediaStore
     private val thumbnailAdapter by lazy {
-        ThumbnailAdapter { media ->
+        ThumbnailAdapter(album.id != MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id) { media ->
             findNavController().navigate(
                 R.id.action_albumFragment_to_mediaViewerFragment,
                 MediaViewerFragment.createBundle(media, album.id)
