@@ -45,8 +45,20 @@
     <!-- Media viewer top sheet -->
     <style name="Theme.Glimpse.MediaViewer.TopSheet" />
 
+    <!-- Media viewer top sheet buttons -->
+    <style name="Theme.Glimpse.MediaViewer.TopSheet.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">8dp</item>
+        <item name="tint">?attr/colorOnSurface</item>
+    </style>
+
     <!-- Media viewer top sheet date/time text -->
     <style name="Theme.Glimpse.MediaViewer.DateTimeText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">11sp</item>
         <item name="android:letterSpacing">0.05</item>
@@ -60,8 +72,9 @@
     <style name="Theme.Glimpse.MediaViewer.BottomSheet.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">28dp</item>
-        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">8dp</item>
         <item name="tint">?attr/colorOnSurface</item>
     </style>
 
