@@ -45,7 +45,8 @@
         <activity
             android:name=".ViewActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Glimpse.MediaViewer">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

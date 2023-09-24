@@ -21,11 +21,11 @@ class MediaViewerViewModel(
 ) : MediaViewModel(application, bucketId) {
     private val mediaPositionInternal = savedStateHandle.getLiveData<Int>(MEDIA_POSITION_KEY)
     val mediaPositionLiveData: LiveData<Int> = mediaPositionInternal
-    var mediaPosition: Int
+    var mediaPosition: Int?
+        get() = mediaPositionInternal.value
         set(value) {
             mediaPositionInternal.value = value
         }
-        get() = mediaPositionInternal.value!!
 
     /**
      * The current height of top and bottom sheets, used to apply padding to media view UI.

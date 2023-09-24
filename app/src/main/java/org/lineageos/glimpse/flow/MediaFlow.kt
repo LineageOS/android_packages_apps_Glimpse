@@ -18,6 +18,12 @@ import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 class MediaFlow(private val context: Context, private val bucketId: Int) : QueryFlow<Media>() {
+    init {
+        assert(bucketId != MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id) {
+            "MEDIA_STORE_BUCKET_PLACEHOLDER found"
+        }
+    }
+
     override fun flowCursor(): Flow<Cursor?> {
         val uri = MediaQuery.MediaStoreFileUri
         val projection = MediaQuery.MediaProjection

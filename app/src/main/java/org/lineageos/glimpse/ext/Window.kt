@@ -12,17 +12,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 private val Window.windowInsetsController
     get() = WindowInsetsControllerCompat(this, decorView)
 
-var Window.isAppearanceLightStatusBars
-    get() = windowInsetsController.isAppearanceLightStatusBars
-    set(value) {
-        windowInsetsController.isAppearanceLightStatusBars = value
-    }
-
-fun Window.resetStatusBarAppearance() {
-    windowInsetsController.isAppearanceLightStatusBars =
-        !context.resources.configuration.isNightModeActive
-}
-
 fun Window.setBarsVisibility(
     systemBars: Boolean? = null,
     statusBars: Boolean? = null,

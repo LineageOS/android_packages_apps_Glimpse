@@ -35,7 +35,12 @@
     </style>
 
     <!-- Media viewer -->
-    <style name="Theme.Glimpse.MediaViewer" parent="Theme.Material3.Dark.NoActionBar" />
+    <style name="Theme.Glimpse.MediaViewer" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+    </style>
 
     <!-- Media viewer top sheet -->
     <style name="Theme.Glimpse.MediaViewer.TopSheet" />

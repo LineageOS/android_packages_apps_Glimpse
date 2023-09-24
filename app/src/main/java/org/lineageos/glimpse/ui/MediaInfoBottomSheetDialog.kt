@@ -16,11 +16,12 @@ import android.text.InputType
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.exifinterface.media.ExifInterface
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -201,11 +202,11 @@ class MediaInfoBottomSheetDialog(
         }
     }
 
-    class Callbacks(private val fragment: Fragment) {
+    class Callbacks(private val activity: AppCompatActivity) {
         private lateinit var editDescriptionMedia: Media
         private lateinit var editDescriptionDescription: String
 
-        private val editDescriptionCallback = fragment.registerForActivityResult(
+        private val editDescriptionCallback = activity.registerForActivityResult(
             ActivityResultContracts.StartIntentSenderForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -217,7 +218,7 @@ class MediaInfoBottomSheetDialog(
             editDescriptionMedia = media
             editDescriptionDescription = description
 
-            val contentResolver = fragment.requireContext().contentResolver
+            val contentResolver = activity.contentResolver
 
             editDescriptionCallback.launch(
                 contentResolver.createWriteRequest(media.externalContentUri)
@@ -225,7 +226,7 @@ class MediaInfoBottomSheetDialog(
         }
 
         private fun editDescription(media: Media, description: String) {
-            val contentResolver = fragment.requireContext().contentResolver
+            val contentResolver = activity.contentResolver
 
             contentResolver.openFileDescriptor(
                 media.externalContentUri, "rw"
@@ -238,7 +239,7 @@ class MediaInfoBottomSheetDialog(
                     exifInterface.saveAttributes()
                 }.onFailure {
                     Toast.makeText(
-                        fragment.requireContext(),
+                        activity,
                         R.string.media_info_write_description_failed,
                         Toast.LENGTH_LONG
                     ).show()

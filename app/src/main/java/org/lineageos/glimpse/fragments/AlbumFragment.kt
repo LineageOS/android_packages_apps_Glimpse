@@ -5,8 +5,10 @@
 
 package org.lineageos.glimpse.fragments
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -29,6 +31,7 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
+import org.lineageos.glimpse.ViewActivity
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
@@ -72,9 +75,12 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     // MediaStore
     private val thumbnailAdapter by lazy {
         ThumbnailAdapter(album.id != MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id) { media ->
-            findNavController().navigate(
-                R.id.action_albumFragment_to_mediaViewerFragment,
-                MediaViewerFragment.createBundle(media, album.id)
+            startActivity(
+                Intent(requireContext(), ViewActivity::class.java).apply {
+                    action = MediaStore.ACTION_REVIEW
+                    data = media.externalContentUri
+                    putExtra(ViewActivity.KEY_ALBUM_ID, album.id)
+                }
             )
         }
     }
