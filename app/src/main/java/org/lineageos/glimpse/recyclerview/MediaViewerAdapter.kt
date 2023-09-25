@@ -96,6 +96,7 @@ class MediaViewerAdapter(
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val imageView = view.findViewById<ImageView>(R.id.imageView)
+        @androidx.media3.common.util.UnstableApi
         private val playerControlView = view.findViewById<PlayerControlView>(R.id.exo_controller)
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
 
@@ -126,6 +127,7 @@ class MediaViewerAdapter(
             playerControlView.player = player
         }
 
+        @androidx.media3.common.util.UnstableApi
         private val sheetsHeightObserver = { sheetsHeight: Pair<Int, Int> ->
             if (mediaViewerViewModel.fullscreenModeLiveData.value != true) {
                 val (topHeight, bottomHeight) = sheetsHeight
