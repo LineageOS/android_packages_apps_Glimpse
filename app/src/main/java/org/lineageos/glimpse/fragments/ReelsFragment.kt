@@ -33,9 +33,9 @@ import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.utils.PermissionsUtils
-import org.lineageos.glimpse.viewmodels.MediaViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
 import org.lineageos.glimpse.viewmodels.QueryResult.Empty
+import org.lineageos.glimpse.viewmodels.ThumbnailViewModel
 
 /**
  * A fragment showing a list of media with thumbnails.
@@ -44,8 +44,8 @@ import org.lineageos.glimpse.viewmodels.QueryResult.Empty
  */
 class ReelsFragment : Fragment(R.layout.fragment_reels) {
     // View models
-    private val mediaViewModel: MediaViewModel by viewModels {
-        MediaViewModel.factory(requireActivity().application)
+    private val model: ThumbnailViewModel by viewModels {
+        ThumbnailViewModel.factory(requireActivity().application)
     }
 
     // Views
@@ -57,7 +57,7 @@ class ReelsFragment : Fragment(R.layout.fragment_reels) {
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mediaViewModel.media.collectLatest {
+                model.mediaWithHeaders.collectLatest {
                     when (it) {
                         is Data -> thumbnailAdapter.data = it.values.toTypedArray()
                         is Empty -> Unit

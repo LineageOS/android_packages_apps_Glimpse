@@ -36,11 +36,10 @@ import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
-import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
-import org.lineageos.glimpse.viewmodels.MediaViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
 import org.lineageos.glimpse.viewmodels.QueryResult.Empty
+import org.lineageos.glimpse.viewmodels.ThumbnailViewModel
 
 /**
  * A fragment showing a list of media from a specific album with thumbnails.
@@ -49,8 +48,8 @@ import org.lineageos.glimpse.viewmodels.QueryResult.Empty
  */
 class AlbumFragment : Fragment(R.layout.fragment_album) {
     // View models
-    private val mediaViewModel: MediaViewModel by viewModels {
-        MediaViewModel.factory(requireActivity().application, album.id)
+    private val model: ThumbnailViewModel by viewModels {
+        ThumbnailViewModel.factory(requireActivity().application, album.id)
     }
 
     // Views
@@ -62,7 +61,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mediaViewModel.media.collectLatest {
+                model.mediaWithHeaders.collectLatest {
                     when (it) {
                         is Data -> thumbnailAdapter.data = it.values.toTypedArray()
                         is Empty -> Unit
@@ -74,7 +73,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
 
     // MediaStore
     private val thumbnailAdapter by lazy {
-        ThumbnailAdapter(album.id != MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id) { media ->
+        ThumbnailAdapter { media ->
             startActivity(
                 Intent(requireContext(), ViewActivity::class.java).apply {
                     action = MediaStore.ACTION_REVIEW
