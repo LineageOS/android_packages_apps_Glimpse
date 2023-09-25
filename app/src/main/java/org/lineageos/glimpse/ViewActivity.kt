@@ -111,6 +111,8 @@ class ViewActivity : AppCompatActivity() {
             null
         }
 
+    private var lastVideoUriPlayed: Uri? = null
+
     // Adapter
     private val mediaViewerAdapter by lazy {
         MediaViewerAdapter(exoPlayerLazy, mediaViewModel)
@@ -216,16 +218,7 @@ class ViewActivity : AppCompatActivity() {
             this@ViewActivity.mediaViewModel.mediaPosition = position
 
             mediaUri?.also {
-                if (it.mediaType == MediaType.VIDEO) {
-                    with(exoPlayerLazy.value) {
-                        setMediaItem(MediaItem.fromUri(it.externalContentUri))
-                        seekTo(C.TIME_UNSET)
-                        prepare()
-                        playWhenReady = true
-                    }
-                } else {
-                    exoPlayer?.stop()
-                }
+                updateExoPlayer(it.mediaType, it.externalContentUri)
             } ?: run {
                 val media = mediaViewerAdapter.getItemAtPosition(position)
 
@@ -239,16 +232,7 @@ class ViewActivity : AppCompatActivity() {
                     }
                 )
 
-                if (media.mediaType == MediaType.VIDEO) {
-                    with(exoPlayerLazy.value) {
-                        setMediaItem(MediaItem.fromUri(media.externalContentUri))
-                        seekTo(C.TIME_UNSET)
-                        prepare()
-                        playWhenReady = true
-                    }
-                } else {
-                    exoPlayer?.stop()
-                }
+                updateExoPlayer(media.mediaType, media.externalContentUri)
             }
         }
     }
@@ -505,6 +489,30 @@ class ViewActivity : AppCompatActivity() {
 
         // Update paddings
         updateSheetsHeight()
+    }
+
+    /**
+     * Update [exoPlayer]'s status.
+     * @param mediaType The currently displayed media's [MediaType]
+     * @param uri The The currently displayed media's [Uri]
+     */
+    private fun updateExoPlayer(mediaType: MediaType, uri: Uri) {
+        if (mediaType == MediaType.VIDEO) {
+            with(exoPlayerLazy.value) {
+                if (uri != lastVideoUriPlayed) {
+                    lastVideoUriPlayed = uri
+                    setMediaItem(MediaItem.fromUri(uri))
+                    seekTo(C.TIME_UNSET)
+                    prepare()
+                    playWhenReady = true
+                }
+            }
+        } else {
+            exoPlayer?.stop()
+
+            // Make sure we will forcefully reload and restart the video
+            lastVideoUriPlayed = null
+        }
     }
 
     private fun trashMedia(media: Media, trash: Boolean = !media.isTrashed) {
