@@ -28,6 +28,7 @@ buildscript {
 
 android {
     compileSdk = 33
+    namespace = "org.lineageos.glimpse"
 
     defaultConfig {
         applicationId = "org.lineageos.glimpse"
