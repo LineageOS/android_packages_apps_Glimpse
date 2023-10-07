@@ -59,7 +59,7 @@ class AlbumsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 albumsViewModel.albums.collectLatest {
                     when (it) {
-                        is Data -> albumThumbnailAdapter.data = it.values.toTypedArray()
+                        is Data -> albumThumbnailAdapter.submitList(it.values)
                         is Empty -> Unit
                     }
                 }

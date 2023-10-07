@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
@@ -23,18 +24,7 @@ import java.util.Date
 
 class ThumbnailAdapter(
     private val onItemSelected: (media: Media) -> Unit,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var data = arrayOf<DataType>()
-        set(value) {
-            val diff = DiffUtil.calculateDiff(ThumbnailCallback(field, value))
-
-            field = value
-
-            diff.dispatchUpdatesTo(this)
-        }
-
-    override fun getItemCount() = data.size
-
+) : ListAdapter<DataType, RecyclerView.ViewHolder>(DATA_TYPE_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context).let { layoutInflater ->
             when (viewType) {
@@ -55,17 +45,42 @@ class ThumbnailAdapter(
         when (holder.itemViewType) {
             ViewTypes.THUMBNAIL.ordinal -> {
                 val thumbnailViewHolder = holder as ThumbnailViewHolder
-                thumbnailViewHolder.bind((data[position] as DataType.Thumbnail).media)
+                thumbnailViewHolder.bind((getItem(position) as DataType.Thumbnail).media)
             }
 
             ViewTypes.DATE_HEADER.ordinal -> {
                 val dateHeaderViewHolder = holder as DateHeaderViewHolder
-                dateHeaderViewHolder.bind((data[position] as DataType.DateHeader).date)
+                dateHeaderViewHolder.bind((getItem(position) as DataType.DateHeader).date)
             }
         }
     }
 
-    override fun getItemViewType(position: Int) = data[position].viewType
+    override fun getItemViewType(position: Int) = getItem(position).viewType
+
+    companion object {
+        val DATA_TYPE_COMPARATOR = object : DiffUtil.ItemCallback<DataType>() {
+            override fun areItemsTheSame(oldItem: DataType, newItem: DataType) = when {
+                oldItem is DataType.Thumbnail && newItem is DataType.Thumbnail ->
+                    oldItem.media.id == newItem.media.id
+
+                oldItem is DataType.DateHeader && newItem is DataType.DateHeader ->
+                    oldItem.date == newItem.date
+
+                else -> false
+            }
+
+            override fun areContentsTheSame(oldItem: DataType, newItem: DataType) = when {
+                oldItem is DataType.Thumbnail && newItem is DataType.Thumbnail ->
+                    oldItem.media.id == newItem.media.id &&
+                            oldItem.media.dateModified == newItem.media.dateModified
+
+                oldItem is DataType.DateHeader && newItem is DataType.DateHeader ->
+                    oldItem.date == newItem.date
+
+                else -> false
+            }
+        }
+    }
 
     class ThumbnailViewHolder(
         view: View,

@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
@@ -19,24 +21,7 @@ import org.lineageos.glimpse.models.Album
 
 class AlbumThumbnailAdapter(
     private val navController: NavController,
-) : RecyclerView.Adapter<AlbumThumbnailAdapter.AlbumViewHolder>() {
-    var data: Array<Album> = arrayOf()
-        set(value) {
-            if (value.contentEquals(field)) {
-                return
-            }
-
-            field = value
-
-            field.let {
-                @Suppress("NotifyDataSetChanged") notifyDataSetChanged()
-            }
-        }
-
-    init {
-        setHasStableIds(true)
-    }
-
+) : ListAdapter<Album, AlbumThumbnailAdapter.AlbumViewHolder>(ALBUM_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
@@ -45,12 +30,17 @@ class AlbumThumbnailAdapter(
         return AlbumViewHolder(view, navController)
     }
 
-    override fun getItemCount() = data.size
-
-    override fun getItemId(position: Int) = data[position].id.toLong()
-
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind(getItem(position))
+    }
+
+    companion object {
+        val ALBUM_COMPARATOR = object : DiffUtil.ItemCallback<Album>() {
+            override fun areItemsTheSame(oldItem: Album, newItem: Album) = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Album, newItem: Album) =
+                oldItem.id == newItem.id && oldItem.size == newItem.size
+        }
     }
 
     class AlbumViewHolder(
