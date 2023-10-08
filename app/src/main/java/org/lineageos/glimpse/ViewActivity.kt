@@ -170,7 +170,7 @@ class ViewActivity : AppCompatActivity() {
                 ),
                 Snackbar.LENGTH_LONG,
             ).apply {
-                setAnchorView(bottomSheetLinearLayout)
+                anchorView = bottomSheetLinearLayout
                 lastTrashedMedia?.takeIf { succeeded }?.let { trashedMedia ->
                     setAction(R.string.file_trashing_undo) {
                         trashMedia(trashedMedia, false)
