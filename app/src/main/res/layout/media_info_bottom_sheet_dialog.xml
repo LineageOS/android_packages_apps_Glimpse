@@ -5,6 +5,7 @@
 -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
@@ -30,18 +31,18 @@
             <TextView
                 android:id="@+id/dateTextView"
                 style="@style/Theme.Glimpse.MediaInfoBottomSheetDialog.DateTimeText"
-                android:text="SAT APRIL 13, 2019"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="SAT APRIL 13, 2019" />
 
             <TextView
                 android:id="@+id/timeTextView"
                 style="@style/Theme.Glimpse.MediaInfoBottomSheetDialog.DateTimeText"
-                android:text="12:09 PM"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/dateTextView"
+                tools:text="12:09 PM" />
 
             <EditText
                 android:id="@+id/descriptionEditText"
