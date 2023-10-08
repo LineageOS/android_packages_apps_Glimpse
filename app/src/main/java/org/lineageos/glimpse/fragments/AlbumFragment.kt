@@ -142,7 +142,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
          * this fragment using the provided parameters.
          *
          * @param album Album.
-         * @return A new instance of fragment ReelsFragment.
+         * @return A new instance of fragment AlbumFragment.
          */
         fun newInstance(
             album: Album,
