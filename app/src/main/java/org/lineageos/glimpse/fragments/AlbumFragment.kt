@@ -63,7 +63,14 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 model.mediaWithHeaders.collectLatest {
                     when (it) {
-                        is Data -> thumbnailAdapter.submitList(it.values)
+                        is Data -> {
+                            thumbnailAdapter.submitList(it.values)
+
+                            if (it.values.isEmpty()) {
+                                // No medias, bail out
+                                activity?.supportFragmentManager?.popBackStack()
+                            }
+                        }
                         is Empty -> Unit
                     }
                 }
