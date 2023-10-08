@@ -27,13 +27,13 @@ buildscript {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
     namespace = "org.lineageos.glimpse"
 
     defaultConfig {
         applicationId = "org.lineageos.glimpse"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }

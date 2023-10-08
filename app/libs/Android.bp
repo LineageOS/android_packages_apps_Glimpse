@@ -8,7 +8,7 @@
 java_import {
     name: "Glimpse_androidx.lifecycle_lifecycle-common-nodeps",
     jars: ["androidx/lifecycle/lifecycle-common/2.6.1/lifecycle-common-2.6.1.jar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -18,7 +18,7 @@ java_import {
 
 java_library_static {
     name: "Glimpse_androidx.lifecycle_lifecycle-common",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -35,7 +35,7 @@ java_library_static {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-common-nodeps",
     aars: ["androidx/media3/media3-common/1.1.1/media3-common-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -49,7 +49,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-common",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -67,7 +67,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-container-nodeps",
     aars: ["androidx/media3/media3-container/1.1.1/media3-container-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -80,7 +80,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-container",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -97,7 +97,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-database-nodeps",
     aars: ["androidx/media3/media3-database/1.1.1/media3-database-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -110,7 +110,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-database",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -127,7 +127,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-datasource-nodeps",
     aars: ["androidx/media3/media3-datasource/1.1.1/media3-datasource-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -141,7 +141,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-datasource",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -159,7 +159,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-decoder-nodeps",
     aars: ["androidx/media3/media3-decoder/1.1.1/media3-decoder-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -172,7 +172,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-decoder",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -189,7 +189,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-dash-nodeps",
     aars: ["androidx/media3/media3-exoplayer-dash/1.1.1/media3-exoplayer-dash-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -202,7 +202,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-exoplayer-dash",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -219,7 +219,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-hls-nodeps",
     aars: ["androidx/media3/media3-exoplayer-hls/1.1.1/media3-exoplayer-hls-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -232,7 +232,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-exoplayer-hls",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -249,7 +249,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-rtsp-nodeps",
     aars: ["androidx/media3/media3-exoplayer-rtsp/1.1.1/media3-exoplayer-rtsp-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -262,7 +262,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-exoplayer-rtsp",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -279,7 +279,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-smoothstreaming-nodeps",
     aars: ["androidx/media3/media3-exoplayer-smoothstreaming/1.1.1/media3-exoplayer-smoothstreaming-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -292,7 +292,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-exoplayer-smoothstreaming",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -309,7 +309,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-nodeps",
     aars: ["androidx/media3/media3-exoplayer/1.1.1/media3-exoplayer-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -328,7 +328,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-exoplayer",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -351,7 +351,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-extractor-nodeps",
     aars: ["androidx/media3/media3-extractor/1.1.1/media3-extractor-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -366,7 +366,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-extractor",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -385,7 +385,7 @@ android_library {
 android_library_import {
     name: "Glimpse_androidx.media3_media3-ui-nodeps",
     aars: ["androidx/media3/media3-ui/1.1.1/media3-ui-1.1.1.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -400,7 +400,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_androidx.media3_media3-ui",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -419,7 +419,7 @@ android_library {
 android_library_import {
     name: "Glimpse_com.google.android.material_material-nodeps",
     aars: ["com/google/android/material/material/1.9.0/material-1.9.0.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -446,7 +446,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_com.google.android.material_material",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -477,7 +477,7 @@ android_library {
 java_import {
     name: "Glimpse_com.google.errorprone_error_prone_annotations-nodeps",
     jars: ["com/google/errorprone/error_prone_annotations/2.15.0/error_prone_annotations-2.15.0.jar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -487,7 +487,7 @@ java_import {
 
 java_library_static {
     name: "Glimpse_com.google.errorprone_error_prone_annotations",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -502,7 +502,7 @@ java_library_static {
 java_import {
     name: "Glimpse_com.squareup.okhttp3_okhttp-nodeps",
     jars: ["com/squareup/okhttp3/okhttp/4.10.0/okhttp-4.10.0.jar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -512,7 +512,7 @@ java_import {
 
 java_library_static {
     name: "Glimpse_com.squareup.okhttp3_okhttp",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -529,7 +529,7 @@ java_library_static {
 java_import {
     name: "Glimpse_com.squareup.okio_okio-jvm-nodeps",
     jars: ["com/squareup/okio/okio-jvm/3.2.0/okio-jvm-3.2.0.jar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -539,7 +539,7 @@ java_import {
 
 java_library_static {
     name: "Glimpse_com.squareup.okio_okio-jvm",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -555,7 +555,7 @@ java_library_static {
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-base-nodeps",
     aars: ["io/coil-kt/coil-base/2.2.2/coil-base-2.2.2.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -575,7 +575,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_io.coil-kt_coil-base",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -599,7 +599,7 @@ android_library {
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-gif-nodeps",
     aars: ["io/coil-kt/coil-gif/2.2.2/coil-gif-2.2.2.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -614,7 +614,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_io.coil-kt_coil-gif",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -633,7 +633,7 @@ android_library {
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-video-nodeps",
     aars: ["io/coil-kt/coil-video/2.2.2/coil-video-2.2.2.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -647,7 +647,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_io.coil-kt_coil-video",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -665,7 +665,7 @@ android_library {
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-nodeps",
     aars: ["io/coil-kt/coil/2.2.2/coil-2.2.2.aar"],
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
@@ -678,7 +678,7 @@ android_library_import {
 
 android_library {
     name: "Glimpse_io.coil-kt_coil",
-    sdk_version: "33",
+    sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
         "//apex_available:platform",
