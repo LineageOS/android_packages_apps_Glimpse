@@ -6,6 +6,7 @@
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -63,6 +64,8 @@ class AlbumViewerViewModel(
         started = SharingStarted.WhileSubscribed(),
         initialValue = QueryResult.Empty(),
     )
+
+    val inSelectionMode = MutableLiveData(false)
 
     sealed class DataType(val viewType: Int) {
         class Thumbnail(val media: Media) : DataType(ThumbnailAdapter.ViewTypes.THUMBNAIL.ordinal) {

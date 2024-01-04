@@ -98,6 +98,10 @@ dependencies {
     // okhttp
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
+    // Recyclerview
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+
     // Coil
     implementation("io.coil-kt:coil:2.2.2")
     implementation("io.coil-kt:coil-gif:2.2.2")

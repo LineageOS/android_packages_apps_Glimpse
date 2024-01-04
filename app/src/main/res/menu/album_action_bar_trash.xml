@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/restoreFromTrash"
+        android:icon="@drawable/ic_restore_from_trash"
+        android:title="@string/file_action_restore_from_trash"
+        android:contentDescription="@string/file_action_restore_from_trash"
+        app:showAsAction="ifRoom" />
+
+    <item
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/deleteForever"
+        android:icon="@drawable/ic_delete_forever"
+        android:title="@string/file_action_delete_forever"
+        android:contentDescription="@string/file_action_delete_forever"
+        app:showAsAction="ifRoom" />
+
+</menu>

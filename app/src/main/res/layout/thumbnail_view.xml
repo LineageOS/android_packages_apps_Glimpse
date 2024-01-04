@@ -33,4 +33,28 @@
         app:layout_constraintTop_toTopOf="@+id/thumbnailImageView"
         app:layout_constraintWidth_percent="0.5"
         app:tint="@android:color/white" />
+
+    <View
+        android:id="@+id/selectionScrimView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/thumbnailImageView"
+        app:layout_constraintEnd_toEndOf="@+id/thumbnailImageView"
+        app:layout_constraintStart_toStartOf="@+id/thumbnailImageView"
+        app:layout_constraintTop_toTopOf="@+id/thumbnailImageView" />
+
+    <ImageView
+        android:id="@+id/selectionCheckedImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_check_circle_outline"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/thumbnailImageView"
+        app:layout_constraintTop_toTopOf="@+id/thumbnailImageView"
+        app:tint="@android:color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

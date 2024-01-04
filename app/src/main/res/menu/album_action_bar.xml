@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share"
+        android:title="@string/file_action_share"
+        android:contentDescription="@string/file_action_share"
+        app:showAsAction="ifRoom" />
+
+    <item
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/moveToTrash"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/file_action_move_to_trash"
+        android:contentDescription="@string/file_action_move_to_trash"
+        app:showAsAction="ifRoom" />
+
+</menu>

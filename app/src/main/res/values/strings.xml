@@ -99,4 +99,7 @@
 
     <!-- No media -->
     <string name="no_media">No media</string>
+
+    <!-- Selection -->
+    <string name="thumbnail_selection_count">%d selected</string>
 </resources>
