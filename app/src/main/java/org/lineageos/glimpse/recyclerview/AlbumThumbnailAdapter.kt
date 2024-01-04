@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.fragments.AlbumFragment
+import org.lineageos.glimpse.fragments.AlbumViewerFragment
 import org.lineageos.glimpse.models.Album
 
 class AlbumThumbnailAdapter(
@@ -67,8 +67,8 @@ class AlbumThumbnailAdapter(
 
             itemView.setOnClickListener {
                 navController.navigate(
-                    R.id.action_mainFragment_to_albumFragment,
-                    AlbumFragment.createBundle(album)
+                    R.id.action_mainFragment_to_albumViewerFragment,
+                    AlbumViewerFragment.createBundle(album)
                 )
             }
         }

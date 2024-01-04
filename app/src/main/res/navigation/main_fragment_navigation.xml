@@ -11,13 +11,14 @@
 
     <fragment
         android:id="@+id/reelsFragment"
-        android:name="org.lineageos.glimpse.fragments.ReelsFragment"
+        android:name="org.lineageos.glimpse.fragments.AlbumViewerFragment"
         android:label=""
-        tools:layout="@layout/fragment_reels" />
+        tools:layout="@layout/fragment_album_viewer" />
 
     <fragment
         android:id="@+id/albumsFragment"
         android:name="org.lineageos.glimpse.fragments.AlbumsFragment"
         android:label="@string/albums_title"
         tools:layout="@layout/fragment_albums" />
+
 </navigation>

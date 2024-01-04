@@ -144,9 +144,9 @@ class ViewActivity : AppCompatActivity() {
                 bottomSheetLinearLayout,
                 resources.getQuantityString(
                     if (it.resultCode == Activity.RESULT_CANCELED) {
-                        R.plurals.file_deletion_unsuccessful
+                        R.plurals.delete_file_forever_unsuccessful
                     } else {
-                        R.plurals.file_deletion_successful
+                        R.plurals.delete_file_forever_successful
                     },
                     1, 1
                 ),
@@ -162,9 +162,9 @@ class ViewActivity : AppCompatActivity() {
                 bottomSheetLinearLayout,
                 resources.getQuantityString(
                     if (succeeded) {
-                        R.plurals.file_trashing_successful
+                        R.plurals.move_file_to_trash_successful
                     } else {
-                        R.plurals.file_trashing_unsuccessful
+                        R.plurals.move_file_to_trash_unsuccessful
                     },
                     1, 1
                 ),
@@ -172,7 +172,7 @@ class ViewActivity : AppCompatActivity() {
             ).apply {
                 anchorView = bottomSheetLinearLayout
                 lastTrashedMedia?.takeIf { succeeded }?.let { trashedMedia ->
-                    setAction(R.string.file_trashing_undo) {
+                    setAction(R.string.move_file_to_trash_undo) {
                         trashMedia(trashedMedia, false)
                     }
                 }
@@ -188,9 +188,9 @@ class ViewActivity : AppCompatActivity() {
                 bottomSheetLinearLayout,
                 resources.getQuantityString(
                     if (it.resultCode == Activity.RESULT_CANCELED) {
-                        R.plurals.file_restoring_from_trash_unsuccessful
+                        R.plurals.restore_file_from_trash_unsuccessful
                     } else {
-                        R.plurals.file_restoring_from_trash_successful
+                        R.plurals.restore_file_from_trash_successful
                     },
                     1, 1
                 ),
@@ -385,10 +385,11 @@ class ViewActivity : AppCompatActivity() {
 
         deleteButton.setOnLongClickListener {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                MaterialAlertDialogBuilder(this).setTitle(R.string.file_deletion_confirm_title)
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.file_action_delete_forever)
                     .setMessage(
                         resources.getQuantityString(
-                            R.plurals.file_deletion_confirm_message, 1, 1
+                            R.plurals.delete_file_forever_confirm_message, 1, 1
                         )
                     ).setPositiveButton(android.R.string.ok) { _, _ ->
                         deleteUriContract.launch(

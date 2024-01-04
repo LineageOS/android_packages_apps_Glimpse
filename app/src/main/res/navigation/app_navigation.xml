@@ -15,8 +15,8 @@
         tools:layout="@layout/fragment_main">
 
         <action
-            android:id="@+id/action_mainFragment_to_albumFragment"
-            app:destination="@id/albumFragment"
+            android:id="@+id/action_mainFragment_to_albumViewerFragment"
+            app:destination="@id/albumViewerFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -24,7 +24,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/albumFragment"
-        android:name="org.lineageos.glimpse.fragments.AlbumFragment"
-        tools:layout="@layout/fragment_album" />
+        android:id="@+id/albumViewerFragment"
+        android:name="org.lineageos.glimpse.fragments.AlbumViewerFragment"
+        tools:layout="@layout/fragment_album_viewer" />
+
 </navigation>

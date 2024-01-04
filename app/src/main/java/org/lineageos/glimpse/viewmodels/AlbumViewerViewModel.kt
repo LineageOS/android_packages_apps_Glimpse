@@ -20,9 +20,9 @@ import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Date
 
-class ThumbnailViewModel(
+class AlbumViewerViewModel(
     application: Application,
-    bucketId: Int,
+    val bucketId: Int,
     addHeaders: Boolean,
 ) : GlimpseViewModel(application) {
     val mediaWithHeaders = MediaRepository.media(context, bucketId).map { medias ->
@@ -83,7 +83,7 @@ class ThumbnailViewModel(
             showHeaders: Boolean = bucketId != MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id,
         ) = viewModelFactory {
             initializer {
-                ThumbnailViewModel(
+                AlbumViewerViewModel(
                     application = application,
                     bucketId = bucketId,
                     addHeaders = showHeaders,

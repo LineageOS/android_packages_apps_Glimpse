@@ -7,18 +7,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        style="@style/Theme.Glimpse.BottomAppBarOption"
-        android:id="@+id/edit"
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/select"
         android:icon="@drawable/ic_edit"
-        android:title="@string/top_app_bar_edit"
-        android:contentDescription="@string/top_app_bar_edit"
-        app:showAsAction="ifRoom" />
-
-    <item
-        style="@style/Theme.Glimpse.BottomAppBarOption"
-        android:id="@+id/more"
-        android:title="@string/top_app_bar_edit"
-        android:contentDescription="@string/top_app_bar_edit"
+        android:title="@string/top_app_bar_select"
+        android:contentDescription="@string/top_app_bar_select"
         app:showAsAction="never" />
 
 </menu>

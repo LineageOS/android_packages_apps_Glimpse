@@ -37,24 +37,26 @@ import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
+import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
 import org.lineageos.glimpse.viewmodels.QueryResult.Empty
-import org.lineageos.glimpse.viewmodels.ThumbnailViewModel
 
 /**
  * A fragment showing a list of media from a specific album with thumbnails.
- * Use the [AlbumFragment.newInstance] factory method to
+ * Use the [AlbumViewerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AlbumFragment : Fragment(R.layout.fragment_album) {
+class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
     // View models
-    private val model: ThumbnailViewModel by viewModels {
-        ThumbnailViewModel.factory(requireActivity().application, album.id)
+    private val model: AlbumViewerViewModel by viewModels {
+        album?.let {
+            AlbumViewerViewModel.factory(requireActivity().application, it.id)
+        } ?: AlbumViewerViewModel.factory(requireActivity().application)
     }
 
     // Views
-    private val albumRecyclerView by getViewProperty<RecyclerView>(R.id.albumRecyclerView)
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
+    private val recyclerView by getViewProperty<RecyclerView>(R.id.recyclerView)
     private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Permissions
@@ -71,6 +73,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                                 activity?.supportFragmentManager?.popBackStack()
                             }
                         }
+
                         is Empty -> Unit
                     }
                 }
@@ -85,14 +88,14 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                 Intent(requireContext(), ViewActivity::class.java).apply {
                     action = MediaStore.ACTION_REVIEW
                     data = media.externalContentUri
-                    putExtra(ViewActivity.KEY_ALBUM_ID, album.id)
+                    putExtra(ViewActivity.KEY_ALBUM_ID, model.bucketId)
                 }
             )
         }
     }
 
     // Arguments
-    private val album by lazy { arguments?.getParcelable(KEY_ALBUM_ID, Album::class)!! }
+    private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -102,24 +105,26 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         appBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(requireContext())
 
-        toolbar.title = album.name
+        album?.let {
+            toolbar.title = it.name
+        }
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        albumRecyclerView.layoutManager = ThumbnailLayoutManager(
+        recyclerView.layoutManager = ThumbnailLayoutManager(
             requireContext(), thumbnailAdapter
         )
-        albumRecyclerView.adapter = thumbnailAdapter
+        recyclerView.adapter = thumbnailAdapter
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
-            albumRecyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            recyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = insets.left
                 rightMargin = insets.right
             }
-            albumRecyclerView.updatePadding(bottom = insets.bottom)
+            recyclerView.updatePadding(bottom = insets.bottom)
 
             windowInsets
         }
@@ -130,30 +135,34 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
-        albumRecyclerView.layoutManager = ThumbnailLayoutManager(
+        recyclerView.layoutManager = ThumbnailLayoutManager(
             requireContext(), thumbnailAdapter
         )
     }
 
     companion object {
-        private const val KEY_ALBUM_ID = "album_id"
+        private const val KEY_ALBUM = "album"
 
+        /**
+         * Create a [Bundle] to use as the arguments for this fragment.
+         * @param album The [Album] to display, if null, reels will be shown
+         */
         fun createBundle(
-            album: Album,
+            album: Album? = null,
         ) = bundleOf(
-            KEY_ALBUM_ID to album,
+            KEY_ALBUM to album,
         )
 
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param album Album.
-         * @return A new instance of fragment AlbumFragment.
+         * @see createBundle
+         * @return A new instance of fragment [AlbumViewerFragment].
          */
         fun newInstance(
             album: Album,
-        ) = AlbumFragment().apply {
+        ) = AlbumViewerFragment().apply {
             arguments = createBundle(album)
         }
     }

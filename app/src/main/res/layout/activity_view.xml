@@ -73,11 +73,13 @@
         <ImageButton
             android:id="@+id/favoriteButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_add_to_favorites"
             android:src="@drawable/ic_star_toggle" />
 
         <ImageButton
             android:id="@+id/shareButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_share"
             android:src="@drawable/ic_share" />
 
         <ImageButton
@@ -88,11 +90,13 @@
         <ImageButton
             android:id="@+id/adjustButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_edit"
             android:src="@drawable/ic_tune" />
 
         <ImageButton
             android:id="@+id/deleteButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_move_to_trash"
             android:src="@drawable/ic_delete" />
 
     </LinearLayout>

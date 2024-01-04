@@ -10,8 +10,7 @@
     <string name="app_permissions_toast">Permissions not granted by the user.</string>
 
     <!-- Top app bar -->
-    <string name="top_app_bar_edit">Edit</string>
-    <string name="top_app_bar_more">More</string>
+    <string name="top_app_bar_select">Select</string>
 
     <!-- Titles -->
     <string name="reels_title">Reels</string>
@@ -29,39 +28,46 @@
     </plurals>
 
     <!-- File deletion -->
-    <string name="file_deletion_confirm_title">Delete</string>
-    <plurals name="file_deletion_confirm_message">
+    <plurals name="delete_file_forever_confirm_message">
         <item quantity="one">Are you sure you want to permanently delete this file?</item>
-        <item quantity="many">Are you sure you want to permanently delete %d files?</item>
+        <item quantity="other">Are you sure you want to permanently delete %d files?</item>
     </plurals>
-    <plurals name="file_deletion_successful">
-        <item quantity="one">File deleted</item>
-        <item quantity="many">%d files deleted</item>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">File permanently deleted</item>
+        <item quantity="other">%d files permanently deleted</item>
     </plurals>
-    <plurals name="file_deletion_unsuccessful">
-        <item quantity="one">File couldn\'t be deleted</item>
-        <item quantity="many">%d files couldn\'t be deleted</item>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">File couldn\'t be permanently deleted</item>
+        <item quantity="other">%d files couldn\'t be permanently deleted</item>
     </plurals>
 
     <!-- File trashing -->
-    <plurals name="file_trashing_successful">
-        <item quantity="one">File trashed</item>
-        <item quantity="many">%d files trashed</item>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Are you sure you want to move one file to trash?</item>
+        <item quantity="other">Are you sure you want to move %d files to trash?</item>
     </plurals>
-    <plurals name="file_trashing_unsuccessful">
-        <item quantity="one">File couldn\'t be trashed</item>
-        <item quantity="many">%d files couldn\'t be trashed</item>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">File moved to trash</item>
+        <item quantity="other">%d files moved to trash</item>
     </plurals>
-    <string name="file_trashing_undo">Undo</string>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">File couldn\'t be moved to trash</item>
+        <item quantity="other">%d files couldn\'t be moved to trash</item>
+    </plurals>
+    <string name="move_file_to_trash_undo">Undo</string>
 
     <!-- File restoring from trash -->
-    <plurals name="file_restoring_from_trash_successful">
-        <item quantity="one">File restored from trash</item>
-        <item quantity="many">%d files restored from trash</item>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Are you sure you want to restore one file from trash?</item>
+        <item quantity="other">Are you sure you want to restore %d files from trash?</item>
     </plurals>
-    <plurals name="file_restoring_from_trash_unsuccessful">
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">File restored from trash</item>
+        <item quantity="other">%d files restored from trash</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
         <item quantity="one">File couldn\'t be restored from trash</item>
-        <item quantity="many">%d files couldn\'t be restored from trash</item>
+        <item quantity="other">%d files couldn\'t be restored from trash</item>
     </plurals>
 
     <!-- Manage media permission -->
@@ -80,4 +86,13 @@
     <string name="intent_media_not_found">Media not found</string>
     <string name="intent_media_type_not_found">Media type not found</string>
     <string name="intent_media_type_not_supported">Media type not supported</string>
+
+    <!-- File actions -->
+    <string name="file_action_add_to_favorites">Add to favorites</string>
+    <string name="file_action_delete_forever">Delete forever</string>
+    <string name="file_action_edit">Edit</string>
+    <string name="file_action_move_to_trash">Move to trash</string>
+    <string name="file_action_remove_from_favorites">Remove from favorites</string>
+    <string name="file_action_restore_from_trash">Restore from trash</string>
+    <string name="file_action_share">Share</string>
 </resources>

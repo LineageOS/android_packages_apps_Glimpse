@@ -19,7 +19,7 @@ import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.viewmodels.ThumbnailViewModel.DataType
+import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel.DataType
 import java.util.Date
 
 class ThumbnailAdapter(

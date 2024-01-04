@@ -31,7 +31,6 @@
     <!-- Bottom app bar option -->
     <style name="Theme.Glimpse.BottomAppBarOption">
         <item name="iconTint">?attr/colorOnSurface</item>
-        <item name="showAsAction">ifRoom</item>
     </style>
 
     <!-- Media viewer -->
