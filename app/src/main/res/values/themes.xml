@@ -26,11 +26,13 @@
 
     <!-- Top app bar option -->
     <style name="Theme.Glimpse.TopAppBarOption">
+        <item name="android:iconTint">?attr/colorOnSurface</item>
         <item name="iconTint">?attr/colorOnSurface</item>
     </style>
 
     <!-- Bottom app bar option -->
     <style name="Theme.Glimpse.BottomAppBarOption">
+        <item name="android:iconTint">?attr/colorOnSurface</item>
         <item name="iconTint">?attr/colorOnSurface</item>
     </style>
 
