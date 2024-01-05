@@ -5,6 +5,9 @@
 
 package org.lineageos.glimpse.recyclerview
 
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -188,13 +191,33 @@ class ThumbnailAdapter(
             }
             videoOverlayImageView.isVisible = media.mediaType == MediaType.VIDEO
 
-            selectionScrimView.isVisible = isSelected
+            if (isSelected) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val blurRenderEffect = RenderEffect.createBlurEffect(
+                        BLUR_RADIUS, BLUR_RADIUS,
+                        Shader.TileMode.MIRROR
+                    )
+                    thumbnailImageView.setRenderEffect(blurRenderEffect)
+                } else {
+                    selectionScrimView.isVisible = true
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    thumbnailImageView.setRenderEffect(null)
+                } else {
+                    selectionScrimView.isVisible = false
+                }
+            }
             selectionCheckedImageView.setImageResource(
                 when (isSelected) {
                     true -> R.drawable.ic_check_circle
                     false -> R.drawable.ic_check_circle_outline
                 }
             )
+        }
+
+        companion object {
+            private const val BLUR_RADIUS = 15f
         }
     }
 
