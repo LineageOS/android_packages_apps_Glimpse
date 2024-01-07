@@ -22,11 +22,13 @@ import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.MediaUri
+import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
 
 class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
     private val mediaViewerViewModel: MediaViewerViewModel,
+    private val mediaViewerUIViewModel: MediaViewerUIViewModel,
 ) : RecyclerView.Adapter<MediaViewerAdapter.MediaViewHolder>() {
     var data: Array<Media> = arrayOf()
         set(value) {
@@ -64,7 +66,7 @@ class MediaViewerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
-        exoPlayer, mediaViewerViewModel
+        exoPlayer, mediaViewerViewModel, mediaViewerUIViewModel
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
@@ -93,6 +95,7 @@ class MediaViewerAdapter(
         private val view: View,
         private val exoPlayer: Lazy<ExoPlayer>,
         private val mediaViewerViewModel: MediaViewerViewModel,
+        private val mediaViewerUIViewModel: MediaViewerUIViewModel,
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val imageView = view.findViewById<ImageView>(R.id.imageView)
@@ -112,7 +115,7 @@ class MediaViewerAdapter(
             imageView.isVisible = !isNowVideoPlayer
             playerView.isVisible = isNowVideoPlayer
 
-            if (!isNowVideoPlayer || mediaViewerViewModel.fullscreenModeLiveData.value == true) {
+            if (!isNowVideoPlayer || mediaViewerUIViewModel.fullscreenModeLiveData.value == true) {
                 playerControlView.hideImmediately()
             } else {
                 playerControlView.show()
@@ -129,7 +132,7 @@ class MediaViewerAdapter(
 
         @androidx.media3.common.util.UnstableApi
         private val sheetsHeightObserver = { sheetsHeight: Pair<Int, Int> ->
-            if (mediaViewerViewModel.fullscreenModeLiveData.value != true) {
+            if (mediaViewerUIViewModel.fullscreenModeLiveData.value != true) {
                 val (topHeight, bottomHeight) = sheetsHeight
 
                 // Place the player controls between the two sheets
@@ -149,10 +152,10 @@ class MediaViewerAdapter(
 
         init {
             imageView.setOnClickListener {
-                mediaViewerViewModel.toggleFullscreenMode()
+                mediaViewerUIViewModel.toggleFullscreenMode()
             }
             playerView.setOnClickListener {
-                mediaViewerViewModel.toggleFullscreenMode()
+                mediaViewerUIViewModel.toggleFullscreenMode()
             }
         }
 
@@ -175,16 +178,16 @@ class MediaViewerAdapter(
         fun onViewAttachedToWindow() {
             view.findViewTreeLifecycleOwner()?.let {
                 mediaViewerViewModel.mediaPositionLiveData.observe(it, mediaPositionObserver)
-                mediaViewerViewModel.sheetsHeightLiveData.observe(it, sheetsHeightObserver)
-                mediaViewerViewModel.fullscreenModeLiveData.observe(it, fullscreenModeObserver)
+                mediaViewerUIViewModel.sheetsHeightLiveData.observe(it, sheetsHeightObserver)
+                mediaViewerUIViewModel.fullscreenModeLiveData.observe(it, fullscreenModeObserver)
             }
         }
 
         @androidx.media3.common.util.UnstableApi
         fun onViewDetachedFromWindow() {
             mediaViewerViewModel.mediaPositionLiveData.removeObserver(mediaPositionObserver)
-            mediaViewerViewModel.sheetsHeightLiveData.removeObserver(sheetsHeightObserver)
-            mediaViewerViewModel.fullscreenModeLiveData.removeObserver(fullscreenModeObserver)
+            mediaViewerUIViewModel.sheetsHeightLiveData.removeObserver(sheetsHeightObserver)
+            mediaViewerUIViewModel.fullscreenModeLiveData.removeObserver(fullscreenModeObserver)
         }
     }
 }

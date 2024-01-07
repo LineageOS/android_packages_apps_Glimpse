@@ -38,6 +38,9 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -50,6 +53,7 @@ import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
+import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
 import org.lineageos.glimpse.viewmodels.QueryResult.Empty
@@ -60,7 +64,7 @@ import java.text.SimpleDateFormat
  */
 class ViewActivity : AppCompatActivity() {
     // View models
-    private val mediaViewModel: MediaViewerViewModel by viewModels {
+    private val model: MediaViewerViewModel by viewModels {
         albumId?.let {
             assert(it != MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id) {
                 "MEDIA_STORE_BUCKET_PLACEHOLDER found, view model initialized too early"
@@ -69,6 +73,7 @@ class ViewActivity : AppCompatActivity() {
             MediaViewerViewModel.factory(application, it)
         } ?: MediaViewerViewModel.factory(application)
     }
+    private val uiModel: MediaViewerUIViewModel by viewModels()
 
     // Views
     private val adjustButton by lazy { findViewById<ImageButton>(R.id.adjustButton) }
@@ -86,6 +91,9 @@ class ViewActivity : AppCompatActivity() {
 
     // System services
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
+
+    // Coroutines
+    private val ioScope = CoroutineScope(Job() + Dispatchers.IO)
 
     // Player
     private val exoPlayerListener = object : Player.Listener {
@@ -115,7 +123,7 @@ class ViewActivity : AppCompatActivity() {
 
     // Adapter
     private val mediaViewerAdapter by lazy {
-        MediaViewerAdapter(exoPlayerLazy, mediaViewModel)
+        MediaViewerAdapter(exoPlayerLazy, model, uiModel)
     }
 
     // okhttp
@@ -215,7 +223,7 @@ class ViewActivity : AppCompatActivity() {
                 return
             }
 
-            this@ViewActivity.mediaViewModel.mediaPosition = position
+            this@ViewActivity.model.mediaPosition = position
 
             mediaUri?.also {
                 updateExoPlayer(it.mediaType, it.externalContentUri)
@@ -241,57 +249,45 @@ class ViewActivity : AppCompatActivity() {
 
     // Permissions
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
-        lifecycleScope.launch {
+        ioScope.launch {
             val intentHandled = handleIntent(intent)
 
-            if (!intentHandled) {
-                finish()
-
-                return@launch
-            }
-
-            // Update UI
-            updateUI()
-
-            // Here we now do a bunch of view model related stuff because we can now initialize it
-            // with the now correctly defined album ID
-
-            // Attach the adapter to the view pager
-            viewPager.adapter = mediaViewerAdapter
-
-            // Observe fullscreen mode
-            mediaViewModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->
-                topSheetConstraintLayout.fade(!fullscreenMode)
-                bottomSheetLinearLayout.fade(!fullscreenMode)
-
-                window.setBarsVisibility(systemBars = !fullscreenMode)
-
-                // If the sheets are being made visible again, update the values
-                if (!fullscreenMode) {
-                    updateSheetsHeight()
+            lifecycleScope.launch lifecycleCoroutine@ {
+                if (!intentHandled) {
+                    finish()
+                    return@lifecycleCoroutine
                 }
-            }
 
-            mediaUri?.also {
-                initData(it)
-            } ?: additionalMedias?.also { additionalMedias ->
-                val medias = media?.let {
-                    arrayOf(it) + additionalMedias
-                } ?: additionalMedias
+                // Update UI
+                updateUI()
 
-                initData(medias.toSet().sortedByDescending { it.dateAdded })
-            } ?: albumId?.also {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    mediaViewModel.media.collectLatest { data ->
-                        when (data) {
-                            is Data -> initData(data.values)
-                            is Empty -> Unit
+                // Here we now do a bunch of view model related stuff because we can now initialize it
+                // with the now correctly defined album ID
+
+                // Attach the adapter to the view pager
+                viewPager.adapter = mediaViewerAdapter
+
+                mediaUri?.also {
+                    initData(it)
+                } ?: additionalMedias?.also { additionalMedias ->
+                    val medias = media?.let {
+                        arrayOf(it) + additionalMedias
+                    } ?: additionalMedias
+
+                    initData(medias.toSet().sortedByDescending { it.dateAdded })
+                } ?: albumId?.also {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        model.media.collectLatest { data ->
+                            when (data) {
+                                is Data -> initData(data.values)
+                                is Empty -> Unit
+                            }
                         }
                     }
-                }
-            } ?: media?.also {
-                initData(listOf(it))
-            } ?: initData(listOf())
+                } ?: media?.also {
+                    initData(listOf(it))
+                } ?: initData(listOf())
+            }
         }
     }
 
@@ -309,13 +305,26 @@ class ViewActivity : AppCompatActivity() {
             setShowWhenLocked(true)
         }
 
+        // Observe fullscreen mode
+        uiModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->
+            topSheetConstraintLayout.fade(!fullscreenMode)
+            bottomSheetLinearLayout.fade(!fullscreenMode)
+
+            window.setBarsVisibility(systemBars = !fullscreenMode)
+
+            // If the sheets are being made visible again, update the values
+            if (!fullscreenMode) {
+                updateSheetsHeight()
+            }
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             // Avoid updating the sheets height when they're hidden.
             // Once the system bars will be made visible again, this function
             // will be called again.
-            if (mediaViewModel.fullscreenModeLiveData.value != true) {
+            if (uiModel.fullscreenModeLiveData.value != true) {
                 topSheetConstraintLayout.updatePadding(
                     left = insets.left,
                     right = insets.right,
@@ -444,7 +453,7 @@ class ViewActivity : AppCompatActivity() {
 
         // If we already have a position, keep that, else get one from
         // the passed media, else go to the first one
-        val mediaPosition = mediaViewModel.mediaPosition ?: media?.let { media ->
+        val mediaPosition = model.mediaPosition ?: media?.let { media ->
             mediaViewerAdapter.data.indexOfFirst {
                 it.id == media.id
             }.takeUnless {
@@ -452,7 +461,7 @@ class ViewActivity : AppCompatActivity() {
             }
         } ?: 0
 
-        mediaViewModel.mediaPosition = mediaPosition
+        model.mediaPosition = mediaPosition
 
         viewPager.setCurrentItem(mediaPosition, false)
         onPageChangeCallback.onPageSelected(mediaPosition)
@@ -464,7 +473,7 @@ class ViewActivity : AppCompatActivity() {
         // We have a single element
         val mediaPosition = 0
 
-        mediaViewModel.mediaPosition = mediaPosition
+        model.mediaPosition = mediaPosition
 
         viewPager.setCurrentItem(mediaPosition, false)
         onPageChangeCallback.onPageSelected(mediaPosition)
@@ -537,7 +546,7 @@ class ViewActivity : AppCompatActivity() {
         topSheetConstraintLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         bottomSheetLinearLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
-        mediaViewModel.sheetsHeightLiveData.value = Pair(
+        uiModel.sheetsHeightLiveData.value = Pair(
             topSheetConstraintLayout.measuredHeight,
             bottomSheetLinearLayout.measuredHeight,
         )
