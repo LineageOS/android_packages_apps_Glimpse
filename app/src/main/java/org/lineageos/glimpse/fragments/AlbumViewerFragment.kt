@@ -11,9 +11,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
@@ -56,6 +58,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
     // Views
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
+    private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
     private val recyclerView by getViewProperty<RecyclerView>(R.id.recyclerView)
     private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
@@ -68,10 +71,9 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
                         is Data -> {
                             thumbnailAdapter.submitList(it.values)
 
-                            if (it.values.isEmpty()) {
-                                // No medias, bail out
-                                activity?.supportFragmentManager?.popBackStack()
-                            }
+                            val noMedia = it.values.isEmpty()
+                            recyclerView.isVisible = !noMedia
+                            noMediaLinearLayout.isVisible = noMedia
                         }
 
                         is Empty -> Unit
