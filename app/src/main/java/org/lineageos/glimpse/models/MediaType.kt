@@ -22,6 +22,11 @@ enum class MediaType(
     );
 
     companion object {
+        private val hlsMimeTypes = listOf(
+            "application/vnd.apple.mpegurl",
+            "audio/x-mpegurl",
+        )
+
         fun fromMediaStoreValue(value: Int) = values().first {
             value == it.mediaStoreValue
         }
@@ -29,7 +34,7 @@ enum class MediaType(
         fun fromMimeType(mimeType: String) = when {
             mimeType.startsWith("image/") -> IMAGE
             mimeType.startsWith("video/") -> VIDEO
-            mimeType == "application/vnd.apple.mpegurl" -> VIDEO // HLS
+            mimeType in hlsMimeTypes -> VIDEO
             else -> null
         }
     }
