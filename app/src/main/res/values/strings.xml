@@ -13,11 +13,14 @@
     <string name="reels_title">Reels</string>
     <string name="albums_title">Albums</string>
     <string name="search_title">Search</string>
+    <string name="categories_title">Categories</string>
 
     <!-- Album buckets -->
     <string name="album_favorites">Favorites</string>
     <string name="album_trash">Trash</string>
     <string name="album_reels">Reels</string>
+    <string name="album_photos">Photos</string>
+    <string name="album_videos">Videos</string>
 
     <!-- Album thumbnail -->
     <plurals name="album_thumbnail_items">

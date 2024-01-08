@@ -24,7 +24,17 @@ enum class MediaStoreBuckets {
     /**
      * Reserved bucket ID for placeholders, throw an exception if this value is used.
      */
-    MEDIA_STORE_BUCKET_PLACEHOLDER;
+    MEDIA_STORE_BUCKET_PLACEHOLDER,
+
+    /**
+     * Reels album, contains only photos.
+     */
+    MEDIA_STORE_BUCKET_PHOTOS,
+
+    /**
+     * Reels album, contains only videos.
+     */
+    MEDIA_STORE_BUCKET_VIDEOS;
 
     val id = -0x0000DEAD - ((ordinal + 1) shl 16)
 }

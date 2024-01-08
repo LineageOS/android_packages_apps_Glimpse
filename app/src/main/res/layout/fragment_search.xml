@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScrollTargetViewId="@+id/searchScrollLayout">
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/searchScrollLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/categoriesTitleTextView"
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="17dp"
+                android:layout_marginVertical="22dp"
+                android:text="@string/categories_title" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <org.lineageos.glimpse.ui.ListItem
+                    android:id="@+id/photosAlbumListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:headlineText="@string/album_photos"
+                    app:leadingIconImage="@drawable/ic_photo_size_select_actual" />
+
+                <org.lineageos.glimpse.ui.ListItem
+                    android:id="@+id/videosAlbumListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:headlineText="@string/album_videos"
+                    app:leadingIconImage="@drawable/ic_play_circle_outline" />
+
+                <org.lineageos.glimpse.ui.ListItem
+                    android:id="@+id/favoritesAlbumListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:headlineText="@string/album_favorites"
+                    app:leadingIconImage="@drawable/ic_star_border" />
+
+                <org.lineageos.glimpse.ui.ListItem
+                    android:id="@+id/trashAlbumListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:headlineText="@string/album_trash"
+                    app:leadingIconImage="@drawable/ic_delete" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -27,16 +27,26 @@ class MediaFlow(private val context: Context, private val bucketId: Int) : Query
     override fun flowCursor(): Flow<Cursor?> {
         val uri = MediaQuery.MediaStoreFileUri
         val projection = MediaQuery.MediaProjection
-        val imageOrVideo =
-            (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
-                    (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+        val image =
+            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
+        val video =
+            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
+        val imageOrVideo = when (bucketId) {
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_PHOTOS.id -> image
+
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_VIDEOS.id -> video
+
+            else -> image or video
+        }
         val albumFilter = when (bucketId) {
             MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> MediaStore.Files.FileColumns.IS_FAVORITE eq 1
 
             MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
                 MediaStore.Files.FileColumns.IS_TRASHED eq 1
 
-            MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id -> null
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id,
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_PHOTOS.id,
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_VIDEOS.id -> null
 
             else -> MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
         }
