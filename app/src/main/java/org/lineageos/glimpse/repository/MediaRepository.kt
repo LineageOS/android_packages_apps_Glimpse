@@ -8,6 +8,7 @@ package org.lineageos.glimpse.repository
 import android.content.Context
 import org.lineageos.glimpse.flow.AlbumFlow
 import org.lineageos.glimpse.flow.AlbumsFlow
+import org.lineageos.glimpse.flow.LocationsFlow
 import org.lineageos.glimpse.flow.MediaFlow
 
 @Suppress("Unused")
@@ -45,4 +46,8 @@ object MediaRepository {
         context: Context,
         mimeType: String? = null,
     ) = AlbumsFlow(context, mimeType).flowCursor()
+
+    fun locations(
+        context: Context,
+    ) = LocationsFlow(context).get()
 }

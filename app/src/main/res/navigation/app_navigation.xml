@@ -21,11 +21,26 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_locationsFragment"
+            app:destination="@id/locationsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
     </fragment>
 
     <fragment
         android:id="@+id/albumViewerFragment"
         android:name="org.lineageos.glimpse.fragments.AlbumViewerFragment"
         tools:layout="@layout/fragment_album_viewer" />
+
+    <fragment
+        android:id="@+id/locationsFragment"
+        android:name="org.lineageos.glimpse.fragments.LocationsFragment"
+        android:label="@string/locations_title"
+        tools:layout="@layout/fragment_locations" />
 
 </navigation>

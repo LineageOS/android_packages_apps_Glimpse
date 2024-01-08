@@ -13,6 +13,7 @@
     <string name="reels_title">Reels</string>
     <string name="albums_title">Albums</string>
     <string name="search_title">Search</string>
+    <string name="locations_title">Locations</string>
     <string name="categories_title">Categories</string>
 
     <!-- Album buckets -->
@@ -126,4 +127,7 @@
     <string name="set_wallpaper_home_screen">Home screen</string>
     <string name="set_wallpaper_lock_screen">Lock screen</string>
     <string name="set_wallpaper_both">Home and lock screen</string>
+
+    <!-- Search fragment -->
+    <string name="search_location_view_all_button">View all</string>
 </resources>
