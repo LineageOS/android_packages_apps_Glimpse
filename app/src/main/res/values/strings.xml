@@ -20,6 +20,7 @@
     <!-- Album buckets -->
     <string name="album_favorites">Favorites</string>
     <string name="album_trash">Trash</string>
+    <string name="album_reels">Reels</string>
 
     <!-- Album thumbnail -->
     <plurals name="album_thumbnail_items">

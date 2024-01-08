@@ -112,6 +112,10 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                                         R.string.album_trash
                                     )
 
+                                    MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id -> context.getString(
+                                        R.string.album_reels
+                                    )
+
                                     else -> bucketDisplayName ?: Build.MODEL
                                 },
                                 Media.fromMediaStore(
