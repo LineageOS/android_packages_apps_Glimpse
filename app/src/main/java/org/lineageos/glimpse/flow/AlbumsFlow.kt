@@ -14,12 +14,10 @@ import android.provider.MediaStore
 import androidx.core.os.bundleOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.queryFlow
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.query.*
-import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
     override fun flowCursor(): Flow<Cursor?> {
@@ -36,7 +34,6 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
                 )
             )
-            putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_INCLUDE)
         }
 
         return context.contentResolver.queryFlow(
@@ -74,67 +71,42 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
                 while (!it.isAfterLast) {
                     val bucketId = it.getInt(bucketIdIndex)
 
-                    val bucketIds = listOfNotNull(
-                        when (it.getInt(isTrashedIndex)) {
-                            1 -> MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id
-                            else -> bucketId
-                        },
-                        MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id.takeIf { _ ->
-                            it.getInt(isFavoriteIndex) == 1
-                        },
-                    )
+                    this[bucketId]?.also { album ->
+                        album.size += 1
+                    } ?: run {
+                        val id = it.getLong(idIndex)
+                        val displayName = it.getString(displayNameIndex)
+                        val isFavorite = it.getInt(isFavoriteIndex)
+                        val isTrashed = it.getInt(isTrashedIndex)
+                        val mediaType = it.getInt(mediaTypeIndex)
+                        val mimeType = it.getString(mimeTypeIndex)
+                        val dateAdded = it.getLong(dateAddedIndex)
+                        val dateModified = it.getLong(dateModifiedIndex)
+                        val width = it.getInt(widthIndex)
+                        val height = it.getInt(heightIndex)
+                        val orientation = it.getInt(orientationIndex)
+                        val bucketDisplayName = it.getString(bucketDisplayNameIndex)
 
-                    for (displayedBucketId in bucketIds) {
-                        this[displayedBucketId]?.also { album ->
-                            album.size += 1
-                        } ?: run {
-                            val id = it.getLong(idIndex)
-                            val displayName = it.getString(displayNameIndex)
-                            val isFavorite = it.getInt(isFavoriteIndex)
-                            val isTrashed = it.getInt(isTrashedIndex)
-                            val mediaType = it.getInt(mediaTypeIndex)
-                            val mimeType = it.getString(mimeTypeIndex)
-                            val dateAdded = it.getLong(dateAddedIndex)
-                            val dateModified = it.getLong(dateModifiedIndex)
-                            val width = it.getInt(widthIndex)
-                            val height = it.getInt(heightIndex)
-                            val orientation = it.getInt(orientationIndex)
-                            val bucketDisplayName = it.getString(bucketDisplayNameIndex)
-
-                            this[displayedBucketId] = Album(
-                                displayedBucketId,
-                                when (displayedBucketId) {
-                                    MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> context.getString(
-                                        R.string.album_favorites
-                                    )
-
-                                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> context.getString(
-                                        R.string.album_trash
-                                    )
-
-                                    MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id -> context.getString(
-                                        R.string.album_reels
-                                    )
-
-                                    else -> bucketDisplayName ?: Build.MODEL
-                                },
-                                MediaStoreMedia.fromMediaStore(
-                                    id,
-                                    bucketId,
-                                    displayName,
-                                    isFavorite,
-                                    isTrashed,
-                                    mediaType,
-                                    mimeType,
-                                    dateAdded,
-                                    dateModified,
-                                    width,
-                                    height,
-                                    orientation,
-                                )
-                            ).apply { size += 1 }
-                        }
+                        this[bucketId] = Album(
+                            bucketId,
+                            bucketDisplayName ?: Build.MODEL,
+                            MediaStoreMedia.fromMediaStore(
+                                id,
+                                bucketId,
+                                displayName,
+                                isFavorite,
+                                isTrashed,
+                                mediaType,
+                                mimeType,
+                                dateAdded,
+                                dateModified,
+                                width,
+                                height,
+                                orientation,
+                            )
+                        ).apply { size += 1 }
                     }
+
                     it.moveToNext()
                 }
             }
