@@ -5,24 +5,26 @@
 
 package org.lineageos.glimpse.utils
 
-enum class MediaStoreBuckets(val id: Int) {
+enum class MediaStoreBuckets {
     /**
      * Favorites album.
      */
-    MEDIA_STORE_BUCKET_FAVORITES(-0x0001DEAD),
+    MEDIA_STORE_BUCKET_FAVORITES,
 
     /**
      * Trash album.
      */
-    MEDIA_STORE_BUCKET_TRASH(-0x0002DEAD),
+    MEDIA_STORE_BUCKET_TRASH,
 
     /**
      * Reels album, contains all medias.
      */
-    MEDIA_STORE_BUCKET_REELS(-0x0003DEAD),
+    MEDIA_STORE_BUCKET_REELS,
 
     /**
      * Reserved bucket ID for placeholders, throw an exception if this value is used.
      */
-    MEDIA_STORE_BUCKET_PLACEHOLDER(-0x0004DEAD),
+    MEDIA_STORE_BUCKET_PLACEHOLDER;
+
+    val id = -0x0000DEAD - ((ordinal + 1) shl 16)
 }
