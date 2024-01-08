@@ -59,8 +59,10 @@ class AlbumThumbnailAdapter(
                 R.plurals.album_thumbnail_items, album.size, album.size
             )
 
-            thumbnailImageView.load(album.thumbnail.uri) {
-                memoryCacheKey("thumbnail_${album.thumbnail.id}")
+            thumbnailImageView.load(album.thumbnail?.uri) {
+                album.thumbnail?.let {
+                    memoryCacheKey("thumbnail_${it.id}")
+                }
                 size(DisplayAwareGridLayoutManager.MAX_THUMBNAIL_SIZE)
                 placeholder(R.drawable.thumbnail_placeholder)
             }
@@ -68,7 +70,7 @@ class AlbumThumbnailAdapter(
             itemView.setOnClickListener {
                 navController.navigate(
                     R.id.action_mainFragment_to_albumViewerFragment,
-                    AlbumViewerFragment.createBundle(album)
+                    AlbumViewerFragment.createBundle(album.id)
                 )
             }
         }

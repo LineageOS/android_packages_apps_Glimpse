@@ -17,7 +17,7 @@ import kotlin.reflect.safeCast
 data class Album(
     val id: Int,
     val name: String,
-    val thumbnail: MediaStoreMedia,
+    val thumbnail: MediaStoreMedia? = null,
     var size: Int = 0,
 ) : Comparable<Album>, Parcelable {
     constructor(parcel: Parcel) : this(

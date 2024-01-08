@@ -15,8 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import org.lineageos.glimpse.ext.*
+import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.repository.MediaRepository
@@ -69,6 +71,14 @@ class AlbumViewerViewModel(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = QueryResult.Empty(),
+    )
+
+    val album = MediaRepository.album(context, bucketId).flowOn(Dispatchers.IO).mapNotNull {
+        it.firstOrNull()
+    }.stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = Album(-1, ""),
     )
 
     val inSelectionMode = MutableLiveData(false)

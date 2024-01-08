@@ -65,8 +65,8 @@ import kotlin.reflect.safeCast
 class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
     // View models
     private val model: AlbumViewerViewModel by viewModels {
-        album?.let {
-            AlbumViewerViewModel.factory(requireActivity().application, it.id)
+        bucketId?.let {
+            AlbumViewerViewModel.factory(requireActivity().application, it)
         } ?: AlbumViewerViewModel.factory(requireActivity().application)
     }
 
@@ -91,6 +91,16 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
                         }
 
                         is Empty -> Unit
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.album.collectLatest {
+                    activity?.runOnUiThread {
+                        toolbar.title = it.name
                     }
                 }
             }
@@ -138,7 +148,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             requireActivity().menuInflater.inflate(
-                when (album?.id) {
+                when (bucketId) {
                     MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> R.menu.album_action_bar_trash
                     else -> R.menu.album_action_bar
                 },
@@ -266,7 +276,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
         }
 
     // Arguments
-    private val album by lazy { arguments?.getParcelable(KEY_ALBUM, Album::class) }
+    private val bucketId by lazy { arguments?.getInt(KEY_BUCKET_ID) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -276,14 +286,10 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
         appBarLayout.statusBarForeground =
             MaterialShapeDrawable.createWithElevationOverlay(requireContext())
 
-        album?.let {
-            toolbar.title = it.name
-        }
-
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        when (album?.id) {
+        when (bucketId) {
             MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
                 R.menu.fragment_album_viewer_toolbar_trash
             else -> null
@@ -404,16 +410,16 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
     }
 
     companion object {
-        private const val KEY_ALBUM = "album"
+        private const val KEY_BUCKET_ID = "bucket_id"
 
         /**
          * Create a [Bundle] to use as the arguments for this fragment.
-         * @param album The [Album] to display, if null, reels will be shown
+         * @param bucketId The [Album] to display's bucket ID, if null, reels will be shown
          */
         fun createBundle(
-            album: Album? = null,
+            bucketId: Int? = null,
         ) = bundleOf(
-            KEY_ALBUM to album,
+            KEY_BUCKET_ID to bucketId,
         )
 
         /**
@@ -424,9 +430,9 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
          * @return A new instance of fragment [AlbumViewerFragment].
          */
         fun newInstance(
-            album: Album,
+            bucketId: Int? = null,
         ) = AlbumViewerFragment().apply {
-            arguments = createBundle(album)
+            arguments = createBundle(bucketId)
         }
     }
 }
