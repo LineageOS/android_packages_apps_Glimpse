@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.lineageos.glimpse.models.Media
@@ -26,7 +28,9 @@ class AlbumViewerViewModel(
     val bucketId: Int,
     addHeaders: Boolean,
 ) : GlimpseViewModel(application) {
-    val mediaWithHeaders = MediaRepository.media(context, bucketId).map { medias ->
+    val mediaWithHeaders = MediaRepository.media(context, bucketId).flowOn(
+        Dispatchers.IO
+    ).map { medias ->
         val data = when (addHeaders) {
             true -> mutableListOf<DataType>().apply {
                 for (i in medias.indices) {
