@@ -46,6 +46,7 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.lineageos.glimpse.ext.*
+import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.UriMedia
@@ -58,6 +59,7 @@ import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
 import org.lineageos.glimpse.viewmodels.QueryResult.Empty
 import java.text.SimpleDateFormat
+import kotlin.reflect.safeCast
 
 /**
  * An activity used to view one or mode medias.
@@ -130,10 +132,9 @@ class ViewActivity : AppCompatActivity() {
     private val httpClient = OkHttpClient()
 
     // Media
-    private var media: MediaStoreMedia? = null
+    private var media: Media? = null
     private var albumId: Int? = MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id
     private var additionalMedias: Array<MediaStoreMedia>? = null
-    private var uriMedia: UriMedia? = null
     private var secure = false
 
     private var lastTrashedMedia: MediaStoreMedia? = null
@@ -143,7 +144,7 @@ class ViewActivity : AppCompatActivity() {
      * Check if we're showing a static set of medias.
      */
     private val readOnly
-        get() = uriMedia != null || additionalMedias != null || albumId == null || secure
+        get() = media !is MediaStoreMedia || additionalMedias != null || albumId == null || secure
 
     // Contracts
     private val deleteUriContract =
@@ -209,7 +210,7 @@ class ViewActivity : AppCompatActivity() {
     private val favoriteContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                favoriteButton.isSelected = it.isFavorite
+                favoriteButton.isSelected = (it as? MediaStoreMedia)?.isFavorite == true
             }
         }
 
@@ -225,23 +226,21 @@ class ViewActivity : AppCompatActivity() {
 
             this@ViewActivity.model.mediaPosition = position
 
-            uriMedia?.also {
-                updateExoPlayer(it.mediaType, it.uri)
-            } ?: run {
-                val media = mediaViewerAdapter.getItemAtPosition(position)
+            val media = mediaViewerAdapter.getItemAtPosition(position)
 
-                dateTextView.text = dateFormatter.format(media.dateAdded)
-                timeTextView.text = timeFormatter.format(media.dateAdded)
-                favoriteButton.isSelected = media.isFavorite
+            MediaStoreMedia::class.safeCast(media)?.let {
+                dateTextView.text = dateFormatter.format(it.dateAdded)
+                timeTextView.text = timeFormatter.format(it.dateAdded)
+                favoriteButton.isSelected = it.isFavorite
                 deleteButton.setImageResource(
-                    when (media.isTrashed) {
+                    when (it.isTrashed) {
                         true -> R.drawable.ic_restore_from_trash
                         false -> R.drawable.ic_delete
                     }
                 )
-
-                updateExoPlayer(media.mediaType, media.uri)
             }
+
+            updateExoPlayer(media.mediaType, media.uri)
         }
     }
 
@@ -267,14 +266,12 @@ class ViewActivity : AppCompatActivity() {
                 // Attach the adapter to the view pager
                 viewPager.adapter = mediaViewerAdapter
 
-                uriMedia?.also {
-                    initData(it)
-                } ?: additionalMedias?.also { additionalMedias ->
-                    val medias = media?.let {
+                additionalMedias?.also { additionalMedias ->
+                    val medias = MediaStoreMedia::class.safeCast(media)?.let {
                         arrayOf(it) + additionalMedias
                     } ?: additionalMedias
 
-                    initData(medias.toSet().sortedByDescending { it.dateAdded })
+                    initData(medias.distinct().sortedByDescending { it.dateAdded })
                 } ?: albumId?.also {
                     repeatOnLifecycle(Lifecycle.State.STARTED) {
                         model.media.collectLatest { data ->
@@ -347,7 +344,9 @@ class ViewActivity : AppCompatActivity() {
         }
 
         favoriteButton.setOnClickListener {
-            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
+            MediaStoreMedia::class.safeCast(
+                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
+            )?.let {
                 favoriteContract.launch(
                     contentResolver.createFavoriteRequest(
                         !it.isFavorite, it.uri
@@ -359,9 +358,7 @@ class ViewActivity : AppCompatActivity() {
         shareButton.setOnClickListener {
             startActivity(
                 Intent.createChooser(
-                    uriMedia?.let {
-                        buildShareIntent(it)
-                    } ?: buildShareIntent(
+                    buildShareIntent(
                         mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
                     ),
                     null
@@ -370,7 +367,9 @@ class ViewActivity : AppCompatActivity() {
         }
 
         infoButton.setOnClickListener {
-            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
+            MediaStoreMedia::class.safeCast(
+                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
+            )?.let {
                 MediaInfoBottomSheetDialog(
                     this, it, mediaInfoBottomSheetDialogCallbacks, secure
                 ).show()
@@ -378,18 +377,24 @@ class ViewActivity : AppCompatActivity() {
         }
 
         adjustButton.setOnClickListener {
-            startActivity(
-                Intent.createChooser(
-                    buildEditIntent(
-                        mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
-                    ),
-                    null
+            MediaStoreMedia::class.safeCast(
+                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
+            )?.let {
+                startActivity(
+                    Intent.createChooser(
+                        buildEditIntent(it),
+                        null
+                    )
                 )
-            )
+            }
         }
 
         deleteButton.setOnClickListener {
-            trashMedia(mediaViewerAdapter.getItemAtPosition(viewPager.currentItem))
+            MediaStoreMedia::class.safeCast(
+                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
+            )?.let {
+                trashMedia(it)
+            }
         }
 
         deleteButton.setOnLongClickListener {
@@ -448,30 +453,18 @@ class ViewActivity : AppCompatActivity() {
         updateSheetsHeight()
     }
 
-    private fun initData(data: List<MediaStoreMedia>) {
+    private fun initData(data: List<Media>) {
         mediaViewerAdapter.data = data.toTypedArray()
 
         // If we already have a position, keep that, else get one from
         // the passed media, else go to the first one
         val mediaPosition = model.mediaPosition ?: media?.let { media ->
             mediaViewerAdapter.data.indexOfFirst {
-                it.id == media.id
+                it.uri == media.uri
             }.takeUnless {
                 it == -1
             }
         } ?: 0
-
-        model.mediaPosition = mediaPosition
-
-        viewPager.setCurrentItem(mediaPosition, false)
-        onPageChangeCallback.onPageSelected(mediaPosition)
-    }
-
-    private fun initData(uriMedia: UriMedia) {
-        mediaViewerAdapter.uriMedia = uriMedia
-
-        // We have a single element
-        val mediaPosition = 0
 
         model.mediaPosition = mediaPosition
 
@@ -486,7 +479,7 @@ class ViewActivity : AppCompatActivity() {
     private fun updateUI() {
         // Set UI elements visibility based on initial arguments
         val readOnly = readOnly
-        val shouldShowMediaButtons = uriMedia == null
+        val shouldShowMediaButtons = media is MediaStoreMedia
 
         dateTextView.isVisible = shouldShowMediaButtons
         timeTextView.isVisible = shouldShowMediaButtons
@@ -620,7 +613,7 @@ class ViewActivity : AppCompatActivity() {
         }
 
         updateArguments(
-            uriMedia = UriMedia(uri, uriType, dataType),
+            media = UriMedia(uri, uriType, dataType),
             secure = secure,
         )
 
@@ -660,20 +653,17 @@ class ViewActivity : AppCompatActivity() {
      * @param media The first media to show
      * @param albumId Album ID, if null [additionalMedias] will be used
      * @param additionalMedias The additional medias to show alongside [media]
-     * @param uriMedia The [UriMedia] to show
      * @param secure Whether this should be considered a secure session
      */
     private fun updateArguments(
-        media: MediaStoreMedia? = null,
+        media: Media? = null,
         albumId: Int? = null,
         additionalMedias: Array<MediaStoreMedia>? = null,
-        uriMedia: UriMedia? = null,
         secure: Boolean = false,
     ) {
         this.media = media
         this.albumId = albumId
         this.additionalMedias = additionalMedias
-        this.uriMedia = uriMedia
         this.secure = secure
     }
 

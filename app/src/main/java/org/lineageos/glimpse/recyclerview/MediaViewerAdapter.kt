@@ -19,18 +19,19 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
+import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.models.UriMedia
 import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
+import kotlin.reflect.safeCast
 
 class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
     private val mediaViewerViewModel: MediaViewerViewModel,
     private val mediaViewerUIViewModel: MediaViewerUIViewModel,
 ) : RecyclerView.Adapter<MediaViewerAdapter.MediaViewHolder>() {
-    var data: Array<MediaStoreMedia> = arrayOf()
+    var data: Array<Media> = arrayOf()
         set(value) {
             if (value.contentEquals(field)) {
                 return
@@ -43,26 +44,7 @@ class MediaViewerAdapter(
             }
         }
 
-    var uriMedia: UriMedia? = null
-        set(value) {
-            if (value == field) {
-                return
-            }
-
-            field = value
-
-            value?.let {
-                @Suppress("NotifyDataSetChanged") notifyDataSetChanged()
-            }
-        }
-
-    init {
-        setHasStableIds(true)
-    }
-
-    override fun getItemCount() = uriMedia?.let { 1 } ?: data.size
-
-    override fun getItemId(position: Int) = uriMedia?.let { 0 } ?: data[position].id
+    override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
@@ -70,9 +52,7 @@ class MediaViewerAdapter(
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
-        uriMedia?.let {
-            holder.bind(it, position)
-        } ?: holder.bind(data[position], position)
+        holder.bind(data[position], position)
     }
 
     @androidx.media3.common.util.UnstableApi
@@ -87,9 +67,7 @@ class MediaViewerAdapter(
         holder.onViewDetachedFromWindow()
     }
 
-    fun getItemAtPosition(position: Int) = uriMedia?.let {
-        throw Exception("Called while Uri is used")
-    } ?: data[position]
+    fun getItemAtPosition(position: Int) = data[position]
 
     class MediaViewHolder(
         private val view: View,
@@ -103,14 +81,13 @@ class MediaViewerAdapter(
         private val playerControlView = view.findViewById<PlayerControlView>(R.id.exo_controller)
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
 
-        private var media: MediaStoreMedia? = null
-        private var uriMedia: UriMedia? = null
+        private var media: Media? = null
         private var position = -1
 
         @androidx.media3.common.util.UnstableApi
         private val mediaPositionObserver: (Int) -> Unit = { currentPosition: Int ->
-            val isNowVideoPlayer = uriMedia?.let { it.mediaType == MediaType.VIDEO }
-                ?: (currentPosition == position && media?.mediaType == MediaType.VIDEO)
+            val isNowVideoPlayer =
+                currentPosition == position && media?.mediaType == MediaType.VIDEO
 
             imageView.isVisible = !isNowVideoPlayer
             playerView.isVisible = isNowVideoPlayer
@@ -145,7 +122,7 @@ class MediaViewerAdapter(
 
         @androidx.media3.common.util.UnstableApi
         private val fullscreenModeObserver = { fullscreenMode: Boolean ->
-            if ((uriMedia?.mediaType ?: media?.mediaType) == MediaType.VIDEO) {
+            if (media?.mediaType == MediaType.VIDEO) {
                 playerControlView.fade(!fullscreenMode)
             }
         }
@@ -159,19 +136,15 @@ class MediaViewerAdapter(
             }
         }
 
-        fun bind(media: MediaStoreMedia, position: Int) {
+        fun bind(media: Media, position: Int) {
             this.media = media
             this.position = position
             imageView.load(media.uri) {
-                memoryCacheKey("full_${media.id}")
-                placeholderMemoryCacheKey("thumbnail_${media.id}")
+                MediaStoreMedia::class.safeCast(media)?.let {
+                    memoryCacheKey("full_${it.id}")
+                    placeholderMemoryCacheKey("thumbnail_${it.id}")
+                }
             }
-        }
-
-        fun bind(uriMedia: UriMedia, position: Int) {
-            this.uriMedia = uriMedia
-            this.position = position
-            imageView.load(uriMedia.uri)
         }
 
         @androidx.media3.common.util.UnstableApi
