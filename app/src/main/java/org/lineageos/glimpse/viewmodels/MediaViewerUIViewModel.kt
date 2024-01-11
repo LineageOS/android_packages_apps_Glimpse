@@ -6,9 +6,10 @@
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 
-class MediaViewerUIViewModel(application: Application) : GlimpseViewModel(application) {
+class MediaViewerUIViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * The current height of top and bottom sheets, used to apply padding to media view UI.
      */
