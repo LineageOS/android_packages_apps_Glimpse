@@ -76,32 +76,36 @@ class MediaFlow(private val context: Context, private val bucketId: Int) : Query
         )
     }
 
-    override fun flowData() = flowCursor().mapEachRow {
-        val idIndex = it.getColumnIndex(MediaStore.Files.FileColumns._ID)
-        val bucketIdIndex = it.getColumnIndex(MediaStore.MediaColumns.BUCKET_ID)
-        val displayNameIndex = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
-        val isFavoriteIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_FAVORITE)
-        val isTrashedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.IS_TRASHED)
-        val mediaTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
-        val mimeTypeIndex = it.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
-        val dateAddedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_ADDED)
-        val dateModifiedIndex = it.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)
-        val widthIndex = it.getColumnIndex(MediaStore.Files.FileColumns.WIDTH)
-        val heightIndex = it.getColumnIndex(MediaStore.Files.FileColumns.HEIGHT)
-        val orientationIndex = it.getColumnIndex(MediaStore.Files.FileColumns.ORIENTATION)
+    override fun flowData() = flowCursor().mapEachRow(
+        arrayOf(
+            MediaStore.Files.FileColumns._ID,
+            MediaStore.Files.FileColumns.BUCKET_ID,
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Files.FileColumns.IS_FAVORITE,
+            MediaStore.Files.FileColumns.IS_TRASHED,
+            MediaStore.Files.FileColumns.MEDIA_TYPE,
+            MediaStore.Files.FileColumns.MIME_TYPE,
+            MediaStore.Files.FileColumns.DATE_ADDED,
+            MediaStore.Files.FileColumns.DATE_MODIFIED,
+            MediaStore.Files.FileColumns.WIDTH,
+            MediaStore.Files.FileColumns.HEIGHT,
+            MediaStore.Files.FileColumns.ORIENTATION,
+        )
+    ) { it, indexCache ->
+        var i = 0
 
-        val id = it.getLong(idIndex)
-        val bucketId = it.getInt(bucketIdIndex)
-        val displayName = it.getString(displayNameIndex)
-        val isFavorite = it.getInt(isFavoriteIndex)
-        val isTrashed = it.getInt(isTrashedIndex)
-        val mediaType = it.getInt(mediaTypeIndex)
-        val mimeType = it.getString(mimeTypeIndex)
-        val dateAdded = it.getLong(dateAddedIndex)
-        val dateModified = it.getLong(dateModifiedIndex)
-        val width = it.getInt(widthIndex)
-        val height = it.getInt(heightIndex)
-        val orientation = it.getInt(orientationIndex)
+        val id = it.getLong(indexCache[i++])
+        val bucketId = it.getInt(indexCache[i++])
+        val displayName = it.getString(indexCache[i++])
+        val isFavorite = it.getInt(indexCache[i++])
+        val isTrashed = it.getInt(indexCache[i++])
+        val mediaType = it.getInt(indexCache[i++])
+        val mimeType = it.getString(indexCache[i++])
+        val dateAdded = it.getLong(indexCache[i++])
+        val dateModified = it.getLong(indexCache[i++])
+        val width = it.getInt(indexCache[i++])
+        val height = it.getInt(indexCache[i++])
+        val orientation = it.getInt(indexCache[i++])
 
         Media.fromMediaStore(
             id,

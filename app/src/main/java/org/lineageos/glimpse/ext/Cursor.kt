@@ -7,15 +7,22 @@ package org.lineageos.glimpse.ext
 
 import android.database.Cursor
 
-fun <T> Cursor?.mapEachRow(mapping: (Cursor) -> T) = this?.use {
+fun <T> Cursor?.mapEachRow(
+    projection: Array<String>,
+    mapping: (Cursor, Array<Int>) -> T,
+) = this?.use {
     if (!moveToFirst()) {
-        emptyList<T>()
+        return@use emptyList<T>()
     }
+
+    val indexCache = projection.map {
+        getColumnIndexOrThrow(it)
+    }.toTypedArray()
+
     val data = mutableListOf<T>()
-    while (!isAfterLast) {
-        val element = mapping(this)
-        data.add(element)
-        moveToNext()
-    }
+    do {
+        data.add(mapping(this, indexCache))
+    } while (moveToNext())
+
     data.toList()
 } ?: emptyList()
