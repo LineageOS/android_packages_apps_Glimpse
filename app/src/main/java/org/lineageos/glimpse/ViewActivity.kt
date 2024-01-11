@@ -454,12 +454,12 @@ class ViewActivity : AppCompatActivity() {
     }
 
     private fun initData(data: List<Media>) {
-        mediaViewerAdapter.data = data.toTypedArray()
+        mediaViewerAdapter.submitList(data)
 
         // If we already have a position, keep that, else get one from
         // the passed media, else go to the first one
         val mediaPosition = model.mediaPosition ?: media?.let { media ->
-            mediaViewerAdapter.data.indexOfFirst {
+            data.indexOfFirst {
                 it.uri == media.uri
             }.takeUnless {
                 it == -1

@@ -15,6 +15,8 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
@@ -30,29 +32,14 @@ class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
     private val mediaViewerViewModel: MediaViewerViewModel,
     private val mediaViewerUIViewModel: MediaViewerUIViewModel,
-) : RecyclerView.Adapter<MediaViewerAdapter.MediaViewHolder>() {
-    var data: Array<Media> = arrayOf()
-        set(value) {
-            if (value.contentEquals(field)) {
-                return
-            }
-
-            field = value
-
-            field.let {
-                @Suppress("NotifyDataSetChanged") notifyDataSetChanged()
-            }
-        }
-
-    override fun getItemCount() = data.size
-
+) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(DATA_TYPE_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
         exoPlayer, mediaViewerViewModel, mediaViewerUIViewModel
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
-        holder.bind(data[position], position)
+        holder.bind(getItem(position), position)
     }
 
     @androidx.media3.common.util.UnstableApi
@@ -67,7 +54,7 @@ class MediaViewerAdapter(
         holder.onViewDetachedFromWindow()
     }
 
-    fun getItemAtPosition(position: Int) = data[position]
+    fun getItemAtPosition(currentItem: Int): Media = getItem(currentItem)
 
     class MediaViewHolder(
         private val view: View,
@@ -161,6 +148,25 @@ class MediaViewerAdapter(
             mediaViewerViewModel.mediaPositionLiveData.removeObserver(mediaPositionObserver)
             mediaViewerUIViewModel.sheetsHeightLiveData.removeObserver(sheetsHeightObserver)
             mediaViewerUIViewModel.fullscreenModeLiveData.removeObserver(fullscreenModeObserver)
+        }
+    }
+
+    companion object {
+        val DATA_TYPE_COMPARATOR = object : DiffUtil.ItemCallback<Media>() {
+            override fun areItemsTheSame(oldItem: Media, newItem: Media) = when {
+                oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
+                    oldItem.id == newItem.id
+
+                else -> oldItem.uri == oldItem.uri
+            }
+
+            override fun areContentsTheSame(oldItem: Media, newItem: Media) = when {
+                oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
+                    oldItem.id == newItem.id &&
+                            oldItem.dateModified == newItem.dateModified
+
+                else -> oldItem.uri == oldItem.uri
+            }
         }
     }
 }
