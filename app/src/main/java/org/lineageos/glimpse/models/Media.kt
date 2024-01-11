@@ -26,7 +26,7 @@ data class Media(
     val height: Int,
     val orientation: Int,
 ) : Comparable<Media>, Parcelable {
-    val externalContentUri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
+    val uri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),

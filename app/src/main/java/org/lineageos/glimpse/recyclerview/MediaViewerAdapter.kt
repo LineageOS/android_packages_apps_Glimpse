@@ -162,7 +162,7 @@ class MediaViewerAdapter(
         fun bind(media: Media, position: Int) {
             this.media = media
             this.position = position
-            imageView.load(media.externalContentUri) {
+            imageView.load(media.uri) {
                 memoryCacheKey("full_${media.id}")
                 placeholderMemoryCacheKey("thumbnail_${media.id}")
             }
@@ -171,7 +171,7 @@ class MediaViewerAdapter(
         fun bind(mediaUri: MediaUri, position: Int) {
             this.mediaUri = mediaUri
             this.position = position
-            imageView.load(mediaUri.externalContentUri)
+            imageView.load(mediaUri.uri)
         }
 
         @androidx.media3.common.util.UnstableApi

@@ -17,14 +17,14 @@ fun buildShareIntent(vararg medias: Media) = Intent().apply {
     if (medias.size == 1) {
         action = Intent.ACTION_SEND
         medias[0].let {
-            putExtra(Intent.EXTRA_STREAM, it.externalContentUri)
+            putExtra(Intent.EXTRA_STREAM, it.uri)
             type = it.mimeType
         }
     } else {
         action = Intent.ACTION_SEND_MULTIPLE
         putParcelableArrayListExtra(
             Intent.EXTRA_STREAM,
-            medias.map { it.externalContentUri }.toCollection(ArrayList())
+            medias.map { it.uri }.toCollection(ArrayList())
         )
         type = when {
             medias.all { it.mediaType == IMAGE } -> "image/*"
@@ -44,14 +44,14 @@ fun buildShareIntent(vararg mediaUris: MediaUri) = Intent().apply {
     if (mediaUris.size == 1) {
         action = Intent.ACTION_SEND
         mediaUris[0].let {
-            putExtra(Intent.EXTRA_STREAM, it.externalContentUri)
+            putExtra(Intent.EXTRA_STREAM, it.uri)
             type = it.mimeType
         }
     } else {
         action = Intent.ACTION_SEND_MULTIPLE
         putParcelableArrayListExtra(
             Intent.EXTRA_STREAM,
-            mediaUris.map { it.externalContentUri }.toCollection(ArrayList())
+            mediaUris.map { it.uri }.toCollection(ArrayList())
         )
         type = when {
             mediaUris.all { it.mediaType == IMAGE } -> "image/*"
@@ -66,6 +66,6 @@ fun buildShareIntent(vararg mediaUris: MediaUri) = Intent().apply {
 
 fun buildEditIntent(media: Media) = Intent().apply {
     action = Intent.ACTION_EDIT
-    setDataAndType(media.externalContentUri, media.mimeType)
+    setDataAndType(media.uri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }

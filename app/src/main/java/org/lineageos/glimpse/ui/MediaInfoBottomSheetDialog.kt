@@ -84,7 +84,7 @@ class MediaInfoBottomSheetDialog(
 
         val contentResolver = context.contentResolver
 
-        contentResolver.openInputStream(media.externalContentUri)?.use { inputStream ->
+        contentResolver.openInputStream(media.uri)?.use { inputStream ->
             val exifInterface = ExifInterface(inputStream)
 
             val userComment = exifInterface.userComment?.takeIf {
@@ -220,7 +220,7 @@ class MediaInfoBottomSheetDialog(
             val contentResolver = activity.contentResolver
 
             editDescriptionCallback.launch(
-                contentResolver.createWriteRequest(media.externalContentUri)
+                contentResolver.createWriteRequest(media.uri)
             )
         }
 
@@ -228,7 +228,7 @@ class MediaInfoBottomSheetDialog(
             val contentResolver = activity.contentResolver
 
             contentResolver.openFileDescriptor(
-                media.externalContentUri, "rw"
+                media.uri, "rw"
             )?.use { assetFileDescriptor ->
                 val exifInterface = ExifInterface(assetFileDescriptor.fileDescriptor)
 

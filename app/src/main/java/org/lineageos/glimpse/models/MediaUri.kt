@@ -14,7 +14,7 @@ import org.lineageos.glimpse.ext.readSerializable
 import kotlin.reflect.safeCast
 
 data class MediaUri(
-    val externalContentUri: Uri,
+    val uri: Uri,
     val mediaType: MediaType,
     val mimeType: String,
 ) : Comparable<MediaUri>, Parcelable {
@@ -25,7 +25,7 @@ data class MediaUri(
     )
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeParcelable(externalContentUri, flags)
+        dest.writeParcelable(uri, flags)
         dest.writeSerializable(mediaType)
         dest.writeString(mimeType)
     }
@@ -33,7 +33,7 @@ data class MediaUri(
     override fun describeContents() = 0
 
     override fun hashCode(): Int {
-        var result = externalContentUri.hashCode()
+        var result = uri.hashCode()
         result = 31 * result + mediaType.hashCode()
         result = 31 * result + mimeType.hashCode()
         return result
@@ -46,7 +46,7 @@ data class MediaUri(
 
     override fun compareTo(other: MediaUri) = compareValuesBy(
         this, other,
-        { it.externalContentUri },
+        { it.uri },
         { it.mediaType },
         { it.mimeType },
     )

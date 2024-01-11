@@ -226,7 +226,7 @@ class ViewActivity : AppCompatActivity() {
             this@ViewActivity.model.mediaPosition = position
 
             mediaUri?.also {
-                updateExoPlayer(it.mediaType, it.externalContentUri)
+                updateExoPlayer(it.mediaType, it.uri)
             } ?: run {
                 val media = mediaViewerAdapter.getItemAtPosition(position)
 
@@ -240,7 +240,7 @@ class ViewActivity : AppCompatActivity() {
                     }
                 )
 
-                updateExoPlayer(media.mediaType, media.externalContentUri)
+                updateExoPlayer(media.mediaType, media.uri)
             }
         }
     }
@@ -350,7 +350,7 @@ class ViewActivity : AppCompatActivity() {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
                 favoriteContract.launch(
                     contentResolver.createFavoriteRequest(
-                        !it.isFavorite, it.externalContentUri
+                        !it.isFavorite, it.uri
                     )
                 )
             }
@@ -403,7 +403,7 @@ class ViewActivity : AppCompatActivity() {
                     ).setPositiveButton(android.R.string.ok) { _, _ ->
                         deleteUriContract.launch(
                             contentResolver.createDeleteRequest(
-                                it.externalContentUri
+                                it.uri
                             )
                         )
                     }
@@ -537,7 +537,7 @@ class ViewActivity : AppCompatActivity() {
 
         contract.launch(
             contentResolver.createTrashRequest(
-                trash, media.externalContentUri
+                trash, media.uri
             )
         )
     }

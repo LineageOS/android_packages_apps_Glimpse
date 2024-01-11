@@ -184,7 +184,7 @@ class ThumbnailAdapter(
                 onItemSelected(media)
             }
 
-            thumbnailImageView.load(media.externalContentUri) {
+            thumbnailImageView.load(media.uri) {
                 memoryCacheKey("thumbnail_${media.id}")
                 size(DisplayAwareGridLayoutManager.MAX_THUMBNAIL_SIZE)
                 placeholder(R.drawable.thumbnail_placeholder)

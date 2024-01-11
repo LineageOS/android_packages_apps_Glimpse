@@ -103,7 +103,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
             startActivity(
                 Intent(requireContext(), ViewActivity::class.java).apply {
                     action = MediaStore.ACTION_REVIEW
-                    data = media.externalContentUri
+                    data = media.uri
                     putExtra(ViewActivity.KEY_ALBUM_ID, model.bucketId)
                 }
             )
@@ -167,7 +167,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
                                 deleteForeverContract.launch(
                                     requireContext().contentResolver.createDeleteRequest(
                                         *selection.map { media ->
-                                            media.externalContentUri
+                                            media.uri
                                         }.toTypedArray()
                                     )
                                 )
@@ -410,7 +410,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
         contract.launch(
             requireContext().contentResolver.createTrashRequest(
-                trash, *medias.map { it.externalContentUri }.toTypedArray()
+                trash, *medias.map { it.uri }.toTypedArray()
             )
         )
     }
