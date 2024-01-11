@@ -73,9 +73,11 @@ fun ContentResolver.queryFlow(
 
     // The first set of values must always be generated and cannot (shouldn't) be cancelled.
     launch(Dispatchers.IO) {
-        trySend(
-            query(uri, projection, queryArgs, null)
-        )
+        runCatching {
+            trySend(
+                query(uri, projection, queryArgs, null)
+            )
+        }
     }
 
     awaitClose {
