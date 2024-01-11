@@ -261,6 +261,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
             ).show()
 
             lastProcessedSelection = null
+            selectionTracker?.clearSelection()
         }
 
     private val trashContract =
@@ -289,6 +290,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
             }.show()
 
             lastProcessedSelection = null
+            selectionTracker?.clearSelection()
         }
 
     private val restoreFromTrashContract =
@@ -309,6 +311,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
             ).show()
 
             lastProcessedSelection = null
+            selectionTracker?.clearSelection()
         }
 
     // Arguments
