@@ -8,10 +8,10 @@
 
     <item
         style="@style/Theme.Glimpse.TopAppBarOption"
-        android:id="@+id/select"
-        android:icon="@drawable/ic_edit"
-        android:title="@string/top_app_bar_select"
-        android:contentDescription="@string/top_app_bar_select"
-        app:showAsAction="never" />
+        android:id="@+id/emptyTrash"
+        android:icon="@drawable/ic_delete_sweep"
+        android:title="@string/empty_trash"
+        android:contentDescription="@string/empty_trash"
+        app:showAsAction="ifRoom" />
 
 </menu>

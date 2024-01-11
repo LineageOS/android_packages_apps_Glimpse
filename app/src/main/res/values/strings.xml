@@ -9,9 +9,6 @@
     <!-- Toast messages -->
     <string name="app_permissions_toast">Permissions not granted by the user.</string>
 
-    <!-- Top app bar -->
-    <string name="top_app_bar_select">Select</string>
-
     <!-- Titles -->
     <string name="reels_title">Reels</string>
     <string name="albums_title">Albums</string>
@@ -102,4 +99,7 @@
 
     <!-- Selection -->
     <string name="thumbnail_selection_count">%d selected</string>
+
+    <!-- Empty trash -->
+    <string name="empty_trash">Empty trash</string>
 </resources>

@@ -56,6 +56,7 @@ import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
 import org.lineageos.glimpse.viewmodels.QueryResult.Empty
+import kotlin.reflect.safeCast
 
 /**
  * A fragment showing a list of media from a specific album with thumbnails.
@@ -331,6 +332,50 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
+
+        when (album?.id) {
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
+                R.menu.fragment_album_viewer_toolbar_trash
+            else -> null
+        }?.let {
+            toolbar.inflateMenu(it)
+        }
+
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.emptyTrash -> {
+                    val selection = thumbnailAdapter.currentList.mapNotNull {
+                        AlbumViewerViewModel.DataType.Thumbnail::class.safeCast(it)?.media
+                    }
+                    val count = selection.size
+
+                    if (count > 0) {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.file_action_delete_forever)
+                            .setMessage(
+                                resources.getQuantityString(
+                                    R.plurals.delete_file_forever_confirm_message, count, count
+                                )
+                            ).setPositiveButton(android.R.string.ok) { _, _ ->
+                                deleteForeverContract.launch(
+                                    requireContext().contentResolver.createDeleteRequest(
+                                        *selection.mapNotNull { media ->
+                                            MediaStoreMedia::class.safeCast(media)?.uri
+                                        }.toTypedArray()
+                                    )
+                                )
+                            }
+                            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                                // Do nothing
+                            }
+                            .show()
+                    }
+
+                    true
+                }
+                else -> false
+            }
+        }
 
         recyclerView.layoutManager = ThumbnailLayoutManager(
             requireContext(), thumbnailAdapter
