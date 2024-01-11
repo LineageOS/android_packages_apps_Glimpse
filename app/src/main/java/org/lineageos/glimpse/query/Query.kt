@@ -16,12 +16,12 @@ sealed interface Node {
     }
 }
 
-private data class Eq(val lhs: Node, val rhs: Node) : Node
-private data class Or(val lhs: Node, val rhs: Node) : Node
-private data class And(val lhs: Node, val rhs: Node) : Node
-private data class Literal<T>(val `val`: T) : Node
+private class Eq(val lhs: Node, val rhs: Node) : Node
+private class Or(val lhs: Node, val rhs: Node) : Node
+private class And(val lhs: Node, val rhs: Node) : Node
+private class Literal<T>(val `val`: T) : Node
 
-open class Query(val root: Node) {
+class Query(val root: Node) {
     fun build() = root.build()
 
     companion object {
