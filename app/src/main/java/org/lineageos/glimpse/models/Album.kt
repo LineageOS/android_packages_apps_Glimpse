@@ -7,11 +7,12 @@ package org.lineageos.glimpse.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.provider.MediaStore
 import org.lineageos.glimpse.ext.*
 import kotlin.reflect.safeCast
 
 /**
- * A media album.
+ * A [MediaStore] media album.
  */
 data class Album(
     val id: Int,

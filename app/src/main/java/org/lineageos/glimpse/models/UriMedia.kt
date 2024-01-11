@@ -13,11 +13,15 @@ import org.lineageos.glimpse.ext.readParcelable
 import org.lineageos.glimpse.ext.readSerializable
 import kotlin.reflect.safeCast
 
+/**
+ * A generic [Media] with unspecified provider.
+ * Could be local or remote.
+ */
 data class UriMedia(
-    val uri: Uri,
-    val mediaType: MediaType,
-    val mimeType: String,
-) : Comparable<UriMedia>, Parcelable {
+    override val uri: Uri,
+    override val mediaType: MediaType,
+    override val mimeType: String,
+) : Media, Comparable<UriMedia>, Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Uri::class)!!,
         parcel.readSerializable(MediaType::class)!!,

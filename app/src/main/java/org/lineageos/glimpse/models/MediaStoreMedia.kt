@@ -8,25 +8,29 @@ package org.lineageos.glimpse.models
 import android.content.ContentUris
 import android.os.Parcel
 import android.os.Parcelable
+import android.provider.MediaStore
 import org.lineageos.glimpse.ext.*
 import java.util.Date
 import kotlin.reflect.safeCast
 
+/**
+ * A [MediaStore] [Media].
+ */
 data class MediaStoreMedia(
     val id: Long,
     val bucketId: Int,
     val displayName: String,
     val isFavorite: Boolean,
     val isTrashed: Boolean,
-    val mediaType: MediaType,
-    val mimeType: String,
+    override val mediaType: MediaType,
+    override val mimeType: String,
     val dateAdded: Date,
     val dateModified: Date,
     val width: Int,
     val height: Int,
     val orientation: Int,
-) : Comparable<MediaStoreMedia>, Parcelable {
-    val uri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
+) : Media, Comparable<MediaStoreMedia>, Parcelable {
+    override val uri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
