@@ -48,7 +48,7 @@ import okhttp3.Request
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.models.MediaUri
+import org.lineageos.glimpse.models.UriMedia
 import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.MediaStoreBuckets
@@ -133,7 +133,7 @@ class ViewActivity : AppCompatActivity() {
     private var media: Media? = null
     private var albumId: Int? = MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id
     private var additionalMedias: Array<Media>? = null
-    private var mediaUri: MediaUri? = null
+    private var uriMedia: UriMedia? = null
     private var secure = false
 
     private var lastTrashedMedia: Media? = null
@@ -143,7 +143,7 @@ class ViewActivity : AppCompatActivity() {
      * Check if we're showing a static set of medias.
      */
     private val readOnly
-        get() = mediaUri != null || additionalMedias != null || albumId == null || secure
+        get() = uriMedia != null || additionalMedias != null || albumId == null || secure
 
     // Contracts
     private val deleteUriContract =
@@ -225,7 +225,7 @@ class ViewActivity : AppCompatActivity() {
 
             this@ViewActivity.model.mediaPosition = position
 
-            mediaUri?.also {
+            uriMedia?.also {
                 updateExoPlayer(it.mediaType, it.uri)
             } ?: run {
                 val media = mediaViewerAdapter.getItemAtPosition(position)
@@ -267,7 +267,7 @@ class ViewActivity : AppCompatActivity() {
                 // Attach the adapter to the view pager
                 viewPager.adapter = mediaViewerAdapter
 
-                mediaUri?.also {
+                uriMedia?.also {
                     initData(it)
                 } ?: additionalMedias?.also { additionalMedias ->
                     val medias = media?.let {
@@ -359,7 +359,7 @@ class ViewActivity : AppCompatActivity() {
         shareButton.setOnClickListener {
             startActivity(
                 Intent.createChooser(
-                    mediaUri?.let {
+                    uriMedia?.let {
                         buildShareIntent(it)
                     } ?: buildShareIntent(
                         mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
@@ -467,8 +467,8 @@ class ViewActivity : AppCompatActivity() {
         onPageChangeCallback.onPageSelected(mediaPosition)
     }
 
-    private fun initData(mediaUri: MediaUri) {
-        mediaViewerAdapter.mediaUri = mediaUri
+    private fun initData(uriMedia: UriMedia) {
+        mediaViewerAdapter.uriMedia = uriMedia
 
         // We have a single element
         val mediaPosition = 0
@@ -486,7 +486,7 @@ class ViewActivity : AppCompatActivity() {
     private fun updateUI() {
         // Set UI elements visibility based on initial arguments
         val readOnly = readOnly
-        val shouldShowMediaButtons = mediaUri == null
+        val shouldShowMediaButtons = uriMedia == null
 
         dateTextView.isVisible = shouldShowMediaButtons
         timeTextView.isVisible = shouldShowMediaButtons
@@ -620,7 +620,7 @@ class ViewActivity : AppCompatActivity() {
         }
 
         updateArguments(
-            mediaUri = MediaUri(uri, uriType, dataType),
+            uriMedia = UriMedia(uri, uriType, dataType),
             secure = secure,
         )
 
@@ -660,20 +660,20 @@ class ViewActivity : AppCompatActivity() {
      * @param media The first media to show
      * @param albumId Album ID, if null [additionalMedias] will be used
      * @param additionalMedias The additional medias to show alongside [media]
-     * @param mediaUri The [MediaUri] to show
+     * @param uriMedia The [UriMedia] to show
      * @param secure Whether this should be considered a secure session
      */
     private fun updateArguments(
         media: Media? = null,
         albumId: Int? = null,
         additionalMedias: Array<Media>? = null,
-        mediaUri: MediaUri? = null,
+        uriMedia: UriMedia? = null,
         secure: Boolean = false,
     ) {
         this.media = media
         this.albumId = albumId
         this.additionalMedias = additionalMedias
-        this.mediaUri = mediaUri
+        this.uriMedia = uriMedia
         this.secure = secure
     }
 

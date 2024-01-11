@@ -13,11 +13,11 @@ import org.lineageos.glimpse.ext.readParcelable
 import org.lineageos.glimpse.ext.readSerializable
 import kotlin.reflect.safeCast
 
-data class MediaUri(
+data class UriMedia(
     val uri: Uri,
     val mediaType: MediaType,
     val mimeType: String,
-) : Comparable<MediaUri>, Parcelable {
+) : Comparable<UriMedia>, Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Uri::class)!!,
         parcel.readSerializable(MediaType::class)!!,
@@ -40,20 +40,20 @@ data class MediaUri(
     }
 
     override fun equals(other: Any?): Boolean {
-        val obj = MediaUri::class.safeCast(other) ?: return false
+        val obj = UriMedia::class.safeCast(other) ?: return false
         return compareTo(obj) == 0
     }
 
-    override fun compareTo(other: MediaUri) = compareValuesBy(
+    override fun compareTo(other: UriMedia) = compareValuesBy(
         this, other,
         { it.uri },
         { it.mediaType },
         { it.mimeType },
     )
 
-    companion object CREATOR : Creator<MediaUri> {
-        override fun createFromParcel(parcel: Parcel) = MediaUri(parcel)
+    companion object CREATOR : Creator<UriMedia> {
+        override fun createFromParcel(parcel: Parcel) = UriMedia(parcel)
 
-        override fun newArray(size: Int) = arrayOfNulls<MediaUri>(size)
+        override fun newArray(size: Int) = arrayOfNulls<UriMedia>(size)
     }
 }

@@ -9,7 +9,7 @@ import android.content.Intent
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType.IMAGE
 import org.lineageos.glimpse.models.MediaType.VIDEO
-import org.lineageos.glimpse.models.MediaUri
+import org.lineageos.glimpse.models.UriMedia
 
 fun buildShareIntent(vararg medias: Media) = Intent().apply {
     assert(medias.isNotEmpty()) { "No media" }
@@ -38,12 +38,12 @@ fun buildShareIntent(vararg medias: Media) = Intent().apply {
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
 
-fun buildShareIntent(vararg mediaUris: MediaUri) = Intent().apply {
-    assert(mediaUris.isNotEmpty()) { "No media uri" }
+fun buildShareIntent(vararg uriMedias: UriMedia) = Intent().apply {
+    assert(uriMedias.isNotEmpty()) { "No media uri" }
 
-    if (mediaUris.size == 1) {
+    if (uriMedias.size == 1) {
         action = Intent.ACTION_SEND
-        mediaUris[0].let {
+        uriMedias[0].let {
             putExtra(Intent.EXTRA_STREAM, it.uri)
             type = it.mimeType
         }
@@ -51,11 +51,11 @@ fun buildShareIntent(vararg mediaUris: MediaUri) = Intent().apply {
         action = Intent.ACTION_SEND_MULTIPLE
         putParcelableArrayListExtra(
             Intent.EXTRA_STREAM,
-            mediaUris.map { it.uri }.toCollection(ArrayList())
+            uriMedias.map { it.uri }.toCollection(ArrayList())
         )
         type = when {
-            mediaUris.all { it.mediaType == IMAGE } -> "image/*"
-            mediaUris.all { it.mediaType == VIDEO } -> "video/*"
+            uriMedias.all { it.mediaType == IMAGE } -> "image/*"
+            uriMedias.all { it.mediaType == VIDEO } -> "video/*"
             else -> {
                 putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
                 "*/*"
