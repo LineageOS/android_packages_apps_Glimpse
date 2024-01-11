@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.lineageos.glimpse.ext.*
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.UriMedia
 import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
@@ -130,13 +130,13 @@ class ViewActivity : AppCompatActivity() {
     private val httpClient = OkHttpClient()
 
     // Media
-    private var media: Media? = null
+    private var media: MediaStoreMedia? = null
     private var albumId: Int? = MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id
-    private var additionalMedias: Array<Media>? = null
+    private var additionalMedias: Array<MediaStoreMedia>? = null
     private var uriMedia: UriMedia? = null
     private var secure = false
 
-    private var lastTrashedMedia: Media? = null
+    private var lastTrashedMedia: MediaStoreMedia? = null
     private var undoTrashSnackbar: Snackbar? = null
 
     /**
@@ -448,7 +448,7 @@ class ViewActivity : AppCompatActivity() {
         updateSheetsHeight()
     }
 
-    private fun initData(data: List<Media>) {
+    private fun initData(data: List<MediaStoreMedia>) {
         mediaViewerAdapter.data = data.toTypedArray()
 
         // If we already have a position, keep that, else get one from
@@ -525,7 +525,7 @@ class ViewActivity : AppCompatActivity() {
         }
     }
 
-    private fun trashMedia(media: Media, trash: Boolean = !media.isTrashed) {
+    private fun trashMedia(media: MediaStoreMedia, trash: Boolean = !media.isTrashed) {
         if (trash) {
             lastTrashedMedia = media
         }
@@ -664,9 +664,9 @@ class ViewActivity : AppCompatActivity() {
      * @param secure Whether this should be considered a secure session
      */
     private fun updateArguments(
-        media: Media? = null,
+        media: MediaStoreMedia? = null,
         albumId: Int? = null,
-        additionalMedias: Array<Media>? = null,
+        additionalMedias: Array<MediaStoreMedia>? = null,
         uriMedia: UriMedia? = null,
         secure: Boolean = false,
     ) {
@@ -678,7 +678,7 @@ class ViewActivity : AppCompatActivity() {
     }
 
     /**
-     * Given a [MediaStore] [Uri], parse its information and get a [Media] object.
+     * Given a [MediaStore] [Uri], parse its information and get a [MediaStoreMedia] object.
      * Must not be executed on main thread.
      * @param uri The [MediaStore] [Uri]
      */
@@ -736,7 +736,7 @@ class ViewActivity : AppCompatActivity() {
             val height = it.getInt(heightIndex)
             val orientation = it.getInt(orientationIndex)
 
-            Media.fromMediaStore(
+            MediaStoreMedia.fromMediaStore(
                 id,
                 bucketId,
                 displayName,

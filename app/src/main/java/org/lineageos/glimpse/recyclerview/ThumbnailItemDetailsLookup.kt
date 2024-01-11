@@ -8,12 +8,12 @@ package org.lineageos.glimpse.recyclerview
 import android.view.MotionEvent
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.widget.RecyclerView
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import kotlin.reflect.safeCast
 
 class ThumbnailItemDetailsLookup(
     private val recyclerView: RecyclerView,
-) : ItemDetailsLookup<Media>() {
+) : ItemDetailsLookup<MediaStoreMedia>() {
     override fun getItemDetails(e: MotionEvent) =
         recyclerView.findChildViewUnder(e.x, e.y)?.let { childView ->
             recyclerView.getChildViewHolder(childView)?.let { viewHolder ->

@@ -28,14 +28,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class MediaInfoBottomSheetDialog(
     context: Context,
-    media: Media,
+    media: MediaStoreMedia,
     callbacks: Callbacks,
     secure: Boolean = false,
 ) : BottomSheetDialog(context) {
@@ -202,7 +202,7 @@ class MediaInfoBottomSheetDialog(
     }
 
     class Callbacks(private val activity: AppCompatActivity) {
-        private lateinit var editDescriptionMedia: Media
+        private lateinit var editDescriptionMedia: MediaStoreMedia
         private lateinit var editDescriptionDescription: String
 
         private val editDescriptionCallback = activity.registerForActivityResult(
@@ -213,7 +213,7 @@ class MediaInfoBottomSheetDialog(
             }
         }
 
-        fun onEditDescription(media: Media, description: String = "") {
+        fun onEditDescription(media: MediaStoreMedia, description: String = "") {
             editDescriptionMedia = media
             editDescriptionDescription = description
 
@@ -224,7 +224,7 @@ class MediaInfoBottomSheetDialog(
             )
         }
 
-        private fun editDescription(media: Media, description: String) {
+        private fun editDescription(media: MediaStoreMedia, description: String) {
             val contentResolver = activity.contentResolver
 
             contentResolver.openFileDescriptor(

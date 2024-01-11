@@ -12,7 +12,7 @@ import org.lineageos.glimpse.ext.*
 import java.util.Date
 import kotlin.reflect.safeCast
 
-data class Media(
+data class MediaStoreMedia(
     val id: Long,
     val bucketId: Int,
     val displayName: String,
@@ -25,7 +25,7 @@ data class Media(
     val width: Int,
     val height: Int,
     val orientation: Int,
-) : Comparable<Media>, Parcelable {
+) : Comparable<MediaStoreMedia>, Parcelable {
     val uri = ContentUris.withAppendedId(mediaType.externalContentUri, id)
 
     constructor(parcel: Parcel) : this(
@@ -44,13 +44,13 @@ data class Media(
     )
 
     override fun equals(other: Any?): Boolean {
-        val obj = Media::class.safeCast(other) ?: return false
+        val obj = MediaStoreMedia::class.safeCast(other) ?: return false
         return compareTo(obj) == 0
     }
 
     override fun hashCode() = id.hashCode()
 
-    override fun compareTo(other: Media) = compareValuesBy(
+    override fun compareTo(other: MediaStoreMedia) = compareValuesBy(
         this, other,
         { it.id },
         { it.bucketId },
@@ -82,10 +82,10 @@ data class Media(
         dest.writeInt(orientation)
     }
 
-    companion object CREATOR : Parcelable.Creator<Media> {
-        override fun createFromParcel(parcel: Parcel) = Media(parcel)
+    companion object CREATOR : Parcelable.Creator<MediaStoreMedia> {
+        override fun createFromParcel(parcel: Parcel) = MediaStoreMedia(parcel)
 
-        override fun newArray(size: Int) = arrayOfNulls<Media>(size)
+        override fun newArray(size: Int) = arrayOfNulls<MediaStoreMedia>(size)
 
         fun fromMediaStore(
             id: Long,
@@ -100,7 +100,7 @@ data class Media(
             width: Int,
             height: Int,
             orientation: Int,
-        ) = Media(
+        ) = MediaStoreMedia(
             id,
             bucketId,
             displayName,

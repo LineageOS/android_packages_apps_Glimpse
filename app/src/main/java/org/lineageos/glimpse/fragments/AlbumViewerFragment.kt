@@ -47,7 +47,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ViewActivity
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.Album
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailItemDetailsLookup
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
@@ -111,9 +111,9 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
     }
 
     // Selection
-    private var selectionTracker: SelectionTracker<Media>? = null
+    private var selectionTracker: SelectionTracker<MediaStoreMedia>? = null
 
-    private val selectionTrackerObserver = object : SelectionTracker.SelectionObserver<Media>() {
+    private val selectionTrackerObserver = object : SelectionTracker.SelectionObserver<MediaStoreMedia>() {
         override fun onSelectionChanged() {
             super.onSelectionChanged()
 
@@ -240,7 +240,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
     }
 
     // Contracts
-    private var lastProcessedSelection: Array<out Media>? = null
+    private var lastProcessedSelection: Array<out MediaStoreMedia>? = null
     private var undoTrashSnackbar: Snackbar? = null
 
     private val deleteForeverContract =
@@ -351,7 +351,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
             recyclerView,
             thumbnailAdapter.itemKeyProvider,
             ThumbnailItemDetailsLookup(recyclerView),
-            StorageStrategy.createParcelableStorage(Media::class.java),
+            StorageStrategy.createParcelableStorage(MediaStoreMedia::class.java),
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
         ).build().also {
@@ -400,7 +400,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
         actionMode = null
     }
 
-    private fun trashMedias(trash: Boolean, vararg medias: Media) {
+    private fun trashMedias(trash: Boolean, vararg medias: MediaStoreMedia) {
         lastProcessedSelection = medias
 
         val contract = when (trash) {

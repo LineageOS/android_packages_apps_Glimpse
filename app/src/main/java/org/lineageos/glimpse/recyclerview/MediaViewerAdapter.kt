@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.UriMedia
 import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
@@ -30,7 +30,7 @@ class MediaViewerAdapter(
     private val mediaViewerViewModel: MediaViewerViewModel,
     private val mediaViewerUIViewModel: MediaViewerUIViewModel,
 ) : RecyclerView.Adapter<MediaViewerAdapter.MediaViewHolder>() {
-    var data: Array<Media> = arrayOf()
+    var data: Array<MediaStoreMedia> = arrayOf()
         set(value) {
             if (value.contentEquals(field)) {
                 return
@@ -103,7 +103,7 @@ class MediaViewerAdapter(
         private val playerControlView = view.findViewById<PlayerControlView>(R.id.exo_controller)
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
 
-        private var media: Media? = null
+        private var media: MediaStoreMedia? = null
         private var uriMedia: UriMedia? = null
         private var position = -1
 
@@ -159,7 +159,7 @@ class MediaViewerAdapter(
             }
         }
 
-        fun bind(media: Media, position: Int) {
+        fun bind(media: MediaStoreMedia, position: Int) {
             this.media = media
             this.position = position
             imageView.load(media.uri) {

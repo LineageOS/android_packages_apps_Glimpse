@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.queryFlow
 import org.lineageos.glimpse.models.Album
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
@@ -118,7 +118,7 @@ class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
 
                                     else -> bucketDisplayName ?: Build.MODEL
                                 },
-                                Media.fromMediaStore(
+                                MediaStoreMedia.fromMediaStore(
                                     id,
                                     bucketId,
                                     displayName,

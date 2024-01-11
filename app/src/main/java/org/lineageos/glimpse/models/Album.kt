@@ -16,13 +16,13 @@ import kotlin.reflect.safeCast
 data class Album(
     val id: Int,
     val name: String,
-    val thumbnail: Media,
+    val thumbnail: MediaStoreMedia,
     var size: Int = 0,
 ) : Comparable<Album>, Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString()!!,
-        parcel.readParcelable(Media::class)!!,
+        parcel.readParcelable(MediaStoreMedia::class)!!,
         parcel.readInt()
     )
 

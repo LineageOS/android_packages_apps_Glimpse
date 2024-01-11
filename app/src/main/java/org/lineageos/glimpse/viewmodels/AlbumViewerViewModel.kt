@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.lineageos.glimpse.ext.*
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.repository.MediaRepository
 import org.lineageos.glimpse.utils.MediaStoreBuckets
@@ -74,7 +74,7 @@ class AlbumViewerViewModel(
     val inSelectionMode = MutableLiveData(false)
 
     sealed class DataType(val viewType: Int) {
-        class Thumbnail(val media: Media) : DataType(ThumbnailAdapter.ViewTypes.THUMBNAIL.ordinal) {
+        class Thumbnail(val media: MediaStoreMedia) : DataType(ThumbnailAdapter.ViewTypes.THUMBNAIL.ordinal) {
             override fun equals(other: Any?) = media == other
             override fun hashCode() = media.hashCode()
         }

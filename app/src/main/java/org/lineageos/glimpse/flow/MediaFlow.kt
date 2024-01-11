@@ -13,11 +13,11 @@ import android.provider.MediaStore
 import androidx.core.os.bundleOf
 import kotlinx.coroutines.flow.Flow
 import org.lineageos.glimpse.ext.*
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
-class MediaFlow(private val context: Context, private val bucketId: Int) : QueryFlow<Media>() {
+class MediaFlow(private val context: Context, private val bucketId: Int) : QueryFlow<MediaStoreMedia>() {
     init {
         assert(bucketId != MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id) {
             "MEDIA_STORE_BUCKET_PLACEHOLDER found"
@@ -107,7 +107,7 @@ class MediaFlow(private val context: Context, private val bucketId: Int) : Query
         val height = it.getInt(indexCache[i++])
         val orientation = it.getInt(indexCache[i++])
 
-        Media.fromMediaStore(
+        MediaStoreMedia.fromMediaStore(
             id,
             bucketId,
             displayName,
