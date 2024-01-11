@@ -55,6 +55,6 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/thumbnailImageView"
         app:layout_constraintTop_toTopOf="@+id/thumbnailImageView"
-        app:tint="@android:color/white" />
+        app:tint="?attr/colorAccent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
