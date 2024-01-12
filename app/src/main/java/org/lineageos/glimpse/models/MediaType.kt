@@ -22,8 +22,14 @@ enum class MediaType(
     );
 
     companion object {
+        private val dashMimeTypes = listOf(
+            "application/dash+xml",
+        )
+
         private val hlsMimeTypes = listOf(
             "application/vnd.apple.mpegurl",
+            "application/x-mpegurl",
+            "audio/mpegurl",
             "audio/x-mpegurl",
         )
 
@@ -34,6 +40,7 @@ enum class MediaType(
         fun fromMimeType(mimeType: String) = when {
             mimeType.startsWith("image/") -> IMAGE
             mimeType.startsWith("video/") -> VIDEO
+            mimeType in dashMimeTypes -> VIDEO
             mimeType in hlsMimeTypes -> VIDEO
             else -> null
         }
