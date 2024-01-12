@@ -88,6 +88,7 @@
     <string name="file_action_add_to_favorites">Add to favorites</string>
     <string name="file_action_delete_forever">Delete forever</string>
     <string name="file_action_edit">Edit</string>
+    <string name="file_action_empty_trash">Empty trash</string>
     <string name="file_action_move_to_trash">Move to trash</string>
     <string name="file_action_remove_from_favorites">Remove from favorites</string>
     <string name="file_action_restore_from_trash">Restore from trash</string>
@@ -101,7 +102,4 @@
 
     <!-- Selection -->
     <string name="thumbnail_selection_count">%d selected</string>
-
-    <!-- Empty trash -->
-    <string name="empty_trash">Empty trash</string>
 </resources>
