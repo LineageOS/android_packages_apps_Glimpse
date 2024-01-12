@@ -36,8 +36,6 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -52,6 +50,7 @@ import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.UriMedia
 import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
+import org.lineageos.glimpse.utils.MediaDialogsUtils
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
@@ -137,8 +136,7 @@ class ViewActivity : AppCompatActivity() {
     private var additionalMedias: Array<MediaStoreMedia>? = null
     private var secure = false
 
-    private var lastTrashedMedia: MediaStoreMedia? = null
-    private var undoTrashSnackbar: Snackbar? = null
+    private var lastProcessedMedia: MediaStoreMedia? = null
 
     /**
      * Check if we're showing a static set of medias.
@@ -149,62 +147,46 @@ class ViewActivity : AppCompatActivity() {
     // Contracts
     private val deleteUriContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            Snackbar.make(
+            val succeeded = it.resultCode != Activity.RESULT_CANCELED
+
+            MediaDialogsUtils.showDeleteForeverResultSnackbar(
+                this,
                 bottomSheetLinearLayout,
-                resources.getQuantityString(
-                    if (it.resultCode == Activity.RESULT_CANCELED) {
-                        R.plurals.delete_file_forever_unsuccessful
-                    } else {
-                        R.plurals.delete_file_forever_successful
-                    },
-                    1, 1
-                ),
-                Snackbar.LENGTH_LONG,
-            ).setAnchorView(bottomSheetLinearLayout).show()
+                succeeded, 1,
+                bottomSheetLinearLayout,
+            )
         }
 
     private val trashUriContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             val succeeded = it.resultCode != Activity.RESULT_CANCELED
 
-            Snackbar.make(
+            MediaDialogsUtils.showMoveToTrashResultSnackbar(
+                this,
                 bottomSheetLinearLayout,
-                resources.getQuantityString(
-                    if (succeeded) {
-                        R.plurals.move_file_to_trash_successful
-                    } else {
-                        R.plurals.move_file_to_trash_unsuccessful
-                    },
-                    1, 1
-                ),
-                Snackbar.LENGTH_LONG,
-            ).apply {
-                anchorView = bottomSheetLinearLayout
-                lastTrashedMedia?.takeIf { succeeded }?.let { trashedMedia ->
-                    setAction(R.string.move_file_to_trash_undo) {
-                        trashMedia(trashedMedia, false)
-                    }
-                }
-                undoTrashSnackbar = this
-            }.show()
+                succeeded, 1,
+                bottomSheetLinearLayout,
+                lastProcessedMedia?.let { trashedMedia ->
+                    { trashMedia(trashedMedia, false) }
+                },
+            )
 
-            lastTrashedMedia = null
+            lastProcessedMedia = null
         }
 
     private val restoreUriFromTrashContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            Snackbar.make(
+            val succeeded = it.resultCode != Activity.RESULT_CANCELED
+
+            MediaDialogsUtils.showRestoreFromTrashResultSnackbar(
+                this,
                 bottomSheetLinearLayout,
-                resources.getQuantityString(
-                    if (it.resultCode == Activity.RESULT_CANCELED) {
-                        R.plurals.restore_file_from_trash_unsuccessful
-                    } else {
-                        R.plurals.restore_file_from_trash_successful
-                    },
-                    1, 1
-                ),
-                Snackbar.LENGTH_LONG,
-            ).setAnchorView(bottomSheetLinearLayout).show()
+                succeeded, 1,
+                bottomSheetLinearLayout,
+                lastProcessedMedia?.let { trashedMedia ->
+                    { trashMedia(trashedMedia, true) }
+                },
+            )
         }
 
     private val favoriteContract =
@@ -399,23 +381,9 @@ class ViewActivity : AppCompatActivity() {
 
         deleteButton.setOnLongClickListener {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.file_action_delete_forever)
-                    .setMessage(
-                        resources.getQuantityString(
-                            R.plurals.delete_file_forever_confirm_message, 1, 1
-                        )
-                    ).setPositiveButton(android.R.string.ok) { _, _ ->
-                        deleteUriContract.launch(
-                            contentResolver.createDeleteRequest(
-                                it.uri
-                            )
-                        )
-                    }
-                    .setNegativeButton(android.R.string.cancel) { _, _ ->
-                        // Do nothing
-                    }
-                    .show()
+                MediaDialogsUtils.openDeleteForeverDialog(this, it.uri) { uris ->
+                    deleteUriContract.launch(contentResolver.createDeleteRequest(*uris))
+                }
 
                 true
             }
@@ -520,7 +488,7 @@ class ViewActivity : AppCompatActivity() {
 
     private fun trashMedia(media: MediaStoreMedia, trash: Boolean = !media.isTrashed) {
         if (trash) {
-            lastTrashedMedia = media
+            lastProcessedMedia = media
         }
 
         val contract = when (trash) {

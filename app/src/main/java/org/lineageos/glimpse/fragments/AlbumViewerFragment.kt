@@ -38,9 +38,7 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
@@ -51,6 +49,7 @@ import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.ThumbnailItemDetailsLookup
 import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
+import org.lineageos.glimpse.utils.MediaDialogsUtils
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel
@@ -154,47 +153,25 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
             selectionTracker?.selection?.toList()?.toTypedArray()?.takeUnless {
                 it.isEmpty()
             }?.let { selection ->
-                val count = selection.count()
-
                 when (item?.itemId) {
                     R.id.deleteForever -> {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(R.string.file_action_delete_forever)
-                            .setMessage(
-                                resources.getQuantityString(
-                                    R.plurals.delete_file_forever_confirm_message, count, count
+                        MediaDialogsUtils.openDeleteForeverDialog(requireContext(), *selection) {
+                            deleteForeverContract.launch(
+                                requireContext().contentResolver.createDeleteRequest(
+                                    *it.map { media ->
+                                        media.uri
+                                    }.toTypedArray()
                                 )
-                            ).setPositiveButton(android.R.string.ok) { _, _ ->
-                                deleteForeverContract.launch(
-                                    requireContext().contentResolver.createDeleteRequest(
-                                        *selection.map { media ->
-                                            media.uri
-                                        }.toTypedArray()
-                                    )
-                                )
-                            }
-                            .setNegativeButton(android.R.string.cancel) { _, _ ->
-                                // Do nothing
-                            }
-                            .show()
+                            )
+                        }
 
                         true
                     }
 
                     R.id.restoreFromTrash -> {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(R.string.file_action_restore_from_trash)
-                            .setMessage(
-                                resources.getQuantityString(
-                                    R.plurals.restore_file_from_trash_confirm_message, count, count
-                                )
-                            ).setPositiveButton(android.R.string.ok) { _, _ ->
-                                trashMedias(false, *selection)
-                            }
-                            .setNegativeButton(android.R.string.cancel) { _, _ ->
-                                // Do nothing
-                            }
-                            .show()
+                        MediaDialogsUtils.openRestoreFromTrashDialog(requireContext(), *selection) {
+                            trashMedias(false, *selection)
+                        }
 
                         true
                     }
@@ -206,19 +183,9 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
                     }
 
                     R.id.moveToTrash -> {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(R.string.file_action_move_to_trash)
-                            .setMessage(
-                                resources.getQuantityString(
-                                    R.plurals.move_file_to_trash_confirm_message, count, count
-                                )
-                            ).setPositiveButton(android.R.string.ok) { _, _ ->
-                                trashMedias(true, *selection)
-                            }
-                            .setNegativeButton(android.R.string.cancel) { _, _ ->
-                                // Do nothing
-                            }
-                            .show()
+                        MediaDialogsUtils.openMoveToTrashDialog(requireContext(), *selection) {
+                            trashMedias(true, *selection)
+                        }
 
                         true
                     }
@@ -242,24 +209,17 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
     // Contracts
     private var lastProcessedSelection: Array<out MediaStoreMedia>? = null
-    private var undoTrashSnackbar: Snackbar? = null
 
     private val deleteForeverContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            val succeeded = it.resultCode != Activity.RESULT_CANCELED
             val count = lastProcessedSelection?.count() ?: 1
 
-            Snackbar.make(
+            MediaDialogsUtils.showDeleteForeverResultSnackbar(
+                requireContext(),
                 requireView(),
-                resources.getQuantityString(
-                    if (it.resultCode == Activity.RESULT_CANCELED) {
-                        R.plurals.delete_file_forever_unsuccessful
-                    } else {
-                        R.plurals.delete_file_forever_successful
-                    },
-                    count, count
-                ),
-                Snackbar.LENGTH_LONG,
-            ).show()
+                succeeded, count,
+            )
 
             lastProcessedSelection = null
             selectionTracker?.clearSelection()
@@ -270,25 +230,16 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
             val succeeded = it.resultCode != Activity.RESULT_CANCELED
             val count = lastProcessedSelection?.count() ?: 1
 
-            Snackbar.make(
+            MediaDialogsUtils.showMoveToTrashResultSnackbar(
+                requireContext(),
                 requireView(),
-                resources.getQuantityString(
-                    if (succeeded) {
-                        R.plurals.move_file_to_trash_successful
-                    } else {
-                        R.plurals.move_file_to_trash_unsuccessful
-                    },
-                    count, count
-                ),
-                Snackbar.LENGTH_LONG,
-            ).apply {
-                lastProcessedSelection?.takeIf { succeeded }?.let { trashedMedias ->
-                    setAction(R.string.move_file_to_trash_undo) {
+                succeeded, count,
+                actionCallback = lastProcessedSelection?.let { trashedMedias ->
+                    {
                         trashMedias(false, *trashedMedias)
                     }
                 }
-                undoTrashSnackbar = this
-            }.show()
+            )
 
             lastProcessedSelection = null
             selectionTracker?.clearSelection()
@@ -296,20 +247,19 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
     private val restoreFromTrashContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            val succeeded = it.resultCode != Activity.RESULT_CANCELED
             val count = lastProcessedSelection?.count() ?: 1
 
-            Snackbar.make(
+            MediaDialogsUtils.showRestoreFromTrashResultSnackbar(
+                requireContext(),
                 requireView(),
-                resources.getQuantityString(
-                    if (it.resultCode == Activity.RESULT_CANCELED) {
-                        R.plurals.restore_file_from_trash_unsuccessful
-                    } else {
-                        R.plurals.restore_file_from_trash_successful
-                    },
-                    count, count
-                ),
-                Snackbar.LENGTH_LONG,
-            ).show()
+                succeeded, count,
+                actionCallback = lastProcessedSelection?.let { trashedMedias ->
+                    {
+                        trashMedias(true, *trashedMedias)
+                    }
+                }
+            )
 
             lastProcessedSelection = null
             selectionTracker?.clearSelection()
@@ -346,29 +296,19 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
                 R.id.emptyTrash -> {
                     val selection = thumbnailAdapter.currentList.mapNotNull {
                         AlbumViewerViewModel.DataType.Thumbnail::class.safeCast(it)?.media
-                    }
+                    }.toTypedArray()
                     val count = selection.size
 
                     if (count > 0) {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(R.string.file_action_delete_forever)
-                            .setMessage(
-                                resources.getQuantityString(
-                                    R.plurals.delete_file_forever_confirm_message, count, count
+                        MediaDialogsUtils.openDeleteForeverDialog(requireContext(), *selection) {
+                            deleteForeverContract.launch(
+                                requireContext().contentResolver.createDeleteRequest(
+                                    *it.mapNotNull { media ->
+                                        MediaStoreMedia::class.safeCast(media)?.uri
+                                    }.toTypedArray()
                                 )
-                            ).setPositiveButton(android.R.string.ok) { _, _ ->
-                                deleteForeverContract.launch(
-                                    requireContext().contentResolver.createDeleteRequest(
-                                        *selection.mapNotNull { media ->
-                                            MediaStoreMedia::class.safeCast(media)?.uri
-                                        }.toTypedArray()
-                                    )
-                                )
-                            }
-                            .setNegativeButton(android.R.string.cancel) { _, _ ->
-                                // Do nothing
-                            }
-                            .show()
+                            )
+                        }
                     }
 
                     true

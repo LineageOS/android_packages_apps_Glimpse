@@ -52,7 +52,6 @@
         <item quantity="one">File couldn\'t be moved to trash</item>
         <item quantity="other">%d files couldn\'t be moved to trash</item>
     </plurals>
-    <string name="move_file_to_trash_undo">Undo</string>
 
     <!-- File restoring from trash -->
     <plurals name="restore_file_from_trash_confirm_message">
@@ -93,6 +92,9 @@
     <string name="file_action_remove_from_favorites">Remove from favorites</string>
     <string name="file_action_restore_from_trash">Restore from trash</string>
     <string name="file_action_share">Share</string>
+
+    <!-- File actions - undo -->
+    <string name="file_action_undo_action">Undo</string>
 
     <!-- No media -->
     <string name="no_media">No media</string>
