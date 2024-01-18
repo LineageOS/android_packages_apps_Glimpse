@@ -33,6 +33,10 @@ enum class MediaType(
             "audio/x-mpegurl",
         )
 
+        private val smoothStreamingMimeTypes = listOf(
+            "application/vnd.ms-sstr+xml",
+        )
+
         fun fromMediaStoreValue(value: Int) = values().first {
             value == it.mediaStoreValue
         }
@@ -42,6 +46,7 @@ enum class MediaType(
             mimeType.startsWith("video/") -> VIDEO
             mimeType in dashMimeTypes -> VIDEO
             mimeType in hlsMimeTypes -> VIDEO
+            mimeType in smoothStreamingMimeTypes -> VIDEO
             else -> null
         }
     }
