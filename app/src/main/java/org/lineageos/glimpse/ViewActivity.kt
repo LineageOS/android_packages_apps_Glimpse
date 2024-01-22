@@ -63,7 +63,7 @@ import kotlin.reflect.safeCast
 /**
  * An activity used to view one or mode medias.
  */
-class ViewActivity : AppCompatActivity() {
+class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     // View models
     private val model: MediaViewerViewModel by viewModels {
         albumId?.let {
@@ -272,8 +272,6 @@ class ViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.activity_view)
 
         // Setup edge-to-edge
         WindowCompat.setDecorFitsSystemWindows(window, false)
