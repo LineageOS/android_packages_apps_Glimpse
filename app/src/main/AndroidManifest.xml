@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
     <application
-        android:name="org.lineageos.glimpse.GlimpseApplication"
+        android:name=".GlimpseApplication"
         android:appCategory="image"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
