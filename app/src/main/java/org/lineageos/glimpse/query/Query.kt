@@ -33,3 +33,11 @@ infix fun Query.or(other: Query) = Query(Or(this.root, other.root))
 infix fun Query.and(other: Query) = Query(And(this.root, other.root))
 infix fun Query.eq(other: Query) = Query(Eq(this.root, other.root))
 infix fun <T> Column.eq(other: T) = Query(Literal(this)) eq Query(Literal(other))
+
+fun Iterable<Query>.join(
+    func: Query.(other: Query) -> Query,
+): Query? = fold(null) { sum: Query?, item ->
+    sum?.let {
+        it.func(item)
+    } ?: item
+}

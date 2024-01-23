@@ -27,4 +27,12 @@ object MediaQuery {
     val AlbumsProjection = arrayOf(
         MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
     ) + MediaProjection
+
+    object Selection {
+        val image =
+            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
+        val video =
+            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
+        val imageOrVideo = image or video
+    }
 }

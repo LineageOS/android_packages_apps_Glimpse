@@ -30,9 +30,10 @@ import java.util.Date
 class AlbumViewerViewModel(
     application: Application,
     val bucketId: Int,
+    mimeType: String? = null,
     addHeaders: Boolean,
 ) : AndroidViewModel(application) {
-    val mediaWithHeaders = MediaRepository.media(context, bucketId).flowOn(
+    val mediaWithHeaders = MediaRepository.media(context, bucketId, mimeType).flowOn(
         Dispatchers.IO
     ).map { medias ->
         val data = when (addHeaders) {
@@ -73,7 +74,9 @@ class AlbumViewerViewModel(
         initialValue = QueryResult.Empty(),
     )
 
-    val album = MediaRepository.album(context, bucketId).flowOn(Dispatchers.IO).mapNotNull {
+    val album = MediaRepository.album(
+        context, bucketId, mimeType
+    ).flowOn(Dispatchers.IO).mapNotNull {
         it.firstOrNull()
     }.stateIn(
         viewModelScope,
@@ -99,12 +102,14 @@ class AlbumViewerViewModel(
         fun factory(
             application: Application,
             bucketId: Int = MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id,
+            mimeType: String? = null,
             showHeaders: Boolean = bucketId != MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id,
         ) = viewModelFactory {
             initializer {
                 AlbumViewerViewModel(
                     application = application,
                     bucketId = bucketId,
+                    mimeType = mimeType,
                     addHeaders = showHeaders,
                 )
             }

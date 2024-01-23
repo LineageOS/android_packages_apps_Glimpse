@@ -26,8 +26,9 @@ class MediaViewerViewModel(
     application: Application,
     savedStateHandle: SavedStateHandle,
     bucketId: Int,
+    mimeType: String? = null,
 ) : AndroidViewModel(application) {
-    val media = MediaRepository.media(context, bucketId).flowOn(Dispatchers.IO).map {
+    val media = MediaRepository.media(context, bucketId, mimeType).flowOn(Dispatchers.IO).map {
         QueryResult.Data(it)
     }.stateIn(
         viewModelScope,
@@ -48,13 +49,15 @@ class MediaViewerViewModel(
 
         fun factory(
             application: Application,
-            bucketId: Int = MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id
+            bucketId: Int = MediaStoreBuckets.MEDIA_STORE_BUCKET_REELS.id,
+            mimeType: String? = null,
         ) = viewModelFactory {
             initializer {
                 MediaViewerViewModel(
                     application = application,
                     savedStateHandle = createSavedStateHandle(),
                     bucketId = bucketId,
+                    mimeType = mimeType,
                 )
             }
         }

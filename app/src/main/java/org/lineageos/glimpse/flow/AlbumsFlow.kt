@@ -17,20 +17,46 @@ import kotlinx.coroutines.flow.map
 import org.lineageos.glimpse.ext.queryFlow
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.MediaStoreMedia
+import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.query.*
+import org.lineageos.glimpse.utils.PickerUtils
 
-class AlbumsFlow(private val context: Context) : QueryFlow<Album>() {
+class AlbumsFlow(
+    private val context: Context,
+    private val mimeType: String? = null,
+) : QueryFlow<Album>() {
     override fun flowCursor(): Flow<Cursor?> {
         val uri = MediaQuery.MediaStoreFileUri
         val projection = MediaQuery.AlbumsProjection
-        val imageOrVideo =
-            (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) or
-                    (MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+        val imageOrVideo = PickerUtils.mediaTypeFromGenericMimeType(mimeType)?.let {
+            when (it) {
+                MediaType.IMAGE -> MediaQuery.Selection.image
+
+                MediaType.VIDEO -> MediaQuery.Selection.video
+            }
+        } ?: MediaQuery.Selection.imageOrVideo
+        val rawMimeType = mimeType?.takeIf { PickerUtils.isMimeTypeNotGeneric(it) }
+        val mimeTypeQuery = rawMimeType?.let {
+            MediaStore.Files.FileColumns.MIME_TYPE eq Query.ARG
+        }
+
+        // Join all the non-null queries
+        val selection = listOfNotNull(
+            mimeTypeQuery,
+            imageOrVideo,
+        ).join(Query::and)
+
+        val selectionArgs = listOfNotNull(
+            rawMimeType,
+        ).toTypedArray()
+
         val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+
         val queryArgs = Bundle().apply {
             putAll(
                 bundleOf(
-                    ContentResolver.QUERY_ARG_SQL_SELECTION to imageOrVideo.build(),
+                    ContentResolver.QUERY_ARG_SQL_SELECTION to selection?.build(),
+                    ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS to selectionArgs,
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
                 )
             )

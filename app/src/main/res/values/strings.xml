@@ -105,4 +105,10 @@
 
     <!-- Selection -->
     <string name="thumbnail_selection_count">%d selected</string>
+
+    <!-- Picker -->
+    <string name="pick_a_photo">Pick a photo</string>
+    <string name="pick_a_video">Pick a video</string>
+    <string name="pick_a_media">Pick a media</string>
+    <string name="picker_done">Done</string>
 </resources>

@@ -14,10 +14,16 @@ import androidx.core.os.bundleOf
 import kotlinx.coroutines.flow.Flow
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.MediaStoreMedia
+import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.query.*
 import org.lineageos.glimpse.utils.MediaStoreBuckets
+import org.lineageos.glimpse.utils.PickerUtils
 
-class MediaFlow(private val context: Context, private val bucketId: Int) : QueryFlow<MediaStoreMedia>() {
+class MediaFlow(
+    private val context: Context,
+    private val bucketId: Int,
+    private val mimeType: String? = null,
+) : QueryFlow<MediaStoreMedia>() {
     init {
         assert(bucketId != MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id) {
             "MEDIA_STORE_BUCKET_PLACEHOLDER found"
@@ -27,16 +33,18 @@ class MediaFlow(private val context: Context, private val bucketId: Int) : Query
     override fun flowCursor(): Flow<Cursor?> {
         val uri = MediaQuery.MediaStoreFileUri
         val projection = MediaQuery.MediaProjection
-        val image =
-            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
-        val video =
-            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
-        val imageOrVideo = when (bucketId) {
-            MediaStoreBuckets.MEDIA_STORE_BUCKET_PHOTOS.id -> image
+        val imageOrVideo = PickerUtils.mediaTypeFromGenericMimeType(mimeType)?.let {
+            when (it) {
+                MediaType.IMAGE -> MediaQuery.Selection.image
 
-            MediaStoreBuckets.MEDIA_STORE_BUCKET_VIDEOS.id -> video
+                MediaType.VIDEO -> MediaQuery.Selection.video
+            }
+        } ?: when (bucketId) {
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_PHOTOS.id -> MediaQuery.Selection.image
 
-            else -> image or video
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_VIDEOS.id -> MediaQuery.Selection.video
+
+            else -> MediaQuery.Selection.imageOrVideo
         }
         val albumFilter = when (bucketId) {
             MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES.id -> MediaStore.Files.FileColumns.IS_FAVORITE eq 1
@@ -50,20 +58,36 @@ class MediaFlow(private val context: Context, private val bucketId: Int) : Query
 
             else -> MediaStore.Files.FileColumns.BUCKET_ID eq Query.ARG
         }
-        val selection = albumFilter?.let { imageOrVideo and it } ?: imageOrVideo
-        val selectionArgs = bucketId.takeIf {
-            MediaStoreBuckets.values().none { bucket -> it == bucket.id }
-        }?.let { arrayOf(it.toString()) }
+        val rawMimeType = mimeType?.takeIf { PickerUtils.isMimeTypeNotGeneric(it) }
+        val mimeTypeQuery = rawMimeType?.let {
+            MediaStore.Files.FileColumns.MIME_TYPE eq Query.ARG
+        }
+
+        // Join all the non-null queries
+        val selection = listOfNotNull(
+            imageOrVideo,
+            albumFilter,
+            mimeTypeQuery,
+        ).join(Query::and)
+
+        val selectionArgs = listOfNotNull(
+            bucketId.takeIf {
+                MediaStoreBuckets.values().none { bucket -> it == bucket.id }
+            }?.toString(),
+            rawMimeType,
+        ).toTypedArray()
+
         val sortOrder = when (bucketId) {
             MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
                 "${MediaStore.Files.FileColumns.DATE_EXPIRES} DESC"
 
             else -> "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
         }
+
         val queryArgs = Bundle().apply {
             putAll(
                 bundleOf(
-                    ContentResolver.QUERY_ARG_SQL_SELECTION to selection.build(),
+                    ContentResolver.QUERY_ARG_SQL_SELECTION to selection?.build(),
                     ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS to selectionArgs,
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
                 )
