@@ -10,24 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.fragments.AlbumViewerFragment
 import org.lineageos.glimpse.models.Album
 
 class AlbumThumbnailAdapter(
-    private val navController: NavController,
+    private val onItemSelected: (album: Album) -> Unit,
 ) : ListAdapter<Album, AlbumThumbnailAdapter.AlbumViewHolder>(ALBUM_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
         val view = layoutInflater.inflate(R.layout.album_thumbnail_view, parent, false)
 
-        return AlbumViewHolder(view, navController)
+        return AlbumViewHolder(view, onItemSelected)
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
@@ -45,7 +43,7 @@ class AlbumThumbnailAdapter(
 
     class AlbumViewHolder(
         itemView: View,
-        private val navController: NavController,
+        private val onItemSelected: (album: Album) -> Unit,
     ) : RecyclerView.ViewHolder(itemView) {
         // Views
         private val descriptionTextView =
@@ -68,10 +66,7 @@ class AlbumThumbnailAdapter(
             }
 
             itemView.setOnClickListener {
-                navController.navigate(
-                    R.id.action_mainFragment_to_albumViewerFragment,
-                    AlbumViewerFragment.createBundle(album.id)
-                )
+                onItemSelected(album)
             }
         }
     }

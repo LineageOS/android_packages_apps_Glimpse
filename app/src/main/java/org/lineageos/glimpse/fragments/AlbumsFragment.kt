@@ -68,7 +68,14 @@ class AlbumsFragment : Fragment() {
     }
 
     // MediaStore
-    private val albumThumbnailAdapter by lazy { AlbumThumbnailAdapter(parentNavController) }
+    private val albumThumbnailAdapter by lazy {
+        AlbumThumbnailAdapter { album ->
+            parentNavController.navigate(
+                R.id.action_mainFragment_to_albumViewerFragment,
+                AlbumViewerFragment.createBundle(album.id)
+            )
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
