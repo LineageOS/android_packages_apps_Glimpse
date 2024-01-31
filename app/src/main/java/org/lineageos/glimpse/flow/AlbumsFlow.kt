@@ -55,7 +55,7 @@ class AlbumsFlow(
         val queryArgs = Bundle().apply {
             putAll(
                 bundleOf(
-                    ContentResolver.QUERY_ARG_SQL_SELECTION to selection?.build(),
+                    ContentResolver.QUERY_ARG_SQL_SELECTION to selection.build(),
                     ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS to selectionArgs,
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
                 )

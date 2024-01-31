@@ -36,8 +36,4 @@ infix fun <T> Column.eq(other: T) = Query(Literal(this)) eq Query(Literal(other)
 
 fun Iterable<Query>.join(
     func: Query.(other: Query) -> Query,
-): Query? = fold(null) { sum: Query?, item ->
-    sum?.let {
-        it.func(item)
-    } ?: item
-}
+): Query = reduceOrNull(func) ?: Query(Literal(""))
