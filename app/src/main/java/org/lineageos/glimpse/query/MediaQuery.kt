@@ -9,7 +9,7 @@ import android.net.Uri
 import android.provider.MediaStore
 
 object MediaQuery {
-    val MediaStoreFileUri: Uri = MediaStore.Files.getContentUri("external")
+    val MediaStoreFileUri: Uri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
     val MediaProjection = arrayOf(
         MediaStore.Files.FileColumns._ID,
         MediaStore.Files.FileColumns.BUCKET_ID,
