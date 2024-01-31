@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fff16301_82d784e9",
+        "filename": "app/src/main/java/org/lineageos/glimpse/fragments/picker/MediaSelectorFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-01-31T18:05:21Z",
+      "side": 1,
+      "message": "Just inline medias.first() here? You\u0027ll also get exception handling while at it.",
+      "revId": "9ac112fd851ac069bf233642d6d5bdffca5a68c3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "239fa8ae_1418383b",
+        "filename": "app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-01-31T18:05:21Z",
+      "side": 1,
+      "message": "not sure if it belongs under this category",
+      "revId": "9ac112fd851ac069bf233642d6d5bdffca5a68c3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
