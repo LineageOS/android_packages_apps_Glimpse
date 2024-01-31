@@ -33,6 +33,41 @@
       "message": "Scary but safe\n\n    /**\n     * Wrap given argument in parenthesis, unless it\u0027s {@code null} or\n     * {@code ()}, in which case return it verbatim.\n     */\n    private @Nullable String wrap(@Nullable String arg) {\n        if (TextUtils.isEmpty(arg)) {\n            return arg;\n        } else {\n            return \"(\" + arg + \")\";\n        }\n    }\n    \n    // Execute wrapped query for extra protection\n    final String wrappedSql \u003d buildQuery(projectionIn, wrap(selection), groupBy,\n            wrap(having), sortOrder, limit);",
       "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1636a8c_303b34c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-01-31T18:23:02Z",
+      "side": 1,
+      "message": "They use isEmpty so we should be good, hasExternal will be false, supposedly",
+      "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "246c1c5f_424170f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-01-31T18:23:02Z",
+      "side": 1,
+      "message": "/** {@hide} */\n    public @Nullable String computeWhere(@Nullable String selection) {\n        final boolean hasInternal \u003d !TextUtils.isEmpty(mWhereClause);\n        final boolean hasExternal \u003d !TextUtils.isEmpty(selection);\n\n        if (hasInternal || hasExternal) {\n            final StringBuilder where \u003d new StringBuilder();\n            if (hasInternal) {\n                where.append(\u0027(\u0027).append(mWhereClause).append(\u0027)\u0027);\n            }\n            if (hasInternal \u0026\u0026 hasExternal) {\n                where.append(\" AND \");\n            }\n            if (hasExternal) {\n                where.append(\u0027(\u0027).append(selection).append(\u0027)\u0027);\n            }\n            return where.toString();\n        } else {\n            return null;\n        }\n    }",
+      "parentUuid": "661826c5_fc0e5256",
+      "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
