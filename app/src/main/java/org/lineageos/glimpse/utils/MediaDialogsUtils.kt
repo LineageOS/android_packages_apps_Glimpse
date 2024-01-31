@@ -68,6 +68,10 @@ object MediaDialogsUtils {
         }
 
         show()
+    }.also {
+        if (succeeded) {
+            PermissionsUtils.showManageMediaPermissionDialogIfNeeded(context)
+        }
     }
 
     // Move to trash
