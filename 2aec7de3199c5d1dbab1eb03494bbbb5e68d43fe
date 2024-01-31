@@ -91,6 +91,30 @@
       },
       "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef4ff6c1_fec3c0ae",
+        "filename": "app/src/main/java/org/lineageos/glimpse/query/Query.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-01-31T18:30:19Z",
+      "side": 1,
+      "message": "1 \u003d 1 actually?",
+      "parentUuid": "bfec5d44_4c0c0abd",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 49
+      },
+      "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
