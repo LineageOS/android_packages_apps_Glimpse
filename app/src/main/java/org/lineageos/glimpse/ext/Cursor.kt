@@ -10,19 +10,19 @@ import android.database.Cursor
 fun <T> Cursor?.mapEachRow(
     projection: Array<String>,
     mapping: (Cursor, Array<Int>) -> T,
-) = this?.use {
-    if (!moveToFirst()) {
+) = this?.use { cursor ->
+    if (!cursor.moveToFirst()) {
         return@use emptyList<T>()
     }
 
-    val indexCache = projection.map {
-        getColumnIndexOrThrow(it)
+    val indexCache = projection.map { column ->
+        cursor.getColumnIndexOrThrow(column)
     }.toTypedArray()
 
     val data = mutableListOf<T>()
     do {
-        data.add(mapping(this, indexCache))
-    } while (moveToNext())
+        data.add(mapping(cursor, indexCache))
+    } while (cursor.moveToNext())
 
     data.toList()
 } ?: emptyList()
