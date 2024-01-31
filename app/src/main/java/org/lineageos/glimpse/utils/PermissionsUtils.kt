@@ -13,7 +13,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.Settings
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -24,50 +23,13 @@ import org.lineageos.glimpse.ext.*
  * App's permissions utils.
  */
 class PermissionsUtils(private val context: Context) {
-    private val sharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(context) }
-
     fun mainPermissionsGranted() = permissionsGranted(mainPermissions)
-
-    fun showManageMediaPermissionDialogIfNeeded() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S
-            || canManageMedia()
-            || sharedPreferences.manageMediaPermissionDialogDismissed
-        ) {
-            return
-        }
-
-        MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.manage_media_permission_title)
-            .setMessage(R.string.manage_media_permission_message)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
-                requestManageMediaPermission()
-            }
-            .setNeutralButton(android.R.string.cancel) { _, _ ->
-                sharedPreferences.manageMediaPermissionDialogDismissed = true
-            }
-            .show()
-    }
 
     private fun permissionGranted(permission: String) =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
     private fun permissionsGranted(permissions: Array<String>) = permissions.all {
         permissionGranted(it)
-    }
-
-    private fun canManageMedia() =
-        Build.VERSION.SDK_INT < Build.VERSION_CODES.S || MediaStore.canManageMedia(context)
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun requestManageMediaPermission() {
-        if (canManageMedia()) {
-            return
-        }
-
-        val intent = Intent(Settings.ACTION_REQUEST_MANAGE_MEDIA).apply {
-            data = Uri.fromParts("package", context.packageName, null)
-        }
-        context.startActivity(intent)
     }
 
     companion object {
@@ -84,5 +46,38 @@ class PermissionsUtils(private val context: Context) {
 
             add(Manifest.permission.ACCESS_MEDIA_LOCATION)
         }.toTypedArray()
+
+        fun showManageMediaPermissionDialogIfNeeded(context: Context) {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S
+                || canManageMedia(context)
+                || sharedPreferences.manageMediaPermissionDialogDismissed
+            ) {
+                return
+            }
+
+            MaterialAlertDialogBuilder(context)
+                .setTitle(R.string.manage_media_permission_title)
+                .setMessage(R.string.manage_media_permission_message)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    if (canManageMedia(context)) {
+                        return@setPositiveButton
+                    }
+
+                    context.startActivity(
+                        Intent(Settings.ACTION_REQUEST_MANAGE_MEDIA).apply {
+                            data = Uri.fromParts("package", context.packageName, null)
+                        }
+                    )
+                }
+                .setNeutralButton(android.R.string.cancel) { _, _ ->
+                    sharedPreferences.manageMediaPermissionDialogDismissed = true
+                }
+                .show()
+        }
+
+        private fun canManageMedia(context: Context) =
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.S || MediaStore.canManageMedia(context)
     }
 }
