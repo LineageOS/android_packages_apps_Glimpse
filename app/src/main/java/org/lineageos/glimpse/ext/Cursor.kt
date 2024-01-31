@@ -11,18 +11,18 @@ fun <T> Cursor?.mapEachRow(
     projection: Array<String>,
     mapping: (Cursor, Array<Int>) -> T,
 ) = this?.use {
-    if (!moveToFirst()) {
+    if (!it.moveToFirst()) {
         return@use emptyList<T>()
     }
 
-    val indexCache = projection.map {
-        getColumnIndexOrThrow(it)
+    val indexCache = projection.map { column ->
+        it.getColumnIndexOrThrow(column)
     }.toTypedArray()
 
     val data = mutableListOf<T>()
     do {
-        data.add(mapping(this, indexCache))
-    } while (moveToNext())
+        data.add(mapping(it, indexCache))
+    } while (it.moveToNext())
 
     data.toList()
 } ?: emptyList()
