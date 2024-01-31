@@ -15,20 +15,23 @@ object PickerUtils {
     private const val MIME_TYPE_ANY = "*/*"
 
     /**
-     * Fix-up a MIME type coming from an [Intent].
-     * @param mimeType A MIME type coming from an [Intent]
+     * Get a fixed up MIME type from an [Intent].
+     * @param intent An [Intent]
      * @return A simpler MIME type, null if not supported
      */
-    fun translateMimeType(mimeType: String?) = (mimeType ?: MIME_TYPE_ANY).let {
-        when (it) {
-            MediaStore.Images.Media.CONTENT_TYPE -> MIME_TYPE_IMAGE_ANY
-            MediaStore.Video.Media.CONTENT_TYPE -> MIME_TYPE_VIDEO_ANY
-            else -> when {
-                it == MIME_TYPE_ANY
-                        || it.startsWith("image/")
-                        || it.startsWith("video/") -> it
+    fun translateMimeType(intent: Intent?) = when (intent?.action) {
+        Intent.ACTION_SET_WALLPAPER -> MIME_TYPE_IMAGE_ANY
+        else -> (intent?.type ?: MIME_TYPE_ANY).let {
+            when (it) {
+                MediaStore.Images.Media.CONTENT_TYPE -> MIME_TYPE_IMAGE_ANY
+                MediaStore.Video.Media.CONTENT_TYPE -> MIME_TYPE_VIDEO_ANY
+                else -> when {
+                    it == MIME_TYPE_ANY
+                            || it.startsWith("image/")
+                            || it.startsWith("video/") -> it
 
-                else -> null
+                    else -> null
+                }
             }
         }
     }
