@@ -68,6 +68,29 @@
       "parentUuid": "661826c5_fc0e5256",
       "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfec5d44_4c0c0abd",
+        "filename": "app/src/main/java/org/lineageos/glimpse/query/Query.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-01-31T18:29:45Z",
+      "side": 1,
+      "message": "\"1\" could work too",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 49
+      },
+      "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
