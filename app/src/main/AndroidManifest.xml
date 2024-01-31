@@ -97,6 +97,12 @@
                 <data android:mimeType="vnd.android.cursor.dir/video" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.SET_WALLPAPER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
 
     </application>

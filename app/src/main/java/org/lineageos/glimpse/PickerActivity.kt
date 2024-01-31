@@ -45,7 +45,7 @@ class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
             return
         }
 
-        val mimeType = PickerUtils.translateMimeType(intent.type) ?: run {
+        val mimeType = PickerUtils.translateMimeType(intent) ?: run {
             Toast.makeText(
                 this, R.string.intent_media_type_not_supported, Toast.LENGTH_SHORT
             ).show()
@@ -79,6 +79,7 @@ class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
         private val supportedIntentActions = listOf(
             Intent.ACTION_GET_CONTENT,
             Intent.ACTION_PICK,
+            Intent.ACTION_SET_WALLPAPER,
         )
     }
 }

@@ -6,6 +6,7 @@
 package org.lineageos.glimpse.fragments.picker
 
 import android.app.Activity
+import android.app.WallpaperManager
 import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -63,11 +65,16 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
     private val mediasRecyclerView by getViewProperty<RecyclerView>(R.id.mediasRecyclerView)
     private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
 
+    // System services
+    private val wallpaperManager by lazy {
+        requireContext().getSystemService(WallpaperManager::class.java)
+    }
+
     // Arguments
     private val bucketId by lazy { arguments?.getInt(KEY_BUCKET_ID) }
 
     // Intent data
-    private val mimeType by lazy { PickerUtils.translateMimeType(activity?.intent?.type) }
+    private val mimeType by lazy { PickerUtils.translateMimeType(activity?.intent) }
 
     // Recyclerview
     private val thumbnailAdapter by lazy {
@@ -242,13 +249,17 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
      * @param medias The selected medias
      */
     private fun sendResult(vararg medias: MediaStoreMedia) {
-        activity?.let {
-            it.setResult(
+        val activity = activity ?: return
+        val intent = activity.intent ?: return
+
+        when (intent.action) {
+            Intent.ACTION_GET_CONTENT,
+            Intent.ACTION_PICK -> activity.setResult(
                 Activity.RESULT_OK,
                 Intent().apply {
                     if (allowMultipleSelection) {
                         clipData = ClipData.newUri(
-                            it.contentResolver, "", medias.first().uri
+                            activity.contentResolver, "", medias.first().uri
                         ).also { clipData ->
                             for (media in 1 until medias.size) {
                                 clipData.addItem(
@@ -267,9 +278,27 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
                     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 }
             )
+            Intent.ACTION_SET_WALLPAPER -> {
+                require(medias.size == 1) {
+                    "More than one media provided when only one was requested"
+                }
 
-            it.finish()
+                runCatching {
+                    wallpaperManager.getCropAndSetWallpaperIntent(
+                        medias.first().uri
+                    )
+                }.getOrNull()?.also {
+                    activity.startActivity(it)
+                } ?: Toast.makeText(
+                    activity,
+                    R.string.intent_no_system_wallpaper_cropper_available,
+                    Toast.LENGTH_LONG,
+                ).show()
+            }
+            else -> throw Exception("Unknown action")
         }
+
+        activity.finish()
     }
 
     /**
@@ -277,9 +306,14 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
      * @see Intent.EXTRA_ALLOW_MULTIPLE
      */
     private val allowMultipleSelection: Boolean
-        get() = activity?.intent?.extras?.getBoolean(
-            Intent.EXTRA_ALLOW_MULTIPLE, false
-        ) ?: false
+        get() = activity?.intent?.let { intent ->
+            when (intent.action) {
+                Intent.ACTION_GET_CONTENT -> intent.extras?.getBoolean(
+                    Intent.EXTRA_ALLOW_MULTIPLE, false
+                )
+                else -> false
+            }
+        } ?: false
 
     companion object {
         private const val KEY_BUCKET_ID = "bucket_id"
