@@ -115,6 +115,30 @@
       },
       "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ec546b0_ec07fe9d",
+        "filename": "app/src/main/java/org/lineageos/glimpse/query/Query.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-01-31T18:35:29Z",
+      "side": 1,
+      "message": "On MySQL 1 \u003d true and 0 \u003d false, dunno if that applies to Android content provider as well",
+      "parentUuid": "ef4ff6c1_fec3c0ae",
+      "range": {
+        "startLine": 39,
+        "startChar": 47,
+        "endLine": 39,
+        "endChar": 49
+      },
+      "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
