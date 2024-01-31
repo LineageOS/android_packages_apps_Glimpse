@@ -30,6 +30,7 @@ android_app {
         "Glimpse_androidx.media3_media3-ui",
         "androidx.navigation_navigation-fragment-ktx",
         "androidx.navigation_navigation-ui-ktx",
+        "Glimpse_com.squareup.okio_okio-jvm",
         "Glimpse_com.squareup.okhttp3_okhttp",
         "androidx.recyclerview_recyclerview",
         "androidx.recyclerview_recyclerview-selection",
