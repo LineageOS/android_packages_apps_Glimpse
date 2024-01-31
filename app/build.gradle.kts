@@ -72,40 +72,40 @@ android {
 
 dependencies {
     // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.10"))
 
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.preference:preference:1.2.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.11.0")
 
     // EXIF
-    implementation("androidx.exifinterface:exifinterface:1.3.6")
+    implementation("androidx.exifinterface:exifinterface:1.3.7")
 
     // Media3
-    implementation("androidx.media3:media3-exoplayer:1.1.1")
-    implementation("androidx.media3:media3-exoplayer-dash:1.1.1")
-    implementation("androidx.media3:media3-exoplayer-hls:1.1.1")
-    implementation("androidx.media3:media3-exoplayer-rtsp:1.1.1")
-    implementation("androidx.media3:media3-exoplayer-smoothstreaming:1.1.1")
-    implementation("androidx.media3:media3-ui:1.1.1")
+    implementation("androidx.media3:media3-exoplayer:1.2.1")
+    implementation("androidx.media3:media3-exoplayer-dash:1.2.1")
+    implementation("androidx.media3:media3-exoplayer-hls:1.2.1")
+    implementation("androidx.media3:media3-exoplayer-rtsp:1.2.1")
+    implementation("androidx.media3:media3-exoplayer-smoothstreaming:1.2.1")
+    implementation("androidx.media3:media3-ui:1.2.1")
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
     // okhttp
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // Recyclerview
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
     // Coil
-    implementation("io.coil-kt:coil:2.2.2")
-    implementation("io.coil-kt:coil-gif:2.2.2")
-    implementation("io.coil-kt:coil-video:2.2.2")
+    implementation("io.coil-kt:coil:2.5.0")
+    implementation("io.coil-kt:coil-gif:2.5.0")
+    implementation("io.coil-kt:coil-video:2.4.0")
 }
 
 configure<GenerateBpPluginExtension> {
