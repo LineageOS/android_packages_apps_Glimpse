@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ed57b55_141508df",
+        "filename": "app/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-01-31T18:05:51Z",
+      "side": 1,
+      "message": "shouldn\u0027t we put \"Gallery2\" above 3D?",
+      "revId": "210857dccd4c983b7b5f8671aeb3464d519af681",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
