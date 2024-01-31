@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5eb7cb2f_694adb0c",
+        "filename": "app/src/main/java/org/lineageos/glimpse/fragments/picker/MediaSelectorFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-01-31T18:14:05Z",
+      "side": 1,
+      "message": "the require() before that already enforces it\nso media.first()!! is easier and avoids the nested ?:",
+      "parentUuid": "fff16301_82d784e9",
+      "revId": "9ac112fd851ac069bf233642d6d5bdffca5a68c3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "239fa8ae_1418383b",
         "filename": "app/src/main/res/values/strings.xml",
         "patchSetId": 1
