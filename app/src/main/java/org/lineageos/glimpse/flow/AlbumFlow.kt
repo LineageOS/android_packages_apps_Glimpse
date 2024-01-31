@@ -75,7 +75,12 @@ class AlbumFlow(
             rawMimeType,
         ).toTypedArray()
 
-        val sortOrder = "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+        val sortOrder = when (bucketId) {
+            MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
+                "${MediaStore.Files.FileColumns.DATE_EXPIRES} DESC"
+
+            else -> "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+        }
 
         val queryArgs = Bundle().apply {
             putAll(
