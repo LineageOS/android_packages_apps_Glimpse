@@ -16,6 +16,23 @@
       "message": "_until we figure out how it behaves on fw_",
       "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "661826c5_fc0e5256",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-01-31T18:21:38Z",
+      "side": 1,
+      "message": "Scary but safe\n\n    /**\n     * Wrap given argument in parenthesis, unless it\u0027s {@code null} or\n     * {@code ()}, in which case return it verbatim.\n     */\n    private @Nullable String wrap(@Nullable String arg) {\n        if (TextUtils.isEmpty(arg)) {\n            return arg;\n        } else {\n            return \"(\" + arg + \")\";\n        }\n    }\n    \n    // Execute wrapped query for extra protection\n    final String wrappedSql \u003d buildQuery(projectionIn, wrap(selection), groupBy,\n            wrap(having), sortOrder, limit);",
+      "revId": "2aec7de3199c5d1dbab1eb03494bbbb5e68d43fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
