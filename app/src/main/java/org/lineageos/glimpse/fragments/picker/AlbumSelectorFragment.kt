@@ -43,7 +43,7 @@ class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) 
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
 
     // Intent data
-    private val mimeType by lazy { PickerUtils.translateMimeType(activity?.intent?.type) }
+    private val mimeType by lazy { PickerUtils.translateMimeType(activity?.intent) }
 
     // Recyclerview
     private val albumThumbnailAdapter by lazy {

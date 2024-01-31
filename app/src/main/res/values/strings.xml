@@ -111,4 +111,5 @@
     <string name="pick_a_video">Pick a video</string>
     <string name="pick_a_media">Pick a media</string>
     <string name="picker_done">Done</string>
+    <string name="intent_no_system_wallpaper_cropper_available">No system cropper available</string>
 </resources>
