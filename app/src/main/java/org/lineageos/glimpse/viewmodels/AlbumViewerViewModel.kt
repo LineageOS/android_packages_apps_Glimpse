@@ -87,12 +87,16 @@ class AlbumViewerViewModel(
     val inSelectionMode = MutableLiveData(false)
 
     sealed class DataType(val viewType: Int) {
-        class Thumbnail(val media: MediaStoreMedia) : DataType(ThumbnailAdapter.ViewTypes.THUMBNAIL.ordinal) {
+        class Thumbnail(
+            val media: MediaStoreMedia,
+        ) : DataType(ThumbnailAdapter.ViewTypes.THUMBNAIL.ordinal) {
             override fun equals(other: Any?) = media == other
             override fun hashCode() = media.hashCode()
         }
 
-        class DateHeader(val date: Date) : DataType(ThumbnailAdapter.ViewTypes.DATE_HEADER.ordinal) {
+        class DateHeader(
+            val date: Date,
+        ) : DataType(ThumbnailAdapter.ViewTypes.DATE_HEADER.ordinal) {
             override fun equals(other: Any?) = date == other
             override fun hashCode() = date.hashCode()
         }

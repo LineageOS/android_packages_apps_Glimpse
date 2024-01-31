@@ -233,7 +233,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         ioScope.launch {
             val intentHandled = handleIntent(intent)
 
-            lifecycleScope.launch lifecycleCoroutine@ {
+            lifecycleScope.launch lifecycleCoroutine@{
                 if (!intentHandled) {
                     finish()
                     return@lifecycleCoroutine

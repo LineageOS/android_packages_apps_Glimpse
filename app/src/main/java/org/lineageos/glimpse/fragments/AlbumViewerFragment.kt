@@ -123,25 +123,26 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
     // Selection
     private var selectionTracker: SelectionTracker<MediaStoreMedia>? = null
 
-    private val selectionTrackerObserver = object : SelectionTracker.SelectionObserver<MediaStoreMedia>() {
-        override fun onSelectionChanged() {
-            super.onSelectionChanged()
+    private val selectionTrackerObserver =
+        object : SelectionTracker.SelectionObserver<MediaStoreMedia>() {
+            override fun onSelectionChanged() {
+                super.onSelectionChanged()
 
-            updateSelection()
+                updateSelection()
+            }
+
+            override fun onSelectionRefresh() {
+                super.onSelectionRefresh()
+
+                updateSelection()
+            }
+
+            override fun onSelectionRestored() {
+                super.onSelectionRestored()
+
+                updateSelection()
+            }
         }
-
-        override fun onSelectionRefresh() {
-            super.onSelectionRefresh()
-
-            updateSelection()
-        }
-
-        override fun onSelectionRestored() {
-            super.onSelectionRestored()
-
-            updateSelection()
-        }
-    }
 
     private var actionMode: ActionMode? = null
 
@@ -292,6 +293,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
         when (bucketId) {
             MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
                 R.menu.fragment_album_viewer_toolbar_trash
+
             else -> null
         }?.let {
             toolbar.inflateMenu(it)
@@ -319,6 +321,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
                     true
                 }
+
                 else -> false
             }
         }
