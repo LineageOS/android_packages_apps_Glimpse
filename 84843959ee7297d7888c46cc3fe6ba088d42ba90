@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76d70211_825fa8e8",
+        "filename": "app/src/main/java/org/lineageos/glimpse/fragments/picker/MediaSelectorFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-01-31T21:35:39Z",
+      "side": 1,
+      "message": "any reason not to make it lazy?\nthe getter works as you\u0027d expect it to behave, but doesn\u0027t explicitly explains \"must be initialized later on\"",
+      "revId": "84843959ee7297d7888c46cc3fe6ba088d42ba90",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
