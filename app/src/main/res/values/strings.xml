@@ -116,4 +116,8 @@
     <!-- Wallpaper -->
     <string name="set_wallpaper_label">Wallpaper</string>
     <string name="set_wallpaper">Set wallpaper</string>
+    <string name="set_wallpaper_dialog_title">Set wallpaper on</string>
+    <string name="ser_wallpaper_home_screen">Home screen</string>
+    <string name="set_wallpaper_lock_screen">Lock screen</string>
+    <string name="set_wallpaper_both">Home and lock screen</string>
 </resources>
