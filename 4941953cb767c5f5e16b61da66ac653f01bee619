@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a0eb28b_7272b066",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T12:41:18Z",
+      "side": 1,
+      "message": "we need to make it obvious the view can be scrolled, and we need an icon for that\nCan\u0027t find the gphoto one in material icons...",
+      "revId": "4941953cb767c5f5e16b61da66ac653f01bee619",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
