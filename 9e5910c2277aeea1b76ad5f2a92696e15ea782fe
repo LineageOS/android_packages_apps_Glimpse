@@ -16,6 +16,24 @@
       "message": "alphabetical order",
       "revId": "9e5910c2277aeea1b76ad5f2a92696e15ea782fe",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad220969_61b8cb0a",
+        "filename": "app/src/main/java/org/lineageos/glimpse/fragments/AlbumsFragment.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T08:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c37fb013_22746822",
+      "revId": "9e5910c2277aeea1b76ad5f2a92696e15ea782fe",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
