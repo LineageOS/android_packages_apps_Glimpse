@@ -78,7 +78,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
 
     // Recyclerview
     private val thumbnailAdapter by lazy {
-        ThumbnailAdapter(model) { media ->
+        ThumbnailAdapter(model) { media, _ ->
             selectionTracker?.select(media)
         }
     }

@@ -34,7 +34,7 @@ import kotlin.reflect.safeCast
 
 class ThumbnailAdapter(
     private val model: AlbumViewerViewModel,
-    private val onItemSelected: (media: MediaStoreMedia) -> Unit,
+    private val onItemSelected: (media: MediaStoreMedia, anchor: View) -> Unit,
 ) : ListAdapter<DataType, RecyclerView.ViewHolder>(DATA_TYPE_COMPARATOR) {
     // We store a reverse lookup list for performance reasons
     private var mediaToIndex: Map<MediaStoreMedia, Int>? = null
@@ -144,7 +144,7 @@ class ThumbnailAdapter(
     class ThumbnailViewHolder(
         private val view: View,
         private val model: AlbumViewerViewModel,
-        private val onItemSelected: (media: MediaStoreMedia) -> Unit,
+        private val onItemSelected: (media: MediaStoreMedia, anchor: View) -> Unit,
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val selectionCheckedImageView =
@@ -181,7 +181,7 @@ class ThumbnailAdapter(
             this.isSelected = isSelected
 
             itemView.setOnClickListener {
-                onItemSelected(media)
+                onItemSelected(media, thumbnailImageView)
             }
 
             thumbnailImageView.load(media.uri) {
