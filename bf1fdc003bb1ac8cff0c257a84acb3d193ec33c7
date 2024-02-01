@@ -46,6 +46,30 @@
       },
       "revId": "bf1fdc003bb1ac8cff0c257a84acb3d193ec33c7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fefef64_16644663",
+        "filename": "app/src/main/java/org/lineageos/glimpse/utils/PermissionsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-01T08:49:31Z",
+      "side": 0,
+      "message": "Android \"\"best practices\"\" says to never store nor assume whether a permission is granted or not",
+      "parentUuid": "23adb127_2f4a740f",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "bf1fdc003bb1ac8cff0c257a84acb3d193ec33c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
