@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03f65bb2_459b872d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T13:17:09Z",
+      "side": 1,
+      "message": "This should be fine as is.\nFeel free the change the look of it and everything, but matches gphotos behavior",
+      "revId": "9f9c219a0ccaac99e44e9c04d57d1592fd99ff3f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
