@@ -99,4 +99,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <!-- Set wallpaper dialog theme -->
+    <style name="Theme.Glimpse.SetWallpaperDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
+        <item name="listItemLayout">@layout/set_wallpaper_dialog_item</item>
+    </style>
 </resources>
