@@ -112,4 +112,8 @@
     <string name="pick_a_video">Pick a video</string>
     <string name="pick_a_media">Pick a media</string>
     <string name="picker_done">Done</string>
+
+    <!-- Wallpaper -->
+    <string name="set_wallpaper_label">Wallpaper</string>
+    <string name="set_wallpaper">Set wallpaper</string>
 </resources>
