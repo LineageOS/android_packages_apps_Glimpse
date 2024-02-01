@@ -8,7 +8,6 @@ package org.lineageos.glimpse.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.findViewTreeLifecycleOwner
@@ -18,7 +17,8 @@ import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.models.Media
@@ -26,7 +26,6 @@ import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
-import kotlin.reflect.safeCast
 
 class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
@@ -63,7 +62,7 @@ class MediaViewerAdapter(
         private val mediaViewerUIViewModel: MediaViewerUIViewModel,
     ) : RecyclerView.ViewHolder(view) {
         // Views
-        private val imageView = view.findViewById<ImageView>(R.id.imageView)
+        private val imageView = view.findViewById<SubsamplingScaleImageView>(R.id.imageView)
 
         @androidx.media3.common.util.UnstableApi
         private val playerControlView = view.findViewById<PlayerControlView>(R.id.exo_controller)
@@ -127,11 +126,9 @@ class MediaViewerAdapter(
         fun bind(media: Media, position: Int) {
             this.media = media
             this.position = position
-            imageView.load(media.uri) {
-                MediaStoreMedia::class.safeCast(media)?.let {
-                    memoryCacheKey("full_${it.id}")
-                    placeholderMemoryCacheKey("thumbnail_${it.id}")
-                }
+
+            if (media.mediaType == MediaType.IMAGE) {
+                imageView.setImage(ImageSource.uri(media.uri))
             }
         }
 

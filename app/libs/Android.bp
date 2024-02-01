@@ -394,6 +394,38 @@ android_library {
 }
 
 android_library_import {
+    name: "Glimpse_com.davemorrissey.labs_subsampling-scale-image-view-androidx-nodeps",
+    aars: ["com/davemorrissey/labs/subsampling-scale-image-view-androidx/3.10.0/subsampling-scale-image-view-androidx-3.10.0.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "androidx.appcompat_appcompat",
+        "androidx.exifinterface_exifinterface",
+    ],
+}
+
+android_library {
+    name: "Glimpse_com.davemorrissey.labs_subsampling-scale-image-view-androidx",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "com/davemorrissey/labs/subsampling-scale-image-view-androidx/3.10.0/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_com.davemorrissey.labs_subsampling-scale-image-view-androidx-nodeps",
+        "androidx.appcompat_appcompat",
+        "androidx.exifinterface_exifinterface",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
     name: "Glimpse_com.google.android.material_material-nodeps",
     aars: ["com/google/android/material/material/1.9.0/material-1.9.0.aar"],
     sdk_version: "34",

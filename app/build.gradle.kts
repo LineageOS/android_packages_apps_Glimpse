@@ -107,6 +107,9 @@ dependencies {
     implementation("io.coil-kt:coil:2.5.0")
     implementation("io.coil-kt:coil-gif:2.5.0")
     implementation("io.coil-kt:coil-video:2.5.0")
+
+    // subsampling-scale-image-view
+    implementation("com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0")
 }
 
 configure<GenerateBpPluginExtension> {

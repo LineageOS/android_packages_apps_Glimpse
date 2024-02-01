@@ -9,7 +9,7 @@
     android:layout_height="match_parent">
 
     <!-- Images -->
-    <ImageView
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
