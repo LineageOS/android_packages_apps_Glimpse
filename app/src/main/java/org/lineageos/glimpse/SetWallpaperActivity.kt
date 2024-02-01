@@ -6,10 +6,12 @@
 package org.lineageos.glimpse
 
 import android.app.WallpaperManager
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) {
     // Views
@@ -36,8 +38,26 @@ class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) 
 
         // Set wallpaper
         setWallpaperButton.setOnClickListener {
-            wallpaperManager.setStream(contentResolver.openInputStream(wallpaperUri))
-            finish()
+            MaterialAlertDialogBuilder(this, R.style.Theme_Glimpse_SetWallpaperDialog)
+                .setTitle(R.string.set_wallpaper_dialog_title)
+                .setItems(R.array.set_wallpaper_items) { _, which ->
+                    val flags = POSITION_TO_FLAG[which] ?: throw Exception("Invalid position")
+                    setWallpaper(wallpaperUri, flags)
+                    finish()
+                }.show()
         }
+    }
+
+    private fun setWallpaper(uri: Uri, flags: Int) {
+        val wallpaperStream = contentResolver.openInputStream(uri)
+        wallpaperManager.setStream(wallpaperStream, null, true, flags)
+    }
+
+    companion object {
+        private val POSITION_TO_FLAG = mapOf(
+            0 to WallpaperManager.FLAG_SYSTEM,
+            1 to WallpaperManager.FLAG_LOCK,
+            2 to (WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK)
+        )
     }
 }
