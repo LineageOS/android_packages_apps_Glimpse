@@ -88,6 +88,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val shareButton by lazy { findViewById<ImageButton>(R.id.shareButton) }
     private val timeTextView by lazy { findViewById<TextView>(R.id.timeTextView) }
     private val topSheetConstraintLayout by lazy { findViewById<ConstraintLayout>(R.id.topSheetConstraintLayout) }
+    private val useAsButton by lazy { findViewById<ImageButton>(R.id.useAsButton) }
     private val viewPager by lazy { findViewById<ViewPager2>(R.id.viewPager) }
 
     // System services
@@ -387,6 +388,19 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             }
 
             false
+        }
+
+        useAsButton.setOnClickListener {
+            MediaStoreMedia::class.safeCast(
+                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
+            )?.let {
+                startActivity(
+                    Intent.createChooser(
+                        buildUseAsIntent(it),
+                        null
+                    )
+                )
+            }
         }
 
         viewPager.offscreenPageLimit = 2

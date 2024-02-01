@@ -43,3 +43,9 @@ fun buildEditIntent(media: MediaStoreMedia) = Intent().apply {
     setDataAndType(media.uri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
+
+fun buildUseAsIntent(media: MediaStoreMedia) = Intent().apply {
+    action = Intent.ACTION_ATTACH_DATA
+    setDataAndType(media.uri, media.mimeType)
+    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+}
