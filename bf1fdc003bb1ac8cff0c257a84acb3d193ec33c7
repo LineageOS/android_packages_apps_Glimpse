@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97270849_460d8144",
+        "filename": "app/src/main/java/org/lineageos/glimpse/utils/PermissionsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T08:20:24Z",
+      "side": 0,
+      "message": "I removed that, can the truthness of canManageMedia change between the right before that and the callback of positive button?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "bf1fdc003bb1ac8cff0c257a84acb3d193ec33c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
