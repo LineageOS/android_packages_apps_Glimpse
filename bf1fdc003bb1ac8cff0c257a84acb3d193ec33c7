@@ -22,6 +22,30 @@
       },
       "revId": "bf1fdc003bb1ac8cff0c257a84acb3d193ec33c7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23adb127_2f4a740f",
+        "filename": "app/src/main/java/org/lineageos/glimpse/utils/PermissionsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-01T08:47:32Z",
+      "side": 0,
+      "message": "Yeah, the user _could_ open settings and change the setting while the dialog is open, system could also decide to revoke that for whatever reason :shrug:",
+      "parentUuid": "97270849_460d8144",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "bf1fdc003bb1ac8cff0c257a84acb3d193ec33c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
