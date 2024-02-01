@@ -8,8 +8,10 @@ package org.lineageos.glimpse.fragments.picker
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
@@ -41,6 +43,7 @@ class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) 
 
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
+    private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
 
     // Intent data
     private val mimeType by lazy { PickerUtils.translateMimeType(activity?.intent) }
@@ -63,6 +66,10 @@ class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) 
                     when (it) {
                         is QueryResult.Data -> {
                             albumThumbnailAdapter.submitList(it.values)
+
+                            val noMedia = it.values.isEmpty()
+                            albumsRecyclerView.isVisible = !noMedia
+                            noMediaLinearLayout.isVisible = noMedia
                         }
 
                         is QueryResult.Empty -> Unit
