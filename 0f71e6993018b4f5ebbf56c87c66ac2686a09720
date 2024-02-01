@@ -33,6 +33,24 @@
       "message": "Supposedly we should provide cropping support but as long as what the user sees on Glimpse is what will be set as wallpaper it\u0027s fine\n\nAlso idk what ATTACH_DATA should do, so trusting you on that",
       "revId": "0f71e6993018b4f5ebbf56c87c66ac2686a09720",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0af9884b_b7adee8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-01T14:04:00Z",
+      "side": 1,
+      "message": "Should we also handle ACTION_CROP_AND_SET_WALLPAPER?",
+      "parentUuid": "7e2c7560_b011a2af",
+      "revId": "0f71e6993018b4f5ebbf56c87c66ac2686a09720",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
