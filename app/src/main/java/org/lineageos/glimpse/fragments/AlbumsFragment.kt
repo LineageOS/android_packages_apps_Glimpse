@@ -11,9 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -48,6 +50,7 @@ class AlbumsFragment : Fragment() {
 
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
+    private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
 
     // Fragments
@@ -61,7 +64,14 @@ class AlbumsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 albumsViewModel.albums.collectLatest {
                     when (it) {
-                        is Data -> albumThumbnailAdapter.submitList(it.values)
+                        is Data -> {
+                            albumThumbnailAdapter.submitList(it.values)
+
+                            val noMedia = it.values.isEmpty()
+                            albumsRecyclerView.isVisible = !noMedia
+                            noMediaLinearLayout.isVisible = noMedia
+                        }
+
                         is Empty -> Unit
                     }
                 }
