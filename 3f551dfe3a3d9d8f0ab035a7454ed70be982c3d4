@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fb39650_95bd58ff",
+        "filename": "app/src/main/java/org/lineageos/glimpse/utils/PermissionsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T08:10:15Z",
+      "side": 1,
+      "message": "move to MediaDialogUtils?",
+      "revId": "3f551dfe3a3d9d8f0ab035a7454ed70be982c3d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
