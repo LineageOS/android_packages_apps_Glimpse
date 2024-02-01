@@ -87,6 +87,7 @@
     <string name="intent_media_type_not_found">Media type not found</string>
     <string name="intent_media_type_not_supported">Media type not supported</string>
     <string name="intent_no_system_wallpaper_cropper_available">No system cropper available</string>
+    <string name="intent_wallpaper_cannot_be_changed">Wallpaper can\'t be changed</string>
 
     <!-- File actions -->
     <string name="file_action_add_to_favorites">Add to favorites</string>
@@ -112,4 +113,8 @@
     <string name="pick_a_video">Pick a video</string>
     <string name="pick_a_media">Pick a media</string>
     <string name="picker_done">Done</string>
+
+    <!-- Wallpaper -->
+    <string name="set_wallpaper_label">Wallpaper</string>
+    <string name="set_wallpaper">Set wallpaper</string>
 </resources>
