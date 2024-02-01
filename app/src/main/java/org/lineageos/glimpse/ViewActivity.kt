@@ -12,6 +12,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.transition.TransitionInflater
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageButton
@@ -40,6 +41,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -123,8 +125,11 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private var lastVideoUriPlayed: Uri? = null
 
     // Adapter
+    private val startPostponedEnterTransitionUnit = {
+        startPostponedEnterTransition()
+    }
     private val mediaViewerAdapter by lazy {
-        MediaViewerAdapter(exoPlayerLazy, model, uiModel)
+        MediaViewerAdapter(exoPlayerLazy, model, uiModel, startPostponedEnterTransitionUnit)
     }
 
     // okhttp
@@ -255,6 +260,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
                     initData(medias.distinct().sortedByDescending { it.dateAdded })
                 } ?: albumId?.also {
+                    // We need a sample as soon as possible to complete the transition
+                    model.media.take(1).collectLatest {
+                        when (it) {
+                            is Data -> initData(it.values)
+                            is Empty -> Unit
+                        }
+                    }
                     repeatOnLifecycle(Lifecycle.State.STARTED) {
                         model.media.collectLatest { data ->
                             when (data) {
@@ -272,6 +284,17 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Setup transitions
+        postponeEnterTransition()
+        TransitionInflater.from(this)
+            .inflateTransition(android.R.transition.move)
+            .let {
+                window.sharedElementEnterTransition = it
+                window.sharedElementReturnTransition = null
+                window.enterTransition = it
+                window.returnTransition = null
+            }
 
         // Setup edge-to-edge
         WindowCompat.setDecorFitsSystemWindows(window, false)

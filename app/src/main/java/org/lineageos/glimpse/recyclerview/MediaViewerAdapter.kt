@@ -31,10 +31,11 @@ class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
     private val mediaViewerViewModel: MediaViewerViewModel,
     private val mediaViewerUIViewModel: MediaViewerUIViewModel,
+    private val startPostponedEnterTransitionUnit: () -> Unit,
 ) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(DATA_TYPE_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
-        exoPlayer, mediaViewerViewModel, mediaViewerUIViewModel
+        exoPlayer, mediaViewerViewModel, mediaViewerUIViewModel, startPostponedEnterTransitionUnit
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
@@ -60,6 +61,7 @@ class MediaViewerAdapter(
         private val exoPlayer: Lazy<ExoPlayer>,
         private val mediaViewerViewModel: MediaViewerViewModel,
         private val mediaViewerUIViewModel: MediaViewerUIViewModel,
+        private val startPostponedEnterTransitionUnit: () -> Unit,
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val imageView = view.findViewById<SubsamplingScaleImageView>(R.id.imageView)
@@ -127,9 +129,12 @@ class MediaViewerAdapter(
             this.media = media
             this.position = position
 
+            imageView.transitionName = "${media.uri}"
             if (media.mediaType == MediaType.IMAGE) {
                 imageView.setImage(ImageSource.uri(media.uri))
             }
+            // TODO: Do that when the imageView is ready, it's broken
+            startPostponedEnterTransitionUnit()
         }
 
         @androidx.media3.common.util.UnstableApi
