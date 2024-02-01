@@ -16,6 +16,40 @@
       "message": "This should be fine as is.\nFeel free the change the look of it and everything, but matches gphotos behavior",
       "revId": "9f9c219a0ccaac99e44e9c04d57d1592fd99ff3f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a980d8aa_1e891581",
+        "filename": "app/src/main/res/layout/activity_set_wallpaper.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2024-02-01T13:30:33Z",
+      "side": 1,
+      "message": "comment start in next line (AS default is wrong there...)",
+      "revId": "9f9c219a0ccaac99e44e9c04d57d1592fd99ff3f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f9cdc8f_57fb7baf",
+        "filename": "app/src/main/res/layout/activity_set_wallpaper.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2024-02-01T13:30:33Z",
+      "side": 1,
+      "message": "missing newline",
+      "revId": "9f9c219a0ccaac99e44e9c04d57d1592fd99ff3f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
