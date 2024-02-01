@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -109,13 +110,19 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
     // MediaStore
     private val thumbnailAdapter by lazy {
-        ThumbnailAdapter(model) { media ->
+        ThumbnailAdapter(model) { media, anchor ->
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                requireActivity(),
+                anchor,
+                "${media.uri}"
+            )
             startActivity(
                 Intent(requireContext(), ViewActivity::class.java).apply {
                     action = MediaStore.ACTION_REVIEW
                     data = media.uri
                     putExtra(ViewActivity.KEY_ALBUM_ID, model.bucketId)
-                }
+                },
+                options.toBundle()
             )
         }
     }
