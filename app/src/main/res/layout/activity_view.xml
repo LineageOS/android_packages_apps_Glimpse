@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -60,45 +60,57 @@
             app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/bottomSheetLinearLayout"
+    <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_media_viewer_bottom_sheet"
-        android:gravity="center"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/favoriteButton"
-            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-            android:contentDescription="@string/file_action_add_to_favorites"
-            android:src="@drawable/ic_star_toggle" />
+        <LinearLayout
+            android:id="@+id/bottomSheetLinearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_media_viewer_bottom_sheet"
+            android:gravity="center">
 
-        <ImageButton
-            android:id="@+id/shareButton"
-            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-            android:contentDescription="@string/file_action_share"
-            android:src="@drawable/ic_share" />
+            <ImageButton
+                android:id="@+id/favoriteButton"
+                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+                android:contentDescription="@string/file_action_add_to_favorites"
+                android:src="@drawable/ic_star_toggle" />
 
-        <ImageButton
-            android:id="@+id/infoButton"
-            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-            android:src="@drawable/ic_info" />
+            <ImageButton
+                android:id="@+id/shareButton"
+                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+                android:contentDescription="@string/file_action_share"
+                android:src="@drawable/ic_share" />
 
-        <ImageButton
-            android:id="@+id/adjustButton"
-            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-            android:contentDescription="@string/file_action_edit"
-            android:src="@drawable/ic_tune" />
+            <ImageButton
+                android:id="@+id/infoButton"
+                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+                android:src="@drawable/ic_info" />
 
-        <ImageButton
-            android:id="@+id/deleteButton"
-            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-            android:contentDescription="@string/file_action_move_to_trash"
-            android:src="@drawable/ic_delete" />
+            <ImageButton
+                android:id="@+id/adjustButton"
+                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+                android:contentDescription="@string/file_action_edit"
+                android:src="@drawable/ic_tune" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/deleteButton"
+                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+                android:contentDescription="@string/file_action_move_to_trash"
+                android:src="@drawable/ic_delete" />
+
+            <ImageButton
+                android:id="@+id/useAsButton"
+                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+                android:contentDescription="@string/file_action_use_as"
+                android:src="@drawable/ic_share" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
