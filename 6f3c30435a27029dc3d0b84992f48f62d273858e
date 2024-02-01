@@ -16,6 +16,23 @@
       "message": "This is probably the best lib out of the three I tried\nOnly issue is that the view class isn\u0027t an ImageView, so no Coil/Glide, but it already loads the images on I/O thread\nIf it\u0027s really needed, https://github.com/davemorrissey/subsampling-scale-image-view/wiki/X.-Picasso,-Glide,-Fresco",
       "revId": "6f3c30435a27029dc3d0b84992f48f62d273858e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43539c0b_26b98762",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T11:28:34Z",
+      "side": 1,
+      "message": "it works indeed, for media viewer alone it\u0027s fine not to use coil\nmay unlock me to finally do the transition...",
+      "revId": "6f3c30435a27029dc3d0b84992f48f62d273858e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
