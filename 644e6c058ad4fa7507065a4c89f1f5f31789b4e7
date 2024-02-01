@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e00268e2_a123da9c",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ext/Cursor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T08:08:14Z",
+      "side": 1,
+      "message": "while you\u0027re at it, cursor -\u003e\nso we\u0027re all good",
+      "revId": "644e6c058ad4fa7507065a4c89f1f5f31789b4e7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
