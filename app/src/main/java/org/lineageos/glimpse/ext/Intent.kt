@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -40,6 +40,12 @@ fun buildShareIntent(vararg medias: Media) = Intent().apply {
 
 fun buildEditIntent(media: MediaStoreMedia) = Intent().apply {
     action = Intent.ACTION_EDIT
+    setDataAndType(media.uri, media.mimeType)
+    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+}
+
+fun buildUseAsIntent(media: MediaStoreMedia) = Intent().apply {
+    action = Intent.ACTION_ATTACH_DATA
     setDataAndType(media.uri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
