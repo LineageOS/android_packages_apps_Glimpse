@@ -16,6 +16,24 @@
       "message": "should be an || no?\nif not support or set not support fail",
       "revId": "38818eba3b88b9fbcddd0108994720f562d3cf1d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "423d6b55_919e79d6",
+        "filename": "app/src/main/java/org/lineageos/glimpse/SetWallpaperActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-01T20:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad38e8c7_39ee9499",
+      "revId": "38818eba3b88b9fbcddd0108994720f562d3cf1d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
