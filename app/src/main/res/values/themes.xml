@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
@@ -98,5 +98,10 @@
     <style name="Theme.Glimpse.MediaInfoBottomSheetDialog.ListItem">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Set wallpaper dialog theme -->
+    <style name="Theme.Glimpse.SetWallpaperDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
+        <item name="listItemLayout">@layout/set_wallpaper_dialog_item</item>
     </style>
 </resources>
