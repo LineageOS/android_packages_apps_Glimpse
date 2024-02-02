@@ -144,7 +144,7 @@ object MediaDialogsUtils {
         anchorView: View? = null,
     ) = showResultSnackbar(
         context, view, succeeded, count, anchorView,
-        titleSuccessfulPluralsRes = R.plurals.restore_file_from_trash_successful,
-        titleUnsuccessfulPluralsRes = R.plurals.restore_file_from_trash_unsuccessful,
+        titleSuccessfulPluralsRes = R.plurals.delete_file_forever_successful,
+        titleUnsuccessfulPluralsRes = R.plurals.delete_file_forever_unsuccessful,
     )
 }
