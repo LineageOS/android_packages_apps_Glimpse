@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b04e7206_1b1d97c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-03T14:40:22Z",
+      "side": 1,
+      "message": "Changed width to wrap_content, otherwise icons weren\u0027t centered.",
+      "revId": "dfe8431e947d09f63fea80cf37056fee58051f81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
