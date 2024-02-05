@@ -54,6 +54,15 @@ class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) 
             return
         }
 
+        // Try to offload this task to styles and wallpaper
+        runCatching {
+            startActivity(wallpaperManager.getCropAndSetWallpaperIntent(wallpaperUri))
+            finish()
+            return
+        }
+
+        // If we reached this point, we have to do stuff on our own
+
         // Check if the wallpaper can be changed
         if (!wallpaperManager.isWallpaperSupported || !wallpaperManager.isSetWallpaperAllowed) {
             Toast.makeText(
