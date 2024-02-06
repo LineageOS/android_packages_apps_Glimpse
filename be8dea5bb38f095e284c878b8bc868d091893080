@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bd4b5d5_ef7304fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-06T15:10:23Z",
+      "side": 1,
+      "message": "nvm, we won\u0027t do that and assume theme picker or wallpaper picker2 will do that.",
+      "parentUuid": "56f6cff9_31c2241e",
+      "revId": "be8dea5bb38f095e284c878b8bc868d091893080",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1c55af3_3f4c6845",
