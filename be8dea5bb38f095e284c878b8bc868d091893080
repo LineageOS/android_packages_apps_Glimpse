@@ -16,6 +16,29 @@
       "message": "uh, what happens if we add support for crop and set?\ninfinite loop?",
       "revId": "be8dea5bb38f095e284c878b8bc868d091893080",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1c55af3_3f4c6845",
+        "filename": "app/src/main/java/org/lineageos/glimpse/SetWallpaperActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-06T15:04:50Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be simpler to:\n\n```\nrunCatching {\n    startActivity(wallpaperManager.getCropAndSetWallpaperIntent(wallpaperUri))\n    finish()\n    return\n}\n```",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "be8dea5bb38f095e284c878b8bc868d091893080",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
