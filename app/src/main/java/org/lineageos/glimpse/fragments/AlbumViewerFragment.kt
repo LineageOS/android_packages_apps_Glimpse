@@ -180,9 +180,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
                     }
 
                     R.id.restoreFromTrash -> {
-                        MediaDialogsUtils.openRestoreFromTrashDialog(requireContext(), *selection) {
-                            trashMedias(false, *selection)
-                        }
+                        trashMedias(false, *selection)
 
                         true
                     }
@@ -194,9 +192,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
                     }
 
                     R.id.moveToTrash -> {
-                        MediaDialogsUtils.openMoveToTrashDialog(requireContext(), *selection) {
-                            trashMedias(true, *selection)
-                        }
+                        trashMedias(true, *selection)
 
                         true
                     }

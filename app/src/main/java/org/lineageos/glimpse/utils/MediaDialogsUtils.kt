@@ -76,16 +76,6 @@ object MediaDialogsUtils {
 
     // Move to trash
 
-    fun <T> openMoveToTrashDialog(
-        context: Context,
-        vararg uris: T,
-        onPositiveCallback: (uris: Array<out T>) -> Unit,
-    ) = openDialog(
-        context, *uris, onPositiveCallback = onPositiveCallback,
-        titleStringRes = R.string.file_action_move_to_trash,
-        confirmMessagePluralsRes = R.plurals.move_file_to_trash_confirm_message,
-    )
-
     fun showMoveToTrashResultSnackbar(
         context: Context,
         view: View,
@@ -100,16 +90,6 @@ object MediaDialogsUtils {
     )
 
     // Restore from trash
-
-    fun <T> openRestoreFromTrashDialog(
-        context: Context,
-        vararg uris: T,
-        onPositiveCallback: (uris: Array<out T>) -> Unit,
-    ) = openDialog(
-        context, *uris, onPositiveCallback = onPositiveCallback,
-        titleStringRes = R.string.file_action_restore_from_trash,
-        confirmMessagePluralsRes = R.plurals.restore_file_from_trash_confirm_message,
-    )
 
     fun showRestoreFromTrashResultSnackbar(
         context: Context,

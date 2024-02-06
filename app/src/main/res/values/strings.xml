@@ -43,10 +43,6 @@
     </plurals>
 
     <!-- File trashing -->
-    <plurals name="move_file_to_trash_confirm_message">
-        <item quantity="one">Are you sure you want to move one file to trash?</item>
-        <item quantity="other">Are you sure you want to move %d files to trash?</item>
-    </plurals>
     <plurals name="move_file_to_trash_successful">
         <item quantity="one">File moved to trash</item>
         <item quantity="other">%d files moved to trash</item>
@@ -57,10 +53,6 @@
     </plurals>
 
     <!-- File restoring from trash -->
-    <plurals name="restore_file_from_trash_confirm_message">
-        <item quantity="one">Are you sure you want to restore one file from trash?</item>
-        <item quantity="other">Are you sure you want to restore %d files from trash?</item>
-    </plurals>
     <plurals name="restore_file_from_trash_successful">
         <item quantity="one">File restored from trash</item>
         <item quantity="other">%d files restored from trash</item>
