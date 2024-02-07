@@ -91,7 +91,7 @@
             android:id="@+id/adjustButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
             android:contentDescription="@string/file_action_edit"
-            android:src="@drawable/ic_tune" />
+            android:src="@drawable/ic_edit" />
 
         <ImageButton
             android:id="@+id/deleteButton"
