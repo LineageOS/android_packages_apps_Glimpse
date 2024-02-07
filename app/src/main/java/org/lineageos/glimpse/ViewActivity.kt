@@ -296,7 +296,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
 
             // Avoid updating the sheets height when they're hidden.
             // Once the system bars will be made visible again, this function

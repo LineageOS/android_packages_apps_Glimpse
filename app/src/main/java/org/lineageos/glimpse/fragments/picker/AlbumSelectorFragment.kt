@@ -88,7 +88,9 @@ class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) 
         albumsRecyclerView.adapter = albumThumbnailAdapter
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
 
             albumsRecyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = insets.left

@@ -8,14 +8,21 @@ package org.lineageos.glimpse
 import android.app.WallpaperManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) {
     // Views
+    private val contentView by lazy { findViewById<View>(android.R.id.content)!! }
     private val wallpaperImageView by lazy { findViewById<ImageView>(R.id.wallpaperImageView)!! }
     private val setWallpaperButton by lazy { findViewById<MaterialButton>(R.id.setWallpaperButton)!! }
 
@@ -24,6 +31,21 @@ class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Setup edge-to-edge
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+
+            setWallpaperButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = insets.bottom
+            }
+
+            windowInsets
+        }
 
         // Load wallpaper from intent
         val wallpaperUri = intent.data ?: run {

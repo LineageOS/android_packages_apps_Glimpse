@@ -8,7 +8,7 @@
     <style name="Theme.Glimpse" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">always</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -40,7 +40,7 @@
     <style name="Theme.Glimpse.MediaViewer" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">always</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
