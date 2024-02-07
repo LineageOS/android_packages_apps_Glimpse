@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,13 +13,18 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.text.InputType
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.exifinterface.media.ExifInterface
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.CoroutineScope
@@ -42,6 +47,7 @@ class MediaInfoBottomSheetDialog(
     // Views
     private val artistInfoListItem by lazy { findViewById<ListItem>(R.id.artistInfoListItem)!! }
     private val cameraInfoListItem by lazy { findViewById<ListItem>(R.id.cameraInfoListItem)!! }
+    private val contentView by lazy { findViewById<View>(android.R.id.content)!! }
     private val dateTextView by lazy { findViewById<TextView>(R.id.dateTextView)!! }
     private val descriptionEditText by lazy { findViewById<EditText>(R.id.descriptionEditText)!! }
     private val locationInfoListItem by lazy { findViewById<ListItem>(R.id.locationInfoListItem)!! }
@@ -60,6 +66,19 @@ class MediaInfoBottomSheetDialog(
 
     init {
         setContentView(R.layout.media_info_bottom_sheet_dialog)
+
+        ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+
+            contentView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                rightMargin = insets.right
+            }
+
+            windowInsets
+        }
 
         descriptionEditText.setOnEditorActionListener { _, _, _ ->
             callbacks.onEditDescription(media, descriptionEditText.text.toString().trim())

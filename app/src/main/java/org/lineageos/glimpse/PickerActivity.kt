@@ -8,9 +8,14 @@ package org.lineageos.glimpse
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -20,6 +25,7 @@ import org.lineageos.glimpse.utils.PickerUtils
 class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
     // Views
     private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.appBarLayout)!! }
+    private val contentView by lazy { findViewById<View>(android.R.id.content)!! }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar)!! }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +40,19 @@ class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+
+            toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                rightMargin = insets.right
+            }
+
+            windowInsets
         }
 
         // Parse intent

@@ -23,6 +23,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -50,6 +51,7 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
     private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
+    private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Fragments
     private val parentNavController by lazy {
@@ -98,7 +100,14 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
         albumsRecyclerView.adapter = albumThumbnailAdapter
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+
+            toolbar.updateLayoutParams<MarginLayoutParams> {
+                leftMargin = insets.left
+                rightMargin = insets.right
+            }
 
             albumsRecyclerView.updateLayoutParams<MarginLayoutParams> {
                 leftMargin = insets.left

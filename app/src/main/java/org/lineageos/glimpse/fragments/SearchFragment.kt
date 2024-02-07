@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -7,10 +7,16 @@ package org.lineageos.glimpse.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.search.SearchBar
 import com.google.android.material.shape.MaterialShapeDrawable
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
@@ -27,6 +33,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
     private val favoritesAlbumListItem by getViewProperty<ListItem>(R.id.favoritesAlbumListItem)
     private val photosAlbumListItem by getViewProperty<ListItem>(R.id.photosAlbumListItem)
+    private val searchNestedScrollView by getViewProperty<NestedScrollView>(R.id.searchNestedScrollView)
+    private val searchBar by getViewProperty<SearchBar>(R.id.searchBar)
     private val trashAlbumListItem by getViewProperty<ListItem>(R.id.trashAlbumListItem)
     private val videosAlbumListItem by getViewProperty<ListItem>(R.id.videosAlbumListItem)
 
@@ -41,6 +49,24 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         val context = requireContext()
 
         appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(context)
+
+        ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+
+            searchBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                rightMargin = insets.right
+            }
+
+            searchNestedScrollView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                rightMargin = insets.right
+            }
+
+            windowInsets
+        }
 
         photosAlbumListItem.setOnClickListener {
             openAlbum(MediaStoreBuckets.MEDIA_STORE_BUCKET_PHOTOS)
