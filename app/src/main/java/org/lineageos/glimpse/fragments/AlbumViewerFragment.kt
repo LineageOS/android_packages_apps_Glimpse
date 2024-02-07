@@ -87,6 +87,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
                             val noMedia = it.values.isEmpty()
                             recyclerView.isVisible = !noMedia
+                            toolbar.menu.findItem(R.id.emptyTrash)?.isVisible = !noMedia
                             noMediaLinearLayout.isVisible = noMedia
                         }
 
