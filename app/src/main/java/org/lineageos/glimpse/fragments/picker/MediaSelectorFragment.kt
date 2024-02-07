@@ -280,6 +280,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
                     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 }
             )
+
             Intent.ACTION_SET_WALLPAPER -> {
                 require(medias.size == 1) {
                     "More than one media provided when only one was requested"
@@ -297,6 +298,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
                     Toast.LENGTH_LONG,
                 ).show()
             }
+
             else -> throw Exception("Unknown action")
         }
 
@@ -313,6 +315,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
                 Intent.ACTION_GET_CONTENT -> intent.extras?.getBoolean(
                     Intent.EXTRA_ALLOW_MULTIPLE, false
                 )
+
                 else -> false
             }
         } ?: false
