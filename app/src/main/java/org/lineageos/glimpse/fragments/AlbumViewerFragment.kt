@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -87,6 +87,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
                             val noMedia = it.values.isEmpty()
                             recyclerView.isVisible = !noMedia
+                            toolbar.menu.findItem(R.id.emptyTrash)?.isVisible = !noMedia
                             noMediaLinearLayout.isVisible = noMedia
                         }
 
