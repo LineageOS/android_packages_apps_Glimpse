@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca17c447_2159d299",
+        "filename": "app/src/main/res/layout/fragment_album_viewer.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-07T21:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c954b6_8b3c805c",
+      "range": {
+        "startLine": 3,
+        "startChar": 29,
+        "endLine": 3,
+        "endChar": 33
+      },
+      "revId": "8380b2e9d986853e6853369cfa5e1a7cf092661c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac7a45c7_383b0b24",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-02-07T21:24:23Z",
       "side": 1,
       "message": "bump to 2024",
+      "range": {
+        "startLine": 3,
+        "startChar": 29,
+        "endLine": 3,
+        "endChar": 33
+      },
+      "revId": "8380b2e9d986853e6853369cfa5e1a7cf092661c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "031fa920_0a0296f9",
+        "filename": "app/src/main/res/layout/fragment_albums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-07T21:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac7a45c7_383b0b24",
       "range": {
         "startLine": 3,
         "startChar": 29,
