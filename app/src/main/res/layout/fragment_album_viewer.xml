@@ -25,29 +25,12 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <include
         android:id="@+id/noMediaLinearLayout"
+        layout="@layout/no_media_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:contentDescription="@string/no_media"
-            android:padding="12dp"
-            android:src="@drawable/ic_no_photography"
-            app:tint="?attr/colorOnBackground" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_media"
-            android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-    </LinearLayout>
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
