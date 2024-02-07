@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -7,9 +7,7 @@ package org.lineageos.glimpse.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import androidx.core.os.bundleOf
@@ -42,7 +40,7 @@ import org.lineageos.glimpse.viewmodels.QueryResult.Empty
  * Use the [AlbumsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AlbumsFragment : Fragment() {
+class AlbumsFragment : Fragment(R.layout.fragment_albums) {
     // View models
     private val albumsViewModel: AlbumsViewModel by viewModels {
         AlbumsViewModel.factory(requireActivity().application)
@@ -88,11 +86,6 @@ class AlbumsFragment : Fragment() {
             )
         }
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_albums, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
