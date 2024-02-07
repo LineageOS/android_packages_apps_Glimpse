@@ -21,6 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:paddingHorizontal="8dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
