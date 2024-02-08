@@ -16,6 +16,24 @@
       "message": "I don\u0027t think there\u0027s a way to have an album with 0 items in it, aside from when we do updates so this should be fine?",
       "revId": "cc987ab9c756ca08a4e687fcd7e44d5bd05c091b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa28f825_daf1a948",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-08T13:47:01Z",
+      "side": 1,
+      "message": "We go back to the previous view if album gets emptied.",
+      "parentUuid": "3ff86516_ccc896c2",
+      "revId": "cc987ab9c756ca08a4e687fcd7e44d5bd05c091b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
