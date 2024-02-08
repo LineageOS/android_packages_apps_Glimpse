@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "343ab86f_b16b5384",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-08T13:28:12Z",
+      "side": 1,
+      "message": "idk, probably it\u0027s the best we can do with the icon",
+      "revId": "e6ee174e39d539b090cb8b5612df3980948b1570",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
