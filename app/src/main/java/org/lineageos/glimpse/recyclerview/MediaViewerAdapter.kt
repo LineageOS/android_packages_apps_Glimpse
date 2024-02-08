@@ -161,7 +161,8 @@ class MediaViewerAdapter(
             override fun areContentsTheSame(oldItem: Media, newItem: Media) = when {
                 oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
                     oldItem.id == newItem.id &&
-                            oldItem.dateModified == newItem.dateModified
+                            oldItem.dateModified == newItem.dateModified &&
+                            oldItem.isFavorite == newItem.isFavorite
 
                 else -> oldItem.uri == oldItem.uri
             }
