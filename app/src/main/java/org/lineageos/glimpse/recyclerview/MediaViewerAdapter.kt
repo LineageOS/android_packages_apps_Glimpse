@@ -38,7 +38,7 @@ class MediaViewerAdapter(
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 
     @androidx.media3.common.util.UnstableApi
@@ -52,8 +52,6 @@ class MediaViewerAdapter(
         super.onViewDetachedFromWindow(holder)
         holder.onViewDetachedFromWindow()
     }
-
-    fun getItemAtPosition(currentItem: Int): Media = getItem(currentItem)
 
     class MediaViewHolder(
         private val view: View,
@@ -69,12 +67,15 @@ class MediaViewerAdapter(
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
 
         private var media: Media? = null
-        private var position = -1
+        private var isCurrentlyDisplayedView = false
 
         @androidx.media3.common.util.UnstableApi
         private val mediaPositionObserver: (Int) -> Unit = { currentPosition: Int ->
-            val isNowVideoPlayer =
-                currentPosition == position && media?.mediaType == MediaType.VIDEO
+            isCurrentlyDisplayedView = currentPosition == bindingAdapterPosition
+
+            updateDisplayedMedia()
+
+            val isNowVideoPlayer = isCurrentlyDisplayedView && media?.mediaType == MediaType.VIDEO
 
             imageView.isVisible = !isNowVideoPlayer
             playerView.isVisible = isNowVideoPlayer
@@ -123,9 +124,10 @@ class MediaViewerAdapter(
             }
         }
 
-        fun bind(media: Media, position: Int) {
+        fun bind(media: Media) {
             this.media = media
-            this.position = position
+
+            updateDisplayedMedia()
 
             if (media.mediaType == MediaType.IMAGE) {
                 imageView.setImage(ImageSource.uri(media.uri))
@@ -147,6 +149,15 @@ class MediaViewerAdapter(
             mediaViewerUIViewModel.sheetsHeightLiveData.removeObserver(sheetsHeightObserver)
             mediaViewerUIViewModel.fullscreenModeLiveData.removeObserver(fullscreenModeObserver)
         }
+
+        /**
+         * If this is the currently displayed view, push the shown media to the view model.
+         */
+        private fun updateDisplayedMedia() {
+            if (isCurrentlyDisplayedView) {
+                mediaViewerUIViewModel.displayedMedia.value = media
+            }
+        }
     }
 
     companion object {
@@ -161,7 +172,8 @@ class MediaViewerAdapter(
             override fun areContentsTheSame(oldItem: Media, newItem: Media) = when {
                 oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
                     oldItem.id == newItem.id &&
-                            oldItem.dateModified == newItem.dateModified
+                            oldItem.dateModified == newItem.dateModified &&
+                            oldItem.isFavorite == newItem.isFavorite
 
                 else -> oldItem.uri == oldItem.uri
             }
