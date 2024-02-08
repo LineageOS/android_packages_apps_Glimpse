@@ -88,7 +88,7 @@ class AlbumFlow(
                     ContentResolver.QUERY_ARG_SQL_SELECTION to selection?.build(),
                     ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS to selectionArgs,
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
-                    ContentResolver.QUERY_ARG_SQL_LIMIT to 1,
+                    ContentResolver.QUERY_ARG_LIMIT to 1,
                 )
             )
 
@@ -130,7 +130,6 @@ class AlbumFlow(
                 val bucketDisplayNameIndex =
                     it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)
 
-                val cursorSize = it.count
                 val cursorNotEmpty = it.moveToFirst()
 
                 val media = if (cursorNotEmpty) {
@@ -197,7 +196,7 @@ class AlbumFlow(
                         else -> bucketDisplayName ?: Build.MODEL
                     },
                     media,
-                    cursorSize,
+                    if (cursorNotEmpty) 1 else 0
                 )
 
                 add(album)
