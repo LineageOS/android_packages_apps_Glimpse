@@ -16,6 +16,23 @@
       "message": "idk, probably it\u0027s the best we can do with the icon",
       "revId": "e6ee174e39d539b090cb8b5612df3980948b1570",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11958628_c903a6fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-08T13:31:18Z",
+      "side": 1,
+      "message": "I\u0027m fine with that. we need to improve the affordance, UX sucks at the moment.",
+      "revId": "e6ee174e39d539b090cb8b5612df3980948b1570",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
