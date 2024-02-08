@@ -130,6 +130,7 @@ class AlbumFlow(
                 val bucketDisplayNameIndex =
                     it.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)
 
+                val cursorSize = it.count
                 val cursorNotEmpty = it.moveToFirst()
 
                 val media = if (cursorNotEmpty) {
@@ -164,9 +165,10 @@ class AlbumFlow(
                     null
                 }
 
-                val bucketDisplayName = when (cursorNotEmpty) {
-                    true -> it.getString(bucketDisplayNameIndex)
-                    false -> null
+                val bucketDisplayName = if (cursorNotEmpty) {
+                    it.getString(bucketDisplayNameIndex)
+                } else {
+                    null
                 }
 
                 val album = Album(
@@ -194,7 +196,8 @@ class AlbumFlow(
 
                         else -> bucketDisplayName ?: Build.MODEL
                     },
-                    media
+                    media,
+                    cursorSize,
                 )
 
                 add(album)
