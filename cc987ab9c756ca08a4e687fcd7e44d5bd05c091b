@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ff86516_ccc896c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-08T13:45:29Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a way to have an album with 0 items in it, aside from when we do updates so this should be fine?",
+      "revId": "cc987ab9c756ca08a4e687fcd7e44d5bd05c091b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
