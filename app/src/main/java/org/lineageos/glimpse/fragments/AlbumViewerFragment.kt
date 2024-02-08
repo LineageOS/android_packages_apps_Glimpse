@@ -100,8 +100,10 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 model.album.collectLatest {
-                    activity?.runOnUiThread {
-                        toolbar.title = it.name
+                    if (it.size > 0) {
+                        activity?.runOnUiThread {
+                            toolbar.title = it.name
+                        }
                     }
                 }
             }
