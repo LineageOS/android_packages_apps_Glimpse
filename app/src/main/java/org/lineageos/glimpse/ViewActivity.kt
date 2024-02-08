@@ -36,6 +36,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -77,18 +78,18 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val uiModel: MediaViewerUIViewModel by viewModels()
 
     // Views
-    private val adjustButton by lazy { findViewById<ImageButton>(R.id.adjustButton) }
+    private val adjustButton by lazy { findViewById<MaterialButton>(R.id.adjustButton) }
     private val backButton by lazy { findViewById<ImageButton>(R.id.backButton) }
     private val bottomSheetLinearLayout by lazy { findViewById<LinearLayout>(R.id.bottomSheetLinearLayout) }
     private val contentView by lazy { findViewById<View>(android.R.id.content) }
     private val dateTextView by lazy { findViewById<TextView>(R.id.dateTextView) }
-    private val deleteButton by lazy { findViewById<ImageButton>(R.id.deleteButton) }
-    private val favoriteButton by lazy { findViewById<ImageButton>(R.id.favoriteButton) }
-    private val infoButton by lazy { findViewById<ImageButton>(R.id.infoButton) }
-    private val shareButton by lazy { findViewById<ImageButton>(R.id.shareButton) }
+    private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
+    private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
+    private val infoButton by lazy { findViewById<MaterialButton>(R.id.infoButton) }
+    private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
     private val timeTextView by lazy { findViewById<TextView>(R.id.timeTextView) }
     private val topSheetConstraintLayout by lazy { findViewById<ConstraintLayout>(R.id.topSheetConstraintLayout) }
-    private val useAsButton by lazy { findViewById<ImageButton>(R.id.useAsButton) }
+    private val useAsButton by lazy { findViewById<MaterialButton>(R.id.useAsButton) }
     private val viewPager by lazy { findViewById<ViewPager2>(R.id.viewPager) }
 
     // System services
@@ -215,11 +216,14 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                 dateTextView.text = dateFormatter.format(it.dateAdded)
                 timeTextView.text = timeFormatter.format(it.dateAdded)
                 favoriteButton.isSelected = it.isFavorite
-                deleteButton.setImageResource(
+                deleteButton.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
                     when (it.isTrashed) {
                         true -> R.drawable.ic_restore_from_trash
                         false -> R.drawable.ic_delete
-                    }
+                    },
+                    0,
+                    0
                 )
             }
 
