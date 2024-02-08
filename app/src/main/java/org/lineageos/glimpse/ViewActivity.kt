@@ -132,7 +132,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     // okhttp
     private val httpClient = OkHttpClient()
 
-    // Media
+    // Intent values
     private var media: Media? = null
     private var albumId: Int? = MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id
     private var additionalMedias: Array<MediaStoreMedia>? = null
@@ -144,7 +144,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
      * Check if we're showing a static set of medias.
      */
     private val readOnly
-        get() = media !is MediaStoreMedia || additionalMedias != null || albumId == null || secure
+        get() = additionalMedias != null || albumId == null || secure
 
     // Contracts
     private val deleteUriContract =
@@ -193,9 +193,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     private val favoriteContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                favoriteButton.isSelected = (it as? MediaStoreMedia)?.isFavorite == true
-            }
+            // Do nothing
         }
 
     private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
@@ -209,31 +207,6 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             }
 
             this@ViewActivity.model.mediaPosition = position
-
-            val media = mediaViewerAdapter.getItemAtPosition(position)
-
-            MediaStoreMedia::class.safeCast(media)?.let {
-                dateTextView.text = dateFormatter.format(it.dateAdded)
-                timeTextView.text = timeFormatter.format(it.dateAdded)
-                favoriteButton.isSelected = it.isFavorite
-                favoriteButton.setText(
-                    when (it.isFavorite) {
-                        true -> R.string.file_action_remove_from_favorites
-                        false -> R.string.file_action_add_to_favorites
-                    }
-                )
-                deleteButton.setCompoundDrawablesWithIntrinsicBounds(
-                    0,
-                    when (it.isTrashed) {
-                        true -> R.drawable.ic_restore_from_trash
-                        false -> R.drawable.ic_delete
-                    },
-                    0,
-                    0
-                )
-            }
-
-            updateExoPlayer(media.mediaType, media.uri)
         }
     }
 
@@ -249,9 +222,6 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     finish()
                     return@lifecycleCoroutine
                 }
-
-                // Update UI
-                updateUI()
 
                 // Here we now do a bunch of view model related stuff because we can now initialize it
                 // with the now correctly defined album ID
@@ -306,6 +276,65 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             }
         }
 
+        // Observe displayed media
+        uiModel.displayedMedia.observe(this@ViewActivity) { displayedMedia ->
+            val mediaStoreMedia = MediaStoreMedia::class.safeCast(displayedMedia)
+
+            // Update date and time text
+            dateTextView.isVisible = mediaStoreMedia != null
+            timeTextView.isVisible = mediaStoreMedia != null
+            mediaStoreMedia?.let {
+                dateTextView.text = dateFormatter.format(it.dateAdded)
+                timeTextView.text = timeFormatter.format(it.dateAdded)
+            }
+
+            // Update favorite button
+            favoriteButton.isVisible = !readOnly && mediaStoreMedia != null
+            mediaStoreMedia?.let {
+                favoriteButton.isSelected = it.isFavorite
+                favoriteButton.setText(
+                    when (it.isFavorite) {
+                        true -> R.string.file_action_remove_from_favorites
+                        false -> R.string.file_action_add_to_favorites
+                    }
+                )
+            }
+
+            // Update share button
+            shareButton.isVisible = !secure
+
+            // Update use as button
+            useAsButton.isVisible = !secure
+
+            // Update info button
+            infoButton.isVisible = mediaStoreMedia != null
+
+            // Update adjust button
+            adjustButton.isVisible = !readOnly && mediaStoreMedia != null
+
+            // Update delete button
+            deleteButton.isVisible = !readOnly && mediaStoreMedia != null
+            mediaStoreMedia?.let {
+                deleteButton.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    when (it.isTrashed) {
+                        true -> R.drawable.ic_restore_from_trash
+                        false -> R.drawable.ic_delete
+                    },
+                    0,
+                    0
+                )
+            }
+
+            // Update ExoPlayer
+            displayedMedia?.let {
+                updateExoPlayer(it)
+            }
+
+            // Trigger a sheets height update
+            updateSheetsHeight()
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
@@ -337,9 +366,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         favoriteButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(
-                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
-            )?.let {
+            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
                 favoriteContract.launch(
                     contentResolver.createFavoriteRequest(
                         !it.isFavorite, it.uri
@@ -349,20 +376,18 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         shareButton.setOnClickListener {
-            startActivity(
-                Intent.createChooser(
-                    buildShareIntent(
-                        mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
-                    ),
-                    null
+            uiModel.displayedMedia.value?.let {
+                startActivity(
+                    Intent.createChooser(
+                        buildShareIntent(it),
+                        null
+                    )
                 )
-            )
+            }
         }
 
         useAsButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(
-                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
-            )?.let {
+            uiModel.displayedMedia.value?.let {
                 startActivity(
                     Intent.createChooser(
                         buildUseAsIntent(it),
@@ -373,9 +398,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         infoButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(
-                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
-            )?.let {
+            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
                 MediaInfoBottomSheetDialog(
                     this, it, mediaInfoBottomSheetDialogCallbacks, secure
                 ).show()
@@ -383,9 +406,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         adjustButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(
-                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
-            )?.let {
+            uiModel.displayedMedia.value?.let {
                 startActivity(
                     Intent.createChooser(
                         buildEditIntent(it),
@@ -396,15 +417,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         deleteButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(
-                mediaViewerAdapter.getItemAtPosition(viewPager.currentItem)
-            )?.let {
+            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
                 trashMedia(it)
             }
         }
 
         deleteButton.setOnLongClickListener {
-            mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
+            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
                 MediaDialogsUtils.openDeleteForeverDialog(this, it.uri) { uris ->
                     deleteUriContract.launch(contentResolver.createDeleteRequest(*uris))
                 }
@@ -465,38 +484,15 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     }
 
     /**
-     * Update the UI elements (such as buttons) based on the current setup.
-     * Must be run on UI thread.
-     */
-    private fun updateUI() {
-        // Set UI elements visibility based on initial arguments
-        val readOnly = readOnly
-        val shouldShowMediaButtons = media is MediaStoreMedia
-
-        dateTextView.isVisible = shouldShowMediaButtons
-        timeTextView.isVisible = shouldShowMediaButtons
-
-        favoriteButton.isVisible = !readOnly
-        shareButton.isVisible = !secure
-        infoButton.isVisible = shouldShowMediaButtons
-        adjustButton.isVisible = !readOnly
-        deleteButton.isVisible = !readOnly
-
-        // Update paddings
-        updateSheetsHeight()
-    }
-
-    /**
      * Update [exoPlayer]'s status.
-     * @param mediaType The currently displayed media's [MediaType]
-     * @param uri The The currently displayed media's [Uri]
+     * @param media The currently displayed [Media]
      */
-    private fun updateExoPlayer(mediaType: MediaType, uri: Uri) {
-        if (mediaType == MediaType.VIDEO) {
+    private fun updateExoPlayer(media: Media) {
+        if (media.mediaType == MediaType.VIDEO) {
             with(exoPlayerLazy.value) {
-                if (uri != lastVideoUriPlayed) {
-                    lastVideoUriPlayed = uri
-                    setMediaItem(MediaItem.fromUri(uri))
+                if (media.uri != lastVideoUriPlayed) {
+                    lastVideoUriPlayed = media.uri
+                    setMediaItem(MediaItem.fromUri(media.uri))
                     seekTo(C.TIME_UNSET)
                     prepare()
                     playWhenReady = true
