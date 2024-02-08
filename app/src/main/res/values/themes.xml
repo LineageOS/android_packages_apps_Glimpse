@@ -72,12 +72,15 @@
 
     <!-- Media viewer bottom sheet buttons -->
     <style name="Theme.Glimpse.MediaViewer.BottomSheet.Button">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:drawableTint">?attr/colorOnSurface</item>
+        <item name="android:hyphenationFrequency">normal</item>
         <item name="android:padding">8dp</item>
-        <item name="tint">?attr/colorOnSurface</item>
+        <item name="android:textAppearance">?attr/textAppearanceCaption</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="rippleColor">?attr/colorControlHighlight</item>
     </style>
 
     <!-- Media info bottom sheet dialog -->

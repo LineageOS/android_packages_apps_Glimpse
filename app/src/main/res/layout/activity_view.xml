@@ -73,42 +73,50 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_media_viewer_bottom_sheet"
-            android:gravity="center">
+            android:gravity="top|center"
+            android:padding="16dp">
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/favoriteButton"
                 style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
                 android:contentDescription="@string/file_action_add_to_favorites"
-                android:src="@drawable/ic_star_toggle" />
+                android:drawableTop="@drawable/ic_star_toggle"
+                android:text="@string/file_action_add_to_favorites" />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/shareButton"
                 style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
                 android:contentDescription="@string/file_action_share"
-                android:src="@drawable/ic_share" />
+                android:drawableTop="@drawable/ic_share"
+                android:text="@string/file_action_share" />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/useAsButton"
                 style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
                 android:contentDescription="@string/file_action_use_as"
-                android:src="@drawable/ic_contact_page" />
+                android:drawableTop="@drawable/ic_contact_page"
+                android:text="@string/file_action_use_as" />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/infoButton"
                 style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-                android:src="@drawable/ic_info" />
+                android:contentDescription="@string/file_action_information"
+                android:drawableTop="@drawable/ic_info"
+                android:text="@string/file_action_information" />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/adjustButton"
                 style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
                 android:contentDescription="@string/file_action_edit"
-                android:src="@drawable/ic_edit" />
+                android:drawableTop="@drawable/ic_edit"
+                android:text="@string/file_action_edit" />
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/deleteButton"
                 style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
                 android:contentDescription="@string/file_action_move_to_trash"
-                android:src="@drawable/ic_delete" />
+                android:drawableTop="@drawable/ic_delete"
+                android:text="@string/file_action_move_to_trash" />
 
         </LinearLayout>
 
