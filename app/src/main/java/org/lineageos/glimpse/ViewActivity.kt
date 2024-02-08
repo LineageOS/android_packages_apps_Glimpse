@@ -194,7 +194,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val favoriteContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             mediaViewerAdapter.getItemAtPosition(viewPager.currentItem).let {
-                favoriteButton.isSelected = (it as? MediaStoreMedia)?.isFavorite == true
+                //favoriteButton.isSelected = (it as? MediaStoreMedia)?.isFavorite == true
             }
         }
 
@@ -215,6 +215,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             MediaStoreMedia::class.safeCast(media)?.let {
                 dateTextView.text = dateFormatter.format(it.dateAdded)
                 timeTextView.text = timeFormatter.format(it.dateAdded)
+                // TODO: We probably call getItemAtPosition during the list diff,
+                //       so we get the old object
                 favoriteButton.isSelected = it.isFavorite
                 deleteButton.setCompoundDrawablesWithIntrinsicBounds(
                     0,
