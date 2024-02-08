@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e1e495a_f6ebb35a",
+        "filename": "app/src/main/java/org/lineageos/glimpse/fragments/AlbumViewerFragment.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-08T11:58:07Z",
+      "side": 1,
+      "message": "if (noMedia) {\n                                toolbar.menu.removeItem(R.id.emptyTrash)\n                            }\n                            \n                            \nmaybe?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 88
+      },
+      "revId": "a761b5460fcd2fb051ba8a4d92923c6518dd02a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
