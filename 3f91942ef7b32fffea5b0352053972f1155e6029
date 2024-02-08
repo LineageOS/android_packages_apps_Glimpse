@@ -16,6 +16,24 @@
       "message": "btw it might be worth testing with ~ german strings ~",
       "revId": "3f91942ef7b32fffea5b0352053972f1155e6029",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d3e97f2_22b0be39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-08T16:19:58Z",
+      "side": 1,
+      "message": "Unlike with Aperture where the only requirement is just having a 1:1 button, we limit both width and max lines, we can tweak them if needed in the future",
+      "parentUuid": "3301e5be_4dd0b08e",
+      "revId": "3f91942ef7b32fffea5b0352053972f1155e6029",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
