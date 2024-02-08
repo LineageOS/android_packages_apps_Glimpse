@@ -105,6 +105,30 @@
       },
       "revId": "be8dea5bb38f095e284c878b8bc868d091893080",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65a01b9d_b50b8ba7",
+        "filename": "app/src/main/java/org/lineageos/glimpse/SetWallpaperActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-08T12:54:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d73a146c_c7470cc6",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "be8dea5bb38f095e284c878b8bc868d091893080",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
