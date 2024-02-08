@@ -8,6 +8,8 @@ package org.lineageos.glimpse.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
 
 class MediaViewerUIViewModel(application: Application) : AndroidViewModel(application) {
     /**
@@ -19,6 +21,11 @@ class MediaViewerUIViewModel(application: Application) : AndroidViewModel(applic
      * Fullscreen mode, set by the user with a single tap on the viewed media.
      */
     val fullscreenModeLiveData = MutableLiveData(false)
+
+    /**
+     * The currently displayed media, [MediaViewerAdapter] will take care of updating the value.
+     */
+    val displayedMedia = MutableLiveData<Media?>(null)
 
     /**
      * Toggle fullscreen mode.

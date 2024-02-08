@@ -7,7 +7,6 @@ package org.lineageos.glimpse.ext
 
 import android.content.Intent
 import org.lineageos.glimpse.models.Media
-import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType.IMAGE
 import org.lineageos.glimpse.models.MediaType.VIDEO
 
@@ -38,13 +37,13 @@ fun buildShareIntent(vararg medias: Media) = Intent().apply {
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
 
-fun buildEditIntent(media: MediaStoreMedia) = Intent().apply {
+fun buildEditIntent(media: Media) = Intent().apply {
     action = Intent.ACTION_EDIT
     setDataAndType(media.uri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
 
-fun buildUseAsIntent(media: MediaStoreMedia) = Intent().apply {
+fun buildUseAsIntent(media: Media) = Intent().apply {
     action = Intent.ACTION_ATTACH_DATA
     setDataAndType(media.uri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
