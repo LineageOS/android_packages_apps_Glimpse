@@ -94,6 +94,7 @@
     <string name="file_action_delete_forever">Delete forever</string>
     <string name="file_action_edit">Edit</string>
     <string name="file_action_empty_trash">Empty trash</string>
+    <string name="file_action_information">Information</string>
     <string name="file_action_move_to_trash">Move to trash</string>
     <string name="file_action_remove_from_favorites">Remove from favorites</string>
     <string name="file_action_restore_from_trash">Restore from trash</string>
