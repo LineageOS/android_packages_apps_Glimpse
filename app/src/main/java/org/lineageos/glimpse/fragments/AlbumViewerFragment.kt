@@ -391,7 +391,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
 
         selectionTracker?.selection?.count()?.takeIf { it > 0 }?.let {
             startSelectionMode().apply {
-                title = getString(R.string.thumbnail_selection_count, it)
+                title = getString(R.plurals.thumbnail_selection_count, it)
             }
         }
     }
