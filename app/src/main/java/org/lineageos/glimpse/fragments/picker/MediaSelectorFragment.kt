@@ -230,7 +230,9 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
 
         selectionTracker?.selection?.count()?.takeIf { it > 0 }?.let {
             startSelectionMode()?.apply {
-                title = getString(R.string.thumbnail_selection_count, it)
+                title = resources.getQuantityString(
+                    R.plurals.thumbnail_selection_count, it, it
+                )
             }
         }
     }
