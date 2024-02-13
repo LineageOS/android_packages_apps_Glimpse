@@ -46,7 +46,8 @@ android_app {
         "Glimpse_io.coil-kt_coil",
         "Glimpse_io.coil-kt_coil-gif",
         "Glimpse_io.coil-kt_coil-video",
-        "Glimpse_com.davemorrissey.labs_subsampling-scale-image-view-androidx",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
     ],
 
     optimize: {

@@ -108,8 +108,9 @@ dependencies {
     implementation("io.coil-kt:coil-gif:2.5.0")
     implementation("io.coil-kt:coil-video:2.5.0")
 
-    // subsampling-scale-image-view
-    implementation("com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0")
+    // ZoomImage
+    implementation("io.github.panpf.zoomimage:zoomimage-core-android:1.0.2")
+    implementation("io.github.panpf.zoomimage:zoomimage-view-coil:1.0.2")
 }
 
 configure<GenerateBpPluginExtension> {
@@ -117,8 +118,9 @@ configure<GenerateBpPluginExtension> {
     availableInAOSP.set { module: Module ->
         when {
             module.group.startsWith("androidx") -> {
-                // We provide our own androidx.media3
-                !module.group.startsWith("androidx.media3")
+                // We provide our own androidx.media3 & annotation-jvm
+                !module.group.startsWith("androidx.media3") &&
+                        module.name != "annotation-jvm"
             }
             module.group.startsWith("org.jetbrains") -> true
             module.group == "com.google.auto.value" -> true
