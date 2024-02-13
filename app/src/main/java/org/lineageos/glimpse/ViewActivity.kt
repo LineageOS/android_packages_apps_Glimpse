@@ -456,6 +456,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         super.onDestroy()
 
         exoPlayer?.release()
+
+        viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
