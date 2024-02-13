@@ -394,38 +394,6 @@ android_library {
 }
 
 android_library_import {
-    name: "Glimpse_com.davemorrissey.labs_subsampling-scale-image-view-androidx-nodeps",
-    aars: ["com/davemorrissey/labs/subsampling-scale-image-view-androidx/3.10.0/subsampling-scale-image-view-androidx-3.10.0.aar"],
-    sdk_version: "34",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    static_libs: [
-        "androidx.appcompat_appcompat",
-        "androidx.exifinterface_exifinterface",
-    ],
-}
-
-android_library {
-    name: "Glimpse_com.davemorrissey.labs_subsampling-scale-image-view-androidx",
-    sdk_version: "34",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    manifest: "com/davemorrissey/labs/subsampling-scale-image-view-androidx/3.10.0/AndroidManifest.xml",
-    static_libs: [
-        "Glimpse_com.davemorrissey.labs_subsampling-scale-image-view-androidx-nodeps",
-        "androidx.appcompat_appcompat",
-        "androidx.exifinterface_exifinterface",
-    ],
-    java_version: "1.7",
-}
-
-android_library_import {
     name: "Glimpse_com.google.android.material_material-nodeps",
     aars: ["com/google/android/material/material/1.9.0/material-1.9.0.aar"],
     sdk_version: "34",
@@ -701,6 +669,148 @@ android_library {
     static_libs: [
         "Glimpse_io.coil-kt_coil-nodeps",
         "Glimpse_io.coil-kt_coil-base",
+        "kotlin-stdlib-jdk8",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android-nodeps",
+    aars: ["io/github/panpf/zoomimage/zoomimage-core-android/1.0.2/zoomimage-core-release.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "kotlinx-coroutines-android",
+        "androidx.exifinterface_exifinterface",
+        "androidx.lifecycle_lifecycle-common",
+        "kotlin-stdlib-jdk8",
+        "androidx.annotation_annotation-jvm",
+        "kotlinx-coroutines-core-jvm",
+    ],
+}
+
+android_library {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/github/panpf/zoomimage/zoomimage-core-android/1.0.2/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android-nodeps",
+        "kotlinx-coroutines-android",
+        "androidx.exifinterface_exifinterface",
+        "androidx.lifecycle_lifecycle-common",
+        "kotlin-stdlib-jdk8",
+        "androidx.annotation_annotation-jvm",
+        "kotlinx-coroutines-core-jvm",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-core-coil-nodeps",
+    aars: ["io/github/panpf/zoomimage/zoomimage-core-coil/1.0.2/zoomimage-core-coil-1.0.2.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_io.coil-kt_coil",
+        "kotlin-stdlib-jdk8",
+    ],
+}
+
+android_library {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-core-coil",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/github/panpf/zoomimage/zoomimage-core-coil/1.0.2/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-core-coil-nodeps",
+        "Glimpse_io.coil-kt_coil",
+        "kotlin-stdlib-jdk8",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil-nodeps",
+    aars: ["io/github/panpf/zoomimage/zoomimage-view-coil/1.0.2/zoomimage-view-coil-1.0.2.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-view",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-core-coil",
+        "kotlin-stdlib-jdk8",
+    ],
+}
+
+android_library {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/github/panpf/zoomimage/zoomimage-view-coil/1.0.2/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil-nodeps",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-view",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-core-coil",
+        "kotlin-stdlib-jdk8",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-view-nodeps",
+    aars: ["io/github/panpf/zoomimage/zoomimage-view/1.0.2/zoomimage-view-1.0.2.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "androidx.appcompat_appcompat",
+        "androidx.core_core-ktx",
+        "androidx.lifecycle_lifecycle-runtime-ktx",
+        "kotlin-stdlib-jdk8",
+    ],
+}
+
+android_library {
+    name: "Glimpse_io.github.panpf.zoomimage_zoomimage-view",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/github/panpf/zoomimage/zoomimage-view/1.0.2/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-view-nodeps",
+        "androidx.appcompat_appcompat",
+        "androidx.core_core-ktx",
+        "androidx.lifecycle_lifecycle-runtime-ktx",
         "kotlin-stdlib-jdk8",
     ],
     java_version: "1.7",

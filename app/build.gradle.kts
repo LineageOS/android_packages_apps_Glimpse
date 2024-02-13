@@ -108,8 +108,8 @@ dependencies {
     implementation("io.coil-kt:coil-gif:2.5.0")
     implementation("io.coil-kt:coil-video:2.5.0")
 
-    // subsampling-scale-image-view
-    implementation("com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0")
+    // zoomimage
+    implementation("io.github.panpf.zoomimage:zoomimage-view-coil:1.0.2")
 }
 
 configure<GenerateBpPluginExtension> {
