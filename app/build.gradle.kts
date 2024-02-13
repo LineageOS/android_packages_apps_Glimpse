@@ -18,7 +18,7 @@ apply {
 
 buildscript {
     repositories {
-        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.3/.m2")
+        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/0d1dcae9e181ed56c421acb81e50acf75b9f1f59/.m2")
     }
 
     dependencies {
@@ -95,10 +95,6 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
-    // OkHttp/Okio
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okio:okio-jvm:3.7.0")
-
     // Recyclerview
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
@@ -109,7 +105,6 @@ dependencies {
     implementation("io.coil-kt:coil-video:2.5.0")
 
     // ZoomImage
-    implementation("io.github.panpf.zoomimage:zoomimage-core-android:1.0.2")
     implementation("io.github.panpf.zoomimage:zoomimage-view-coil:1.0.2")
 }
 
@@ -118,9 +113,8 @@ configure<GenerateBpPluginExtension> {
     availableInAOSP.set { module: Module ->
         when {
             module.group.startsWith("androidx") -> {
-                // We provide our own androidx.media3 & annotation-jvm
-                !module.group.startsWith("androidx.media3") &&
-                        module.name != "annotation-jvm"
+                // We provide our own androidx.media3
+                !module.group.startsWith("androidx.media3")
             }
             module.group.startsWith("org.jetbrains") -> true
             module.group == "com.google.auto.value" -> true
