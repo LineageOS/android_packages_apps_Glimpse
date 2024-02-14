@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -81,6 +82,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val adjustButton by lazy { findViewById<MaterialButton>(R.id.adjustButton) }
     private val backButton by lazy { findViewById<ImageButton>(R.id.backButton) }
     private val bottomSheetLinearLayout by lazy { findViewById<LinearLayout>(R.id.bottomSheetLinearLayout) }
+    private val bottomSheetHorizontalScrollView by lazy { findViewById<HorizontalScrollView>(R.id.bottomSheetHorizontalScrollView) }
     private val contentView by lazy { findViewById<View>(android.R.id.content) }
     private val dateTextView by lazy { findViewById<TextView>(R.id.dateTextView) }
     private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
@@ -153,9 +155,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
             MediaDialogsUtils.showDeleteForeverResultSnackbar(
                 this,
-                bottomSheetLinearLayout,
+                bottomSheetHorizontalScrollView,
                 succeeded, 1,
-                bottomSheetLinearLayout,
+                bottomSheetHorizontalScrollView,
             )
         }
 
@@ -165,9 +167,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
             MediaDialogsUtils.showMoveToTrashResultSnackbar(
                 this,
-                bottomSheetLinearLayout,
+                bottomSheetHorizontalScrollView,
                 succeeded, 1,
-                bottomSheetLinearLayout,
+                bottomSheetHorizontalScrollView,
                 lastProcessedMedia?.let { trashedMedia ->
                     { trashMedia(trashedMedia, false) }
                 },
@@ -182,9 +184,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
             MediaDialogsUtils.showRestoreFromTrashResultSnackbar(
                 this,
-                bottomSheetLinearLayout,
+                bottomSheetHorizontalScrollView,
                 succeeded, 1,
-                bottomSheetLinearLayout,
+                bottomSheetHorizontalScrollView,
                 lastProcessedMedia?.let { trashedMedia ->
                     { trashMedia(trashedMedia, true) }
                 },
@@ -266,7 +268,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         // Observe fullscreen mode
         uiModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->
             topSheetConstraintLayout.fade(!fullscreenMode)
-            bottomSheetLinearLayout.fade(!fullscreenMode)
+            bottomSheetHorizontalScrollView.fade(!fullscreenMode)
 
             window.setBarsVisibility(systemBars = !fullscreenMode)
 
@@ -350,9 +352,11 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     top = insets.top,
                 )
                 bottomSheetLinearLayout.updatePadding(
-                    bottom = insets.bottom,
                     left = insets.left,
                     right = insets.right,
+                )
+                bottomSheetHorizontalScrollView.updatePadding(
+                    bottom = insets.bottom,
                 )
 
                 updateSheetsHeight()
@@ -527,11 +531,11 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     private fun updateSheetsHeight() {
         topSheetConstraintLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        bottomSheetLinearLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        bottomSheetHorizontalScrollView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
 
         uiModel.sheetsHeightLiveData.value = Pair(
             topSheetConstraintLayout.measuredHeight,
-            bottomSheetLinearLayout.measuredHeight,
+            bottomSheetHorizontalScrollView.measuredHeight,
         )
     }
 
