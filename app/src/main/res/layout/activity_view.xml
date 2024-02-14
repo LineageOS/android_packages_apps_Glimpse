@@ -61,8 +61,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <HorizontalScrollView
+        android:id="@+id/bottomSheetHorizontalScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_media_viewer_bottom_sheet"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,10 +75,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:background="@drawable/bg_media_viewer_bottom_sheet"
             android:gravity="top|center">
 
-            <!-- Horizontal margin nor padding works -->
+            <!-- Cannot mess with fixed padding from here because of insets -->
             <Space
                 android:layout_width="16dp"
                 android:layout_height="match_parent" />
@@ -123,7 +124,7 @@
                 android:drawableTop="@drawable/ic_delete"
                 android:text="@string/file_action_move_to_trash" />
 
-            <!-- Horizontal margin nor padding works -->
+            <!-- Cannot mess with fixed padding from here because of insets -->
             <Space
                 android:layout_width="16dp"
                 android:layout_height="match_parent" />
