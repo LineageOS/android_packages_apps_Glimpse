@@ -34,6 +34,24 @@
       "parentUuid": "87560f72_983f4590",
       "revId": "299c9ac0a89b7acd657b71d17b56c26aea5453f1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8760f27a_58ffcaf0",
+        "filename": "rro_overlays/GlimpseOverlay/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-16T09:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "694c6022_65ab8725",
+      "revId": "299c9ac0a89b7acd657b71d17b56c26aea5453f1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
