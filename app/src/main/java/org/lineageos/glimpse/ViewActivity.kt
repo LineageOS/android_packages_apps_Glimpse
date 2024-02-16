@@ -36,6 +36,11 @@ import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.mediarouter.app.MediaRouteButton
+import androidx.mediarouter.media.MediaControlIntent
+import androidx.mediarouter.media.MediaRouteSelector
+import androidx.mediarouter.media.MediaRouter
+import androidx.mediarouter.media.RemotePlaybackClient
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
@@ -87,6 +92,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val dateTextView by lazy { findViewById<TextView>(R.id.dateTextView) }
     private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
     private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
+    private val mediaRouteButton by lazy { findViewById<MediaRouteButton>(R.id.mediaRouteButton) }
     private val infoButton by lazy { findViewById<MaterialButton>(R.id.infoButton) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
     private val timeTextView by lazy { findViewById<TextView>(R.id.timeTextView) }
@@ -125,6 +131,97 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
     private var lastVideoUriPlayed: Uri? = null
+
+    // Media router
+    private val mediaRouter by lazy { MediaRouter.getInstance(this) }
+
+    private var currentRoute: MediaRouter.RouteInfo? = null
+    private var remotePlaybackClient: RemotePlaybackClient? = null
+
+    private val mediaRouteSelector by lazy {
+        MediaRouteSelector.Builder()
+            .addControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO)
+            .addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK)
+            .build()
+    }
+
+    private val mediaRouterCallback = object : MediaRouter.Callback() {
+        override fun onRouteSelected(
+            router: MediaRouter,
+            route: MediaRouter.RouteInfo,
+            reason: Int
+        ) {
+            // Check if we support this route
+            if (!route.matchesSelector(mediaRouteSelector)) {
+                return
+            }
+
+            // Stop local playback (if necessary)
+            exoPlayer?.stop()
+
+            // Save the new route
+            currentRoute = route
+
+            when {
+                route.supportsControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK) -> {
+                    remotePlaybackClient = RemotePlaybackClient(
+                        this@ViewActivity, route
+                    ).apply {
+                        uiModel.displayedMedia.value?.let {
+                            play(it.uri, it.mimeType, null, 0L, null, null)
+                        }
+                    }
+                }
+                route.supportsControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO) -> {
+                    // TODO
+                }
+            }
+        }
+
+        override fun onRouteUnselected(
+            router: MediaRouter,
+            route: MediaRouter.RouteInfo,
+            reason: Int
+        ) {
+            when {
+                route.supportsControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK) -> {
+                    // Changed route: tear down previous client
+                    currentRoute?.also {
+                        remotePlaybackClient?.release()
+                        remotePlaybackClient = null
+                    }
+
+                    // Save the new route
+                    currentRoute = route
+
+                    when (reason) {
+                        MediaRouter.UNSELECT_REASON_UNKNOWN -> {
+                            // Do nothing
+                        }
+
+                        MediaRouter.UNSELECT_REASON_DISCONNECTED -> {
+                            // Do nothing
+                        }
+
+                        MediaRouter.UNSELECT_REASON_STOPPED -> {
+                            // Do nothing
+                        }
+
+                        MediaRouter.UNSELECT_REASON_ROUTE_CHANGED -> {
+                            // Resume local playback (if necessary)
+                            exoPlayer?.let {
+                                it.prepare()
+                                it.play()
+                            }
+                        }
+                    }
+                }
+                route.supportsControlCategory(MediaControlIntent.CATEGORY_LIVE_VIDEO) -> {
+                    // TODO
+                }
+            }
+        }
+    }
 
     // Adapter
     private val mediaViewerAdapter by lazy {
@@ -264,6 +361,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         if (keyguardManager.isKeyguardLocked && intent.action == MediaStore.ACTION_REVIEW_SECURE) {
             setShowWhenLocked(true)
         }
+
+        mediaRouteButton.routeSelector = mediaRouteSelector
 
         // Observe fullscreen mode
         uiModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->
@@ -444,6 +543,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         permissionsGatedCallback.runAfterPermissionsCheck()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        // Add MediaRouter callbacks
+        mediaRouter.addCallback(mediaRouteSelector, mediaRouterCallback)
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -454,6 +560,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         super.onPause()
 
         exoPlayer?.pause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        // Remove MediaRouter callbacks
+        mediaRouter.removeCallback(mediaRouterCallback)
     }
 
     override fun onDestroy() {

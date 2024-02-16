@@ -42,6 +42,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.mediarouter.app.MediaRouteButton
+            android:id="@+id/mediaRouteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_goneMarginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dateTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/dateTextView"
             style="@style/Theme.Glimpse.MediaViewer.DateTimeText"
@@ -58,6 +68,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <HorizontalScrollView
