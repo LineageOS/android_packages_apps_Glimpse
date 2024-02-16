@@ -91,6 +91,9 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer-smoothstreaming:1.2.1")
     implementation("androidx.media3:media3-ui:1.2.1")
 
+    // Mediarouter
+    implementation("androidx.mediarouter:mediarouter:1.6.0")
+
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
