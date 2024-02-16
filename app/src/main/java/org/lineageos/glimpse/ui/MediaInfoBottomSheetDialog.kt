@@ -91,13 +91,11 @@ class MediaInfoBottomSheetDialog(
         dateTextView.text = dateFormatter.format(media.dateAdded)
         timeTextView.text = timeFormatter.format(media.dateAdded)
 
-        mediaInfoListItem.leadingIconImage = ResourcesCompat.getDrawable(
-            context.resources,
+        mediaInfoListItem.setLeadingIconImage(
             when (media.mediaType) {
                 MediaType.IMAGE -> R.drawable.ic_image
                 MediaType.VIDEO -> R.drawable.ic_video_camera_back
-            },
-            null
+            }
         )
         mediaInfoListItem.headlineText = media.displayName
 
@@ -177,7 +175,7 @@ class MediaInfoBottomSheetDialog(
                 ).joinToString(SEPARATOR)
 
                 if (Geocoder.isPresent()) {
-                    locationInfoListItem.headlineText = context.resources.getString(
+                    locationInfoListItem.setHeadlineText(
                         R.string.media_info_location_loading_placeholder
                     )
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
