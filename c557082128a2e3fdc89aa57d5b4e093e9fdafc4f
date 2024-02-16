@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "885539c0_7ef5f0be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-16T09:12:58Z",
+      "side": 1,
+      "message": "also maybe `app/overlay`/`app/rro_overlay` would be a better place, idk.",
+      "revId": "c557082128a2e3fdc89aa57d5b4e093e9fdafc4f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
