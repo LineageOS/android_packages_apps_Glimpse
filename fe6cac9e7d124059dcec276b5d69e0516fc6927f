@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20a29bbc_61cfd04b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-16T04:19:39Z",
+      "side": 1,
+      "message": "Media3\u0027s cast stuff requires GMS, so we\u0027re on our own there\n\nhttps://developer.android.com/media/routing/mediarouter",
+      "revId": "fe6cac9e7d124059dcec276b5d69e0516fc6927f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
