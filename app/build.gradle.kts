@@ -91,6 +91,9 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer-smoothstreaming:1.2.1")
     implementation("androidx.media3:media3-ui:1.2.1")
 
+    // Mediarouter
+    implementation("androidx.mediarouter:mediarouter:1.6.0")
+
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
@@ -113,8 +116,11 @@ configure<GenerateBpPluginExtension> {
     availableInAOSP.set { module: Module ->
         when {
             module.group.startsWith("androidx") -> {
-                // We provide our own androidx.media3
-                !module.group.startsWith("androidx.media3")
+                // We provide our own androidx.media3 and androidx.mediarouter
+                module.group !in listOf(
+                    "androidx.media3",
+                    "androidx.mediarouter",
+                )
             }
             module.group.startsWith("org.jetbrains") -> true
             module.group == "com.google.auto.value" -> true

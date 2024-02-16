@@ -36,6 +36,7 @@ import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.mediarouter.app.MediaRouteButton
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
@@ -55,6 +56,7 @@ import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.MediaDialogsUtils
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
+import org.lineageos.glimpse.utils.RemotePlayer
 import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
@@ -87,6 +89,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val dateTextView by lazy { findViewById<TextView>(R.id.dateTextView) }
     private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
     private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
+    private val mediaRouteButton by lazy { findViewById<MediaRouteButton>(R.id.mediaRouteButton) }
     private val infoButton by lazy { findViewById<MaterialButton>(R.id.infoButton) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
     private val timeTextView by lazy { findViewById<TextView>(R.id.timeTextView) }
@@ -125,6 +128,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
     private var lastVideoUriPlayed: Uri? = null
+
+    // Remote player
+    private val remotePlayer = RemotePlayer(this, lifecycle) { uiModel }
 
     // Adapter
     private val mediaViewerAdapter by lazy {
@@ -264,6 +270,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         if (keyguardManager.isKeyguardLocked && intent.action == MediaStore.ACTION_REVIEW_SECURE) {
             setShowWhenLocked(true)
         }
+
+        // Connect the media route button with the selector
+        mediaRouteButton.routeSelector = remotePlayer.mediaRouteSelector
 
         // Observe fullscreen mode
         uiModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->

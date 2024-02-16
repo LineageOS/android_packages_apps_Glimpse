@@ -44,6 +44,7 @@ android_app {
         "Glimpse_androidx.media3_media3-exoplayer-rtsp",
         "Glimpse_androidx.media3_media3-exoplayer-smoothstreaming",
         "Glimpse_androidx.media3_media3-ui",
+        "Glimpse_androidx.mediarouter_mediarouter",
         "androidx.navigation_navigation-fragment-ktx",
         "androidx.navigation_navigation-ui-ktx",
         "androidx.recyclerview_recyclerview",

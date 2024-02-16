@@ -28,6 +28,11 @@ class MediaViewerUIViewModel(application: Application) : AndroidViewModel(applic
     val displayedMedia = MutableLiveData<Media?>(null)
 
     /**
+     * Whether the app is currently casting to an external route
+     */
+    val isCasting = MutableLiveData(false)
+
+    /**
      * Toggle fullscreen mode.
      */
     fun toggleFullscreenMode() {

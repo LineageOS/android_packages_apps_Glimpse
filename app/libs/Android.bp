@@ -420,6 +420,50 @@ android_library {
 }
 
 android_library_import {
+    name: "Glimpse_androidx.mediarouter_mediarouter-nodeps",
+    aars: ["androidx/mediarouter/mediarouter/1.6.0/mediarouter-1.6.0.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "androidx.annotation_annotation-experimental",
+        "androidx.appcompat_appcompat",
+        "androidx.appcompat_appcompat-resources",
+        "androidx.core_core",
+        "androidx.media_media",
+        "androidx.palette_palette",
+        "androidx.recyclerview_recyclerview",
+        "guava",
+    ],
+}
+
+android_library {
+    name: "Glimpse_androidx.mediarouter_mediarouter",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "androidx/mediarouter/mediarouter/1.6.0/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_androidx.mediarouter_mediarouter-nodeps",
+        "androidx.annotation_annotation-experimental",
+        "androidx.appcompat_appcompat",
+        "androidx.appcompat_appcompat-resources",
+        "androidx.core_core",
+        "androidx.media_media",
+        "androidx.palette_palette",
+        "androidx.recyclerview_recyclerview",
+        "guava",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
     name: "Glimpse_com.google.android.material_material-nodeps",
     aars: ["com/google/android/material/material/1.9.0/material-1.9.0.aar"],
     sdk_version: "34",
