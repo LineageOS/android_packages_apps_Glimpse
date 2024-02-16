@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c1a4bc1_ce9ec425",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-16T09:11:33Z",
+      "side": 1,
+      "message": "ty for license, I usually don\u0027t add it to overlays but guess it makes sense here",
+      "revId": "155b1c7d594584391c196033b7639ce301f0b446",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}

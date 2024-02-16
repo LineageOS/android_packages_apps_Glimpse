@@ -52,6 +52,42 @@
       "parentUuid": "694c6022_65ab8725",
       "revId": "299c9ac0a89b7acd657b71d17b56c26aea5453f1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7adadf8_2ad7bede",
+        "filename": "rro_overlays/GlimpseOverlay/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-16T09:11:33Z",
+      "side": 1,
+      "message": "I just went with one of the rro we\u0027ve been using as template",
+      "parentUuid": "694c6022_65ab8725",
+      "revId": "299c9ac0a89b7acd657b71d17b56c26aea5453f1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bdf87fa_2e20707c",
+        "filename": "rro_overlays/GlimpseOverlay/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-16T09:11:33Z",
+      "side": 1,
+      "message": "I just went with the \"standard rro\" we\u0027ve been using",
+      "parentUuid": "694c6022_65ab8725",
+      "revId": "299c9ac0a89b7acd657b71d17b56c26aea5453f1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
