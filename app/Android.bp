@@ -46,6 +46,9 @@ android_app {
         "Glimpse_io.coil-kt_coil-video",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
     ],
+    required: [
+        "GlimpseOverlay",
+    ],
 
     optimize: {
         proguard_flags_files: ["proguard-rules.pro"],
