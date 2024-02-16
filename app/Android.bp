@@ -23,6 +23,10 @@ android_app {
         "GalleryNew3D",
     ],
 
+    required: [
+        "GlimpseOverlay",
+    ],
+
     static_libs: [
         // DO NOT EDIT THIS SECTION MANUALLY
         "androidx.core_core-ktx",
