@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9021a9b2_a73fc8c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-17T17:33:52Z",
+      "side": 1,
+      "message": "can we decide what we are doing here? Is current folder naming scheme good to go, or do we want to change it?",
+      "revId": "107893933ca5627b5cb80a21a547bcd68a644a26",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
