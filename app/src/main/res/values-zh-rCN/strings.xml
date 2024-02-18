@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">图库</string>
+    <string name="app_permissions_toast">用户没有授予权限。</string>
+    <string name="reels_title">卷轴</string>
+    <string name="albums_title">相册</string>
+    <string name="search_title">搜索</string>
+    <string name="categories_title">类别</string>
+    <string name="album_favorites">收藏夹</string>
+    <string name="album_trash">垃圾桶</string>
+    <string name="album_reels">卷轴</string>
+    <string name="album_photos">照片</string>
+    <string name="album_videos">视频</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="other">%d 项</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="other">您确定要永久删除 %d 文件吗？</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="other">%d 个文件已永久删除</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="other">%d 个文件无法被永久删除</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="other">您确定要移动 %d 个文件到垃圾桶？</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="other">%d 个文件已经移动到垃圾桶</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="other">%d 个文件无法被移动到垃圾桶</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="other">您确定想从垃圾桶恢复 %d 个文件？</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="other">%d 个文件已经从垃圾桶里恢复</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="other">%d 个文件无法从垃圾桶中恢复</item>
+    </plurals>
+    <string name="manage_media_permission_title">管理媒体权限</string>
+    <string name="manage_media_permission_message">为了更好的管理您的图像和视频，请允许应用管理您的媒体文件。</string>
+    <string name="media_info_unknown">未知</string>
+    <string name="media_info_add_description_hint">添加描述</string>
+    <string name="media_info_write_description_failed">更改媒体描述失败</string>
+    <string name="media_info_location_loading_placeholder">正在加载……</string>
+    <string name="media_info_location_open_with">使用该应用查看位置</string>
+    <string name="intent_action_not_supported">不支持的操作</string>
+    <string name="intent_media_not_found">未找到媒体</string>
+    <string name="intent_media_type_not_found">未找到媒体类型</string>
+    <string name="intent_media_type_not_supported">媒体类型不被支持</string>
+    <string name="intent_no_system_wallpaper_cropper_available">没有中可用的系统修剪器</string>
+    <string name="intent_wallpaper_cannot_be_changed">无法修改壁纸</string>
+    <string name="file_action_add_to_favorites">添加到收藏夹</string>
+    <string name="file_action_delete_forever">永久删除</string>
+    <string name="file_action_edit">编辑</string>
+    <string name="file_action_empty_trash">清空垃圾桶</string>
+    <string name="file_action_information">信息</string>
+    <string name="file_action_move_to_trash">移动到垃圾桶</string>
+    <string name="file_action_remove_from_favorites">从收藏夹中删除</string>
+    <string name="file_action_restore_from_trash">从垃圾桶恢复</string>
+    <string name="file_action_share">分享</string>
+    <string name="file_action_use_as">设为...</string>
+    <string name="file_action_undo_action">撤销</string>
+    <string name="no_media">没有媒体</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="other">已选择 %d 项</item>
+    </plurals>
+    <string name="pick_a_photo">选择照片</string>
+    <string name="pick_a_video">选择视频</string>
+    <string name="pick_a_media">选择媒体</string>
+    <string name="picker_done">完成</string>
+    <string name="set_wallpaper_label">壁纸</string>
+    <string name="set_wallpaper">设置壁纸</string>
+    <string name="set_wallpaper_dialog_title">设置壁纸于</string>
+    <string name="set_wallpaper_home_screen">主屏幕</string>
+    <string name="set_wallpaper_lock_screen">锁屏</string>
+    <string name="set_wallpaper_both">主屏和锁屏界面</string>
+</resources>

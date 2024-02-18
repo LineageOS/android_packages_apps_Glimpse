@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">ギャラリー</string>
+    <string name="app_permissions_toast">権限がユーザーによって許可されていません。</string>
+    <string name="reels_title">リール</string>
+    <string name="albums_title">アルバム</string>
+    <string name="search_title">検索</string>
+    <string name="categories_title">カテゴリー</string>
+    <string name="album_favorites">お気に入り</string>
+    <string name="album_trash">ゴミ箱</string>
+    <string name="album_reels">リール</string>
+    <string name="album_photos">写真</string>
+    <string name="album_videos">動画</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="other">%d 個のアイテム</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="other">%d 個のファイルを完全に削除しますか？</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="other">%d 個のファイルを完全に削除しました</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="other">%d 個のファイルを削除できませんでした</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="other">%d 個のファイルをゴミ箱に移動してもよろしいですか？</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="other">%d 個のファイルをゴミ箱に移動しました</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="other">%d 個のファイルをゴミ箱に移動できませんでした</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="other">%d 個のファイルをゴミ箱から復元してもよろしいですか？</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="other">%d 個のファイルをゴミ箱から復元しました</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="other">%d 個のファイルをゴミ箱から復元できませんでした</item>
+    </plurals>
+    <string name="manage_media_permission_title">メディア管理の権限</string>
+    <string name="manage_media_permission_message">画像やビデオを管理しやすくするために、アプリがメディアファイルを管理できるようにします</string>
+    <string name="media_info_unknown">不明</string>
+    <string name="media_info_add_description_hint">説明を追加</string>
+    <string name="media_info_write_description_failed">メディアの説明を変更できませんでした</string>
+    <string name="media_info_location_loading_placeholder">読み込み中…</string>
+    <string name="media_info_location_open_with">場所を表示</string>
+    <string name="intent_action_not_supported">対応していないアクションです</string>
+    <string name="intent_media_not_found">メディアが見つかりません</string>
+    <string name="intent_media_type_not_found">メディアタイプが見つかりません</string>
+    <string name="intent_media_type_not_supported">対応していないメディアタイプです</string>
+    <string name="intent_no_system_wallpaper_cropper_available">利用可能なシステムクロッパーがありません</string>
+    <string name="intent_wallpaper_cannot_be_changed">壁紙を変更できません</string>
+    <string name="file_action_add_to_favorites">お気に入りに追加</string>
+    <string name="file_action_delete_forever">完全に削除</string>
+    <string name="file_action_edit">編集</string>
+    <string name="file_action_empty_trash">ゴミ箱を空にする</string>
+    <string name="file_action_information">情報</string>
+    <string name="file_action_move_to_trash">ゴミ箱へ移動</string>
+    <string name="file_action_remove_from_favorites">お気に入りから削除</string>
+    <string name="file_action_restore_from_trash">ゴミ箱から復元</string>
+    <string name="file_action_share">共有</string>
+    <string name="file_action_use_as">次として使用：</string>
+    <string name="file_action_undo_action">元に戻す</string>
+    <string name="no_media">メディアなし</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="other">%d件を選択中</item>
+    </plurals>
+    <string name="pick_a_photo">画像を選択</string>
+    <string name="pick_a_video">動画を選択</string>
+    <string name="pick_a_media">メディアを選択</string>
+    <string name="picker_done">完了</string>
+    <string name="set_wallpaper_label">壁紙</string>
+    <string name="set_wallpaper">壁紙を設定</string>
+    <string name="set_wallpaper_dialog_title">壁紙を設定</string>
+    <string name="set_wallpaper_home_screen">ホーム画面</string>
+    <string name="set_wallpaper_lock_screen">ロック画面</string>
+    <string name="set_wallpaper_both">ホーム画面とロック画面</string>
+</resources>

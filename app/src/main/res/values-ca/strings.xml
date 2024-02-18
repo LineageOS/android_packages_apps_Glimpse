@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galeria</string>
+    <string name="app_permissions_toast">Permisos no concedits per l\'usuari.</string>
+    <string name="reels_title">Rodets</string>
+    <string name="albums_title">Àlbums</string>
+    <string name="search_title">Cerca</string>
+    <string name="categories_title">Categories</string>
+    <string name="album_favorites">Preferits</string>
+    <string name="album_trash">Paperera</string>
+    <string name="album_reels">Rodets</string>
+    <string name="album_photos">Fotos</string>
+    <string name="album_videos">Vídeos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d element</item>
+        <item quantity="other">%d elements</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Esteu segur que voleu suprimir permanentment aquest fitxer?</item>
+        <item quantity="other">Esteu segur que voleu suprimir permanentment %d fitxers?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Fitxer suprimit permanentment</item>
+        <item quantity="other">S\'han suprimit %d fitxers permanentment</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">El fitxer no s\'ha pogut suprimir permanentment</item>
+        <item quantity="other">%d fitxers no s\'han pogut suprimir permanentment</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Esteu segur que voleu moure un fitxer a la paperera?</item>
+        <item quantity="other">Esteu segur que voleu moure %d fitxers a la paperera?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">S\'ha mogut el fitxer a la paperera</item>
+        <item quantity="other">S\'han mogut %d fitxers a la paperera</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">No s\'ha pogut moure el fitxer a la paperera</item>
+        <item quantity="other">No s\'han pogut moure %d fitxers a la paperera</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Esteu segur que voleu restaurar un fitxer de la paperera?</item>
+        <item quantity="other">Esteu segur que voleu restaurar %d fitxers de la paperera?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Fitxer restaurat de la paperera</item>
+        <item quantity="other">S\'han restaurat %d fitxers de la paperera</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">No s\'ha pogut restaurar el fitxer de la paperera</item>
+        <item quantity="other">No s\'han pogut restaurar %d fitxers de la paperera</item>
+    </plurals>
+    <string name="manage_media_permission_title">Gestionar els permisos dels mitjans</string>
+    <string name="manage_media_permission_message">Per gestionar millor les vostres imatges i vídeos, permeteu que l\'aplicació gestioni els vostres fitxers multimèdia</string>
+    <string name="media_info_unknown">Desconegut</string>
+    <string name="media_info_add_description_hint">Afegeix una descripció</string>
+    <string name="media_info_write_description_failed">No s\'ha pogut canviar la descripció del mitjà</string>
+    <string name="media_info_location_loading_placeholder">Carregant...</string>
+    <string name="media_info_location_open_with">Mostra la ubicació amb</string>
+    <string name="intent_action_not_supported">Acció no compatible</string>
+    <string name="intent_media_not_found">No s\'han trobat mitjans</string>
+    <string name="intent_media_type_not_found">Tipus de fitxer multimèdia no trobat</string>
+    <string name="intent_media_type_not_supported">Tipus de fitxer multimèdia no compatible</string>
+    <string name="intent_no_system_wallpaper_cropper_available">No hi ha cap eina de retall disponible al sistema</string>
+    <string name="intent_wallpaper_cannot_be_changed">El fons de pantalla no es pot canviar</string>
+    <string name="file_action_add_to_favorites">Afegeix als preferits</string>
+    <string name="file_action_delete_forever">Suprimeix per sempre</string>
+    <string name="file_action_edit">Edita</string>
+    <string name="file_action_empty_trash">Buida la paperera</string>
+    <string name="file_action_information">Informació</string>
+    <string name="file_action_move_to_trash">Mou a la paperera</string>
+    <string name="file_action_remove_from_favorites">Elimina dels preferits</string>
+    <string name="file_action_restore_from_trash">Restaura des de la paperera</string>
+    <string name="file_action_share">Comparteix</string>
+    <string name="file_action_use_as">Utilitza com</string>
+    <string name="file_action_undo_action">Desfés</string>
+    <string name="no_media">Cap fitxer multimèdia</string>
+    <string name="pick_a_photo">Trieu una foto</string>
+    <string name="pick_a_video">Trieu un vídeo</string>
+    <string name="pick_a_media">Trieu un mitjà</string>
+    <string name="picker_done">Fet</string>
+    <string name="set_wallpaper_label">Fons de pantalla</string>
+    <string name="set_wallpaper">Estableix fons de pantalla</string>
+    <string name="set_wallpaper_dialog_title">Activa el fons de pantalla</string>
+    <string name="set_wallpaper_home_screen">Pantalla d\'inici</string>
+    <string name="set_wallpaper_lock_screen">Pantalla de bloqueig</string>
+    <string name="set_wallpaper_both">Pantalla d\'inici i de bloqueig</string>
+</resources>

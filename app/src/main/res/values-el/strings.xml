@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Συλλογή</string>
+    <string name="app_permissions_toast">Οι άδειες δε χορηγήθηκαν από το χρήστη.</string>
+    <string name="albums_title">Άλμπουμ</string>
+    <string name="search_title">Αναζήτηση</string>
+    <string name="categories_title">Κατηγορίες</string>
+    <string name="album_favorites">Αγαπημένα</string>
+    <string name="album_trash">Κάδος</string>
+    <string name="album_photos">Φωτογραφίες</string>
+    <string name="album_videos">Βίντεο</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d αντικείμενο</item>
+        <item quantity="other">%d αντικείμενα</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να διαγράψετε οριστικά αυτό το αρχείο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να διαγράψετε οριστικά %d αρχεία;</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Το αρχείο διαγράφηκε οριστικά</item>
+        <item quantity="other">%d αρχεία διαγράφηκαν οριστικά</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Το αρχείο δεν μπόρεσε να διαγραφεί οριστικά</item>
+        <item quantity="other">%d αρχεία δεν μπόρεσαν να διαγραφούν οριστικά</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να μετακινήσετε ένα αρχείο στον κάδο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να μετακινήσετε %d αρχεία στον κάδο;</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Το αρχείο μετακινήθηκε στον κάδο</item>
+        <item quantity="other">%d αρχεία μετακινήθηκαν στον κάδο</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Το αρχείο δεν μπόρεσε να μετακινηθεί στον κάδο</item>
+        <item quantity="other">%d αρχεία δεν μπόρεσαν να μετακινηθούν στον κάδο</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Είστε βέβαιοι ότι θέλετε να επαναφέρετε ένα αρχείο από τον κάδο;</item>
+        <item quantity="other">Είστε βέβαιοι ότι θέλετε να επαναφέρετε %d αρχεία από τον κάδο;</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Το αρχείο επαναφέρθηκε από τον κάδο</item>
+        <item quantity="other">%d αρχεία επαναφέρθηκαν από τον κάδο</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Δεν ήταν δυνατή η επαναφορά του αρχείου από τον κάδο</item>
+        <item quantity="other">Δεν ήταν δυνατή η επαναφορά %d αρχείων από τον κάδο</item>
+    </plurals>
+    <string name="manage_media_permission_title">Διαχείριση αδειών πολυμέσων</string>
+    <string name="manage_media_permission_message">Για καλύτερη διαχείριση των εικόνων και των βίντεό σας, επιτρέψτε στην εφαρμογή να διαχειριστεί τα αρχεία πολυμέσων σας</string>
+    <string name="media_info_unknown">Άγνωστο</string>
+    <string name="media_info_add_description_hint">Προσθήκη περιγραφής</string>
+    <string name="media_info_write_description_failed">Αποτυχία αλλαγής περιγραφής πολυμέσων</string>
+    <string name="media_info_location_loading_placeholder">Φόρτωση…</string>
+    <string name="media_info_location_open_with">Εμφάνιση τοποθεσίας με</string>
+    <string name="intent_action_not_supported">Η ενέργεια δεν υποστηρίζεται</string>
+    <string name="intent_media_not_found">Δε βρέθηκαν πολυμέσα</string>
+    <string name="intent_media_type_not_found">Ο τύπος πολυμέσων δεν βρέθηκε</string>
+    <string name="intent_media_type_not_supported">Ο τύπος πολυμέσων δεν υποστηρίζεται</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Δεν υπάρχει διαθέσιμη εφαρμογή περικοπής συστήματος</string>
+    <string name="intent_wallpaper_cannot_be_changed">Η ταπετσαρία δεν μπορεί να αλλάξει</string>
+    <string name="file_action_add_to_favorites">Προσθήκη στα αγαπημένα</string>
+    <string name="file_action_delete_forever">Διαγραφή για πάντα</string>
+    <string name="file_action_edit">Επεξεργασία</string>
+    <string name="file_action_empty_trash">Άδειασμα κάδου</string>
+    <string name="file_action_information">Πληροφορίες</string>
+    <string name="file_action_move_to_trash">Μετακίνηση στον κάδο</string>
+    <string name="file_action_remove_from_favorites">Αφαίρεση από τα αγαπημένα</string>
+    <string name="file_action_restore_from_trash">Επαναφορά από τον κάδο</string>
+    <string name="file_action_share">Κοινή χρήση</string>
+    <string name="file_action_use_as">Χρήση ως</string>
+    <string name="file_action_undo_action">Αναίρεση</string>
+    <string name="no_media">Χωρίς πολυμέσα</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">Επιλέχθηκε %d</item>
+        <item quantity="other">Επιλέχθηκαν %d</item>
+    </plurals>
+    <string name="pick_a_photo">Επιλέξετε μια φωτογραφία</string>
+    <string name="pick_a_video">Επιλέξτε ένα βίντεο</string>
+    <string name="pick_a_media">Επιλέξτε ένα πολυμέσο</string>
+    <string name="picker_done">Ολοκληρώθηκε</string>
+    <string name="set_wallpaper_label">Ταπετσαρία</string>
+    <string name="set_wallpaper">Ορισμός ταπετσαρίας</string>
+    <string name="set_wallpaper_dialog_title">Ορισμός ταπετσαρίας σε</string>
+    <string name="set_wallpaper_home_screen">Αρχική οθόνη</string>
+    <string name="set_wallpaper_lock_screen">Οθόνη κλειδώματος</string>
+    <string name="set_wallpaper_both">Αρχική και οθόνη κλειδώματος</string>
+</resources>

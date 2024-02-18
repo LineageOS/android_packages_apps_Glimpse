@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galerie</string>
+    <string name="app_permissions_toast">Autorisations non accordées par l\'utilisateur.</string>
+    <string name="reels_title">Chronologie</string>
+    <string name="albums_title">Albums</string>
+    <string name="search_title">Rechercher</string>
+    <string name="categories_title">Catégories</string>
+    <string name="album_favorites">Favoris</string>
+    <string name="album_trash">Corbeille</string>
+    <string name="album_reels">Chronologie</string>
+    <string name="album_photos">Photos</string>
+    <string name="album_videos">Vidéos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d élément</item>
+        <item quantity="other">%d éléments</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Êtes-vous sûr de vouloir supprimer définitivement ce fichier ?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir supprimer définitivement %d fichiers ?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Fichier définitivement supprimé</item>
+        <item quantity="other">%d fichiers définitivement supprimés</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Le fichier n\'a pas pu être définitivement supprimé</item>
+        <item quantity="other">%d fichiers n\'ont pas pu être définitivement supprimés</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Êtes-vous sûr de vouloir déplacer un fichier vers la corbeille ?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir déplacer %d fichiers vers la corbeille ?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Fichier déplacé vers la corbeille</item>
+        <item quantity="other">%d fichiers déplacés vers la corbeille</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Le fichier n\'a pas pu être déplacé vers la corbeille</item>
+        <item quantity="other">%d fichiers n\'ont pas pu être déplacés vers la corbeille</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Êtes-vous sûr de vouloir récupérer un fichier de la corbeille ?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir récupérer %d fichiers de la corbeille ?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Fichier récupéré de la corbeille</item>
+        <item quantity="other">%d fichiers récupérés de la corbeille</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Le fichier n\'a pas pu être récupéré de la corbeille</item>
+        <item quantity="other">%d fichiers n\'ont pas pu être récupérés de la corbeille</item>
+    </plurals>
+    <string name="manage_media_permission_title">Gérer les autorisations pour les médias</string>
+    <string name="manage_media_permission_message">Pour mieux gérer vos images et vidéos, autorisez l\'application à gérer vos fichiers multimédias</string>
+    <string name="media_info_unknown">Inconnu</string>
+    <string name="media_info_add_description_hint">Ajouter une description</string>
+    <string name="media_info_write_description_failed">Impossible de modifier la description du média</string>
+    <string name="media_info_location_loading_placeholder">Chargement…</string>
+    <string name="media_info_location_open_with">Voir la localisation avec</string>
+    <string name="intent_action_not_supported">Action non prise en charge</string>
+    <string name="intent_media_not_found">Média introuvable</string>
+    <string name="intent_media_type_not_found">Type de média introuvable</string>
+    <string name="intent_media_type_not_supported">Type de média non pris en charge</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Aucun outil de recadrage système disponible</string>
+    <string name="intent_wallpaper_cannot_be_changed">Le fond d\'écran ne peut pas être modifié</string>
+    <string name="file_action_add_to_favorites">Ajouter aux favoris</string>
+    <string name="file_action_delete_forever">Supprimer définitivement</string>
+    <string name="file_action_edit">Éditer</string>
+    <string name="file_action_empty_trash">Vider la corbeille</string>
+    <string name="file_action_information">Information</string>
+    <string name="file_action_move_to_trash">Déplacer vers la corbeille</string>
+    <string name="file_action_remove_from_favorites">Supprimer des favoris</string>
+    <string name="file_action_restore_from_trash">Récupérer de la corbeille</string>
+    <string name="file_action_share">Partager</string>
+    <string name="file_action_use_as">Utiliser comme</string>
+    <string name="file_action_undo_action">Annuler</string>
+    <string name="no_media">Aucun média</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d sélectionné</item>
+        <item quantity="other">%d sélectionnés</item>
+    </plurals>
+    <string name="pick_a_photo">Sélectionner une photo</string>
+    <string name="pick_a_video">Sélectionner une vidéo</string>
+    <string name="pick_a_media">Sélectionner un média</string>
+    <string name="picker_done">Terminé</string>
+    <string name="set_wallpaper_label">Fond d\'écran</string>
+    <string name="set_wallpaper">Définir le fond d\'écran</string>
+    <string name="set_wallpaper_dialog_title">Définir le fond d\'écran sur</string>
+    <string name="set_wallpaper_home_screen">Écran d\'accueil</string>
+    <string name="set_wallpaper_lock_screen">Écran de verrouillage</string>
+    <string name="set_wallpaper_both">Écran d\'accueil et de verrouillage</string>
+</resources>
