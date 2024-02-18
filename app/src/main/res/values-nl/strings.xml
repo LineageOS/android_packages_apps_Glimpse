@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galerij</string>
+    <string name="app_permissions_toast">Machtigingen niet toegekend door de gebruiker.</string>
+    <string name="reels_title">Spoelen</string>
+    <string name="albums_title">Albums</string>
+    <string name="search_title">Zoeken</string>
+    <string name="categories_title">Categorieën</string>
+    <string name="album_favorites">Favorieten</string>
+    <string name="album_trash">Afval</string>
+    <string name="album_reels">Spoelen</string>
+    <string name="album_photos">Foto\'s</string>
+    <string name="album_videos">Video\'s</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d item</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Weet u zeker dat u dit bestand permanent wilt verwijderen?</item>
+        <item quantity="other">Weet u zeker dat u %d bestanden permanent wilt verwijderen?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Bestand permanent verwijderd</item>
+        <item quantity="other">%d bestanden permanent verwijderd</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Bestand kon niet permanent worden verwijderd</item>
+        <item quantity="other">%d bestanden konden niet permanent worden verwijderd</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Weet u zeker dat u een bestand wilt verplaatsen naar de prullenbak?</item>
+        <item quantity="other">Weet u zeker dat u %d bestanden naar de prullenbak wilt verplaatsen?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Bestand naar de prullenbak verplaatst</item>
+        <item quantity="other">%d bestanden naar de prullenbak verplaatst</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Bestand kon niet naar de prullenbak verplaatst worden</item>
+        <item quantity="other">%d bestanden konden niet naar de prullenbak verplaatst worden</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Weet u zeker dat u een bestand wilt terughalen uit de prullenbak?</item>
+        <item quantity="other">Weet u zeker dat u %d bestanden uit de prullenbak wilt herstellen?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Bestand hersteld uit de prullenbak0</item>
+        <item quantity="other">%d bestanden hersteld uit de prullenbak</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Bestand kan niet uit de prullenbak worden hersteld</item>
+        <item quantity="other">%d bestanden konden niet uit de prullenbak worden hersteld</item>
+    </plurals>
+    <string name="manage_media_permission_title">Beheer mediamachtiging</string>
+    <string name="manage_media_permission_message">Sta de app toe om uw mediabestanden te beheren om uw afbeeldingen en video\'s beter te beheren</string>
+    <string name="media_info_unknown">Onbekend</string>
+    <string name="media_info_add_description_hint">Voeg een beschrijving toe</string>
+    <string name="media_info_write_description_failed">Wijzigen van media-beschrijving is mislukt</string>
+    <string name="media_info_location_loading_placeholder">Bezig met laden ...</string>
+    <string name="media_info_location_open_with">Bekijk de locatie met</string>
+    <string name="intent_action_not_supported">Actie niet ondersteund</string>
+    <string name="intent_media_not_found">Media niet gevonden</string>
+    <string name="intent_media_type_not_found">Mediatype niet gevonden</string>
+    <string name="intent_media_type_not_supported">Mediatype wordt niet ondersteund</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Geen systeem cropper beschikbaar</string>
+    <string name="intent_wallpaper_cannot_be_changed">Achtergrond kan niet worden gewijzigd</string>
+    <string name="file_action_add_to_favorites">Voeg toe aan favorieten</string>
+    <string name="file_action_delete_forever">Verwijder definitief</string>
+    <string name="file_action_edit">Bewerk</string>
+    <string name="file_action_empty_trash">Maak prullenbak leeg</string>
+    <string name="file_action_information">Informatie</string>
+    <string name="file_action_move_to_trash">Verplaats naar prullenbak</string>
+    <string name="file_action_remove_from_favorites">Verwijder uit favorieten</string>
+    <string name="file_action_restore_from_trash">Herstel uit prullenbak</string>
+    <string name="file_action_share">Deel</string>
+    <string name="file_action_use_as">Gebruik als</string>
+    <string name="file_action_undo_action">Maak ongedaan</string>
+    <string name="no_media">Geen media</string>
+    <string name="pick_a_photo">Kies een foto</string>
+    <string name="pick_a_video">Kies een video</string>
+    <string name="pick_a_media">Kies media</string>
+    <string name="picker_done">Voltooid</string>
+    <string name="set_wallpaper_label">Achtergrond</string>
+    <string name="set_wallpaper">Achtergrond instellen</string>
+    <string name="set_wallpaper_dialog_title">Achtergrond instellen op</string>
+    <string name="set_wallpaper_home_screen">Startscherm</string>
+    <string name="set_wallpaper_lock_screen">Vergrendelscherm</string>
+    <string name="set_wallpaper_both">Start- en vergrendelscherm</string>
+</resources>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galeria</string>
+    <string name="app_permissions_toast">Uprawnienia nie zostały przyznane przez użytkownika.</string>
+    <string name="reels_title">Rolki</string>
+    <string name="albums_title">Albumy</string>
+    <string name="search_title">Szukaj</string>
+    <string name="categories_title">Kategorie</string>
+    <string name="album_favorites">Ulubione</string>
+    <string name="album_trash">Kosz</string>
+    <string name="album_reels">Rolki</string>
+    <string name="album_photos">Zdjęcia</string>
+    <string name="album_videos">Filmy</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d element</item>
+        <item quantity="few">%d elementy</item>
+        <item quantity="many">%d elementów</item>
+        <item quantity="other">%d elementów</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Czy na pewno chcesz trwale usunąć ten plik?</item>
+        <item quantity="few">Czy na pewno chcesz trwale usunąć %d pliki?</item>
+        <item quantity="many">Czy na pewno chcesz trwale usunąć %d plików?</item>
+        <item quantity="other">Czy na pewno chcesz trwale usunąć %d plików?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Plik trwale usunięty</item>
+        <item quantity="few">%d pliki trwale usunięte</item>
+        <item quantity="many">%d plików trwale usuniętych</item>
+        <item quantity="other">%d plików trwale usuniętych</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Nie można trwale usunąć pliku</item>
+        <item quantity="few">Nie można trwale usunąć %d plików</item>
+        <item quantity="many">Nie można trwale usunąć %d plików</item>
+        <item quantity="other">Nie można trwale usunąć %d plików</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Czy na pewno chcesz przenieść jeden plik do kosza?</item>
+        <item quantity="few">Czy na pewno chcesz przenieść %d pliki do kosza?</item>
+        <item quantity="many">Czy na pewno chcesz przenieść %d plików do kosza?</item>
+        <item quantity="other">Czy na pewno chcesz przenieść %d plików do kosza?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Plik przeniesiony do kosza</item>
+        <item quantity="few">%d pliki przeniesione do kosza</item>
+        <item quantity="many">%d plików przeniesionych do kosza</item>
+        <item quantity="other">%d plików przeniesionych do kosza</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Plik nie może być przeniesiony do kosza</item>
+        <item quantity="few">%d pliki nie mogą być przeniesione do kosza</item>
+        <item quantity="many">%d plików nie może być przeniesionych do kosza</item>
+        <item quantity="other">%d plików nie może być przeniesionych do kosza</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Czy na pewno chcesz przywrócić jeden plik z kosza?</item>
+        <item quantity="few">Czy na pewno chcesz przywrócić %d pliki z kosza?</item>
+        <item quantity="many">Czy na pewno chcesz przywrócić %d plików z kosza?</item>
+        <item quantity="other">Czy na pewno chcesz przywrócić %d plików z kosza?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Plik przywrócony z kosza</item>
+        <item quantity="few">%d pliki przywrócone z kosza</item>
+        <item quantity="many">%d plików przywróconych z kosza</item>
+        <item quantity="other">%d plików przywróconych z kosza</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Nie można przywrócić pliku z kosza</item>
+        <item quantity="few">Nie można przywrócić %d plików z kosza</item>
+        <item quantity="many">Nie można przywrócić %d plików z kosza</item>
+        <item quantity="other">Nie można przywrócić %d plików z kosza</item>
+    </plurals>
+    <string name="manage_media_permission_title">Zarządzaj uprawnieniami multimediów</string>
+    <string name="manage_media_permission_message">Aby lepiej zarządzać zdjęciami i filmami, pozwól aplikacji na zarządzanie plikami multimedialnymi</string>
+    <string name="media_info_unknown">Nieznane</string>
+    <string name="media_info_add_description_hint">Dodaj opis</string>
+    <string name="media_info_write_description_failed">Nie udało się zmienić opisu multimediów</string>
+    <string name="media_info_location_loading_placeholder">Wczytywanie…</string>
+    <string name="media_info_location_open_with">Wyświetl lokalizację za pomocą</string>
+    <string name="intent_action_not_supported">Nieobsługiwane działanie</string>
+    <string name="intent_media_not_found">Nie znaleziono multimediów</string>
+    <string name="intent_media_type_not_found">Nie znaleziono typu multimediów</string>
+    <string name="intent_media_type_not_supported">Typ multimediów nie jest obsługiwany </string>
+    <string name="intent_no_system_wallpaper_cropper_available">Brak dostępnego narzędzia do przycinania w systemie</string>
+    <string name="intent_wallpaper_cannot_be_changed">Tapeta nie może zostać zmieniona</string>
+    <string name="file_action_add_to_favorites">Dodaj do ulubionych</string>
+    <string name="file_action_delete_forever">Trwale usuń</string>
+    <string name="file_action_edit">Edytuj</string>
+    <string name="file_action_empty_trash">Opróżnij kosz</string>
+    <string name="file_action_information">Informacje</string>
+    <string name="file_action_move_to_trash">Przenieś do kosza</string>
+    <string name="file_action_remove_from_favorites">Usuń z ulubionych</string>
+    <string name="file_action_restore_from_trash">Przywróć z kosza</string>
+    <string name="file_action_share">Udostepnij</string>
+    <string name="file_action_use_as">Użyj jako</string>
+    <string name="file_action_undo_action">Cofnij</string>
+    <string name="no_media">Brak multimediów</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">Wybrano: %d</item>
+        <item quantity="few">Wybrano: %d</item>
+        <item quantity="many">Wybrano: %d</item>
+        <item quantity="other">Wybrano: %d</item>
+    </plurals>
+    <string name="pick_a_photo">Wybierz zdjęcie</string>
+    <string name="pick_a_video">Wybierz film</string>
+    <string name="pick_a_media">Wybierz multimedia</string>
+    <string name="picker_done">Gotowe</string>
+    <string name="set_wallpaper_label">Tapeta</string>
+    <string name="set_wallpaper">Ustaw tapetę</string>
+    <string name="set_wallpaper_dialog_title">Ustaw tapetę na</string>
+    <string name="set_wallpaper_home_screen">Ekranie głównym</string>
+    <string name="set_wallpaper_lock_screen">Ekranie blokady</string>
+    <string name="set_wallpaper_both">Ekranie głównym oraz blokady</string>
+</resources>

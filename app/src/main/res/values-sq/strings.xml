@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galeria</string>
+    <string name="app_permissions_toast">Lejet nuk janë dhënë nga përdoruesi.</string>
+    <string name="reels_title">bobinat</string>
+    <string name="albums_title">Albumet</string>
+    <string name="search_title">Kërko</string>
+    <string name="categories_title">Kategoritë</string>
+    <string name="album_favorites">Të preferuarat</string>
+    <string name="album_trash">Kosh</string>
+    <string name="album_reels">bobinat</string>
+    <string name="album_photos">Fotografitë</string>
+    <string name="album_videos">Videot</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d artikull</item>
+        <item quantity="other">%d artikuj</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Jeni i sigurt që dëshironi ta fshini përgjithmonë këtë skedar?</item>
+        <item quantity="other">Jeni i sigurt që dëshironi të fshini përgjithmonë %d skedarë?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Skedari u fshi përgjithmonë</item>
+        <item quantity="other">%d skedarë u fshinë përgjithmonë</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Skedari nuk mund të fshihej përgjithmonë</item>
+        <item quantity="other">%d skedarë nuk mund të fshiheshin përgjithmonë</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Jeni i sigurt që dëshironi të zhvendosni një skedar në kosh?</item>
+        <item quantity="other">Jeni i sigurt që dëshironi të zhvendosni %d skedarë në kosh?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Skedari u zhvendos në kosh</item>
+        <item quantity="other">%d skedarë u zhvendosën në kosh</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Skedari nuk mund të zhvendosej në kosh</item>
+        <item quantity="other">%d skedarë nuk mund të zhvendoseshin në kosh</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Jeni i sigurt që dëshironi të rivendosni një skedar nga koshi?</item>
+        <item quantity="other">Jeni i sigurt që dëshironi të rivendosni %d skedarë nga koshi?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Skedari u rivendos nga koshi</item>
+        <item quantity="other">%d skedarë u restauruan nga koshi</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Skedari nuk mund të rikthehej nga koshi</item>
+        <item quantity="other">%d skedarë nuk mund të restauroheshin nga koshi</item>
+    </plurals>
+    <string name="manage_media_permission_title">Menaxho lejen e medias</string>
+    <string name="manage_media_permission_message">Për të menaxhuar më mirë imazhet dhe videot tuaja, lejo aplikacionin të menaxhojë skedarët e medias</string>
+    <string name="media_info_unknown">I panjohur</string>
+    <string name="media_info_add_description_hint">Shto një përshkrim</string>
+    <string name="media_info_write_description_failed">Ndryshimi i përshkrimit të medias dështoi</string>
+    <string name="media_info_location_loading_placeholder">Po ngarkohet…</string>
+    <string name="media_info_location_open_with">Shiko vendndodhjen me</string>
+    <string name="intent_action_not_supported">Veprimi nuk mbështetet</string>
+    <string name="intent_media_not_found">Media nuk u gjet</string>
+    <string name="intent_media_type_not_found">Lloji i medias nuk u gjet</string>
+    <string name="intent_media_type_not_supported">Lloji i medias nuk mbështetet</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Asnjë prerës sistemi i disponueshëm</string>
+    <string name="intent_wallpaper_cannot_be_changed">Sfondi nuk mund të ndryshohet</string>
+    <string name="file_action_add_to_favorites">Shto tek të preferuarat</string>
+    <string name="file_action_delete_forever">fshije përgjithmonë</string>
+    <string name="file_action_edit">Ndrysho</string>
+    <string name="file_action_empty_trash">Boshatis koshin</string>
+    <string name="file_action_move_to_trash">Zhvendos tek koshi</string>
+    <string name="file_action_remove_from_favorites">Hiqe nga të preferuarat</string>
+    <string name="file_action_restore_from_trash">Rivendos nga koshi</string>
+    <string name="file_action_share">Shpërndaje</string>
+    <string name="file_action_undo_action">Zhbëj</string>
+    <string name="no_media">S\'ka media</string>
+    <string name="pick_a_photo">Zgjidh nje fotografi</string>
+    <string name="pick_a_video">Zgjidh nje video</string>
+    <string name="pick_a_media">Zgjidh nje media</string>
+    <string name="picker_done">U krye</string>
+    <string name="set_wallpaper_label">Sfondi</string>
+    <string name="set_wallpaper">Cakto sfondin</string>
+    <string name="set_wallpaper_dialog_title">Vendos si sfond</string>
+    <string name="set_wallpaper_home_screen">Ekrani kryesor</string>
+    <string name="set_wallpaper_lock_screen">Ekrani i kyçjes </string>
+    <string name="set_wallpaper_both">Ekrani kryesor dhe ekrani kyçjes</string>
+</resources>
