@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">გალერეა</string>
+    <string name="app_permissions_toast">ნებადართული არაა მომხმარებლისგან.</string>
+    <string name="reels_title">ვიდეორგოლები</string>
+    <string name="albums_title">ალბომები</string>
+    <string name="search_title">ძიება</string>
+    <string name="categories_title">ჯგუფები</string>
+    <string name="album_favorites">რჩეულები</string>
+    <string name="album_trash">სანაგვე</string>
+    <string name="album_reels">ვიდეორგოლები</string>
+    <string name="album_photos">სურათები</string>
+    <string name="album_videos">ვიდეოები</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d ერთეული</item>
+        <item quantity="other">%d ერთეული</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">ნამდვილად გსურთ, სამუდამოდ წაიშალოს ეს ფაილი?</item>
+        <item quantity="other">ნამდვილად გსურთ, სამუდამოდ წაიშალოს %d ფაილი?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">ფაილი სამუდამოდ წაიშალა</item>
+        <item quantity="other">%d ფაილი სამუდამოდ წაიშალა</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">ფაილი სამუდამოდ ვერ წაიშალა</item>
+        <item quantity="other">%d ფაილი სამუდამოდ ვერ წაიშალა</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">ნამდვილად გსურთ ფაილის სანაგვეში გადატანა?</item>
+        <item quantity="other">ნამდვილად გსურთ %d ფაილის სანაგვეში გადატანა?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">ფაილი გადატანილია სანაგვეში</item>
+        <item quantity="other">%d ფაილი გადატანილია სანაგვეში</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">ფაილის სანაგვეში გადატანა ვერ მოხერხდა</item>
+        <item quantity="other">%d ფაილის სანაგვეში გადატანა ვერ მოხერხდა</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">ნამდვილად გსურთ ფაილის აღდგენა სანაგვიდან?</item>
+        <item quantity="other">ნამდვილად გსურთ %d ფაილის აღდგენა სანაგვიდან?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">ფაილი აღდგენილია სანაგვიდან</item>
+        <item quantity="other">%d ფაილი აღდგენილია სანაგვიდან</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">ფაილის აღდგენა ვერ მოხერხდა სანაგვიდან</item>
+        <item quantity="other">%d ფაილის აღდგენა ვერ მოხერხდა სანაგვიდან</item>
+    </plurals>
+    <string name="manage_media_permission_title">ფაილის ნებართვების მართვა</string>
+    <string name="manage_media_permission_message">სურათებისა და ვიდეოების უკეთ გამოსაყენებლად დართეთ პროგრამას ფაილების მართვის ნება</string>
+    <string name="media_info_unknown">უცნობი</string>
+    <string name="media_info_add_description_hint">აღწერის დამატება</string>
+    <string name="media_info_write_description_failed">ვერ მოხერხდა ფაილის აღწერის ცვლილება</string>
+    <string name="media_info_location_loading_placeholder">იტვირთება…</string>
+    <string name="media_info_location_open_with">მდებარეობის სანახავად გამოიყენეთ</string>
+    <string name="intent_action_not_supported">მოქმედება მხარდაუჭერელია</string>
+    <string name="intent_media_not_found">ფაილი ვერ მოიძებნა</string>
+    <string name="intent_media_type_not_found">ფაილის სახეობა ვერ მოიძებნა</string>
+    <string name="intent_media_type_not_supported">ფაილის სახეობა მხარდაუჭერელია</string>
+    <string name="intent_no_system_wallpaper_cropper_available">ფონის მოსაჭრელი პროგრამა არაა სისტემაში</string>
+    <string name="intent_wallpaper_cannot_be_changed">ფონის შეცვლა ვერ მოხერხდა</string>
+    <string name="file_action_add_to_favorites">რჩეულებში დამატება</string>
+    <string name="file_action_delete_forever">სამუდამოდ წაშლა</string>
+    <string name="file_action_edit">ჩასწორება</string>
+    <string name="file_action_empty_trash">სანაგვის დაცლა</string>
+    <string name="file_action_information">მონაცემები</string>
+    <string name="file_action_move_to_trash">გადატანა სანაგვეში</string>
+    <string name="file_action_remove_from_favorites">რჩეულებიდან მოცილება</string>
+    <string name="file_action_restore_from_trash">აღდგენა სანაგვიდან</string>
+    <string name="file_action_share">გაზიარება</string>
+    <string name="file_action_use_as">გამოიყენოს, როგორც</string>
+    <string name="file_action_undo_action">დაბრუნება</string>
+    <string name="no_media">ფაილები არაა</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d არჩეულია</item>
+        <item quantity="other">%d არჩეულია</item>
+    </plurals>
+    <string name="pick_a_photo">სურათის არჩევა</string>
+    <string name="pick_a_video">ვიდეოს არჩევა</string>
+    <string name="pick_a_media">ფაილის არჩევა</string>
+    <string name="picker_done">მზადაა</string>
+    <string name="set_wallpaper_label">ფონი</string>
+    <string name="set_wallpaper">ფონის დაყენება</string>
+    <string name="set_wallpaper_dialog_title">ფონის დაყენება</string>
+    <string name="set_wallpaper_home_screen">მთავარი ეკრანი</string>
+    <string name="set_wallpaper_lock_screen">ჩამკეტი ეკრანი</string>
+    <string name="set_wallpaper_both">მთავარი და ჩამკეტი ეკრანი</string>
+</resources>

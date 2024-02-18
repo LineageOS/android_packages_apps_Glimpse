@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galerie</string>
+    <string name="app_permissions_toast">Permisiuni care nu sunt acordate de utilizator.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Albume</string>
+    <string name="search_title">Căutare</string>
+    <string name="categories_title">Categorii</string>
+    <string name="album_favorites">Favorite</string>
+    <string name="album_trash">Coș de gunoi</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Fotografii</string>
+    <string name="album_videos">Videoclipuri</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d element</item>
+        <item quantity="few">%d elemente</item>
+        <item quantity="other">%d de elemente</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Sunteţi sigur(ă) că doriţi să ştergeţi permanent acest fişier?</item>
+        <item quantity="few">Sunteţi sigur(ă) că doriţi să ştergeţi permanent %d fişiere?</item>
+        <item quantity="other">Sunteţi sigur(ă) că doriţi să ştergeţi permanent %d de fișiere?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Un fișier șters permanent</item>
+        <item quantity="few">%d fișiere șterse permanent</item>
+        <item quantity="other">%d de fișiere șterse permanent</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Fișierul nu a putut fi șters permanent</item>
+        <item quantity="few">%d fișiere nu au putut fi șterse permanent </item>
+        <item quantity="other">%d de fișiere nu au putut fi șterse permanent</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Sigur doriți să mutați fișierul în coșul de gunoi?</item>
+        <item quantity="few">Sigur doriți să mutați %d fișiere în coșul de gunoi?</item>
+        <item quantity="other">Sigur doriți să mutați %d de fișiere în coșul de gunoi?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Fișier mutat în coșul de gunoi</item>
+        <item quantity="few">%d fișiere mutate în coșul de gunoi</item>
+        <item quantity="other">%d de fișiere mutate în coșul de gunoi</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Fișierul nu a putut fi mutat în coșul de gunoi</item>
+        <item quantity="few">%d fișiere nu au putut fi mutate în coșul de gunoi</item>
+        <item quantity="other">%d de fișiere nu au putut fi mutate în coșul de gunoi</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Sunteţi sigur(ă) că doriţi să restauraţi un fişier din coşul de gunoi?</item>
+        <item quantity="few">Sunteți sigur(ă) că doriți să restaurați %d fișiere din coșul de gunoi?</item>
+        <item quantity="other">Sunteți sigur(ă) că doriți să restaurați %d de fișiere din coșul de gunoi?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Fișier restaurat din coșul de gunoi</item>
+        <item quantity="few">%d fișiere restaurate din coșul de gunoi</item>
+        <item quantity="other">%d de fișiere restaurate din coșul de gunoi</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Fișierul nu a putut fi restaurat din coșul de gunoi</item>
+        <item quantity="few">%d fișiere nu au putut fi restaurate din coșul de gunoi</item>
+        <item quantity="other">%d de fișiere nu au putut fi restaurate din coșul de gunoi</item>
+    </plurals>
+    <string name="manage_media_permission_title">Gestionare permisiune media</string>
+    <string name="manage_media_permission_message">Pentru a vă gestiona mai bine imaginile și videoclipurile, permiteți aplicației să gestioneze fișierele media</string>
+    <string name="media_info_unknown">Necunoscut</string>
+    <string name="media_info_add_description_hint">Adăugați o descriere</string>
+    <string name="media_info_write_description_failed">Modificarea descrierii media a eșuat</string>
+    <string name="media_info_location_loading_placeholder">Se încarcă…</string>
+    <string name="media_info_location_open_with">Vizualizați locația cu</string>
+    <string name="intent_action_not_supported">Acțiune neacceptată</string>
+    <string name="intent_media_not_found">Fișierele media nu au fost găsite</string>
+    <string name="intent_media_type_not_found">Tipul de fișier media nu a fost găsit</string>
+    <string name="intent_media_type_not_supported">Tipul de fișier media nu este acceptat</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Niciun cropper de sistem disponibil</string>
+    <string name="intent_wallpaper_cannot_be_changed">Fundalul nu poate fi schimbat</string>
+    <string name="file_action_add_to_favorites">Adăugați la favorite</string>
+    <string name="file_action_delete_forever">Ștergeți pentru totdeauna</string>
+    <string name="file_action_edit">Editați</string>
+    <string name="file_action_empty_trash">Goliți coșul de gunoi</string>
+    <string name="file_action_information">Informație</string>
+    <string name="file_action_move_to_trash">Mutare la gunoi</string>
+    <string name="file_action_remove_from_favorites">Eliminați din favorite</string>
+    <string name="file_action_restore_from_trash">Restaurați din gunoi</string>
+    <string name="file_action_share">Distribuiți</string>
+    <string name="file_action_use_as">Utilizare ca</string>
+    <string name="file_action_undo_action">Anulare</string>
+    <string name="no_media">Fără media</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d selectat</item>
+        <item quantity="few">%d selectate</item>
+        <item quantity="other">%d selectate</item>
+    </plurals>
+    <string name="pick_a_photo">Selectați o fotografie</string>
+    <string name="pick_a_video">Alegeți un video</string>
+    <string name="pick_a_media">Alegeți media</string>
+    <string name="picker_done">Efectuat</string>
+    <string name="set_wallpaper_label">Imagine de fundal</string>
+    <string name="set_wallpaper">Setați imaginea de fundal</string>
+    <string name="set_wallpaper_dialog_title">Setați fundalul pe</string>
+    <string name="set_wallpaper_home_screen">Ecranul Acasă</string>
+    <string name="set_wallpaper_lock_screen">Ecranul de blocare</string>
+    <string name="set_wallpaper_both">Ecranele Acasă și de blocare</string>
+</resources>

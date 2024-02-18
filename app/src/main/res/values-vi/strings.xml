@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Bộ sưu tập</string>
+    <string name="app_permissions_toast">Quyền không được cấp bởi người dùng.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Album</string>
+    <string name="search_title">Tìm kiếm</string>
+    <string name="categories_title">Danh mục</string>
+    <string name="album_favorites">Yêu thích</string>
+    <string name="album_trash">Thùng rác</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Ảnh</string>
+    <string name="album_videos">Video</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="other">%d mục</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="other">Bạn có chắc chắn muốn xóa tệp tin này vĩnh viễn không?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="other">Tệp đã bị xóa vĩnh viễn</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="other">Không thể xóa vĩnh viễn tệp tin này</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="other">Bạn có chắc chắn rằng muốn chuyển tệp vào thùng rác?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="other">Tệp đã được chuyển vào thùng rác</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="other">Không thể chuyển tệp vào thùng rác</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="other">Bạn có chắc chắn muốn khôi phục tệp từ thùng rác?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="other">Đã khôi phục tệp từ thùng rác</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="other">Không thể khôi phục tệp từ thùng rác</item>
+    </plurals>
+    <string name="manage_media_permission_title">Quản lý quyền phương tiện</string>
+    <string name="manage_media_permission_message">Để quản lý ảnh và video tốt hơn, cho phép ứng dụng quản lý các tệp phương tiện của bạn</string>
+    <string name="media_info_unknown">Không rõ</string>
+    <string name="media_info_add_description_hint">Thêm mô tả</string>
+    <string name="media_info_write_description_failed">Không thể thay đổi mô tả phương tiện</string>
+    <string name="media_info_location_loading_placeholder">Đang tải…</string>
+    <string name="media_info_location_open_with">Xem vị trí với</string>
+    <string name="intent_action_not_supported">Thao tác không được hỗ trợ</string>
+    <string name="intent_media_not_found">Không tìm thấy phương tiện</string>
+    <string name="intent_media_type_not_found">Không tìm thấy loại phương tiện</string>
+    <string name="intent_media_type_not_supported">Loại phương tiện không được hỗ trợ</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Không có sẵn trình cắt hệ thống</string>
+    <string name="intent_wallpaper_cannot_be_changed">Không thể thay đổi hình nền</string>
+    <string name="file_action_add_to_favorites">Thêm vào Yêu thích</string>
+    <string name="file_action_delete_forever">Xóa vĩnh viễn</string>
+    <string name="file_action_edit">Sửa</string>
+    <string name="file_action_empty_trash">Dọn sạch thùng rác</string>
+    <string name="file_action_information">Thông tin</string>
+    <string name="file_action_move_to_trash">Di chuyển vào thùng rác</string>
+    <string name="file_action_remove_from_favorites">Xóa khỏi Yêu thích</string>
+    <string name="file_action_restore_from_trash">Khôi phục từ thùng rác</string>
+    <string name="file_action_share">Chia sẻ</string>
+    <string name="file_action_use_as">Sử dụng như</string>
+    <string name="file_action_undo_action">Hoàn tác</string>
+    <string name="no_media">Không có phương tiện</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="other">Đã chọn %d</item>
+    </plurals>
+    <string name="pick_a_photo">Chọn một ảnh</string>
+    <string name="pick_a_video">Chọn một video</string>
+    <string name="pick_a_media">Chọn một phương tiện</string>
+    <string name="picker_done">Hoàn tất</string>
+    <string name="set_wallpaper_label">Hình nền</string>
+    <string name="set_wallpaper">Đặt hình nền</string>
+    <string name="set_wallpaper_dialog_title">Đặt hình nền trên</string>
+    <string name="set_wallpaper_home_screen">Màn hình chính</string>
+    <string name="set_wallpaper_lock_screen">Màn hình khóa</string>
+    <string name="set_wallpaper_both">Màn hình chính và Màn hình khóa</string>
+</resources>

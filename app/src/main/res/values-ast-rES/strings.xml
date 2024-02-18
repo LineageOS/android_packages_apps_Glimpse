@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galería</string>
+    <string name="app_permissions_toast">L\'usuariu nun concedió los permisos.</string>
+    <string name="reels_title">Carretes</string>
+    <string name="albums_title">Álbumes</string>
+    <string name="search_title">Buscar</string>
+    <string name="categories_title">Categoríes</string>
+    <string name="album_favorites">Favoritos</string>
+    <string name="album_trash">Papelera</string>
+    <string name="album_reels">Carretes</string>
+    <string name="album_photos">Semeyes</string>
+    <string name="album_videos">Vídeos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d elementu</item>
+        <item quantity="other">%d elementos</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">¿De xuru que quies desaniciar permanentemente esti ficheru?</item>
+        <item quantity="other">¿De xuru que quies desaniciar permanentemente %d ficheros?</item>
+    </plurals>
+    <string name="manage_media_permission_message">Pa xestionar meyor les imáxenes y los vídeos, permite que l\'aplicación xestione los ficheros multimedia</string>
+    <string name="media_info_add_description_hint">Amestar una descripción</string>
+    <string name="media_info_location_loading_placeholder">Cargando…</string>
+    <string name="file_action_edit">Editar</string>
+    <string name="file_action_information">Información</string>
+    <string name="file_action_move_to_trash">Tirar a la papelera</string>
+    <string name="file_action_restore_from_trash">Sacar de la papelera</string>
+    <string name="file_action_share">Compartir</string>
+    <string name="file_action_use_as">Usar como</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">Selecionóse %d</item>
+        <item quantity="other">Selecionáronse %d</item>
+    </plurals>
+    <string name="set_wallpaper_home_screen">Pantalla d\'aniciu</string>
+    <string name="set_wallpaper_lock_screen">Pantalla de bloquéu</string>
+    <string name="set_wallpaper_both">Pantalla d\'aniciu y de bloquéu</string>
+</resources>
