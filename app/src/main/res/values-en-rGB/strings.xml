@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Gallery</string>
+    <string name="app_permissions_toast">Permissions not granted by the user.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Albums</string>
+    <string name="search_title">Search</string>
+    <string name="categories_title">Categories</string>
+    <string name="album_favorites">Favourites</string>
+    <string name="album_trash">Bin</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Photos</string>
+    <string name="album_videos">Videos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Are you sure you want to permanently delete this file?</item>
+        <item quantity="other">Are you sure you want to permanently delete %d files?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">File permanently deleted</item>
+        <item quantity="other">%d files permanently deleted</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">File couldn\'t be permanently deleted</item>
+        <item quantity="other">%d files couldn\'t be permanently deleted</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Are you sure you want to move one file to bin?</item>
+        <item quantity="other">Are you sure you want to move %d files to rubbish?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">File moved to bin</item>
+        <item quantity="other">%d files moved to bin</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">File couldn\'t be moved to bin</item>
+        <item quantity="other">%d files couldn\'t be moved to bin</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Are you sure you want to restore one file from bin?</item>
+        <item quantity="other">Are you sure you want to restore %d files from bin?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">File restored from bin</item>
+        <item quantity="other">%d files restored from bin</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">File couldn\'t be restored from bin</item>
+        <item quantity="other">%d files couldn\'t be restored from bin</item>
+    </plurals>
+    <string name="manage_media_permission_title">Manage media permission</string>
+    <string name="manage_media_permission_message">To better manage your images and videos, allow the app to manage your media files</string>
+    <string name="media_info_unknown">Unknown</string>
+    <string name="media_info_add_description_hint">Add a description</string>
+    <string name="media_info_write_description_failed">Failed to change media description</string>
+    <string name="media_info_location_loading_placeholder">Loading…</string>
+    <string name="media_info_location_open_with">View the location with</string>
+    <string name="intent_action_not_supported">Action not supported</string>
+    <string name="intent_media_not_found">Media not found</string>
+    <string name="intent_media_type_not_found">Media type not found</string>
+    <string name="intent_media_type_not_supported">Media type not supported</string>
+    <string name="intent_no_system_wallpaper_cropper_available">No system cropper available</string>
+    <string name="intent_wallpaper_cannot_be_changed">Wallpaper can\'t be changed</string>
+    <string name="file_action_add_to_favorites">Add to favourites</string>
+    <string name="file_action_delete_forever">Delete forever</string>
+    <string name="file_action_edit">Edit</string>
+    <string name="file_action_empty_trash">Empty bin</string>
+    <string name="file_action_information">Information</string>
+    <string name="file_action_move_to_trash">Move to bin</string>
+    <string name="file_action_remove_from_favorites">Remove from favourites</string>
+    <string name="file_action_restore_from_trash">Restore from bin</string>
+    <string name="file_action_share">Share</string>
+    <string name="file_action_use_as">Use as</string>
+    <string name="file_action_undo_action">Undo</string>
+    <string name="no_media">No media</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
+    <string name="pick_a_photo">Pick a photo</string>
+    <string name="pick_a_video">Pick a video</string>
+    <string name="pick_a_media">Pick a media</string>
+    <string name="picker_done">Done</string>
+    <string name="set_wallpaper_label">Wallpaper</string>
+    <string name="set_wallpaper">Set wallpaper</string>
+    <string name="set_wallpaper_dialog_title">Set wallpaper on</string>
+    <string name="set_wallpaper_home_screen">Home screen</string>
+    <string name="set_wallpaper_lock_screen">Lock screen</string>
+    <string name="set_wallpaper_both">Home and lock screen</string>
+</resources>

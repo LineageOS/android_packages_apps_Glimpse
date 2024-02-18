@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galleria</string>
+    <string name="app_permissions_toast">Autorizzazioni non concesse dall\'utente.</string>
+    <string name="reels_title">Reel</string>
+    <string name="albums_title">Album</string>
+    <string name="search_title">Cerca</string>
+    <string name="categories_title">Categorie</string>
+    <string name="album_favorites">Preferiti</string>
+    <string name="album_trash">Cestino</string>
+    <string name="album_reels">Reel</string>
+    <string name="album_photos">Foto</string>
+    <string name="album_videos">Video</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d elemento</item>
+        <item quantity="other">%d elementi</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Sei sicuro di voler eliminare definitivamente questo file?</item>
+        <item quantity="other">Sei sicuro di voler eliminare definitivamente %d file?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">File eliminato definitivamente</item>
+        <item quantity="other">%d file eliminati definitivamente</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Impossibile eliminare definitivamente il file</item>
+        <item quantity="other">Impossibile eliminare definitivamente %d file</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Sei sicuro di voler spostare un file nel cestino?</item>
+        <item quantity="other">Sei sicuro di voler spostare %d file nel cestino?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">File spostato nel cestino</item>
+        <item quantity="other">%d file spostati nel cestino</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Impossibile spostare il file nel cestino</item>
+        <item quantity="other">Impossibile spostare %d file nel cestino</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Sei sicuro di voler ripristinare un file dal cestino?</item>
+        <item quantity="other">Sei sicuro di voler ripristinare %d file dal cestino?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">File ripristinato dal cestino</item>
+        <item quantity="other">%d file ripristinati dal cestino</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Impossibile ripristinare il file dal cestino</item>
+        <item quantity="other">Impossibile ripristinare %d file dal cestino</item>
+    </plurals>
+    <string name="manage_media_permission_title">Gestisci le autorizzazioni relative ai file multimediali</string>
+    <string name="manage_media_permission_message">Per una gestione ottimale di immagini e video, consenti all\'app di gestire i tuoi file multimediali</string>
+    <string name="media_info_unknown">Sconosciuto</string>
+    <string name="media_info_add_description_hint">Aggiungi una descrizione</string>
+    <string name="media_info_write_description_failed">Impossibile modificare la descrizione del file multimediale</string>
+    <string name="media_info_location_loading_placeholder">Caricamento…</string>
+    <string name="media_info_location_open_with">Visualizza la posizione con</string>
+    <string name="intent_action_not_supported">Azione non supportata</string>
+    <string name="intent_media_not_found">File multimediali non trovati</string>
+    <string name="intent_media_type_not_found">Tipo di file multimediale non trovato</string>
+    <string name="intent_media_type_not_supported">Tipo di file multimediale non supportato</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Non è disponibile alcuno strumento di sistema per il ritaglio</string>
+    <string name="intent_wallpaper_cannot_be_changed">Non è possibile cambiare lo sfondo</string>
+    <string name="file_action_add_to_favorites">Aggiungi ai preferiti</string>
+    <string name="file_action_delete_forever">Elimina definitivamente</string>
+    <string name="file_action_edit">Modifica</string>
+    <string name="file_action_empty_trash">Svuota il cestino</string>
+    <string name="file_action_information">Informazioni</string>
+    <string name="file_action_move_to_trash">Sposta nel cestino</string>
+    <string name="file_action_remove_from_favorites">Rimuovi dai Preferiti</string>
+    <string name="file_action_restore_from_trash">Ripristina dal cestino</string>
+    <string name="file_action_share">Condividi</string>
+    <string name="file_action_use_as">Usa come</string>
+    <string name="file_action_undo_action">Annulla</string>
+    <string name="no_media">Nessun file multimediale</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d selezionato</item>
+        <item quantity="other">%d selezionati</item>
+    </plurals>
+    <string name="pick_a_photo">Seleziona una foto</string>
+    <string name="pick_a_video">Seleziona un video</string>
+    <string name="pick_a_media">Seleziona un file multimediale</string>
+    <string name="picker_done">Fatto</string>
+    <string name="set_wallpaper_label">Sfondo</string>
+    <string name="set_wallpaper">Imposta sfondo</string>
+    <string name="set_wallpaper_dialog_title">Imposta come sfondo su</string>
+    <string name="set_wallpaper_home_screen">Schermata iniziale</string>
+    <string name="set_wallpaper_lock_screen">Schermata di blocco</string>
+    <string name="set_wallpaper_both">Schermata iniziale e di blocco</string>
+</resources>

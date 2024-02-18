@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galerie</string>
+    <string name="app_permissions_toast">Berechtigungen vom Nutzer nicht erteilt.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Alben</string>
+    <string name="search_title">Suchen</string>
+    <string name="categories_title">Kategorien</string>
+    <string name="album_favorites">Favoriten</string>
+    <string name="album_trash">Papierkorb</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Fotos</string>
+    <string name="album_videos">Videos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d Element</item>
+        <item quantity="other">%d Elemente</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Bist du sicher, dass du diese Datei endgültig löschen willst?</item>
+        <item quantity="other">Bist du sicher, dass du diese %d Dateien endgültig löschen willst?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Datei endgültig gelöscht</item>
+        <item quantity="other">%d Dateien endgültig gelöscht</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Datei konnte nicht endgültig gelöscht werden</item>
+        <item quantity="other">%d Dateien konnten nicht endgültig gelöscht werden</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Bist du sicher, dass du diese Datei in den Papierkorb verschieben willst?</item>
+        <item quantity="other">Bist du sicher, dass du %d Dateien in den Papierkorb verschieben willst?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Datei in den Papierkorb verschoben</item>
+        <item quantity="other">%d Dateien in den Papierkorb verschoben</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Datei konnte nicht in den Papierkorb verschoben werden</item>
+        <item quantity="other">%d Dateien konnten nicht in den Papierkorb verschoben werden</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Bist du sicher, dass du eine Datei aus dem Papierkorb wiederherstellen willst?</item>
+        <item quantity="other">Bist du sicher, dass du %d Dateien aus dem Papierkorb wiederherstellen willst?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Datei aus dem Papierkorb wiederhergestellt</item>
+        <item quantity="other">%d Dateien aus dem Papierkorb wiederhergestellt</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Datei konnte nicht aus dem Papierkorb wiederhergestellt werden</item>
+        <item quantity="other">%d Dateien konnten nicht aus dem Papierkorb wiederhergestellt werden</item>
+    </plurals>
+    <string name="manage_media_permission_title">Medienberechtigung verwalten</string>
+    <string name="manage_media_permission_message">Um deine Bilder und Videos besser zu verwalten, erlaube der App, deine Mediendateien zu verwalten</string>
+    <string name="media_info_unknown">Unbekannt</string>
+    <string name="media_info_add_description_hint">Beschreibung hinzufügen</string>
+    <string name="media_info_write_description_failed">Ändern der Medienbeschreibung fehlgeschlagen</string>
+    <string name="media_info_location_loading_placeholder">Wird geladen…</string>
+    <string name="media_info_location_open_with">Ansicht des Standorts mit</string>
+    <string name="intent_action_not_supported">Aktion wird nicht unterstützt</string>
+    <string name="intent_media_type_not_found">Medientyp nicht gefunden</string>
+    <string name="intent_media_type_not_supported">Medientyp wird nicht unterstützt</string>
+    <string name="intent_wallpaper_cannot_be_changed">Hintergrundbild kann nicht geändert werden</string>
+    <string name="file_action_add_to_favorites">Zu Favoriten hinzufügen</string>
+    <string name="file_action_delete_forever">Endgültig löschen</string>
+    <string name="file_action_edit">Bearbeiten</string>
+    <string name="file_action_empty_trash">Papierkorb leeren</string>
+    <string name="file_action_information">Information</string>
+    <string name="file_action_move_to_trash">In Papierkorb verschieben</string>
+    <string name="file_action_remove_from_favorites">Aus Favoriten entfernen</string>
+    <string name="file_action_restore_from_trash">Aus dem Papierkorb wiederherstellen</string>
+    <string name="file_action_share">Teilen</string>
+    <string name="file_action_use_as">Verwenden als</string>
+    <string name="file_action_undo_action">Rückgängig</string>
+    <string name="no_media">Keine Medien</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d ausgewählt</item>
+        <item quantity="other">%d ausgewählt</item>
+    </plurals>
+    <string name="pick_a_photo">Foto auswählen</string>
+    <string name="pick_a_video">Video auswählen</string>
+    <string name="pick_a_media">Mediendatei auswählen</string>
+    <string name="picker_done">Fertig</string>
+    <string name="set_wallpaper_label">Hintergrundbild</string>
+    <string name="set_wallpaper">Hintergrundbild festlegen</string>
+    <string name="set_wallpaper_dialog_title">Hintergrundbild festlegen auf</string>
+    <string name="set_wallpaper_home_screen">Startbildschirm</string>
+    <string name="set_wallpaper_lock_screen">Sperrbildschirm</string>
+    <string name="set_wallpaper_both">Start- und Sperrbildschirm</string>
+</resources>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galerija</string>
+    <string name="app_permissions_toast">Dovoljenje ni odobreno od uporabnika</string>
+    <string name="reels_title">Koluti</string>
+    <string name="albums_title">Albumi</string>
+    <string name="search_title">Iskanje</string>
+    <string name="categories_title">Kategorije</string>
+    <string name="album_favorites">Priljubljene</string>
+    <string name="album_trash">Smetnjak</string>
+    <string name="album_reels">Koluti</string>
+    <string name="album_photos">Fotografije</string>
+    <string name="album_videos">Videoposnetki</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d predmet</item>
+        <item quantity="two">%d predmeta</item>
+        <item quantity="few">%d predmeti</item>
+        <item quantity="other">%d predmetov</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Ali ste prepričani, da želite trajno izbrisati to datoteko?</item>
+        <item quantity="two">Ali ste prepričani, da želite trajno izbrisati %d datoteki?</item>
+        <item quantity="few">Ali ste prepričani, da želite trajno izbrisati %d datoteke?</item>
+        <item quantity="other">Ali ste prepričani, da želite trajno izbrisati %d datotek?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Datoteka trajno izbrisana</item>
+        <item quantity="two">%d datoteki trajno izbrisani</item>
+        <item quantity="few">%d datoteke trajno izbrisane</item>
+        <item quantity="other">%d datotek trajno izbrisanih</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Datoteke ni bilo mogoče izbrisati.</item>
+        <item quantity="two">%d datotek ni bilo mogoče izbrisati.</item>
+        <item quantity="few">%d datotek ni bilo mogoče izbrisati.</item>
+        <item quantity="other">%d datotek ni bilo mogoče izbrisati.</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Ali ste prepričani, da želite premakniti eno datoteko v smetnjak?</item>
+        <item quantity="two">Ali ste prepričani, da želite premakniti %d datoteki v smetnjak?</item>
+        <item quantity="few">Ali ste prepričani, da želite premakniti %d datoteke v smetnjak?</item>
+        <item quantity="other">Ali ste prepričani, da želite premakniti %d datotek v smetnjak?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Datoteka premaknjena v smetnjak</item>
+        <item quantity="two">%d datoteki premaknjeni v smetnjak</item>
+        <item quantity="few">%d datoteke premaknjene v smetnjak</item>
+        <item quantity="other">%d datotek premaknjenih v smetnjak</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Datoteke ni bilo mogoče premakniti v koš</item>
+        <item quantity="two">%d datotek ni bilo mogoče premakniti v koš</item>
+        <item quantity="few">%d datotek ni bilo mogoče premakniti v koš</item>
+        <item quantity="other">%d datotek ni bilo mogoče premakniti v koš</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Ali ste prepričani, da želite obnoviti eno datoteko iz smetnjaka?</item>
+        <item quantity="two">Ali ste prepričani, da želite obnoviti %d datoteki iz smetnjaka?</item>
+        <item quantity="few">Ali ste prepričani, da želite obnoviti %d datoteke iz smetnjaka?</item>
+        <item quantity="other">Ali ste prepričani, da želite obnoviti %d datotek iz smetnjaka?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Datoteka obnovljena iz smetnjaka</item>
+        <item quantity="two">%d datoteki obnovljeni iz smetnjaka</item>
+        <item quantity="few">%d datoteke obnovljene iz smetnjaka</item>
+        <item quantity="other">%d datotek obnovljenih iz smetnjaka</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Datoteke ni bilo mogoče obnoviti iz smetnjaka</item>
+        <item quantity="two">%d datotek ni bilo mogoče obnoviti iz smetnjaka</item>
+        <item quantity="few">%d datotek ni bilo mogoče obnoviti iz smetnjaka</item>
+        <item quantity="other">%d datotek ni bilo mogoče obnoviti iz smetnjaka</item>
+    </plurals>
+    <string name="manage_media_permission_title">Upravljaj z dovoljenjem predstavnosti</string>
+    <string name="manage_media_permission_message">Za boljše upravljanje vaših slik in videoposnetkov, dovolite aplikaciji, da upravlja z vašimi predstavnostnimi datotekami</string>
+    <string name="media_info_unknown">Neznano</string>
+    <string name="media_info_add_description_hint">Dodaj opis</string>
+    <string name="media_info_write_description_failed">Sprememba opisa predstavnosti ni uspela</string>
+    <string name="media_info_location_loading_placeholder">Nalaganje …</string>
+    <string name="media_info_location_open_with">Pokaži lokacijo s/z</string>
+    <string name="intent_action_not_supported">Dejanje ni podprto</string>
+    <string name="intent_media_not_found">Predstavnost ni najdena</string>
+    <string name="intent_media_type_not_found">Vrsta predstavnosti ni najdena</string>
+    <string name="intent_media_type_not_supported">Vrsta predstavnosti ni podprta</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Noben sistemski obrezovalnik ni na voljo</string>
+    <string name="intent_wallpaper_cannot_be_changed">Zaslonskega ozadja ni mogoče spremeniti</string>
+    <string name="file_action_add_to_favorites">Dodaj k priljubljenim</string>
+    <string name="file_action_delete_forever">Trajno izbriši</string>
+    <string name="file_action_edit">Uredi</string>
+    <string name="file_action_empty_trash">Izprazni smetnjak</string>
+    <string name="file_action_information">Informacije</string>
+    <string name="file_action_move_to_trash">Premakni v smetnjak</string>
+    <string name="file_action_remove_from_favorites">Odstrani iz priljubljenih</string>
+    <string name="file_action_restore_from_trash">Obnovi iz smetnjaka</string>
+    <string name="file_action_share">Deli</string>
+    <string name="file_action_use_as">Uporabi kot</string>
+    <string name="file_action_undo_action">Razveljavi</string>
+    <string name="no_media">Ni predstavnosti</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d izbrana</item>
+        <item quantity="two">%d izbrani</item>
+        <item quantity="few">%d izbrane</item>
+        <item quantity="other">%d izbranih</item>
+    </plurals>
+    <string name="pick_a_photo">Izberite fotografijo</string>
+    <string name="pick_a_video">Izberite videoposnetek</string>
+    <string name="pick_a_media">Izberite predstavnost</string>
+    <string name="picker_done">Opravljeno</string>
+    <string name="set_wallpaper_label">Zaslonsko ozadje</string>
+    <string name="set_wallpaper">Nastavi zaslonsko ozadje</string>
+    <string name="set_wallpaper_dialog_title">Nastavi zaslonsko ozadje na</string>
+    <string name="set_wallpaper_home_screen">Domači zaslon</string>
+    <string name="set_wallpaper_lock_screen">Zaklenjen zaslon</string>
+    <string name="set_wallpaper_both">Domači in zaklenjen zaslon</string>
+</resources>

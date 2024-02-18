@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">갤러리</string>
+    <string name="app_permissions_toast">사용자에 의해 권한이 허용되어 있지 않습니다.</string>
+    <string name="reels_title">릴</string>
+    <string name="albums_title">앨범</string>
+    <string name="search_title">검색</string>
+    <string name="categories_title">카테고리</string>
+    <string name="album_favorites">즐겨찾기</string>
+    <string name="album_trash">휴지통</string>
+    <string name="album_reels">릴</string>
+    <string name="album_photos">사진</string>
+    <string name="album_videos">동영상</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="other">%d개 항목</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="other">정말 %d개 파일을 완전히 삭제하시겠습니까?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="other">파일을 완전히 삭제했습니다</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="other">%d개 파일을 완전히 삭제하지 못했습니다</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="other">정말 %d개 파일을 휴지통으로 옮기시겠습니까?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="other">%d개 파일을 휴지통으로 옮겼습니다</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="other">%d개 파일을 휴지통으로 옮기지 못했습니다</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="other">정말 %d개 파일을 휴지통에서 복원하시겠습니까?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="other">%d개 파일을 휴지통에서 복원했습니다</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="other">%d개 파일을 휴지통에서 복원하지 못했습니다</item>
+    </plurals>
+    <string name="manage_media_permission_title">미디어 권한 관리</string>
+    <string name="media_info_unknown">알 수 없음</string>
+    <string name="media_info_add_description_hint">설명 추가</string>
+    <string name="media_info_location_loading_placeholder">불러오는 중…</string>
+    <string name="intent_media_not_found">미디어 없음</string>
+    <string name="file_action_add_to_favorites">즐겨찾기에 추가</string>
+    <string name="file_action_delete_forever">완전히 삭제</string>
+    <string name="file_action_edit">편집</string>
+    <string name="file_action_empty_trash">휴지통 비우기</string>
+    <string name="file_action_information">정보</string>
+    <string name="file_action_move_to_trash">휴지통으로 이동</string>
+    <string name="file_action_remove_from_favorites">즐겨찾기에서 제거</string>
+    <string name="file_action_restore_from_trash">휴지통에서 복원</string>
+    <string name="file_action_share">공유</string>
+    <string name="file_action_undo_action">실행 취소</string>
+    <string name="no_media">미디어 없음</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="other">%d 선택됨</item>
+    </plurals>
+    <string name="pick_a_photo">사진 선택</string>
+    <string name="pick_a_video">동영상 선택</string>
+    <string name="pick_a_media">미디어 선택</string>
+    <string name="picker_done">완료</string>
+    <string name="set_wallpaper_label">배경화면</string>
+    <string name="set_wallpaper">배경화면으로 설정</string>
+    <string name="set_wallpaper_home_screen">홈 화면</string>
+    <string name="set_wallpaper_lock_screen">잠금 화면</string>
+    <string name="set_wallpaper_both">홈 및 잠금 화면</string>
+</resources>

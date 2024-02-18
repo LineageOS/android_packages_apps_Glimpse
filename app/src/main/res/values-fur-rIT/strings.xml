@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galarie</string>
+    <string name="app_permissions_toast">L\'utent nol concêt i permès.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Albums</string>
+    <string name="search_title">Cîr</string>
+    <string name="categories_title">Categoriis</string>
+    <string name="album_favorites">Preferîts</string>
+    <string name="album_trash">Scovacere</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Fotos</string>
+    <string name="album_videos">Videos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d element</item>
+        <item quantity="other">%d elements</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Pardabon eliminâ par simpri chest file?</item>
+        <item quantity="other">Pardabon eliminâ par simpri %d files?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">File eliminât par simpri</item>
+        <item quantity="other">%d files eliminâts par simpri</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Nol è stât pussibil eliminâ par simpri il file</item>
+        <item quantity="other">Nol è stât pussibil eliminâ par simpri %d files</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Pardabon spostâ un file te scovacere?</item>
+        <item quantity="other">Pardabon spostâ %d files te scovacere?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">File spostât te scovacere</item>
+        <item quantity="other">%d files spostâts te scovacere</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Nol è stât pussibil spostâ il file te scovacere</item>
+        <item quantity="other">Nol è stât pussibil spostâ %d files te scovacere</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Paradobon ripristinâ un file de scovacere?</item>
+        <item quantity="other">Pardabon ripristinâ %d files de scovacere?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">File ripristinât de scovacere</item>
+        <item quantity="other">%d files ripristinâts de scovacere</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Nol è stât pussibil ripristinâ il file de scovacere</item>
+        <item quantity="other">Nol è stât pussibil ripristinâ %d files de scovacere</item>
+    </plurals>
+    <string name="manage_media_permission_title">Gjestìs permès multimediâi</string>
+    <string name="manage_media_permission_message">Par gjestî miôr lis imagjins e i videos, permet ae aplicazion di gjestî i tiei files multimediâi</string>
+    <string name="media_info_unknown">No cognossût</string>
+    <string name="media_info_add_description_hint">Zonte une descrizion</string>
+    <string name="media_info_write_description_failed">Impussibil cambiâ la descrizion  multimediâl</string>
+    <string name="media_info_location_loading_placeholder">Daûr a cjariâ…</string>
+    <string name="media_info_location_open_with">Viôt la posizion cun</string>
+    <string name="intent_action_not_supported">Azion no supuartade</string>
+    <string name="intent_media_not_found">Multimedia no cjatât</string>
+    <string name="intent_media_type_not_found">Gjenar di multimedia no cjatât</string>
+    <string name="intent_media_type_not_supported">Gjenar di multimedia no supuartât</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Nissun çoncjadôr di sisteme disponibil</string>
+    <string name="intent_wallpaper_cannot_be_changed">Nol è pussibil cambiâ il fonts</string>
+    <string name="file_action_add_to_favorites">Zonte tai preferîts</string>
+    <string name="file_action_delete_forever">Elimine par simpri</string>
+    <string name="file_action_edit">Modifiche</string>
+    <string name="file_action_empty_trash">Disvuede scovacere</string>
+    <string name="file_action_information">Informazions</string>
+    <string name="file_action_move_to_trash">Sposte te scovacere</string>
+    <string name="file_action_remove_from_favorites">Gjave dai preferîts</string>
+    <string name="file_action_restore_from_trash">Ripristine de scovacere</string>
+    <string name="file_action_share">Condivît</string>
+    <string name="file_action_use_as">Dopre come</string>
+    <string name="file_action_undo_action">Disfe</string>
+    <string name="no_media">Nissun file multimediâl</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d selezionât</item>
+        <item quantity="other">%d selezionâts</item>
+    </plurals>
+    <string name="pick_a_photo">Sielç une foto</string>
+    <string name="pick_a_video">Sielç un video</string>
+    <string name="pick_a_media">Sielç un file multimediâl</string>
+    <string name="picker_done">Fat</string>
+    <string name="set_wallpaper_label">Fonts</string>
+    <string name="set_wallpaper">Stabilìs fonts</string>
+    <string name="set_wallpaper_dialog_title">Stabilìs fonts su</string>
+    <string name="set_wallpaper_home_screen">Schermade di inizi</string>
+    <string name="set_wallpaper_lock_screen">Schermade di bloc</string>
+    <string name="set_wallpaper_both">Inizi e schermade di bloc</string>
+</resources>
