@@ -10,6 +10,7 @@ import android.app.KeyguardManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -387,6 +388,23 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                         null
                     )
                 )
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            shareButton.setOnLongClickListener {
+                MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
+                    startActivity(
+                        Intent.createChooser(
+                            buildShareIntent(it, redact = { uri ->
+                                MediaStore.getRedactedUri(contentResolver, uri) ?: uri
+                            }),
+                            null
+                        )
+                    )
+                }
+
+                true
             }
         }
 

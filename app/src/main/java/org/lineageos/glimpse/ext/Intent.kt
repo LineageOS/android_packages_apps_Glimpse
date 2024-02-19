@@ -6,24 +6,28 @@
 package org.lineageos.glimpse.ext
 
 import android.content.Intent
+import android.net.Uri
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType.IMAGE
 import org.lineageos.glimpse.models.MediaType.VIDEO
 
-fun buildShareIntent(vararg medias: Media) = Intent().apply {
+fun buildShareIntent(
+    vararg medias: Media,
+    redact: (uri: Uri) -> Uri = { it },
+) = Intent().apply {
     assert(medias.isNotEmpty()) { "No media" }
 
     if (medias.size == 1) {
         action = Intent.ACTION_SEND
         medias[0].let {
-            putExtra(Intent.EXTRA_STREAM, it.uri)
+            putExtra(Intent.EXTRA_STREAM, redact(it.uri))
             type = it.mimeType
         }
     } else {
         action = Intent.ACTION_SEND_MULTIPLE
         putParcelableArrayListExtra(
             Intent.EXTRA_STREAM,
-            medias.map { it.uri }.toCollection(ArrayList())
+            medias.map { redact(it.uri) }.toCollection(ArrayList())
         )
         type = when {
             medias.all { it.mediaType == IMAGE } -> "image/*"
