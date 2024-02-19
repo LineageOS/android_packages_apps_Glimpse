@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0aa3bb6f_2493f2e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-19T21:06:35Z",
+      "side": 1,
+      "message": "Aside from the bad UX, the share sheet preview/file name is completely wrong\nit seems like it isn\u0027t even aware it\u0027s an image.\nsharing it works as expected tho",
+      "revId": "ae90906aba2e3e3ad5096aa71471848b35e6ad7e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
