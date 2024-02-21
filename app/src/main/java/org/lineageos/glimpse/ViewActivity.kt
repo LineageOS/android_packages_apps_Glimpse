@@ -549,7 +549,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
      */
     private fun handleIntent(intent: Intent) = when (intent.action) {
         Intent.ACTION_VIEW -> handleView(intent)
-        MediaStore.ACTION_REVIEW -> handleReview(intent)
+        MediaStore.ACTION_REVIEW, "com.android.camera.action.REVIEW" -> handleReview(intent)
         MediaStore.ACTION_REVIEW_SECURE -> handleReview(intent, true)
         else -> run {
             runOnUiThread {
