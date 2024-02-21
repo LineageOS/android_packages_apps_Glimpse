@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5c2fbb3_871cce0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-21T17:28:04Z",
+      "side": 1,
+      "message": "Sorry, we won\u0027t support deprecated or non-standard intents",
+      "revId": "f6c4f695bc825c3a102fb62ccac2e3ed73cfc4d0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
