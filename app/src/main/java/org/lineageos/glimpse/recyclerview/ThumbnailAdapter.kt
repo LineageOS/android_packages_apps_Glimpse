@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.Disposable
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
@@ -155,6 +156,7 @@ class ThumbnailAdapter(
         private val thumbnailImageView = itemView.findViewById<ImageView>(R.id.thumbnailImageView)!!
 
         private lateinit var media: MediaStoreMedia
+        private lateinit var thumbnailDisposable: Disposable
         private var isSelected = false
 
         private val inSelectionModeObserver = Observer { inSelectionMode: Boolean ->
@@ -174,6 +176,7 @@ class ThumbnailAdapter(
 
         fun onViewDetachedToWindow() {
             model.inSelectionMode.removeObserver(inSelectionModeObserver)
+            thumbnailDisposable.dispose()
         }
 
         fun bind(media: MediaStoreMedia, isSelected: Boolean = false) {
@@ -184,7 +187,7 @@ class ThumbnailAdapter(
                 onItemSelected(media)
             }
 
-            thumbnailImageView.load(media.uri) {
+            thumbnailDisposable = thumbnailImageView.load(media.uri) {
                 memoryCacheKey("thumbnail_${media.id}")
                 size(DisplayAwareGridLayoutManager.MAX_THUMBNAIL_SIZE)
                 placeholder(R.drawable.thumbnail_placeholder)
