@@ -27,6 +27,6 @@ class GlimpseApplication : Application(), ImageLoaderFactory {
         add(GifDecoder.Factory())
         add(VideoFrameDecoder.Factory())
     }.memoryCache {
-        MemoryCache.Builder(this).maxSizePercent(0.25).build()
+        MemoryCache.Builder(this).maxSizePercent(0.5).build()
     }.build()
 }
