@@ -16,6 +16,24 @@
       "message": "attempting to get a smoother reel page...",
       "revId": "156c2a5c77673b8c89f3ce6f4efce5b8da5f9ff4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e76bd89e_8c619dc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-28T17:27:31Z",
+      "side": 1,
+      "message": "Setting lifecycle doesn\u0027t work?",
+      "parentUuid": "c529dacd_ce1ca413",
+      "revId": "156c2a5c77673b8c89f3ce6f4efce5b8da5f9ff4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
