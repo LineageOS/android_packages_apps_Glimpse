@@ -11,6 +11,10 @@ runs:
         java-version: 17
         cache: 'gradle'
 
+    - name: Install dependencies
+      shell: bash
+      run: sudo apt -y install faketime
+
     - name: Build with Gradle
       shell: bash
       run: ./gradlew assembleDebug
@@ -18,7 +22,7 @@ runs:
     - name: Generate Android.bp
       shell: bash
       run: |
-        ./gradlew app:generateBp
+        faketime "$(stat -c %y app/libs/Android.bp)" ./gradlew app:generateBp
         if [[ ! -z $(git status -s) ]]; then
           git status
           exit -1
