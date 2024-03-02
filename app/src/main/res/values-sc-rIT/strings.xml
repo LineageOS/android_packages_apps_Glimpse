@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galleria</string>
+    <string name="app_permissions_toast">S\'utente no at donadu permissos.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Albums</string>
+    <string name="search_title">Chirca</string>
+    <string name="categories_title">Categorias</string>
+    <string name="album_favorites">Preferidos</string>
+    <string name="album_trash">Àliga</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Fotografias</string>
+    <string name="album_videos">Vìdeos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d elementos</item>
+        <item quantity="other">%d elementos</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Seguru chi boles cantzellare in manera permanente custu archìviu?</item>
+        <item quantity="other">Seguru chi boles cantzellare in manera permanente %d archìvios?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Archìviu cantzelladu in manera permanente</item>
+        <item quantity="other">%d archìvios cantzellados in manera permanente</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Impossìbile cantzellare s\'archìviu in manera permanente</item>
+        <item quantity="other">Impossìbile cantzellare %d archìvios in manera permanente</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Seguru chi boles mòvere un\'archìviu a s\'àliga?</item>
+        <item quantity="other">Seguru chi boles mòvere %d archìvios a s\'àliga?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Archìviu mòvidu a s\'àliga</item>
+        <item quantity="other">%d archìvios mòvidos a s\'àliga</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Impossìbile mòvere s\'archìviu a s\'àliga</item>
+        <item quantity="other">Impossìbile mòvere %d archìvios a s\'àliga</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Seguru chi boles recuperare un\'archìviu dae s\'àliga?</item>
+        <item quantity="other">Seguru chi boles recuperare %d archìvios dae s\'àliga?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Archìviu recuperadu dae s\'àliga</item>
+        <item quantity="other">%d archìvios recuperados dae s\'àliga</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Impossìbile recuperare s\'archìviu dae s\'àliga</item>
+        <item quantity="other">Impossìbile recuperare %d archìvios dae s\'àliga</item>
+    </plurals>
+    <string name="manage_media_permission_title">Gesti is permissos de is elementos multimediales</string>
+    <string name="manage_media_permission_message">Pro gestire mègius is immàgines e is vìdeos tuos, permite a s\'aplicatzione de gestire is archìvios multimediales</string>
+    <string name="media_info_unknown">Disconnotu</string>
+    <string name="media_info_add_description_hint">Agiunghe una descritzione</string>
+    <string name="media_info_write_description_failed">Impossìbile modificare sa descritzione de s\'elementu multimediale</string>
+    <string name="media_info_location_loading_placeholder">Carrighende...</string>
+    <string name="media_info_location_open_with">Mustra sa positzione cun</string>
+    <string name="intent_action_not_supported">Atzione non cumpatìbile</string>
+    <string name="intent_media_not_found">Impossìbile agatare s\'elementu multimediale</string>
+    <string name="intent_media_type_not_found">Impossìbile agatare su tipu de elementu multimediale</string>
+    <string name="intent_media_type_not_supported">Tipu de elementu multimediale no cumpatìbile</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Nissuna aina de sistema pro sa segada</string>
+    <string name="intent_wallpaper_cannot_be_changed">Impossìbile modificare s\'isfundu de s\'ischermu</string>
+    <string name="file_action_add_to_favorites">Agiunghe a is preferidos</string>
+    <string name="file_action_delete_forever">Cantzella pro semper</string>
+    <string name="file_action_edit">Modìfica</string>
+    <string name="file_action_empty_trash">Isbòida s\'àliga</string>
+    <string name="file_action_information">Informatzione</string>
+    <string name="file_action_move_to_trash">Move a s\'àliga</string>
+    <string name="file_action_remove_from_favorites">Boga dae preferidos</string>
+    <string name="file_action_restore_from_trash">Recùpera dae s\'àliga</string>
+    <string name="file_action_share">Cumpartzi</string>
+    <string name="file_action_use_as">Imprea comente</string>
+    <string name="file_action_undo_action">Iscontza</string>
+    <string name="no_media">Nissunu elementu multimediale</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d seletzionadu</item>
+        <item quantity="other">%d seletzionados</item>
+    </plurals>
+    <string name="pick_a_photo">Seletziona una fotografia</string>
+    <string name="pick_a_video">Seletziona unu vìdeu</string>
+    <string name="pick_a_media">Seletziona un\'elementu multimediale</string>
+    <string name="picker_done">Fatu</string>
+    <string name="set_wallpaper_label">Immàgine de isfundu</string>
+    <string name="set_wallpaper">Cunfigura un\'isfundu</string>
+    <string name="set_wallpaper_dialog_title">Cunfigura un\'isfundu in</string>
+    <string name="set_wallpaper_home_screen">Ischermu printzipale</string>
+    <string name="set_wallpaper_lock_screen">Ischermu de blocu</string>
+    <string name="set_wallpaper_both">Ischermu preintzipale e de blocu</string>
+</resources>
