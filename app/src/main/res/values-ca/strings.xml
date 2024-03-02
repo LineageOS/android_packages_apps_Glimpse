@@ -80,6 +80,10 @@
     <string name="file_action_use_as">Utilitza com</string>
     <string name="file_action_undo_action">Desfés</string>
     <string name="no_media">Cap fitxer multimèdia</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d seleccionat</item>
+        <item quantity="other">%d seleccionats</item>
+    </plurals>
     <string name="pick_a_photo">Trieu una foto</string>
     <string name="pick_a_video">Trieu un vídeo</string>
     <string name="pick_a_media">Trieu un mitjà</string>
