@@ -72,12 +72,18 @@
     <string name="file_action_delete_forever">fshije përgjithmonë</string>
     <string name="file_action_edit">Ndrysho</string>
     <string name="file_action_empty_trash">Boshatis koshin</string>
+    <string name="file_action_information">Informacion</string>
     <string name="file_action_move_to_trash">Zhvendos tek koshi</string>
     <string name="file_action_remove_from_favorites">Hiqe nga të preferuarat</string>
     <string name="file_action_restore_from_trash">Rivendos nga koshi</string>
     <string name="file_action_share">Shpërndaje</string>
+    <string name="file_action_use_as">Përdorni si</string>
     <string name="file_action_undo_action">Zhbëj</string>
     <string name="no_media">S\'ka media</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d të përzgjedhur</item>
+        <item quantity="other">%d të përzgjedhur</item>
+    </plurals>
     <string name="pick_a_photo">Zgjidh nje fotografi</string>
     <string name="pick_a_video">Zgjidh nje video</string>
     <string name="pick_a_media">Zgjidh nje media</string>

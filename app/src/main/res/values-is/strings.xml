@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Myndasafn</string>
+    <string name="app_permissions_toast">Heimildir ekki veittar af notandanum.</string>
+    <string name="reels_title">Spólur</string>
+    <string name="albums_title">Albúm</string>
+    <string name="search_title">Leita</string>
+    <string name="categories_title">Flokkar</string>
+    <string name="album_favorites">Eftirlæti</string>
+    <string name="album_trash">Rusl</string>
+    <string name="album_reels">Spólur</string>
+    <string name="album_photos">Ljósmyndir</string>
+    <string name="album_videos">Myndskeið</string>
+    <string name="manage_media_permission_title">Stýra heimildum á myndefni</string>
+    <string name="manage_media_permission_message">Til að stýra betur ljósmyndunum þínum og myndskeiðum, skaltu leyfa forritinu að sýsla með myndefnisskrárnar þínar</string>
+    <string name="media_info_unknown">Óþekkt</string>
+    <string name="media_info_add_description_hint">Bæta við lýsingu</string>
+    <string name="media_info_write_description_failed">Mistókst að breyta lýsingu myndefnis</string>
+    <string name="media_info_location_loading_placeholder">Hleð inn…</string>
+    <string name="media_info_location_open_with">Skoða staðsetningu með</string>
+    <string name="intent_action_not_supported">Aðgerð ekki studd</string>
+    <string name="intent_media_not_found">Gagnamiðill fannst ekki</string>
+    <string name="intent_media_type_not_found">Tegund myndefnis fannst ekki</string>
+    <string name="intent_media_type_not_supported">Tegund myndefnis er ekki studd</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Ekkert utanskurðartól kerfis er tiltækt</string>
+    <string name="intent_wallpaper_cannot_be_changed">Bakgrunnsmyndinni er ekki hægt að breyta</string>
+    <string name="file_action_add_to_favorites">Bæta í eftirlæti</string>
+    <string name="file_action_delete_forever">Eyða að eilífu</string>
+    <string name="file_action_edit">Breyta</string>
+    <string name="file_action_empty_trash">Tæma ruslið</string>
+    <string name="file_action_information">Upplýsingar</string>
+    <string name="file_action_move_to_trash">Flytja í ruslið</string>
+    <string name="file_action_remove_from_favorites">Fjarlægja úr eftirlætum</string>
+    <string name="file_action_restore_from_trash">Endurheimta úr rusli</string>
+    <string name="file_action_share">Deila</string>
+    <string name="file_action_use_as">Nota sem</string>
+    <string name="file_action_undo_action">Afturkalla</string>
+    <string name="no_media">Ekkert myndefni</string>
+    <string name="pick_a_photo">Veldu ljósmynd</string>
+    <string name="pick_a_video">Veldu myndskeið</string>
+    <string name="pick_a_media">Veldu myndefni</string>
+    <string name="picker_done">Lokið</string>
+    <string name="set_wallpaper_label">Bakgrunnsmynd</string>
+    <string name="set_wallpaper">Setja sem bakgrunnsmynd</string>
+    <string name="set_wallpaper_dialog_title">Setja sem bakgrunnsmynd á</string>
+    <string name="set_wallpaper_home_screen">Heimaskjá</string>
+    <string name="set_wallpaper_lock_screen">Lásskjá</string>
+    <string name="set_wallpaper_both">Heima- og lásskjá</string>
+</resources>
