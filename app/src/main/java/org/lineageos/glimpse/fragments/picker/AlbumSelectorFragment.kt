@@ -23,8 +23,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import lineagex.core.ext.getViewProperty
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
 import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback

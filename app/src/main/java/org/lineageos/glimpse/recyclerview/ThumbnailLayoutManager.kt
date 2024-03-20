@@ -6,12 +6,12 @@
 package org.lineageos.glimpse.recyclerview
 
 import android.content.Context
-import org.lineageos.glimpse.ext.*
+import lineagex.core.ext.toPx
 
 class ThumbnailLayoutManager(
     context: Context,
     adapter: ThumbnailAdapter,
-) : DisplayAwareGridLayoutManager(context, 4, 4.px) {
+) : DisplayAwareGridLayoutManager(context, 4, 4.toPx) {
     init {
         spanSizeLookup = ThumbnailSpanSizeLookup(adapter, spanCount)
     }

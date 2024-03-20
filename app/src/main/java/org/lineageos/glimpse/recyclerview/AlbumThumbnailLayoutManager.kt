@@ -6,8 +6,8 @@
 package org.lineageos.glimpse.recyclerview
 
 import android.content.Context
-import org.lineageos.glimpse.ext.px
+import lineagex.core.ext.toPx
 
 class AlbumThumbnailLayoutManager(
     context: Context,
-) : DisplayAwareGridLayoutManager(context, 2, 24.px)
+) : DisplayAwareGridLayoutManager(context, 2, 24.toPx)

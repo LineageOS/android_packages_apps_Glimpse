@@ -8,7 +8,7 @@ package org.lineageos.glimpse.models
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.MediaStore
-import org.lineageos.glimpse.ext.*
+import lineagex.core.ext.readParcelable
 import kotlin.reflect.safeCast
 
 /**

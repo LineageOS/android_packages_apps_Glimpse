@@ -9,8 +9,8 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import android.os.Parcelable.Creator
-import org.lineageos.glimpse.ext.readParcelable
-import org.lineageos.glimpse.ext.readSerializable
+import lineagex.core.ext.readParcelable
+import lineagex.core.ext.readSerializable
 import kotlin.reflect.safeCast
 
 /**

@@ -36,8 +36,8 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import lineagex.core.ext.getViewProperty
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.recyclerview.ThumbnailAdapter

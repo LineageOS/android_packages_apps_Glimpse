@@ -43,6 +43,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import lineagex.core.ext.asArray
+import lineagex.core.ext.fade
+import lineagex.core.ext.updateBarsVisibility
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.lineageos.glimpse.ext.*
@@ -270,7 +273,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             topSheetConstraintLayout.fade(!fullscreenMode)
             bottomSheetHorizontalScrollView.fade(!fullscreenMode)
 
-            window.setBarsVisibility(systemBars = !fullscreenMode)
+            window.updateBarsVisibility(systemBars = !fullscreenMode)
 
             // If the sheets are being made visible again, update the values
             if (!fullscreenMode) {

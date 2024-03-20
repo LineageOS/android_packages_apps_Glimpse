@@ -31,6 +31,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import lineagex.core.ext.round
+import lineagex.core.ext.toFraction
+import lineagex.ui.listitem.ListItem
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.*
 import org.lineageos.glimpse.models.MediaStoreMedia
