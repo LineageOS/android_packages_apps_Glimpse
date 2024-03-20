@@ -9,6 +9,7 @@ import android.view.View
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.requestPlayPauseFocus
 import androidx.media3.ui.updateAll
+import lineagex.core.ext.fade
 
 @androidx.media3.common.util.UnstableApi
 fun PlayerControlView.fade(visible: Boolean) {

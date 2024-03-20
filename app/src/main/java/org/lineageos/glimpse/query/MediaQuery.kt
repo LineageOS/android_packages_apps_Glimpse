@@ -7,6 +7,8 @@ package org.lineageos.glimpse.query
 
 import android.net.Uri
 import android.provider.MediaStore
+import lineagex.core.query.eq
+import lineagex.core.query.or
 
 object MediaQuery {
     val MediaStoreFileUri: Uri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)

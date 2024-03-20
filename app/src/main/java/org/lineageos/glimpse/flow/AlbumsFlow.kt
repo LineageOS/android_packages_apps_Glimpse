@@ -14,17 +14,22 @@ import android.provider.MediaStore
 import androidx.core.os.bundleOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.lineageos.glimpse.ext.queryFlow
+import lineagex.core.ext.queryFlow
+import lineagex.core.query.Query
+import lineagex.core.query.QueryFlow
+import lineagex.core.query.and
+import lineagex.core.query.eq
+import lineagex.core.query.join
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.MediaStoreMedia
 import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.query.*
+import org.lineageos.glimpse.query.MediaQuery
 import org.lineageos.glimpse.utils.PickerUtils
 
 class AlbumsFlow(
     private val context: Context,
     private val mimeType: String? = null,
-) : QueryFlow<Album>() {
+) : QueryFlow<Album> {
     override fun flowCursor(): Flow<Cursor?> {
         val uri = MediaQuery.MediaStoreFileUri
         val projection = MediaQuery.AlbumsProjection

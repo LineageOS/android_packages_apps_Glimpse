@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationBarView
+import lineagex.core.ext.getViewProperty
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.ext.getViewProperty
 
 class MainFragment : Fragment(R.layout.fragment_main) {
     // Views

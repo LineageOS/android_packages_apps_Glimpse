@@ -9,7 +9,7 @@ import android.content.ContentUris
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.MediaStore
-import org.lineageos.glimpse.ext.*
+import lineagex.core.ext.readSerializable
 import java.util.Date
 import kotlin.reflect.safeCast
 
