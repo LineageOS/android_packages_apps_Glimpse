@@ -80,6 +80,11 @@ dependencies {
     implementation("androidx.preference:preference:1.2.1")
     implementation("com.google.android.material:material:1.9.0")
 
+    // LineageX
+    implementation(project(":core"))
+    implementation(project(":settingslib"))
+    implementation(project(":ui"))
+
     // EXIF
     implementation("androidx.exifinterface:exifinterface:1.3.7")
 
