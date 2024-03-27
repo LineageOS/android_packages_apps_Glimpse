@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galeri</string>
+    <string name="app_permissions_toast">Izin tidak diberikan oleh pengguna</string>
+    <string name="albums_title">Album</string>
+    <string name="categories_title">Kategori</string>
+    <string name="album_favorites">Favorit</string>
+    <string name="album_videos">Video</string>
+    <string name="media_info_unknown">Tak dikenal</string>
+    <string name="media_info_add_description_hint">Tambahkan deskripsi</string>
+</resources>

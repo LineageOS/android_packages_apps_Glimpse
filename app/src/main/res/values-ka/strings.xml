@@ -6,13 +6,13 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">გალერეა</string>
     <string name="app_permissions_toast">ნებადართული არაა მომხმარებლისგან.</string>
-    <string name="reels_title">ვიდეორგოლები</string>
-    <string name="albums_title">ალბომები</string>
+    <string name="reels_title">ვიდეორგოლი</string>
+    <string name="albums_title">ალბომი</string>
     <string name="search_title">ძიება</string>
-    <string name="categories_title">ჯგუფები</string>
+    <string name="categories_title">დაჯგუფებული</string>
     <string name="album_favorites">რჩეულები</string>
     <string name="album_trash">სანაგვე</string>
-    <string name="album_reels">ვიდეორგოლები</string>
+    <string name="album_reels">ვიდეორგოლი</string>
     <string name="album_photos">სურათები</string>
     <string name="album_videos">ვიდეოები</string>
     <plurals name="album_thumbnail_items">

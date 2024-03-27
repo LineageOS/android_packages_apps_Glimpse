@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galerie</string>
+    <string name="app_permissions_toast">Uživatel neudělil oprávnění.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Alba</string>
+    <string name="search_title">Vyhledat</string>
+    <string name="categories_title">Kategorie</string>
+    <string name="album_favorites">Oblíbené</string>
+    <string name="album_trash">Koš</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Fotky</string>
+    <string name="album_videos">Videa</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d položka</item>
+        <item quantity="few">%d položky</item>
+        <item quantity="many">%d položek</item>
+        <item quantity="other">%d položek</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Opravdu chcete odstranit tento soubor?</item>
+        <item quantity="few">Opravdu chcete odstranit %d soubory?</item>
+        <item quantity="many">Opravdu chcete odstranit %d souborů?</item>
+        <item quantity="other">Opravdu chcete odstranit %d souborů?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Soubor odstraněn</item>
+        <item quantity="few">%d soubory odstraněny</item>
+        <item quantity="many">%d souborů odstraněno</item>
+        <item quantity="other">%d souborů odstraněno</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Soubor nelze odstranit</item>
+        <item quantity="few">%d soubory nebylo možné odstranit</item>
+        <item quantity="many">%d souborů nebylo možné odstranit</item>
+        <item quantity="other">%d souborů nebylo možné odstranit</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Určitě chcete tento soubor přesunout do koše?</item>
+        <item quantity="few">Opravdu chcete přesunout %d soubory do koše?</item>
+        <item quantity="many">Opravdu chcete přesunout %d souborů do koše?</item>
+        <item quantity="other">Opravdu chcete přesunout %d souborů do koše?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Soubor přesunut do koše</item>
+        <item quantity="few">%d soubory přesunuty do koše</item>
+        <item quantity="many">%d souborů přesunuto do koše</item>
+        <item quantity="other">%d souborů přesunuto do koše</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Soubor nelze přesunout do koše</item>
+        <item quantity="few">%d soubory nebylo možné přesunout do koše</item>
+        <item quantity="many">%d souborů nebylo možné přesunout do koše</item>
+        <item quantity="other">%d souborů nebylo možné přesunout do koše</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Určitě chcete obnovit tento soubor z koše?</item>
+        <item quantity="few">Opravdu chcete obnovit %d soubory z koše?</item>
+        <item quantity="many">Opravdu chcete obnovit %d souborů z koše?</item>
+        <item quantity="other">Opravdu chcete obnovit %d souborů z koše?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Soubor obnoven z koše</item>
+        <item quantity="few">%d soubory obnovených z koše</item>
+        <item quantity="many">%d souborů obnovených z koše</item>
+        <item quantity="other">%d souborů obnovených z koše</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Soubor nelze obnovit z koše</item>
+        <item quantity="few">%d soubory se nepodařilo obnovit z koše</item>
+        <item quantity="many">%d souborů se nepodařilo obnovit z koše</item>
+        <item quantity="other">%d souborů se nepodařilo obnovit z koše</item>
+    </plurals>
+    <string name="manage_media_permission_title">Správa oprávnění médií</string>
+    <string name="manage_media_permission_message">Pro lepší správu obrázků a videí povolte aplikaci spravovat vaše mediální soubory</string>
+    <string name="media_info_unknown">Neznámý</string>
+    <string name="media_info_add_description_hint">Přidat popis</string>
+    <string name="media_info_write_description_failed">Změna popisu média se nezdařila</string>
+    <string name="media_info_location_loading_placeholder">Načítání…</string>
+    <string name="media_info_location_open_with">Zobrazit polohu s</string>
+    <string name="intent_action_not_supported">Akce není podporována</string>
+    <string name="intent_media_not_found">Média nebyla nalezena</string>
+    <string name="intent_media_type_not_found">Typ média nebyl nalezen</string>
+    <string name="intent_media_type_not_supported">Tento typ média není podporován</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Není k dispozici žádná aplikace pro úpravu tapety</string>
+    <string name="intent_wallpaper_cannot_be_changed">Tapetu nelze změnit</string>
+    <string name="file_action_add_to_favorites">Přidat k oblíbeným</string>
+    <string name="file_action_delete_forever">Smazat navždy</string>
+    <string name="file_action_edit">Změnit</string>
+    <string name="file_action_empty_trash">Vysypat koš</string>
+    <string name="file_action_information">Informace</string>
+    <string name="file_action_move_to_trash">Přesunout do koše</string>
+    <string name="file_action_remove_from_favorites">Odebrat z oblíbených</string>
+    <string name="file_action_restore_from_trash">Obnovit z koše</string>
+    <string name="file_action_share">Sdílet</string>
+    <string name="file_action_use_as">Použít jako</string>
+    <string name="file_action_undo_action">Zpět</string>
+    <string name="no_media">Žádná média</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d vybraný</item>
+        <item quantity="few">%d vybrané</item>
+        <item quantity="many">%d vybraných</item>
+        <item quantity="other">%d vybraných</item>
+    </plurals>
+    <string name="pick_a_photo">Vybrat fotografii</string>
+    <string name="pick_a_video">Vybrat video</string>
+    <string name="pick_a_media">Vybrat média</string>
+    <string name="picker_done">Hotovo</string>
+    <string name="set_wallpaper_label">Tapeta</string>
+    <string name="set_wallpaper">Nastavit tapetu</string>
+    <string name="set_wallpaper_dialog_title">Nastavit tapetu na</string>
+    <string name="set_wallpaper_home_screen">Domovská obrazovka</string>
+    <string name="set_wallpaper_lock_screen">Zamykací obrazovka</string>
+    <string name="set_wallpaper_both">Domovská a zamykací obrazovka</string>
+</resources>
