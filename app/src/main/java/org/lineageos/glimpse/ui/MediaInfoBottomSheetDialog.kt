@@ -88,8 +88,8 @@ class MediaInfoBottomSheetDialog(
 
         val unknownString = unknownString
 
-        dateTextView.text = dateFormatter.format(media.dateAdded)
-        timeTextView.text = timeFormatter.format(media.dateAdded)
+        dateTextView.text = dateFormatter.format(media.dateModified)
+        timeTextView.text = timeFormatter.format(media.dateModified)
 
         mediaInfoListItem.leadingIconImage = ResourcesCompat.getDrawable(
             context.resources,

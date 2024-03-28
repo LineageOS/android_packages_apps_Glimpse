@@ -43,19 +43,19 @@ class AlbumViewerViewModel(
 
                     if (i == 0) {
                         // First element must always be a header
-                        add(DataType.DateHeader(currentMedia.dateAdded))
+                        add(DataType.DateHeader(currentMedia.dateModified))
                         add(DataType.Thumbnail(currentMedia))
                         continue
                     }
 
                     val previousMedia = medias[i - 1]
 
-                    val before = previousMedia.dateAdded.toInstant().atZone(ZoneId.systemDefault())
-                    val after = currentMedia.dateAdded.toInstant().atZone(ZoneId.systemDefault())
+                    val before = previousMedia.dateModified.toInstant().atZone(ZoneId.systemDefault())
+                    val after = currentMedia.dateModified.toInstant().atZone(ZoneId.systemDefault())
                     val days = ChronoUnit.DAYS.between(after, before)
 
                     if (days >= 1 || before.dayOfMonth != after.dayOfMonth) {
-                        add(DataType.DateHeader(currentMedia.dateAdded))
+                        add(DataType.DateHeader(currentMedia.dateModified))
                     }
 
                     add(DataType.Thumbnail(currentMedia))
