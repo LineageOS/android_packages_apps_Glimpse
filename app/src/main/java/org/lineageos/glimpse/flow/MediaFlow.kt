@@ -81,7 +81,7 @@ class MediaFlow(
             MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id ->
                 "${MediaStore.Files.FileColumns.DATE_EXPIRES} DESC"
 
-            else -> "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+            else -> "${MediaStore.Files.FileColumns.DATE_MODIFIED} DESC"
         }
 
         val queryArgs = Bundle().apply {
