@@ -236,7 +236,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                         arrayOf(it) + additionalMedias
                     } ?: additionalMedias
 
-                    initData(medias.distinct().sortedByDescending { it.dateAdded })
+                    initData(medias.distinct().sortedByDescending { it.dateModified })
                 } ?: albumId?.also {
                     repeatOnLifecycle(Lifecycle.State.STARTED) {
                         model.media.collectLatest { data ->
@@ -286,8 +286,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             dateTextView.isVisible = mediaStoreMedia != null
             timeTextView.isVisible = mediaStoreMedia != null
             mediaStoreMedia?.let {
-                dateTextView.text = dateFormatter.format(it.dateAdded)
-                timeTextView.text = timeFormatter.format(it.dateAdded)
+                dateTextView.text = dateFormatter.format(it.dateModified)
+                timeTextView.text = timeFormatter.format(it.dateModified)
             }
 
             // Update favorite button

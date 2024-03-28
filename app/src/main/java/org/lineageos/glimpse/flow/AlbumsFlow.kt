@@ -50,7 +50,7 @@ class AlbumsFlow(
             rawMimeType,
         ).toTypedArray()
 
-        val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+        val sortOrder = MediaStore.Files.FileColumns.DATE_MODIFIED + " DESC"
 
         val queryArgs = Bundle().apply {
             putAll(
