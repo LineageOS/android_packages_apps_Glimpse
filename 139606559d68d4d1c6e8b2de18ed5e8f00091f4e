@@ -16,6 +16,23 @@
       "message": "Usind DATE_MODIFIED provides a better user experience than DATE_ADDED.\n\nSwitching to DATE_TAKEN might probably be preferrable, however DATE_TAKEN is only available for media with Exif-Info. If it\u0027s missing, the image was taken \"1970/1/1\". A conditional combination of DATE_TAKEN and DATE_MODIFIED may require a quite complex logic for sorting and might slow down the app.",
       "revId": "139606559d68d4d1c6e8b2de18ed5e8f00091f4e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8df59b4_f5191aec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-04-05T10:48:24Z",
+      "side": 1,
+      "message": "Sure but then once a media is edited it ends up at the top, something we don\u0027t want as well",
+      "revId": "139606559d68d4d1c6e8b2de18ed5e8f00091f4e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
