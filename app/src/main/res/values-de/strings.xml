@@ -65,6 +65,7 @@
     <string name="intent_action_not_supported">Aktion wird nicht unterstützt</string>
     <string name="intent_media_type_not_found">Medientyp nicht gefunden</string>
     <string name="intent_media_type_not_supported">Medientyp wird nicht unterstützt</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Kein Zuschneidewerkzeug verfügbar</string>
     <string name="intent_wallpaper_cannot_be_changed">Hintergrundbild kann nicht geändert werden</string>
     <string name="file_action_add_to_favorites">Zu Favoriten hinzufügen</string>
     <string name="file_action_delete_forever">Endgültig löschen</string>
