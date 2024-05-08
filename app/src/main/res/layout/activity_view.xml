@@ -74,6 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
+            android:fillViewport="true"
             android:gravity="top|center">
 
             <!-- Cannot mess with fixed padding from here because of insets -->
