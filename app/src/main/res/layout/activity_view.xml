@@ -62,9 +62,10 @@
 
     <HorizontalScrollView
         android:id="@+id/bottomSheetHorizontalScrollView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_media_viewer_bottom_sheet"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
