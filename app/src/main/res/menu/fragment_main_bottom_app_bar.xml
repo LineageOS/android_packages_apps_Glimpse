@@ -19,8 +19,8 @@
 
     <item
         style="@style/Theme.Glimpse.BottomAppBarOption"
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search"
-        android:title="@string/search_title" />
+        android:id="@+id/libraryFragment"
+        android:icon="@drawable/ic_library"
+        android:title="@string/library_title" />
 
 </menu>
