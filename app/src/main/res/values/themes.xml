@@ -44,42 +44,21 @@
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
-    <!-- Media viewer top sheet -->
-    <style name="Theme.Glimpse.MediaViewer.TopSheet" />
-
-    <!-- Media viewer top sheet buttons -->
-    <style name="Theme.Glimpse.MediaViewer.TopSheet.Button">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-        <item name="android:padding">8dp</item>
-        <item name="tint">?attr/colorOnSurface</item>
-    </style>
-
-    <!-- Media viewer top sheet date/time text -->
-    <style name="Theme.Glimpse.MediaViewer.DateTimeText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
-        <item name="android:textSize">11sp</item>
-        <item name="android:letterSpacing">0.05</item>
-        <item name="android:typeface">monospace</item>
-    </style>
-
     <!-- Media viewer bottom sheet -->
     <style name="Theme.Glimpse.MediaViewer.BottomSheet" />
 
     <!-- Media viewer bottom sheet buttons -->
     <style name="Theme.Glimpse.MediaViewer.BottomSheet.Button">
-        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:drawableTint">?attr/colorOnSurface</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawableTint">@android:color/white</item>
         <item name="android:hyphenationFrequency">normal</item>
         <item name="android:maxLines">3</item>
+        <item name="android:maxWidth">320dp</item>
         <item name="android:padding">8dp</item>
         <item name="android:textAppearance">?attr/textAppearanceCaption</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="rippleColor">?attr/colorControlHighlight</item>
     </style>
