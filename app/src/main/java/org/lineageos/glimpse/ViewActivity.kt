@@ -19,6 +19,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -80,7 +81,6 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     // Views
     private val adjustButton by lazy { findViewById<MaterialButton>(R.id.adjustButton) }
-    private val backButton by lazy { findViewById<ImageButton>(R.id.backButton) }
     private val bottomSheetLinearLayout by lazy { findViewById<LinearLayout>(R.id.bottomSheetLinearLayout) }
     private val bottomSheetHorizontalScrollView by lazy { findViewById<HorizontalScrollView>(R.id.bottomSheetHorizontalScrollView) }
     private val contentView by lazy { findViewById<View>(android.R.id.content) }
@@ -90,6 +90,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val infoButton by lazy { findViewById<MaterialButton>(R.id.infoButton) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
     private val timeTextView by lazy { findViewById<TextView>(R.id.timeTextView) }
+    private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
     private val topSheetConstraintLayout by lazy { findViewById<ConstraintLayout>(R.id.topSheetConstraintLayout) }
     private val useAsButton by lazy { findViewById<MaterialButton>(R.id.useAsButton) }
     private val viewPager by lazy { findViewById<ViewPager2>(R.id.viewPager) }
@@ -365,7 +366,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             windowInsets
         }
 
-        backButton.setOnClickListener {
+        toolbar.setNavigationOnClickListener {
             finish()
         }
 
