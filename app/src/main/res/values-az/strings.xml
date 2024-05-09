@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">İstifadəçi tərəfindən verilməyən icazələr.</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">Albomlar</string>
-    <string name="search_title">Axtar</string>
     <string name="categories_title">Kateqoriyalar</string>
     <string name="album_favorites">Sevimlilər</string>
     <string name="album_trash">Tullantı</string>

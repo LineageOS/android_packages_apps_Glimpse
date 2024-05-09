@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">Berechtigungen vom Nutzer nicht erteilt.</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">Alben</string>
-    <string name="search_title">Suchen</string>
     <string name="categories_title">Kategorien</string>
     <string name="album_favorites">Favoriten</string>
     <string name="album_trash">Papierkorb</string>

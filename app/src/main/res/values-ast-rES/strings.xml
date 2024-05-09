@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">L\'usuariu nun concedió los permisos.</string>
     <string name="reels_title">Carretes</string>
     <string name="albums_title">Álbumes</string>
-    <string name="search_title">Busca</string>
     <string name="categories_title">Categoríes</string>
     <string name="album_favorites">Favoritos</string>
     <string name="album_trash">Papelera</string>

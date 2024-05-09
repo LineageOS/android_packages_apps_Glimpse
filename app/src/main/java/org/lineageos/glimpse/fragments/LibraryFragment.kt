@@ -16,7 +16,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.search.SearchBar
 import com.google.android.material.shape.MaterialShapeDrawable
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
@@ -34,7 +33,6 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
     private val favoritesAlbumListItem by getViewProperty<ListItem>(R.id.favoritesAlbumListItem)
     private val photosAlbumListItem by getViewProperty<ListItem>(R.id.photosAlbumListItem)
     private val libraryNestedScrollView by getViewProperty<NestedScrollView>(R.id.libraryNestedScrollView)
-    private val searchBar by getViewProperty<SearchBar>(R.id.searchBar)
     private val trashAlbumListItem by getViewProperty<ListItem>(R.id.trashAlbumListItem)
     private val videosAlbumListItem by getViewProperty<ListItem>(R.id.videosAlbumListItem)
 
@@ -54,11 +52,6 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             )
-
-            searchBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = insets.left
-                rightMargin = insets.right
-            }
 
             libraryNestedScrollView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = insets.left

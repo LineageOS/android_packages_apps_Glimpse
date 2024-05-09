@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">権限がユーザーによって許可されていません。</string>
     <string name="reels_title">リール</string>
     <string name="albums_title">アルバム</string>
-    <string name="search_title">検索</string>
     <string name="categories_title">カテゴリー</string>
     <string name="album_favorites">お気に入り</string>
     <string name="album_trash">ゴミ箱</string>

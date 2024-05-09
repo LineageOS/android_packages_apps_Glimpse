@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">Heimildir ekki veittar af notandanum.</string>
     <string name="reels_title">Spólur</string>
     <string name="albums_title">Albúm</string>
-    <string name="search_title">Leita</string>
     <string name="categories_title">Flokkar</string>
     <string name="album_favorites">Eftirlæti</string>
     <string name="album_trash">Rusl</string>

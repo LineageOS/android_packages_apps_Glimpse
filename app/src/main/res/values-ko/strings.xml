@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">사용자에 의해 권한이 허용되어 있지 않습니다.</string>
     <string name="reels_title">릴</string>
     <string name="albums_title">앨범</string>
-    <string name="search_title">검색</string>
     <string name="categories_title">카테고리</string>
     <string name="album_favorites">즐겨찾기</string>
     <string name="album_trash">휴지통</string>

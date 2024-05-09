@@ -16,12 +16,12 @@
         android:paddingHorizontal="16dp"
         app:liftOnScrollTargetViewId="@+id/libraryNestedScrollView">
 
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/searchBar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            app:defaultMarginsEnabled="false" />
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:title="@string/library_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/categoriesTitleTextView"
-                style="@style/TextAppearance.Material3.TitleLarge"
+                style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="17dp"

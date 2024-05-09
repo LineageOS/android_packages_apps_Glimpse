@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">Οι άδειες δε χορηγήθηκαν από το χρήστη.</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">Άλμπουμ</string>
-    <string name="search_title">Αναζήτηση</string>
     <string name="categories_title">Κατηγορίες</string>
     <string name="album_favorites">Αγαπημένα</string>
     <string name="album_trash">Κάδος</string>
