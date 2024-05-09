@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70723b30_d3069004",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 19612
+      },
+      "writtenOn": "2024-05-09T16:43:27Z",
+      "side": 1,
+      "message": "AGP 8.4.0 needs Gradle \u003e\u003d 8.6, so I bumped it to 8.7 as it has improvements for kotlin DSL and more.",
+      "revId": "88e7ee4ee96ad6241753605bc50691e659ba3075",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
