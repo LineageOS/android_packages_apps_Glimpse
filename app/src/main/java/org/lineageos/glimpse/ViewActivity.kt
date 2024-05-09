@@ -14,15 +14,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.webkit.MimeTypeMap
-import android.widget.HorizontalScrollView
-import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -37,6 +33,8 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -80,18 +78,15 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     // Views
     private val adjustButton by lazy { findViewById<MaterialButton>(R.id.adjustButton) }
-    private val backButton by lazy { findViewById<ImageButton>(R.id.backButton) }
+    private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.appBarLayout) }
     private val bottomSheetLinearLayout by lazy { findViewById<LinearLayout>(R.id.bottomSheetLinearLayout) }
-    private val bottomSheetHorizontalScrollView by lazy { findViewById<HorizontalScrollView>(R.id.bottomSheetHorizontalScrollView) }
     private val contentView by lazy { findViewById<View>(android.R.id.content) }
-    private val dateTextView by lazy { findViewById<TextView>(R.id.dateTextView) }
     private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
     private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
-    private val infoButton by lazy { findViewById<MaterialButton>(R.id.infoButton) }
+    private val infoButton by lazy { toolbar.menu.findItem(R.id.info) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
-    private val timeTextView by lazy { findViewById<TextView>(R.id.timeTextView) }
-    private val topSheetConstraintLayout by lazy { findViewById<ConstraintLayout>(R.id.topSheetConstraintLayout) }
-    private val useAsButton by lazy { findViewById<MaterialButton>(R.id.useAsButton) }
+    private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
+    private val useAsButton by lazy { toolbar.menu.findItem(R.id.useAs) }
     private val viewPager by lazy { findViewById<ViewPager2>(R.id.viewPager) }
 
     // System services
@@ -155,9 +150,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
             MediaDialogsUtils.showDeleteForeverResultSnackbar(
                 this,
-                bottomSheetHorizontalScrollView,
+                bottomSheetLinearLayout,
                 succeeded, 1,
-                bottomSheetHorizontalScrollView,
+                bottomSheetLinearLayout,
             )
         }
 
@@ -167,9 +162,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
             MediaDialogsUtils.showMoveToTrashResultSnackbar(
                 this,
-                bottomSheetHorizontalScrollView,
+                bottomSheetLinearLayout,
                 succeeded, 1,
-                bottomSheetHorizontalScrollView,
+                bottomSheetLinearLayout,
                 lastProcessedMedia?.let { trashedMedia ->
                     { trashMedia(trashedMedia, false) }
                 },
@@ -184,9 +179,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
             MediaDialogsUtils.showRestoreFromTrashResultSnackbar(
                 this,
-                bottomSheetHorizontalScrollView,
+                bottomSheetLinearLayout,
                 succeeded, 1,
-                bottomSheetHorizontalScrollView,
+                bottomSheetLinearLayout,
                 lastProcessedMedia?.let { trashedMedia ->
                     { trashMedia(trashedMedia, true) }
                 },
@@ -267,8 +262,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         // Observe fullscreen mode
         uiModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->
-            topSheetConstraintLayout.fade(!fullscreenMode)
-            bottomSheetHorizontalScrollView.fade(!fullscreenMode)
+            appBarLayout.fade(!fullscreenMode)
+            bottomSheetLinearLayout.fade(!fullscreenMode)
 
             window.setBarsVisibility(systemBars = !fullscreenMode)
 
@@ -283,11 +278,12 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             val mediaStoreMedia = MediaStoreMedia::class.safeCast(displayedMedia)
 
             // Update date and time text
-            dateTextView.isVisible = mediaStoreMedia != null
-            timeTextView.isVisible = mediaStoreMedia != null
             mediaStoreMedia?.let {
-                dateTextView.text = dateFormatter.format(it.dateAdded)
-                timeTextView.text = timeFormatter.format(it.dateAdded)
+                toolbar.title = dateFormatter.format(it.dateAdded)
+                toolbar.subtitle = timeFormatter.format(it.dateAdded)
+            } ?: run {
+                toolbar.title = ""
+                toolbar.subtitle = ""
             }
 
             // Update favorite button
@@ -346,17 +342,10 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             // Once the system bars will be made visible again, this function
             // will be called again.
             if (uiModel.fullscreenModeLiveData.value != true) {
-                topSheetConstraintLayout.updatePadding(
-                    left = insets.left,
-                    right = insets.right,
-                    top = insets.top,
-                )
                 bottomSheetLinearLayout.updatePadding(
                     left = insets.left,
                     right = insets.right,
-                )
-                bottomSheetHorizontalScrollView.updatePadding(
-                    bottom = insets.bottom,
+                    bottom = insets.bottom
                 )
 
                 updateSheetsHeight()
@@ -365,7 +354,29 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             windowInsets
         }
 
-        backButton.setOnClickListener {
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.info -> {
+                    MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
+                        MediaInfoBottomSheetDialog(
+                            this@ViewActivity, it, mediaInfoBottomSheetDialogCallbacks, secure
+                        ).show()
+                    }
+                    true
+                }
+
+                R.id.useAs -> {
+                    uiModel.displayedMedia.value?.let {
+                        startActivity(Intent.createChooser(buildUseAsIntent(it), null))
+                    }
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+        toolbar.setNavigationOnClickListener {
             finish()
         }
 
@@ -387,25 +398,6 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                         null
                     )
                 )
-            }
-        }
-
-        useAsButton.setOnClickListener {
-            uiModel.displayedMedia.value?.let {
-                startActivity(
-                    Intent.createChooser(
-                        buildUseAsIntent(it),
-                        null
-                    )
-                )
-            }
-        }
-
-        infoButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
-                MediaInfoBottomSheetDialog(
-                    this, it, mediaInfoBottomSheetDialogCallbacks, secure
-                ).show()
             }
         }
 
@@ -530,14 +522,14 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     }
 
     private fun updateSheetsHeight() {
-        topSheetConstraintLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        bottomSheetHorizontalScrollView.measure(
+        appBarLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        bottomSheetLinearLayout.measure(
             View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED
         )
 
         uiModel.sheetsHeightLiveData.value = Pair(
-            topSheetConstraintLayout.measuredHeight,
-            bottomSheetHorizontalScrollView.measuredHeight,
+            appBarLayout.measuredHeight,
+            bottomSheetLinearLayout.measuredHeight,
         )
     }
 

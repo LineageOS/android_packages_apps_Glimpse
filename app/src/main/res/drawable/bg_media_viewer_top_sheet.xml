@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
@@ -9,7 +9,7 @@
             <gradient
                 android:angle="270"
                 android:endColor="@android:color/transparent"
-                android:startColor="@android:color/black"
+                android:startColor="#DD000000"
                 android:type="linear" />
         </shape>
     </item>

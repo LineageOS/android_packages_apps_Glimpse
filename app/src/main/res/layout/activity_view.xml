@@ -3,7 +3,7 @@
      SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,124 +13,76 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/topSheetConstraintLayout"
-        android:layout_width="0dp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_media_viewer_top_sheet"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:fitsSystemWindows="true">
 
-        <ImageButton
-            android:id="@+id/backButton"
-            style="@style/Theme.Glimpse.MediaViewer.TopSheet.Button"
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:menu="@menu/activity_view_toolbar"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@android:color/white"
+            app:subtitleTextAppearance="?attr/textAppearanceTitleSmall"
+            app:subtitleTextColor="@android:color/white"
+            app:titleTextAppearance="?attr/textAppearanceTitleSmall"
+            app:titleTextColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/dateTextView"
-            style="@style/Theme.Glimpse.MediaViewer.DateTimeText"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/timeTextView"
-            style="@style/Theme.Glimpse.MediaViewer.DateTimeText"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <HorizontalScrollView
-        android:id="@+id/bottomSheetHorizontalScrollView"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/bottomSheetLinearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:background="@drawable/bg_media_viewer_bottom_sheet"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:gravity="top|center">
 
-        <LinearLayout
-            android:id="@+id/bottomSheetLinearLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:gravity="top|center">
+        <!-- Cannot mess with fixed padding from here because of insets -->
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="match_parent" />
 
-            <!-- Cannot mess with fixed padding from here because of insets -->
-            <Space
-                android:layout_width="16dp"
-                android:layout_height="match_parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/favoriteButton"
+            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_add_to_favorites"
+            android:drawableTop="@drawable/ic_star_toggle"
+            android:text="@string/file_action_add_to_favorites" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/favoriteButton"
-                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-                android:contentDescription="@string/file_action_add_to_favorites"
-                android:drawableTop="@drawable/ic_star_toggle"
-                android:text="@string/file_action_add_to_favorites" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareButton"
+            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_share"
+            android:drawableTop="@drawable/ic_share"
+            android:text="@string/file_action_share" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/shareButton"
-                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-                android:contentDescription="@string/file_action_share"
-                android:drawableTop="@drawable/ic_share"
-                android:text="@string/file_action_share" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/adjustButton"
+            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_edit"
+            android:drawableTop="@drawable/ic_edit"
+            android:text="@string/file_action_edit" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/useAsButton"
-                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-                android:contentDescription="@string/file_action_use_as"
-                android:drawableTop="@drawable/ic_contact_page"
-                android:text="@string/file_action_use_as" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteButton"
+            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_move_to_trash"
+            android:drawableTop="@drawable/ic_delete"
+            android:text="@string/file_action_move_to_trash" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/infoButton"
-                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-                android:contentDescription="@string/file_action_information"
-                android:drawableTop="@drawable/ic_info"
-                android:text="@string/file_action_information" />
+        <!-- Cannot mess with fixed padding from here because of insets -->
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="match_parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/adjustButton"
-                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-                android:contentDescription="@string/file_action_edit"
-                android:drawableTop="@drawable/ic_edit"
-                android:text="@string/file_action_edit" />
+    </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/deleteButton"
-                style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
-                android:contentDescription="@string/file_action_move_to_trash"
-                android:drawableTop="@drawable/ic_delete"
-                android:text="@string/file_action_move_to_trash" />
-
-            <!-- Cannot mess with fixed padding from here because of insets -->
-            <Space
-                android:layout_width="16dp"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
