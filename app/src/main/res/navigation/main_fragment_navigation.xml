@@ -22,9 +22,9 @@
         tools:layout="@layout/fragment_albums" />
 
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="org.lineageos.glimpse.fragments.SearchFragment"
-        android:label="@string/search_title"
-        tools:layout="@layout/fragment_search" />
+        android:id="@+id/libraryFragment"
+        android:name="org.lineageos.glimpse.fragments.LibraryFragment"
+        android:label="@string/library_title"
+        tools:layout="@layout/fragment_library" />
 
 </navigation>

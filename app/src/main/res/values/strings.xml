@@ -14,6 +14,7 @@
     <string name="albums_title">Albums</string>
     <string name="search_title">Search</string>
     <string name="categories_title">Categories</string>
+    <string name="library_title">Library</string>
 
     <!-- Album buckets -->
     <string name="album_favorites">Favorites</string>
