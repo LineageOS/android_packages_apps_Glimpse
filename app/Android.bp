@@ -49,10 +49,12 @@ android_app {
         "androidx.navigation_navigation-ui-ktx",
         "androidx.recyclerview_recyclerview",
         "androidx.recyclerview_recyclerview-selection",
-        "Glimpse_io.coil-kt_coil",
         "Glimpse_io.coil-kt_coil-gif",
         "Glimpse_io.coil-kt_coil-video",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
+        "Glimpse_com.github.awxkee_avif-coder-coil",
+        "Glimpse_io.github.awxkee_jxl-coder-coil",
+        "Glimpse_io.coil-kt_coil",
     ],
 
     optimize: {
