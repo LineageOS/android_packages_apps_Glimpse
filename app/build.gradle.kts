@@ -106,6 +106,12 @@ dependencies {
 
     // ZoomImage
     implementation("io.github.panpf.zoomimage:zoomimage-view-coil:1.0.2")
+
+    // AVIF
+    implementation("com.github.awxkee:avif-coder-coil:1.7.5")
+
+    // JPEG XL
+    implementation("io.github.awxkee:jxl-coder-coil:2.2.0")
 }
 
 configure<GenerateBpPluginExtension> {
