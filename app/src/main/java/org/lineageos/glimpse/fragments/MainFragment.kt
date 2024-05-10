@@ -16,7 +16,7 @@ import org.lineageos.glimpse.ext.getViewProperty
 
 class MainFragment : Fragment(R.layout.fragment_main) {
     // Views
-    private val bottomNavigationView by getViewProperty<NavigationBarView>(R.id.bottomNavigationView)
+    private val navigationBarView by getViewProperty<NavigationBarView>(R.id.navigationBarView)
 
     // Fragments
     private val childNavHostFragment by lazy { childFragmentManager.findFragmentById(R.id.childNavHostFragment) as NavHostFragment }
@@ -26,6 +26,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bottomNavigationView.setupWithNavController(childNavController)
+        navigationBarView.setupWithNavController(childNavController)
     }
 }
