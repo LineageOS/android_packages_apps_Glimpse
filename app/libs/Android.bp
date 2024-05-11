@@ -796,6 +796,77 @@ android_library {
     java_version: "1.7",
 }
 
+android_library_import {
+    name: "Glimpse_io.github.awxkee_jxl-coder-nodeps",
+    aars: ["io/github/awxkee/jxl-coder/2.2.0/jxl-coder-2.2.0-release.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_com.google.android.material_material",
+        "androidx.appcompat_appcompat",
+        "androidx.core_core-ktx",
+        "kotlin-stdlib-jdk8",
+    ],
+    extract_jni: true,
+}
+
+android_library {
+    name: "Glimpse_io.github.awxkee_jxl-coder",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/github/awxkee/jxl-coder/2.2.0/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_io.github.awxkee_jxl-coder-nodeps",
+        "Glimpse_com.google.android.material_material",
+        "androidx.appcompat_appcompat",
+        "androidx.core_core-ktx",
+        "kotlin-stdlib-jdk8",
+    ],
+    java_version: "1.7",
+}
+
+android_library_import {
+    name: "Glimpse_io.github.awxkee_jxl-coder-coil-nodeps",
+    aars: ["io/github/awxkee/jxl-coder-coil/2.2.0/jxl-coder-coil-2.2.0-release.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Glimpse_io.coil-kt_coil",
+        "Glimpse_io.github.awxkee_jxl-coder",
+        "kotlin-stdlib-jdk8",
+    ],
+}
+
+android_library {
+    name: "Glimpse_io.github.awxkee_jxl-coder-coil",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/github/awxkee/jxl-coder-coil/2.2.0/AndroidManifest.xml",
+    static_libs: [
+        "Glimpse_io.github.awxkee_jxl-coder-coil-nodeps",
+        "Glimpse_io.coil-kt_coil",
+        "Glimpse_io.github.awxkee_jxl-coder",
+        "kotlin-stdlib-jdk8",
+    ],
+    java_version: "1.7",
+}
+
 java_library_static {
     name: "Glimpse_io.github.panpf.zoomimage_zoomimage-core",
     sdk_version: "34",

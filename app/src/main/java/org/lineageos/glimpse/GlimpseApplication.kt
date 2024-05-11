@@ -12,6 +12,8 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.memory.MemoryCache
+import com.awxkee.jxlcoder.coil.AnimatedJxlDecoder
+import com.awxkee.jxlcoder.coil.JxlDecoder
 import com.github.awxkee.avifcoil.decoder.HeifDecoder
 import com.google.android.material.color.DynamicColors
 
@@ -30,6 +32,10 @@ class GlimpseApplication : Application(), ImageLoaderFactory {
 
         // AVIF
         add(HeifDecoder.Factory(this@GlimpseApplication))
+
+        // JPEG XL
+        add(JxlDecoder.Factory())
+        add(AnimatedJxlDecoder.Factory(this@GlimpseApplication))
     }.memoryCache {
         MemoryCache.Builder(this).maxSizePercent(0.25).build()
     }.build()
