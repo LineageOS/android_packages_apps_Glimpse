@@ -432,6 +432,7 @@ android_library_import {
         "androidx.annotation_annotation",
         "kotlin-stdlib-jdk8",
     ],
+    extract_jni: true,
 }
 
 android_library {
