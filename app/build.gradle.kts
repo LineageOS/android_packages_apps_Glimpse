@@ -19,6 +19,7 @@ apply {
 buildscript {
     repositories {
         maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.9/.m2")
+        maven("https://repo1.maven.org/maven2/org/aomedia/avif/android/avif")
     }
 
     dependencies {
@@ -106,6 +107,9 @@ dependencies {
 
     // ZoomImage
     implementation("io.github.panpf.zoomimage:zoomimage-view-coil:1.0.2")
+
+    // AVIF
+    implementation("org.aomedia.avif.android:avif:0.11.1.647c3c2")
 }
 
 configure<GenerateBpPluginExtension> {
