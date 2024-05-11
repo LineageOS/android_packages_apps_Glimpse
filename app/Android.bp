@@ -51,7 +51,6 @@ android_app {
         "androidx.recyclerview_recyclerview",
         "androidx.recyclerview_recyclerview-selection",
         "Glimpse_io.coil-kt_coil",
-        "Glimpse_io.coil-kt_coil-gif",
         "Glimpse_io.coil-kt_coil-video",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
     ],

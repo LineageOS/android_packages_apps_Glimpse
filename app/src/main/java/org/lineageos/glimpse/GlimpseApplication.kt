@@ -24,7 +24,6 @@ class GlimpseApplication : Application(), ImageLoaderFactory {
 
     override fun newImageLoader() = ImageLoader.Builder(this).components {
         add(ImageDecoderDecoder.Factory())
-        add(GifDecoder.Factory())
         add(VideoFrameDecoder.Factory())
     }.memoryCache {
         MemoryCache.Builder(this).maxSizePercent(0.25).build()

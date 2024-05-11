@@ -101,7 +101,6 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-gif:2.5.0")
     implementation("io.coil-kt:coil-video:2.5.0")
 
     // ZoomImage
