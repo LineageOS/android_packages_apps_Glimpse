@@ -33,6 +33,24 @@
       "message": "SPDX",
       "revId": "07500639bfaa0d16d67428c64ea2596d62fcb33c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c7e65eb_f6985500",
+        "filename": "app/src/main/res/menu/activity_view_toolbar.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 19612
+      },
+      "writtenOn": "2024-05-11T14:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "440d6458_54e425c6",
+      "revId": "07500639bfaa0d16d67428c64ea2596d62fcb33c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
