@@ -882,32 +882,3 @@ android_library {
     ],
     java_version: "1.7",
 }
-
-android_library_import {
-    name: "Glimpse_org.aomedia.avif.android_avif-nodeps",
-    aars: ["org/aomedia/avif/android/avif/0.11.1.647c3c2/avif-0.11.1.647c3c2.aar"],
-    sdk_version: "34",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    static_libs: [
-    ],
-    extract_jni: true,
-}
-
-android_library {
-    name: "Glimpse_org.aomedia.avif.android_avif",
-    sdk_version: "34",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    manifest: "org/aomedia/avif/android/avif/0.11.1.647c3c2/AndroidManifest.xml",
-    static_libs: [
-        "Glimpse_org.aomedia.avif.android_avif-nodeps",
-    ],
-    java_version: "1.7",
-}

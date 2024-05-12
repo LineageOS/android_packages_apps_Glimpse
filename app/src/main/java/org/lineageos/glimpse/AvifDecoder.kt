@@ -25,12 +25,8 @@ class AvifDecoder @JvmOverloads constructor(
 ) : Decoder {
     override suspend fun decode(): DecodeResult {
         val sourceBuffer = source.source().readByteArray()
-        val byteBuffer = ByteBuffer.allocateDirect(sourceBuffer.size).apply {
-            put(sourceBuffer)
-            position(0)
-        }
         val info = NativeAvifDecoder.Info()
-        if (!NativeAvifDecoder.getInfo(byteBuffer, byteBuffer.remaining(), info)) {
+        if (!NativeAvifDecoder.getInfo(sourceBuffer, info)) {
             throw IllegalArgumentException("Failed to get AVIF info.")
         }
         lateinit var bitmap: Bitmap
@@ -43,7 +39,7 @@ class AvifDecoder @JvmOverloads constructor(
             else -> Bitmap.Config.ARGB_8888
         }
         bitmap = Bitmap.createBitmap(info.width, info.height, config)
-        if (!NativeAvifDecoder.decode(byteBuffer, byteBuffer.remaining(), bitmap)) {
+        if (!NativeAvifDecoder.decode(sourceBuffer, bitmap)) {
             throw IllegalArgumentException("Failed to decode AVIF.")
         }
         return DecodeResult(
