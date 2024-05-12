@@ -54,7 +54,6 @@ android_app {
         "Glimpse_io.coil-kt_coil-gif",
         "Glimpse_io.coil-kt_coil-video",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
-        "Glimpse_org.aomedia.avif.android_avif",
     ],
 
     optimize: {

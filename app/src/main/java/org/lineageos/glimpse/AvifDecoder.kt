@@ -13,9 +13,8 @@ import coil.decode.Decoder
 import coil.decode.ImageSource
 import coil.fetch.SourceResult
 import coil.request.Options
+import okio.Buffer
 import okio.BufferedSource
-import okio.ByteString.Companion.encodeUtf8
-import java.nio.ByteBuffer
 import org.aomedia.avif.android.AvifDecoder as NativeAvifDecoder
 
 class AvifDecoder @JvmOverloads constructor(
@@ -24,13 +23,9 @@ class AvifDecoder @JvmOverloads constructor(
     private val enforceMinimumFrameDelay: Boolean = true
 ) : Decoder {
     override suspend fun decode(): DecodeResult {
-        val sourceBuffer = source.source().readByteArray()
-        val byteBuffer = ByteBuffer.allocateDirect(sourceBuffer.size).apply {
-            put(sourceBuffer)
-            position(0)
-        }
+        val buffer = source.source().readByteArray()
         val info = NativeAvifDecoder.Info()
-        if (!NativeAvifDecoder.getInfo(byteBuffer, byteBuffer.remaining(), info)) {
+        if (!NativeAvifDecoder.getInfo(buffer, info)) {
             throw IllegalArgumentException("Failed to get AVIF info.")
         }
         lateinit var bitmap: Bitmap
@@ -43,7 +38,7 @@ class AvifDecoder @JvmOverloads constructor(
             else -> Bitmap.Config.ARGB_8888
         }
         bitmap = Bitmap.createBitmap(info.width, info.height, config)
-        if (!NativeAvifDecoder.decode(byteBuffer, byteBuffer.remaining(), bitmap)) {
+        if (!NativeAvifDecoder.decode(buffer, bitmap)) {
             throw IllegalArgumentException("Failed to decode AVIF.")
         }
         return DecodeResult(
@@ -64,24 +59,15 @@ class AvifDecoder @JvmOverloads constructor(
             return AvifDecoder(result.source, options, enforceMinimumFrameDelay)
         }
 
-        private fun isApplicable(source: BufferedSource) =
-            AVAILABLE_BRANDS.any { source.rangeEquals(4, it) }
+        private fun isApplicable(source: BufferedSource): Boolean {
+            val peek = source.peek()
+            val buffer = Buffer()
+            peek.read(buffer, 32)
+            return NativeAvifDecoder.isAvifImage(buffer.readByteArray())
+        }
 
         override fun equals(other: Any?) = other is Factory
 
         override fun hashCode() = javaClass.hashCode()
-
-        companion object {
-            private val MIF = "ftypmif1".encodeUtf8()
-            private val MSF = "ftypmsf1".encodeUtf8()
-            private val HEIC = "ftypheic".encodeUtf8()
-            private val HEIX = "ftypheix".encodeUtf8()
-            private val HEVC = "ftyphevc".encodeUtf8()
-            private val HEVX = "ftyphevx".encodeUtf8()
-            private val AVIF = "ftypavif".encodeUtf8()
-            private val AVIS = "ftypavis".encodeUtf8()
-
-            private val AVAILABLE_BRANDS = listOf(MIF, MSF, HEIC, HEIX, HEVC, HEVX, AVIF, AVIS)
-        }
     }
 }
