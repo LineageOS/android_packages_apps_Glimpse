@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e373f0c_a6b7880f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-05-12T00:11:07Z",
+      "side": 1,
+      "message": "I\u0027ve removed the SelectedPhotoAccess ignore rule, for the simple reason that the app also works as a non-system one, and in the future Google might break stuff on newer SDK versions, legit warnings are always appreciated.\nOne day we will add support for READ_MEDIA_VISUAL_USER_SELECTED as well",
+      "revId": "22b68c9a81f960f7291093934bfecb0fcfc32561",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
