@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">相簿</string>
+    <string name="app_permissions_toast">使用者未授予權限。</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">相簿</string>
+    <string name="search_title">搜尋</string>
+    <string name="categories_title">類別</string>
+    <string name="album_favorites">我的最愛</string>
+    <string name="album_trash">垃圾桶</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">相片</string>
+    <string name="album_videos">影片</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="other">%d 個項目</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="other">您確定要永久刪除 %d 個檔案嗎？</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="other">檔案已永久刪除</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="other">檔案無法永久刪除</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="other">您確定您要將檔案移到垃圾桶？</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="other">檔案已移動到垃圾桶</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="other">檔案無法移動到垃圾桶</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="other">您確定要將檔案從垃圾桶中還原？</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="other">檔案已從垃圾桶中還原</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="other">檔案無法從垃圾桶中還原</item>
+    </plurals>
+    <string name="manage_media_permission_title">管理媒體權限</string>
+    <string name="manage_media_permission_message">為了管理您的圖片及影片，請給予應用程式權限管理您的媒體檔案</string>
+    <string name="media_info_unknown">未知</string>
+    <string name="media_info_add_description_hint">新增描述</string>
+    <string name="media_info_write_description_failed">修改描述失敗</string>
+    <string name="media_info_location_loading_placeholder">讀取中...</string>
+    <string name="media_info_location_open_with">檢視地點</string>
+    <string name="intent_action_not_supported">不支援此操作</string>
+    <string name="intent_media_not_found">找不到媒體</string>
+    <string name="intent_media_type_not_found">找不到媒體格式</string>
+    <string name="intent_media_type_not_supported">不支援媒體格式</string>
+    <string name="intent_no_system_wallpaper_cropper_available">沒有系統的裁切工具可用</string>
+    <string name="intent_wallpaper_cannot_be_changed">桌布無法更改</string>
+    <string name="file_action_add_to_favorites">新增至我的最愛</string>
+    <string name="file_action_delete_forever">永久刪除</string>
+    <string name="file_action_edit">編輯</string>
+    <string name="file_action_empty_trash">清空垃圾桶</string>
+    <string name="file_action_information">資訊</string>
+    <string name="file_action_move_to_trash">移至垃圾桶</string>
+    <string name="file_action_remove_from_favorites">從我的最愛中移除</string>
+    <string name="file_action_restore_from_trash">從垃圾桶中還原</string>
+    <string name="file_action_share">分享</string>
+    <string name="file_action_use_as">作為使用</string>
+    <string name="file_action_undo_action">復原</string>
+    <string name="no_media">沒有媒體檔案</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="other">%d 已選擇</item>
+    </plurals>
+    <string name="pick_a_photo">選擇照片</string>
+    <string name="pick_a_video">挑選影片</string>
+    <string name="pick_a_media">選擇媒體</string>
+    <string name="picker_done">完成</string>
+    <string name="set_wallpaper_label">桌布</string>
+    <string name="set_wallpaper">設定桌布</string>
+    <string name="set_wallpaper_dialog_title">設定桌布於</string>
+    <string name="set_wallpaper_home_screen">主畫面</string>
+    <string name="set_wallpaper_lock_screen">鎖定畫面</string>
+    <string name="set_wallpaper_both">桌面和鎖定畫面</string>
+</resources>

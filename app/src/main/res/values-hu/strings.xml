@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galéria</string>
+    <string name="app_permissions_toast">A jogosultságot a felhasználó nem adta meg.</string>
+    <string name="reels_title">Tekercsek</string>
+    <string name="albums_title">Albumok</string>
+    <string name="search_title">Keresés</string>
+    <string name="categories_title">Kategóriák</string>
+    <string name="album_favorites">Kedvencek</string>
+    <string name="album_trash">Lomtár</string>
+    <string name="album_reels">Tekercsek</string>
+    <string name="album_photos">Fotók</string>
+    <string name="album_videos">Videók</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d elem</item>
+        <item quantity="other">%d elem</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Biztos benne, hogy véglegesen törli ezt a fájlt?</item>
+        <item quantity="other">Biztos benne, hogy véglegesen töröl %d fájlt?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">A fájl véglegesen törölve</item>
+        <item quantity="other">%d fájl véglegesen törölve</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Ez a fájl nem törölhető véglegesen</item>
+        <item quantity="other">Ez a(z) %d fájl nem törölhető véglegesen</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Biztos benne, hogy ezt az egy fájlt a lomtárba dobja?</item>
+        <item quantity="other">Biztos benne, hogy ezt a(z) %d fájlt a lomtárba dobja?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">A fájl a lomtárba került</item>
+        <item quantity="other">%d fájl a lomtárba került</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Ez a fájl nem dobható a lomtárba</item>
+        <item quantity="other">Ez a(z) %d fájl nem dobható a lomtárba</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Biztos benne, hogy egy fáljt visszaállít a lomtárból?</item>
+        <item quantity="other">Biztos benne, hogy %d fáljt visszaállít a lomtárból?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Egy fájl visszaállításra került</item>
+        <item quantity="other">%d fájl visszaállításra került</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">A fájl nem állítható vissza a lomtárból</item>
+        <item quantity="other">%d fájl nem állítható vissza a lomtárból</item>
+    </plurals>
+    <string name="manage_media_permission_title">A médiajogosultságok kezelése</string>
+    <string name="manage_media_permission_message">A képek és videók jobb feldolgozásához engedélyezze az alkalmazásnak a médiafájlok kezelését</string>
+    <string name="media_info_unknown">Ismeretlen</string>
+    <string name="media_info_add_description_hint">Egy leírás hozzáadása</string>
+    <string name="media_info_write_description_failed">A médialeírás módosítása meghiúsult</string>
+    <string name="media_info_location_loading_placeholder">Betöltés…</string>
+    <string name="media_info_location_open_with">Hely megtekintése a következővel:</string>
+    <string name="intent_action_not_supported">Nem támogatott művelet</string>
+    <string name="intent_media_not_found">Nem található média</string>
+    <string name="intent_media_type_not_found">Nem található médiatipus</string>
+    <string name="intent_media_type_not_supported">Ez a médiatípus nem támogatott</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Nem áll rendelkezésre vágóeszköz</string>
+    <string name="intent_wallpaper_cannot_be_changed">Nem változtatható meg a háttérkép</string>
+    <string name="file_action_add_to_favorites">Hozzáadás a kedvencekhez</string>
+    <string name="file_action_delete_forever">Végleges törlés</string>
+    <string name="file_action_edit">Szerkesztés</string>
+    <string name="file_action_empty_trash">Lomtárürítés</string>
+    <string name="file_action_information">Információ</string>
+    <string name="file_action_move_to_trash">Lomtárba helyezés</string>
+    <string name="file_action_remove_from_favorites">Eltávolítás a kedvencek közül</string>
+    <string name="file_action_restore_from_trash">Visszaállítás a Lomtárból</string>
+    <string name="file_action_share">Megosztás</string>
+    <string name="file_action_use_as">Használja mint</string>
+    <string name="file_action_undo_action">Visszavonás</string>
+    <string name="no_media">Nem található médiafájl</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d kiválasztva</item>
+        <item quantity="other">%d kiválasztva</item>
+    </plurals>
+    <string name="pick_a_photo">Válasszon egy képet</string>
+    <string name="pick_a_video">Válasszon egy videót</string>
+    <string name="pick_a_media">Válasszon egy médiafájlt</string>
+    <string name="picker_done">Kész</string>
+    <string name="set_wallpaper_label">Háttérkép</string>
+    <string name="set_wallpaper">Háttérkép-beállítás</string>
+    <string name="set_wallpaper_dialog_title">Állítsa be a háttérképet</string>
+    <string name="set_wallpaper_home_screen">Kezdőképernyőre</string>
+    <string name="set_wallpaper_lock_screen">Záróképernyőre</string>
+    <string name="set_wallpaper_both">Kezdő- és Záróképernyőre</string>
+</resources>
