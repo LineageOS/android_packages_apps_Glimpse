@@ -24,6 +24,10 @@ runs:
           exit -1
         fi
 
+    - uses: lineageos-infra/check-copyright-headers@main
+      with:
+        dirs: app,rro_overlays
+
     - uses: actions/upload-artifact@v3
       with:
         name: app-debug.apk
