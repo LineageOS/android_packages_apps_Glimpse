@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "926af5d9_e0993a6b",
+        "filename": "app/src/main/res/drawable/bg_media_viewer_bottom_sheet.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-05-22T18:57:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf0190b6_f6e97081",
+      "revId": "81be79c6fef1830243fc1f8b020f6f0b2147d409",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b84be66a_3c3cb9aa",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-05-22T18:33:04Z",
       "side": 1,
       "message": "2024",
+      "revId": "81be79c6fef1830243fc1f8b020f6f0b2147d409",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f46d1775_3934d75c",
+        "filename": "app/src/main/res/drawable/bg_media_viewer_top_sheet.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-05-22T18:57:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b84be66a_3c3cb9aa",
       "revId": "81be79c6fef1830243fc1f8b020f6f0b2147d409",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
