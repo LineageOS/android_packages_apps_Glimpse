@@ -7,7 +7,7 @@ package androidx.media3.ui
 
 @androidx.media3.common.util.UnstableApi
 fun PlayerControlView.updateAll() {
-    updateAll()
+    updateAll() // teehee~
 }
 
 @androidx.media3.common.util.UnstableApi
