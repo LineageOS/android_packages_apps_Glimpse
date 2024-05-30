@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "634211f9_755b9397",
+        "filename": "app/preinstalled-packages-org.lineageos.glimpse.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2024-05-30T16:53:36Z",
+      "side": 1,
+      "message": "wrong packagename?",
+      "revId": "484ec6500077eacbd60d97d700c1270c89e44605",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
