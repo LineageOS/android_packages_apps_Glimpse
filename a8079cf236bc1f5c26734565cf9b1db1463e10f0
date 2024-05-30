@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f35d33e8_d764880c",
+        "filename": "app/preinstalled-packages-org.lineageos.glimpse.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2024-05-30T15:38:51Z",
+      "side": 1,
+      "message": "```suggestion\n    \u003cinstall-in-user-type package\u003d\"org.lineageos.glimpse\"\u003e\n```",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "a8079cf236bc1f5c26734565cf9b1db1463e10f0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
