@@ -30,6 +30,7 @@ android_app {
 
     required: [
         "GlimpseFrameworksBaseOverlay",
+        "preinstalled-packages-org.lineageos.glimpse",
     ],
 
     static_libs: [
@@ -59,4 +60,12 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard-rules.pro"],
     },
+}
+
+prebuilt_etc {
+    name: "preinstalled-packages-org.lineageos.glimpse",
+    product_specific: true,
+    sub_dir: "sysconfig",
+    src: "preinstalled-packages-org.lineageos.glimpse.xml",
+    filename_from_src: true,
 }
