@@ -22,6 +22,30 @@
       },
       "revId": "a8079cf236bc1f5c26734565cf9b1db1463e10f0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a264df9b_fb529337",
+        "filename": "app/preinstalled-packages-org.lineageos.glimpse.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2024-05-30T15:42:26Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "f35d33e8_d764880c",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "a8079cf236bc1f5c26734565cf9b1db1463e10f0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
