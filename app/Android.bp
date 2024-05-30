@@ -30,6 +30,7 @@ android_app {
 
     required: [
         "GlimpseFrameworksBaseOverlay",
+        "initial-package-stopped-states-org.lineageos.glimpse",
         "preinstalled-packages-org.lineageos.glimpse",
     ],
 
@@ -60,6 +61,14 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard-rules.pro"],
     },
+}
+
+prebuilt_etc {
+    name: "initial-package-stopped-states-org.lineageos.glimpse",
+    product_specific: true,
+    sub_dir: "sysconfig",
+    src: "initial-package-stopped-states-org.lineageos.glimpse.xml",
+    filename_from_src: true,
 }
 
 prebuilt_etc {
