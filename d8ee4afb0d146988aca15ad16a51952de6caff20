@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "840d41f6_4b97af46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11409
+      },
+      "writtenOn": "2024-05-31T09:27:08Z",
+      "side": 1,
+      "message": "Using the modification time (instead of creation time) seems to me much more suitable, because if a picture becomes modified (cropped, color change etc.), then it is something different than before, which should be refelcted by the new sort order. And if the modification yields to a new file, then even the creation date would not keept the position of the new file.\n\nAnd most important: Reorganisation of pictures (folder structure, moving from internal SD card to external SD card etc.) keeps the sort order.\n\nAnother aspect is: A modification timestamp can be changed by many utilities, if it seems necessary (e.g. changing the file comments should not result in a modified sort order).\nBut the creation date (e.g. after moving to another file system) cannot be changed easily (afaik).",
+      "revId": "d8ee4afb0d146988aca15ad16a51952de6caff20",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
