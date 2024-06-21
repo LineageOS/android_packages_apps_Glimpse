@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -126,4 +126,7 @@
     <string name="set_wallpaper_home_screen">Home screen</string>
     <string name="set_wallpaper_lock_screen">Lock screen</string>
     <string name="set_wallpaper_both">Home and lock screen</string>
+
+    <!-- Warnings and information -->
+    <string name="warning_bin_time_period">Files will be permanently deleted after 30 days.</string>
 </resources>
