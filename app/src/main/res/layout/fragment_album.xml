@@ -23,6 +23,18 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="10dp"
+            android:drawablePadding="10dp"
+            android:text="@string/warning_trash_time_period"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_info" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
