@@ -313,6 +313,10 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             // Update delete button
             deleteButton.isVisible = !readOnly && mediaStoreMedia != null
             mediaStoreMedia?.let {
+                deleteButton.text = when (it.isTrashed) {
+                    true -> getString(R.string.file_action_restore_from_trash)
+                    false -> getString(R.string.file_action_move_to_trash)
+                }
                 deleteButton.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     when (it.isTrashed) {
