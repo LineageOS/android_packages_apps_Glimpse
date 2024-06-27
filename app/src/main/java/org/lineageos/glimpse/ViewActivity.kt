@@ -438,6 +438,12 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                         0
                     )
 
+                    // Disable non-available actions in trash
+                    adjustButton.isVisible = !isTrashed
+                    favoriteButton.isVisible = !isTrashed
+                    shareButton.isVisible = !isTrashed
+                    useAsButton.isVisible = !isTrashed
+
                     // Update ExoPlayer
                     displayedMedia?.let {
                         updateExoPlayer(it)
