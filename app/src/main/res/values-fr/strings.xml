@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Autorisations non accordées par l\'utilisateur.</string>
     <string name="reels_title">Chronologie</string>
     <string name="albums_title">Albums</string>
-    <string name="search_title">Rechercher</string>
     <string name="categories_title">Catégories</string>
+    <string name="library_title">Bibliothèque</string>
     <string name="album_favorites">Favoris</string>
     <string name="album_trash">Corbeille</string>
     <string name="album_reels">Chronologie</string>

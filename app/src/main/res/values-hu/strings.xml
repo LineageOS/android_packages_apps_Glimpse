@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">A jogosultságot a felhasználó nem adta meg.</string>
     <string name="reels_title">Tekercsek</string>
     <string name="albums_title">Albumok</string>
-    <string name="search_title">Keresés</string>
     <string name="categories_title">Kategóriák</string>
+    <string name="library_title">Könyvtár</string>
     <string name="album_favorites">Kedvencek</string>
     <string name="album_trash">Lomtár</string>
     <string name="album_reels">Tekercsek</string>

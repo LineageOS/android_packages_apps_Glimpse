@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">ნებადართული არაა მომხმარებლისგან.</string>
     <string name="reels_title">ვიდეორგოლი</string>
     <string name="albums_title">ალბომი</string>
-    <string name="search_title">ძიება</string>
     <string name="categories_title">დაჯგუფებული</string>
     <string name="album_favorites">რჩეულები</string>
     <string name="album_trash">სანაგვე</string>

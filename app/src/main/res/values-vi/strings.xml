@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Quyền không được cấp bởi người dùng.</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">Album</string>
-    <string name="search_title">Tìm kiếm</string>
     <string name="categories_title">Danh mục</string>
+    <string name="library_title">Thư viện</string>
     <string name="album_favorites">Yêu thích</string>
     <string name="album_trash">Thùng rác</string>
     <string name="album_reels">Reels</string>

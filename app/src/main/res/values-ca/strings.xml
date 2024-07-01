@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Permisos no concedits per l\'usuari.</string>
     <string name="reels_title">Rodets</string>
     <string name="albums_title">Àlbums</string>
-    <string name="search_title">Cerca</string>
     <string name="categories_title">Categories</string>
+    <string name="library_title">Biblioteca</string>
     <string name="album_favorites">Preferits</string>
     <string name="album_trash">Paperera</string>
     <string name="album_reels">Rodets</string>

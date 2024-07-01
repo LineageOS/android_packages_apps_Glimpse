@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">使用者未授予權限。</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">相簿</string>
-    <string name="search_title">搜尋</string>
     <string name="categories_title">類別</string>
     <string name="album_favorites">我的最愛</string>
     <string name="album_trash">垃圾桶</string>

@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">L\'usuariu nun concedió los permisos.</string>
     <string name="reels_title">Carretes</string>
     <string name="albums_title">Álbumes</string>
-    <string name="search_title">Busca</string>
     <string name="categories_title">Categoríes</string>
+    <string name="library_title">Biblioteca</string>
     <string name="album_favorites">Favoritos</string>
     <string name="album_trash">Papelera</string>
     <string name="album_reels">Carretes</string>
@@ -22,6 +22,14 @@
     <plurals name="delete_file_forever_confirm_message">
         <item quantity="one">¿De xuru que quies desaniciar permanentemente esti ficheru?</item>
         <item quantity="other">¿De xuru que quies desaniciar permanentemente %d ficheros?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">El ficheru desanicióse permanentemente</item>
+        <item quantity="other">Desaniciáronse %d ficheros permanentemente</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">El ficheru nun se pudo desaniciar permanentemente</item>
+        <item quantity="other">Nun se pudieron desaniciar %d ficheros permanentemente</item>
     </plurals>
     <plurals name="move_file_to_trash_confirm_message">
         <item quantity="one">¿De xuru que quies tirar %d ficheru a la papelera?</item>
@@ -49,6 +57,7 @@
     <string name="intent_action_not_supported">L\'aición nun ta sofitada</string>
     <string name="intent_wallpaper_cannot_be_changed">Nun se pue camudar el fondu de pantalla</string>
     <string name="file_action_add_to_favorites">Amestar a Favoritos</string>
+    <string name="file_action_delete_forever">Desaniciar permanentemente</string>
     <string name="file_action_edit">Editar</string>
     <string name="file_action_empty_trash">Balerar la papelera</string>
     <string name="file_action_information">Información</string>

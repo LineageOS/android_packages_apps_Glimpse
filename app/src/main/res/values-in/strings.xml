@@ -7,7 +7,6 @@
     <string name="app_name">Galeri</string>
     <string name="app_permissions_toast">Izin tidak diberikan oleh pengguna</string>
     <string name="albums_title">Album</string>
-    <string name="search_title">Cari</string>
     <string name="categories_title">Kategori</string>
     <string name="album_favorites">Favorit</string>
     <string name="album_trash">Sampah</string>

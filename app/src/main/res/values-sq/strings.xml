@@ -8,7 +8,6 @@
     <string name="app_permissions_toast">Lejet nuk janë dhënë nga përdoruesi.</string>
     <string name="reels_title">bobinat</string>
     <string name="albums_title">Albumet</string>
-    <string name="search_title">Kërko</string>
     <string name="categories_title">Kategoritë</string>
     <string name="album_favorites">Të preferuarat</string>
     <string name="album_trash">Kosh</string>

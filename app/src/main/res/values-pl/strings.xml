@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Uprawnienia nie zostały przyznane przez użytkownika.</string>
     <string name="reels_title">Rolki</string>
     <string name="albums_title">Albumy</string>
-    <string name="search_title">Szukaj</string>
     <string name="categories_title">Kategorie</string>
+    <string name="library_title">Biblioteka</string>
     <string name="album_favorites">Ulubione</string>
     <string name="album_trash">Kosz</string>
     <string name="album_reels">Rolki</string>

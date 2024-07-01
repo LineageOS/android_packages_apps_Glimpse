@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Machtigingen niet toegekend door de gebruiker.</string>
     <string name="reels_title">Spoelen</string>
     <string name="albums_title">Albums</string>
-    <string name="search_title">Zoeken</string>
     <string name="categories_title">Categorieën</string>
+    <string name="library_title">Bibliotheek</string>
     <string name="album_favorites">Favorieten</string>
     <string name="album_trash">Afval</string>
     <string name="album_reels">Spoelen</string>

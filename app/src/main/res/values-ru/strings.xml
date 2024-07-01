@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Пользователь не предоставил разрешения.</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">Альбомы</string>
-    <string name="search_title">Поиск</string>
     <string name="categories_title">Категории</string>
+    <string name="library_title">Библиотека</string>
     <string name="album_favorites">Закладки</string>
     <string name="album_trash">Корзина</string>
     <string name="album_reels">Reels</string>

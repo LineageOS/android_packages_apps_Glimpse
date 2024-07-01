@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Permisiuni care nu sunt acordate de utilizator.</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">Albume</string>
-    <string name="search_title">Căutare</string>
     <string name="categories_title">Categorii</string>
+    <string name="library_title">Bibliotecă</string>
     <string name="album_favorites">Favorite</string>
     <string name="album_trash">Coș de gunoi</string>
     <string name="album_reels">Reels</string>

@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">Permissions not granted by the user.</string>
     <string name="reels_title">Reels</string>
     <string name="albums_title">Albums</string>
-    <string name="search_title">Search</string>
     <string name="categories_title">Categories</string>
+    <string name="library_title">Library</string>
     <string name="album_favorites">Favorites</string>
     <string name="album_trash">Bin</string>
     <string name="album_reels">Reels</string>

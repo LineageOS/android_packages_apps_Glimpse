@@ -8,8 +8,8 @@
     <string name="app_permissions_toast">用户没有授予权限。</string>
     <string name="reels_title">时间轴</string>
     <string name="albums_title">相册</string>
-    <string name="search_title">搜索</string>
     <string name="categories_title">类别</string>
+    <string name="library_title">库</string>
     <string name="album_favorites">收藏夹</string>
     <string name="album_trash">回收站</string>
     <string name="album_reels">卷轴</string>
