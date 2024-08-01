@@ -9,6 +9,7 @@
     <string name="reels_title">Reel</string>
     <string name="albums_title">Album</string>
     <string name="categories_title">Categorie</string>
+    <string name="library_title">Libreria</string>
     <string name="album_favorites">Preferiti</string>
     <string name="album_trash">Cestino</string>
     <string name="album_reels">Reel</string>
