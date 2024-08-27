@@ -35,6 +35,7 @@ android_app {
 
     static_libs: [
         // DO NOT EDIT THIS SECTION MANUALLY
+        "kotlin-stdlib",
         "androidx.core_core-ktx",
         "androidx.appcompat_appcompat",
         "androidx-constraintlayout_constraintlayout",
@@ -55,7 +56,6 @@ android_app {
         "Glimpse_io.coil-kt_coil-gif",
         "Glimpse_io.coil-kt_coil-video",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
-        "kotlin-stdlib-jdk8",
     ],
 
     optimize: {
