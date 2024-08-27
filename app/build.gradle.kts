@@ -88,12 +88,13 @@ dependencies {
     implementation("androidx.exifinterface:exifinterface:1.3.7")
 
     // Media3
-    implementation("androidx.media3:media3-exoplayer:1.2.1")
-    implementation("androidx.media3:media3-exoplayer-dash:1.2.1")
-    implementation("androidx.media3:media3-exoplayer-hls:1.2.1")
-    implementation("androidx.media3:media3-exoplayer-rtsp:1.2.1")
-    implementation("androidx.media3:media3-exoplayer-smoothstreaming:1.2.1")
-    implementation("androidx.media3:media3-ui:1.2.1")
+    val media3 = "1.4.0"
+    implementation("androidx.media3:media3-exoplayer:$media3")
+    implementation("androidx.media3:media3-exoplayer-dash:$media3")
+    implementation("androidx.media3:media3-exoplayer-hls:$media3")
+    implementation("androidx.media3:media3-exoplayer-rtsp:$media3")
+    implementation("androidx.media3:media3-exoplayer-smoothstreaming:$media3")
+    implementation("androidx.media3:media3-ui:$media3")
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
