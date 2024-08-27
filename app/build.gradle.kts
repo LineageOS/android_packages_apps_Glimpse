@@ -105,9 +105,10 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
     // Coil
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-gif:2.5.0")
-    implementation("io.coil-kt:coil-video:2.5.0")
+    val coil = "2.7.0"
+    implementation("io.coil-kt:coil:$coil")
+    implementation("io.coil-kt:coil-gif:$coil")
+    implementation("io.coil-kt:coil-video:$coil")
 
     // ZoomImage
     implementation("io.github.panpf.zoomimage:zoomimage-view-coil:1.0.2")
