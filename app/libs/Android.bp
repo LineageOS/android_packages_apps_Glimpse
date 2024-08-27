@@ -421,7 +421,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_com.google.android.material_material-nodeps",
-    aars: ["com/google/android/material/material/1.9.0/material-1.9.0.aar"],
+    aars: ["com/google/android/material/material/1.12.0/material-1.12.0.aar"],
     sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
@@ -431,6 +431,7 @@ android_library_import {
     static_libs: [
         "Glimpse_com.google.errorprone_error_prone_annotations",
         "androidx-constraintlayout_constraintlayout",
+        "androidx.activity_activity",
         "androidx.annotation_annotation",
         "androidx.annotation_annotation-experimental",
         "androidx.appcompat_appcompat",
@@ -442,9 +443,11 @@ android_library_import {
         "androidx.fragment_fragment",
         "androidx.lifecycle_lifecycle-runtime",
         "androidx.recyclerview_recyclerview",
+        "androidx.resourceinspection_resourceinspection-annotation",
         "androidx.transition_transition",
         "androidx.vectordrawable_vectordrawable",
         "androidx.viewpager2_viewpager2",
+        "org.jetbrains.kotlin_kotlin-bom",
     ],
 }
 
@@ -456,11 +459,12 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "com/google/android/material/material/1.9.0/AndroidManifest.xml",
+    manifest: "com/google/android/material/material/1.12.0/AndroidManifest.xml",
     static_libs: [
         "Glimpse_com.google.android.material_material-nodeps",
         "Glimpse_com.google.errorprone_error_prone_annotations",
         "androidx-constraintlayout_constraintlayout",
+        "androidx.activity_activity",
         "androidx.annotation_annotation",
         "androidx.annotation_annotation-experimental",
         "androidx.appcompat_appcompat",
@@ -472,9 +476,11 @@ android_library {
         "androidx.fragment_fragment",
         "androidx.lifecycle_lifecycle-runtime",
         "androidx.recyclerview_recyclerview",
+        "androidx.resourceinspection_resourceinspection-annotation",
         "androidx.transition_transition",
         "androidx.vectordrawable_vectordrawable",
         "androidx.viewpager2_viewpager2",
+        "org.jetbrains.kotlin_kotlin-bom",
     ],
     java_version: "1.7",
 }
