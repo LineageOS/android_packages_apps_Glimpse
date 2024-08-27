@@ -76,7 +76,7 @@ android {
 
 dependencies {
     // Align versions of all Kotlin components
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.10"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.0.20"))
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
