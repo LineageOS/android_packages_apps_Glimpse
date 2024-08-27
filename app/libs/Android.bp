@@ -547,7 +547,7 @@ java_library_static {
 
 java_import {
     name: "Glimpse_com.squareup.okio_okio-jvm-nodeps",
-    jars: ["com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar"],
+    jars: ["com/squareup/okio/okio-jvm/3.9.0/okio-jvm-3.9.0.jar"],
     sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
@@ -566,14 +566,14 @@ java_library_static {
     ],
     static_libs: [
         "Glimpse_com.squareup.okio_okio-jvm-nodeps",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
     java_version: "1.7",
 }
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-nodeps",
-    aars: ["io/coil-kt/coil/2.5.0/coil-2.5.0.aar"],
+    aars: ["io/coil-kt/coil/2.7.0/coil-2.7.0.aar"],
     sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
@@ -582,7 +582,7 @@ android_library_import {
     ],
     static_libs: [
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 }
 
@@ -594,18 +594,18 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil/2.5.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil/2.7.0/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-nodeps",
         "Glimpse_io.coil-kt_coil-base",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
     java_version: "1.7",
 }
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-base-nodeps",
-    aars: ["io/coil-kt/coil-base/2.5.0/coil-base-2.5.0.aar"],
+    aars: ["io/coil-kt/coil-base/2.7.0/coil-base-2.7.0.aar"],
     sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
@@ -635,7 +635,7 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-base/2.5.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-base/2.7.0/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-base-nodeps",
         "Glimpse_com.squareup.okhttp3_okhttp",
@@ -655,7 +655,7 @@ android_library {
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-gif-nodeps",
-    aars: ["io/coil-kt/coil-gif/2.5.0/coil-gif-2.5.0.aar"],
+    aars: ["io/coil-kt/coil-gif/2.7.0/coil-gif-2.7.0.aar"],
     sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
@@ -666,7 +666,7 @@ android_library_import {
         "Glimpse_io.coil-kt_coil-base",
         "androidx.core_core-ktx",
         "androidx.vectordrawable_vectordrawable-animated",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 }
 
@@ -678,20 +678,20 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-gif/2.5.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-gif/2.7.0/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-gif-nodeps",
         "Glimpse_io.coil-kt_coil-base",
         "androidx.core_core-ktx",
         "androidx.vectordrawable_vectordrawable-animated",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
     java_version: "1.7",
 }
 
 android_library_import {
     name: "Glimpse_io.coil-kt_coil-video-nodeps",
-    aars: ["io/coil-kt/coil-video/2.5.0/coil-video-2.5.0.aar"],
+    aars: ["io/coil-kt/coil-video/2.7.0/coil-video-2.7.0.aar"],
     sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
@@ -701,7 +701,7 @@ android_library_import {
     static_libs: [
         "Glimpse_io.coil-kt_coil-base",
         "androidx.core_core-ktx",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 }
 
@@ -713,12 +713,12 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-video/2.5.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-video/2.7.0/AndroidManifest.xml",
     static_libs: [
         "Glimpse_io.coil-kt_coil-video-nodeps",
         "Glimpse_io.coil-kt_coil-base",
         "androidx.core_core-ktx",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
     java_version: "1.7",
 }
