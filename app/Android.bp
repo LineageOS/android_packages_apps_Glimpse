@@ -55,6 +55,7 @@ android_app {
         "Glimpse_io.coil-kt_coil-gif",
         "Glimpse_io.coil-kt_coil-video",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
+        "kotlin-stdlib-jdk8",
     ],
 
     optimize: {
