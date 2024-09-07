@@ -27,13 +27,13 @@ buildscript {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "org.lineageos.glimpse"
 
     defaultConfig {
         applicationId = "org.lineageos.glimpse"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }
@@ -120,6 +120,7 @@ configure<GenerateBpPluginExtension> {
                 // We provide our own androidx.media3
                 !module.group.startsWith("androidx.media3")
             }
+
             module.group.startsWith("org.jetbrains") -> true
             module.group == "com.google.auto.value" -> true
             module.group == "com.google.guava" -> true
