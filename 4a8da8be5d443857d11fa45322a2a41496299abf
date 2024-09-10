@@ -16,6 +16,24 @@
       "message": "don\u0027t think JPEG XL will ever see any real usage",
       "revId": "4a8da8be5d443857d11fa45322a2a41496299abf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8d07814_c4cae423",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34112
+      },
+      "writtenOn": "2024-09-10T05:56:51Z",
+      "side": 1,
+      "message": "It seems like this has been proven wrong, can this be picked back up? The only thing it needs to do to be updated at least is s/2.2.0/2.3.0.1",
+      "parentUuid": "098392f0_8b558cdf",
+      "revId": "4a8da8be5d443857d11fa45322a2a41496299abf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": []
