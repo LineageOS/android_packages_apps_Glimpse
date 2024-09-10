@@ -34,6 +34,24 @@
       "parentUuid": "098392f0_8b558cdf",
       "revId": "4a8da8be5d443857d11fa45322a2a41496299abf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "831e8902_c63dee0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-09-10T13:57:48Z",
+      "side": 1,
+      "message": "We will think about this once Aperture gains JPEG-XL support (we\u0027re waiting for Google)",
+      "parentUuid": "e8d07814_c4cae423",
+      "revId": "4a8da8be5d443857d11fa45322a2a41496299abf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": []
