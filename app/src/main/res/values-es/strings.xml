@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galería</string>
+    <string name="app_permissions_toast">Permisos no otorgados por el usuario.</string>
+    <string name="reels_title">Carretes</string>
+    <string name="albums_title">Álbumes</string>
+    <string name="categories_title">Categorías</string>
+    <string name="library_title">Biblioteca</string>
+    <string name="album_favorites">Favoritos</string>
+    <string name="album_trash">Papelera</string>
+    <string name="album_reels">Carretes</string>
+    <string name="album_photos">Fotos</string>
+    <string name="album_videos">Vídeos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d elemento</item>
+        <item quantity="other">%d elementos</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">¿Estás seguro de que deseas eliminar permanentemente este archivo?</item>
+        <item quantity="other">¿Estás seguro de que deseas eliminar permanentemente %d archivos?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Archivo eliminado permanentemente</item>
+        <item quantity="other">%d archivos eliminados permanentemente</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">El archivo no se pudo eliminar permanentemente</item>
+        <item quantity="other">%d archivos no se pudieron eliminar permanentemente</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">¿Estás seguro de que deseas mover este archivo a la papelera?</item>
+        <item quantity="other">¿Estás seguro de que deseas mover %d archivos a la papelera?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Archivo movido a la papelera</item>
+        <item quantity="other">%d archivos movidos a la papelera</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">No se pudo mover el archivo a la papelera</item>
+        <item quantity="other">No se pudieron mover %d archivos a la papelera</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">¿Estás seguro de que deseas restaurar el archivo de la papelera?</item>
+        <item quantity="other">¿Estás seguro de que deseas restaurar %d archivos de la papelera?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Archivo restaurado de la papelera</item>
+        <item quantity="other">%d archivos restaurados de la papelera</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">No se pudo restaurar el archivo de la papelera</item>
+        <item quantity="other">No se pudieron restaurar %d archivos de la papelera</item>
+    </plurals>
+    <string name="manage_media_permission_title">Administrar permisos de medios</string>
+    <string name="manage_media_permission_message">Para gestionar mejor tus imágenes y vídeos, permite que la aplicación administre tus archivos multimedia</string>
+    <string name="media_info_unknown">Desconocido</string>
+    <string name="media_info_add_description_hint">Añadir una descripción</string>
+    <string name="media_info_write_description_failed">Error al cambiar la descripción de medios</string>
+    <string name="media_info_location_loading_placeholder">Cargando…</string>
+    <string name="media_info_location_open_with">Ver la ubicación con</string>
+    <string name="intent_action_not_supported">Acción no soportada</string>
+    <string name="intent_media_not_found">Medios no encontrados</string>
+    <string name="intent_media_type_not_found">Tipo de medio no encontrado</string>
+    <string name="intent_media_type_not_supported">Tipo de medio no soportado</string>
+    <string name="intent_no_system_wallpaper_cropper_available">No hay herramienta de recorte disponible en el sistema</string>
+    <string name="intent_wallpaper_cannot_be_changed">No se puede cambiar el fondo de pantalla</string>
+    <string name="file_action_add_to_favorites">Añadir a favoritos</string>
+    <string name="file_action_delete_forever">Eliminar permanentemente</string>
+    <string name="file_action_edit">Editar</string>
+    <string name="file_action_empty_trash">Vaciar papelera</string>
+    <string name="file_action_information">Información</string>
+    <string name="file_action_move_to_trash">Mover a la papelera</string>
+    <string name="file_action_remove_from_favorites">Quitar de favoritos</string>
+    <string name="file_action_restore_from_trash">Restaurar desde la papelera</string>
+    <string name="file_action_share">Compartir</string>
+    <string name="file_action_use_as">Usar como</string>
+    <string name="file_action_undo_action">Deshacer</string>
+    <string name="no_media">Ningún medio</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d seleccionado</item>
+        <item quantity="other">%d seleccionados</item>
+    </plurals>
+    <string name="pick_a_photo">Elige una foto</string>
+    <string name="pick_a_video">Elige un vídeo</string>
+    <string name="pick_a_media">Elige un medio</string>
+    <string name="picker_done">Terminado</string>
+    <string name="set_wallpaper_label">Fondo de pantalla</string>
+    <string name="set_wallpaper">Establecer fondo de pantalla</string>
+    <string name="set_wallpaper_dialog_title">Establecer fondo de pantalla</string>
+    <string name="set_wallpaper_home_screen">Pantalla de inicio</string>
+    <string name="set_wallpaper_lock_screen">Pantalla de bloqueo</string>
+    <string name="set_wallpaper_both">Pantalla de inicio y de bloqueo</string>
+</resources>
