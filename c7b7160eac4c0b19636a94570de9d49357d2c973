@@ -16,6 +16,23 @@
       "message": "let the people decide",
       "revId": "c7b7160eac4c0b19636a94570de9d49357d2c973",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fb96f44_245a9022",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-09-19T16:26:39Z",
+      "side": 1,
+      "message": "Whatever",
+      "revId": "c7b7160eac4c0b19636a94570de9d49357d2c973",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
