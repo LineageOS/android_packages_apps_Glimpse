@@ -48,7 +48,10 @@
     <string name="media_info_unknown">알 수 없음</string>
     <string name="media_info_add_description_hint">설명 추가</string>
     <string name="media_info_location_loading_placeholder">불러오는 중…</string>
+    <string name="intent_action_not_supported">지원하지 않는 작업</string>
     <string name="intent_media_not_found">미디어 없음</string>
+    <string name="intent_media_type_not_found">미디어 형식 없음</string>
+    <string name="intent_media_type_not_supported">지원하지 않는 미디어 형식</string>
     <string name="file_action_add_to_favorites">즐겨찾기에 추가</string>
     <string name="file_action_delete_forever">완전히 삭제</string>
     <string name="file_action_edit">편집</string>
