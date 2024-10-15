@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ccc0afc_41dcb0e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 21290
+      },
+      "writtenOn": "2024-10-15T23:27:41Z",
+      "side": 1,
+      "message": "not sure if that\u0027s something we want.. It\u0027s being used by Camera2 and some other 3rd party camera apps",
+      "revId": "47a4e5ad3000603f849ef74659d24e8eae00da25",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
