@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e2bf30b_79a169b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 21290
+      },
+      "writtenOn": "2024-10-15T23:37:59Z",
+      "side": 1,
+      "message": "Previously:\n```10-16 00:40:20.985  2030  5055 I ActivityTaskManager: START u0 {act\u003dandroid.intent.action.MAIN cat\u003d[android.intent.category.APP_GALLERY] flg\u003d0x10000000} with LAUNCH_MULTIPLE from uid 10187 result code\u003d-91\n```\n\nNow:\n```\n10-16 01:37:07.964  2022  2329 I ActivityTaskManager: START u0 {act\u003dandroid.intent.action.MAIN cat\u003d[android.intent.category.APP_GALLERY] flg\u003d0x10000000 cmp\u003dorg.lineageos.glimpse/.MainActivity} with LAUNCH_MULTIPLE from uid 10187 (BAL_ALLOW_VISIBLE_WINDOW) result code\u003d2\n```",
+      "revId": "f1b0c0ac2a9c233a27bec4141dcebd24a6578af4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
