@@ -543,6 +543,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         Intent.ACTION_VIEW -> handleView(intent)
         MediaStore.ACTION_REVIEW -> handleReview(intent)
         MediaStore.ACTION_REVIEW_SECURE -> handleReview(intent, true)
+        "com.android.camera.action.REVIEW" -> handleReview(intent)
         else -> run {
             runOnUiThread {
                 Toast.makeText(
