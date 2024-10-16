@@ -17,7 +17,7 @@
     <string name="album_videos">Video\'s</string>
     <plurals name="album_thumbnail_items">
         <item quantity="one">%d item</item>
-        <item quantity="other">%d item</item>
+        <item quantity="other">%d items</item>
     </plurals>
     <plurals name="delete_file_forever_confirm_message">
         <item quantity="one">Weet u zeker dat u dit bestand permanent wilt verwijderen?</item>
