@@ -39,6 +39,30 @@
       },
       "revId": "f1b0c0ac2a9c233a27bec4141dcebd24a6578af4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9980e45a_6e399641",
+        "filename": "app/src/main/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 21290
+      },
+      "writtenOn": "2024-10-16T08:50:13Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "06597687_2ca2bd90",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 74
+      },
+      "revId": "f1b0c0ac2a9c233a27bec4141dcebd24a6578af4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
