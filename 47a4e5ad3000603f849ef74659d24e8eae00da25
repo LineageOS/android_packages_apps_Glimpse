@@ -16,6 +16,23 @@
       "message": "not sure if that\u0027s something we want.. It\u0027s being used by Camera2 and some other 3rd party camera apps",
       "revId": "47a4e5ad3000603f849ef74659d24e8eae00da25",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88912360_a21566de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-10-16T06:38:40Z",
+      "side": 1,
+      "message": "https://github.com/lineage-next/android_packages_apps_Glimpse/issues/64\n\u003e Note: Only AOSP intents are there, we don\u0027t want to encourage the usage of deprecated or vendor intents, keep it that way",
+      "revId": "47a4e5ad3000603f849ef74659d24e8eae00da25",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
