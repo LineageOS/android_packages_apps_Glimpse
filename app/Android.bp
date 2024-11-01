@@ -39,7 +39,7 @@ android_app {
         "androidx.appcompat_appcompat",
         "androidx-constraintlayout_constraintlayout",
         "androidx.preference_preference",
-        "Glimpse_com.google.android.material_material",
+        "com.google.android.material_material",
         "androidx.exifinterface_exifinterface",
         "Glimpse_androidx.media3_media3-exoplayer",
         "Glimpse_androidx.media3_media3-exoplayer-dash",

@@ -419,66 +419,6 @@ android_library {
     java_version: "1.7",
 }
 
-android_library_import {
-    name: "Glimpse_com.google.android.material_material-nodeps",
-    aars: ["com/google/android/material/material/1.9.0/material-1.9.0.aar"],
-    sdk_version: "35",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    static_libs: [
-        "Glimpse_com.google.errorprone_error_prone_annotations",
-        "androidx-constraintlayout_constraintlayout",
-        "androidx.annotation_annotation",
-        "androidx.annotation_annotation-experimental",
-        "androidx.appcompat_appcompat",
-        "androidx.cardview_cardview",
-        "androidx.coordinatorlayout_coordinatorlayout",
-        "androidx.core_core",
-        "androidx.drawerlayout_drawerlayout",
-        "androidx.dynamicanimation_dynamicanimation",
-        "androidx.fragment_fragment",
-        "androidx.lifecycle_lifecycle-runtime",
-        "androidx.recyclerview_recyclerview",
-        "androidx.transition_transition",
-        "androidx.vectordrawable_vectordrawable",
-        "androidx.viewpager2_viewpager2",
-    ],
-}
-
-android_library {
-    name: "Glimpse_com.google.android.material_material",
-    sdk_version: "35",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    manifest: "com/google/android/material/material/1.9.0/AndroidManifest.xml",
-    static_libs: [
-        "Glimpse_com.google.android.material_material-nodeps",
-        "Glimpse_com.google.errorprone_error_prone_annotations",
-        "androidx-constraintlayout_constraintlayout",
-        "androidx.annotation_annotation",
-        "androidx.annotation_annotation-experimental",
-        "androidx.appcompat_appcompat",
-        "androidx.cardview_cardview",
-        "androidx.coordinatorlayout_coordinatorlayout",
-        "androidx.core_core",
-        "androidx.drawerlayout_drawerlayout",
-        "androidx.dynamicanimation_dynamicanimation",
-        "androidx.fragment_fragment",
-        "androidx.lifecycle_lifecycle-runtime",
-        "androidx.recyclerview_recyclerview",
-        "androidx.transition_transition",
-        "androidx.vectordrawable_vectordrawable",
-        "androidx.viewpager2_viewpager2",
-    ],
-    java_version: "1.7",
-}
-
 java_import {
     name: "Glimpse_com.google.errorprone_error_prone_annotations-nodeps",
     jars: ["com/google/errorprone/error_prone_annotations/2.15.0/error_prone_annotations-2.15.0.jar"],
