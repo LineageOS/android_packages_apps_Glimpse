@@ -8,7 +8,6 @@ package org.lineageos.glimpse.fragments
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -19,13 +18,12 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.shape.MaterialShapeDrawable
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.ui.ListItem
-import org.lineageos.glimpse.utils.MediaStoreBuckets
+import org.lineageos.glimpse.models.AlbumType
+import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.ui.views.ListItem
 
 /**
  * A fragment showing a search bar with categories.
- * Use the [LibraryFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class LibraryFragment : Fragment(R.layout.fragment_library) {
     // Views
@@ -35,11 +33,6 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
     private val libraryNestedScrollView by getViewProperty<NestedScrollView>(R.id.libraryNestedScrollView)
     private val trashAlbumListItem by getViewProperty<ListItem>(R.id.trashAlbumListItem)
     private val videosAlbumListItem by getViewProperty<ListItem>(R.id.videosAlbumListItem)
-
-    // Fragments
-    private val parentNavController by lazy {
-        requireParentFragment().requireParentFragment().findNavController()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,42 +55,32 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
         }
 
         photosAlbumListItem.setOnClickListener {
-            openAlbum(MediaStoreBuckets.MEDIA_STORE_BUCKET_PHOTOS)
+            openAlbum(AlbumType.REELS, MediaType.IMAGE)
         }
 
         videosAlbumListItem.setOnClickListener {
-            openAlbum(MediaStoreBuckets.MEDIA_STORE_BUCKET_VIDEOS)
+            openAlbum(AlbumType.REELS, MediaType.VIDEO)
         }
 
         favoritesAlbumListItem.setOnClickListener {
-            openAlbum(MediaStoreBuckets.MEDIA_STORE_BUCKET_FAVORITES)
+            openAlbum(AlbumType.FAVORITES)
         }
 
         trashAlbumListItem.setOnClickListener {
-            openAlbum(MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH)
+            openAlbum(AlbumType.TRASH)
         }
     }
 
-    private fun openAlbum(mediaStoreBucket: MediaStoreBuckets) {
-        parentNavController.navigate(
-            R.id.action_mainFragment_to_albumViewerFragment,
-            AlbumViewerFragment.createBundle(
-                bucketId = mediaStoreBucket.id
+    private fun openAlbum(
+        albumType: AlbumType,
+        fileType: MediaType? = null,
+    ) {
+        findNavController().navigate(
+            R.id.action_mainFragment_to_fragment_album,
+            AlbumFragment.createBundle(
+                albumType = albumType,
+                fileType = fileType,
             )
         )
-    }
-
-    companion object {
-        private fun createBundle() = bundleOf()
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment SearchFragment.
-         */
-        fun newInstance() = LibraryFragment().apply {
-            arguments = createBundle()
-        }
     }
 }

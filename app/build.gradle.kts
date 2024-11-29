@@ -10,6 +10,7 @@ import org.lineageos.generatebp.models.Module
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 apply {
@@ -18,7 +19,7 @@ apply {
 
 buildscript {
     repositories {
-        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.15/.m2")
+        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.16/.m2")
     }
 
     dependencies {
