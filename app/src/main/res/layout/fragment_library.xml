@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:paddingHorizontal="16dp"
         app:liftOnScrollTargetViewId="@+id/libraryNestedScrollView">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -51,28 +50,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <org.lineageos.glimpse.ui.ListItem
+                <org.lineageos.glimpse.ui.views.ListItem
                     android:id="@+id/photosAlbumListItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:headlineText="@string/album_photos"
                     app:leadingIconImage="@drawable/ic_photo_size_select_actual" />
 
-                <org.lineageos.glimpse.ui.ListItem
+                <org.lineageos.glimpse.ui.views.ListItem
                     android:id="@+id/videosAlbumListItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:headlineText="@string/album_videos"
                     app:leadingIconImage="@drawable/ic_play_circle_outline" />
 
-                <org.lineageos.glimpse.ui.ListItem
+                <org.lineageos.glimpse.ui.views.ListItem
                     android:id="@+id/favoritesAlbumListItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:headlineText="@string/album_favorites"
                     app:leadingIconImage="@drawable/ic_star_border" />
 
-                <org.lineageos.glimpse.ui.ListItem
+                <org.lineageos.glimpse.ui.views.ListItem
                     android:id="@+id/trashAlbumListItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

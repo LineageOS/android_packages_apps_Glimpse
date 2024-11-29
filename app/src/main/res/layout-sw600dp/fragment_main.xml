@@ -10,21 +10,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/childNavHostFragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/navigationBarView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/main_fragment_navigation" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.navigationrail.NavigationRailView
         android:id="@+id/navigationBarView"
-        style="@style/Widget.Material3.BottomAppBar"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

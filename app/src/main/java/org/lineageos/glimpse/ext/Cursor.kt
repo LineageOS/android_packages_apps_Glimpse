@@ -6,22 +6,20 @@
 package org.lineageos.glimpse.ext
 
 import android.database.Cursor
+import org.lineageos.glimpse.models.ColumnIndexCache
 
 fun <T> Cursor?.mapEachRow(
-    projection: Array<String>,
-    mapping: (Cursor, Array<Int>) -> T,
+    mapping: (ColumnIndexCache) -> T,
 ) = this?.use { cursor ->
     if (!cursor.moveToFirst()) {
         return@use emptyList<T>()
     }
 
-    val indexCache = projection.map { column ->
-        cursor.getColumnIndexOrThrow(column)
-    }.toTypedArray()
+    val columnIndexCache = ColumnIndexCache(cursor, cursor.columnNames)
 
     val data = mutableListOf<T>()
     do {
-        data.add(mapping(cursor, indexCache))
+        data.add(mapping(columnIndexCache))
     } while (cursor.moveToNext())
 
     data.toList()
