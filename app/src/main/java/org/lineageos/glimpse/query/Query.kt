@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -7,33 +7,43 @@ package org.lineageos.glimpse.query
 
 typealias Column = String
 
-sealed interface Node {
-    fun build(): String = when (this) {
-        is Eq -> "${lhs.build()} = ${rhs.build()}"
-        is Or -> "(${lhs.build()}) OR (${rhs.build()})"
-        is And -> "(${lhs.build()}) AND (${rhs.build()})"
-        is Literal<*> -> "$`val`"
-    }
-}
-
-private class Eq(val lhs: Node, val rhs: Node) : Node
-private class Or(val lhs: Node, val rhs: Node) : Node
-private class And(val lhs: Node, val rhs: Node) : Node
-private class Literal<T>(val `val`: T) : Node
-
-class Query(val root: Node) {
-    fun build() = root.build()
+sealed interface Query {
+    fun build(): String
 
     companion object {
         const val ARG = "?"
+        const val NULL = "NULL"
     }
 }
 
-infix fun Query.or(other: Query) = Query(Or(this.root, other.root))
-infix fun Query.and(other: Query) = Query(And(this.root, other.root))
-infix fun Query.eq(other: Query) = Query(Eq(this.root, other.root))
-infix fun <T> Column.eq(other: T) = Query(Literal(this)) eq Query(Literal(other))
+enum class Operator(val symbol: String) {
+    AND("AND"),
+    OR("OR"),
+    EQUALS("="),
+    NOT_EQUALS("!="),
+    LIKE("LIKE"),
+    IS("IS"),
+}
 
-fun Iterable<Query>.join(
-    func: Query.(other: Query) -> Query,
-) = reduceOrNull(func)
+class LogicalOp(private val lhs: Query, private val op: Operator, private val rhs: Query) : Query {
+    override fun build() = "(${lhs.build()}) ${op.symbol} (${rhs.build()})"
+}
+
+class StringOp<T>(private val lhs: Column, private val op: Operator, private val rhs: T) : Query {
+    override fun build() = "$lhs ${op.symbol} $rhs"
+}
+
+class In<T>(private val value: T, private val values: Collection<T>) : Query {
+    override fun build() = "$value IN (${values.joinToString(", ")})"
+}
+
+infix fun Query.and(other: Query) = LogicalOp(this, Operator.AND, other)
+infix fun Query.or(other: Query) = LogicalOp(this, Operator.OR, other)
+
+infix fun Column.eq(other: String) = StringOp(this, Operator.EQUALS, other)
+infix fun Column.neq(other: String) = StringOp(this, Operator.NOT_EQUALS, other)
+infix fun Column.like(other: String) = StringOp(this, Operator.LIKE, other)
+infix fun Column.`is`(other: String) = StringOp(this, Operator.IS, other)
+infix fun <T> Column.`in`(values: Collection<T>) = In(this, values)
+
+inline fun query(block: () -> Query) = block().build()

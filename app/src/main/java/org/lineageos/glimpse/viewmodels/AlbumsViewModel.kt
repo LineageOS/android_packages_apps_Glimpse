@@ -6,41 +6,45 @@
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import org.lineageos.glimpse.ext.context
-import org.lineageos.glimpse.repository.MediaRepository
+import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.RequestStatus
 
-class AlbumsViewModel(
-    application: Application,
-    val mimeType: String? = null,
-) : AndroidViewModel(application) {
-    val albums = MediaRepository.albums(context, mimeType).flowOn(Dispatchers.IO).map {
-        QueryResult.Data(it)
-    }.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = QueryResult.Empty()
+class AlbumsViewModel(application: Application) : GlimpseViewModel(application) {
+    data class AlbumsRequest(
+        val mediaType: MediaType? = null,
+        val mimeType: String? = null,
     )
 
-    companion object {
-        fun factory(
-            application: Application,
-            mimeType: String? = null,
-        ) = viewModelFactory {
-            initializer {
-                AlbumsViewModel(
-                    application = application,
-                    mimeType = mimeType,
-                )
-            }
+    private val _albumsRequest = MutableStateFlow<AlbumsRequest?>(null)
+    val albumsRequest = _albumsRequest.asStateFlow()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val albums = albumsRequest
+        .filterNotNull()
+        .flatMapLatest { albumsRequest ->
+            mediaRepository.albums(
+                albumsRequest.mediaType,
+                albumsRequest.mimeType,
+            )
         }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = RequestStatus.Loading()
+        )
+
+    fun loadAlbums(albumsRequest: AlbumsRequest?) {
+        _albumsRequest.value = albumsRequest
     }
 }
