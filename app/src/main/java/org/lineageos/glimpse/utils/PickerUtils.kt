@@ -7,7 +7,7 @@ package org.lineageos.glimpse.utils
 
 import android.content.Intent
 import android.provider.MediaStore
-import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.FileType
 
 object PickerUtils {
     private const val MIME_TYPE_IMAGE_ANY = "image/*"
@@ -37,14 +37,14 @@ object PickerUtils {
     }
 
     /**
-     * Get a [MediaType] only if the provided MIME type is a generic one, else return null.
+     * Get a [FileType] only if the provided MIME type is a generic one, else return null.
      * @param mimeType A MIME type
-     * @return [MediaType] if the MIME type is generic, else null
+     * @return [FileType] if the MIME type is generic, else null
      *         (assume MIME type represent either a specific file format or any)
      */
     fun mediaTypeFromGenericMimeType(mimeType: String?) = when (mimeType) {
-        MIME_TYPE_IMAGE_ANY -> MediaType.IMAGE
-        MIME_TYPE_VIDEO_ANY -> MediaType.VIDEO
+        MIME_TYPE_IMAGE_ANY -> FileType.IMAGE
+        MIME_TYPE_VIDEO_ANY -> FileType.VIDEO
         else -> null
     }
 
