@@ -25,25 +25,21 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
-import org.lineageos.glimpse.utils.PermissionsGatedCallback
+import org.lineageos.glimpse.models.RequestStatus
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailAdapter
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailLayoutManager
+import org.lineageos.glimpse.utils.PermissionsChecker
+import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.utils.PickerUtils
 import org.lineageos.glimpse.viewmodels.AlbumsViewModel
-import org.lineageos.glimpse.viewmodels.QueryResult
 
 class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) {
     // View models
-    private val model: AlbumsViewModel by viewModels {
-        AlbumsViewModel.factory(
-            requireActivity().application,
-            mimeType,
-        )
-    }
+    private val model by viewModels<AlbumsViewModel>()
 
     // Views
-    private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
     private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
+    private val recyclerView by getViewProperty<RecyclerView>(R.id.recyclerView)
 
     // Intent data
     private val mimeType by lazy { PickerUtils.translateMimeType(activity?.intent) }
@@ -53,54 +49,71 @@ class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) 
         AlbumThumbnailAdapter { album ->
             findNavController().navigate(
                 R.id.action_pickerAlbumSelectorFragment_to_pickerMediaSelectorFragment,
-                MediaSelectorFragment.createBundle(album.id)
+                MediaSelectorFragment.createBundle(album.uri)
             )
         }
     }
 
     // Permissions
-    private val permissionsGatedCallback = PermissionsGatedCallback(this) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                model.albums.collectLatest {
-                    when (it) {
-                        is QueryResult.Data -> {
-                            albumThumbnailAdapter.submitList(it.values)
-
-                            val noMedia = it.values.isEmpty()
-                            albumsRecyclerView.isVisible = !noMedia
-                            noMediaLinearLayout.isVisible = noMedia
-                        }
-
-                        is QueryResult.Empty -> Unit
-                    }
-                }
-            }
-        }
-    }
+    private val permissionsChecker = PermissionsChecker(this, PermissionsUtils.mainPermissions)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val context = requireContext()
 
-        albumsRecyclerView.layoutManager = AlbumThumbnailLayoutManager(context)
-        albumsRecyclerView.adapter = albumThumbnailAdapter
+        recyclerView.layoutManager = AlbumThumbnailLayoutManager(context)
+        recyclerView.adapter = albumThumbnailAdapter
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             )
 
-            albumsRecyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            recyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = insets.left
                 rightMargin = insets.right
             }
-            albumsRecyclerView.updatePadding(bottom = insets.bottom)
+            recyclerView.updatePadding(bottom = insets.bottom)
 
             windowInsets
         }
 
-        permissionsGatedCallback.runAfterPermissionsCheck()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                permissionsChecker.withPermissionsGranted {
+                    loadData()
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        recyclerView.adapter = null
+
+        super.onDestroyView()
+    }
+
+    private suspend fun loadData() {
+        model.albums.collectLatest {
+            when (it) {
+                is RequestStatus.Loading -> {
+                    // Do nothing
+                }
+
+                is RequestStatus.Success -> {
+                    albumThumbnailAdapter.submitList(it.data)
+
+                    val isEmpty = it.data.isEmpty()
+                    recyclerView.isVisible = !isEmpty
+                    noMediaLinearLayout.isVisible = isEmpty
+                }
+
+                is RequestStatus.Error -> {
+                    recyclerView.isVisible = false
+                    noMediaLinearLayout.isVisible = true
+                }
+            }
+        }
     }
 }

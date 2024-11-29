@@ -1,48 +1,63 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.glimpse.repository
 
 import android.content.Context
-import org.lineageos.glimpse.flow.AlbumFlow
-import org.lineageos.glimpse.flow.AlbumsFlow
-import org.lineageos.glimpse.flow.MediaFlow
+import android.net.Uri
+import android.provider.MediaStore
+import kotlinx.coroutines.CoroutineScope
+import org.lineageos.glimpse.datasources.LocalDataSource
+import org.lineageos.glimpse.datasources.MediaDataSource
+import org.lineageos.glimpse.models.FileType
 
-@Suppress("Unused")
-object MediaRepository {
-    fun media(
-        context: Context,
-        bucketId: Int,
-        mimeType: String? = null,
-    ) = MediaFlow(context, bucketId, mimeType).flowData()
+/**
+ * Media repository. This class coordinates all the providers and their data source.
+ * All methods that involves a URI as a parameter will be redirected to the
+ * proper data source that can handle the media item.
+ */
+class MediaRepository(
+    private val context: Context,
+    scope: CoroutineScope,
+) {
+    /**
+     * Content resolver.
+     */
+    private val contentResolver = context.contentResolver
 
-    fun mediaCursor(
-        context: Context,
-        bucketId: Int,
-        mimeType: String? = null,
-    ) = MediaFlow(context, bucketId, mimeType).flowCursor()
+    /**
+     * Local data source singleton.
+     */
+    private val localDataSource = LocalDataSource(
+        contentResolver,
+        MediaStore.VOLUME_EXTERNAL,
+    ) as MediaDataSource
 
-    fun album(
-        context: Context,
-        bucketId: Int,
-        mimeType: String? = null,
-    ) = AlbumFlow(context, bucketId, mimeType).flowData()
+    /**
+     * @see MediaDataSource.isMediaItemCompatible
+     */
+    fun isMediaItemCompatible(mediaItemUri: Uri) =
+        localDataSource.isMediaItemCompatible(mediaItemUri)
 
-    fun albumCursor(
-        context: Context,
-        bucketId: Int,
-        mimeType: String? = null,
-    ) = AlbumFlow(context, bucketId, mimeType).flowCursor()
+    /**
+     * @see MediaDataSource.mediaTypeOf
+     */
+    suspend fun mediaTypeOf(mediaItemUri: Uri) = localDataSource.mediaTypeOf(mediaItemUri)
 
-    fun albums(
-        context: Context,
-        mimeType: String? = null,
-    ) = AlbumsFlow(context, mimeType).flowData()
+    /**
+     * @see MediaDataSource.reels
+     */
+    fun reels(fileType: FileType? = null) = localDataSource.reels(fileType)
 
-    fun albumsCursor(
-        context: Context,
-        mimeType: String? = null,
-    ) = AlbumsFlow(context, mimeType).flowCursor()
+    /**
+     * @see MediaDataSource.albums
+     */
+    fun albums() = localDataSource.albums()
+
+    /**
+     * @see MediaDataSource.album
+     */
+    fun album(albumUri: Uri) = localDataSource.album(albumUri)
 }

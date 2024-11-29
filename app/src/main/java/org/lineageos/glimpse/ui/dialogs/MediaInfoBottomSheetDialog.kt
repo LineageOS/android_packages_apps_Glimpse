@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.ui
+package org.lineageos.glimpse.ui.dialogs
 
 import android.app.Activity
 import android.content.Context
@@ -46,14 +46,15 @@ import org.lineageos.glimpse.ext.round
 import org.lineageos.glimpse.ext.software
 import org.lineageos.glimpse.ext.toFraction
 import org.lineageos.glimpse.ext.userComment
-import org.lineageos.glimpse.models.MediaStoreMedia
-import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.FileType
+import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.ui.views.ListItem
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class MediaInfoBottomSheetDialog(
     context: Context,
-    media: MediaStoreMedia,
+    media: Media,
     callbacks: Callbacks,
     secure: Boolean = false,
 ) : BottomSheetDialog(context) {
@@ -106,9 +107,9 @@ class MediaInfoBottomSheetDialog(
 
         mediaInfoListItem.leadingIconImage = ResourcesCompat.getDrawable(
             context.resources,
-            when (media.mediaType) {
-                MediaType.IMAGE -> R.drawable.ic_image
-                MediaType.VIDEO -> R.drawable.ic_video_camera_back
+            when (media.fileType) {
+                FileType.IMAGE -> R.drawable.ic_image
+                FileType.VIDEO -> R.drawable.ic_video_camera_back
             },
             null
         )
@@ -234,7 +235,7 @@ class MediaInfoBottomSheetDialog(
     }
 
     class Callbacks(private val activity: AppCompatActivity) {
-        private lateinit var editDescriptionMedia: MediaStoreMedia
+        private lateinit var editDescriptionMedia: Media
         private lateinit var editDescriptionDescription: String
 
         private val editDescriptionCallback = activity.registerForActivityResult(
@@ -245,7 +246,7 @@ class MediaInfoBottomSheetDialog(
             }
         }
 
-        fun onEditDescription(media: MediaStoreMedia, description: String = "") {
+        fun onEditDescription(media: Media, description: String = "") {
             editDescriptionMedia = media
             editDescriptionDescription = description
 
@@ -256,7 +257,7 @@ class MediaInfoBottomSheetDialog(
             )
         }
 
-        private fun editDescription(media: MediaStoreMedia, description: String) {
+        private fun editDescription(media: Media, description: String) {
             val contentResolver = activity.contentResolver
 
             contentResolver.openFileDescriptor(

@@ -11,9 +11,9 @@
 
     <fragment
         android:id="@+id/reelsFragment"
-        android:name="org.lineageos.glimpse.fragments.AlbumViewerFragment"
+        android:name="org.lineageos.glimpse.fragments.ReelsFragment"
         android:label=""
-        tools:layout="@layout/fragment_album_viewer" />
+        tools:layout="@layout/fragment_reels" />
 
     <fragment
         android:id="@+id/albumsFragment"
