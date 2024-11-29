@@ -6,7 +6,7 @@
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.createSavedStateHandle
@@ -16,10 +16,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import org.lineageos.glimpse.ext.context
-import org.lineageos.glimpse.repository.MediaRepository
+import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 class MediaViewerViewModel(
@@ -27,14 +25,14 @@ class MediaViewerViewModel(
     savedStateHandle: SavedStateHandle,
     bucketId: Int,
     mimeType: String? = null,
-) : AndroidViewModel(application) {
-    val media = MediaRepository.media(context, bucketId, mimeType).flowOn(Dispatchers.IO).map {
-        QueryResult.Data(it)
-    }.stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = QueryResult.Empty(),
-    )
+) : GlimpseViewModel(application) {
+    val media = mediaRepository.album(Uri.EMPTY)
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = RequestStatus.Loading(),
+        )
 
     private val mediaPositionInternal = savedStateHandle.getLiveData<Int>(MEDIA_POSITION_KEY)
     val mediaPositionLiveData: LiveData<Int> = mediaPositionInternal

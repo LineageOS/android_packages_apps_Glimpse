@@ -25,8 +25,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
+import org.lineageos.glimpse.models.RequestStatus
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailAdapter
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.utils.PickerUtils
 import org.lineageos.glimpse.viewmodels.AlbumsViewModel
@@ -34,12 +35,7 @@ import org.lineageos.glimpse.viewmodels.QueryResult
 
 class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) {
     // View models
-    private val model: AlbumsViewModel by viewModels {
-        AlbumsViewModel.factory(
-            requireActivity().application,
-            mimeType,
-        )
-    }
+    private val model by viewModels<AlbumsViewModel>()
 
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
@@ -53,7 +49,7 @@ class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) 
         AlbumThumbnailAdapter { album ->
             findNavController().navigate(
                 R.id.action_pickerAlbumSelectorFragment_to_pickerMediaSelectorFragment,
-                MediaSelectorFragment.createBundle(album.id)
+                //MediaSelectorFragment.createBundle(album.uri)
             )
         }
     }
@@ -64,15 +60,15 @@ class AlbumSelectorFragment : Fragment(R.layout.fragment_picker_album_selector) 
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 model.albums.collectLatest {
                     when (it) {
-                        is QueryResult.Data -> {
-                            albumThumbnailAdapter.submitList(it.values)
+                        is RequestStatus.Success -> {
+                            albumThumbnailAdapter.submitList(it.data)
 
-                            val noMedia = it.values.isEmpty()
+                            val noMedia = it.data.isEmpty()
                             albumsRecyclerView.isVisible = !noMedia
                             noMediaLinearLayout.isVisible = noMedia
                         }
 
-                        is QueryResult.Empty -> Unit
+                        else -> Unit
                     }
                 }
             }

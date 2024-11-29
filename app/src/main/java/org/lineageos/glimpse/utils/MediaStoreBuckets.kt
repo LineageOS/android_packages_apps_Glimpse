@@ -22,11 +22,6 @@ enum class MediaStoreBuckets {
     MEDIA_STORE_BUCKET_REELS,
 
     /**
-     * Reserved bucket ID for placeholders, throw an exception if this value is used.
-     */
-    MEDIA_STORE_BUCKET_PLACEHOLDER,
-
-    /**
      * Reels album, contains only photos.
      */
     MEDIA_STORE_BUCKET_PHOTOS,

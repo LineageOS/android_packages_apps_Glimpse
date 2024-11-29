@@ -3,21 +3,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.recyclerview
+package org.lineageos.glimpse.ui.recyclerview
 
 import android.content.Context
+import androidx.recyclerview.widget.RecyclerView
 import org.lineageos.glimpse.ext.px
 
 class ThumbnailLayoutManager(
     context: Context,
-    adapter: ThumbnailAdapter,
+    adapter: RecyclerView.Adapter<*>,
 ) : DisplayAwareGridLayoutManager(context, 4, 4.px) {
     init {
         spanSizeLookup = ThumbnailSpanSizeLookup(adapter, spanCount)
     }
 
     private class ThumbnailSpanSizeLookup(
-        private val adapter: ThumbnailAdapter,
+        private val adapter: RecyclerView.Adapter<*>,
         private val spanCount: Int,
     ) : SpanSizeLookup() {
         override fun getSpanSize(position: Int) = when (adapter.getItemViewType(position)) {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.recyclerview
+package org.lineageos.glimpse.ui.recyclerview
 
 import android.content.Context
 import org.lineageos.glimpse.ext.px

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.recyclerview
+package org.lineageos.glimpse.ui.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,6 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
@@ -22,17 +21,15 @@ import com.github.panpf.zoomimage.CoilZoomImageView
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.models.Media
-import org.lineageos.glimpse.models.MediaStoreMedia
-import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.FileType
 import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
-import kotlin.reflect.safeCast
 
 class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
     private val mediaViewerViewModel: MediaViewerViewModel,
     private val mediaViewerUIViewModel: MediaViewerUIViewModel,
-) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(DATA_TYPE_COMPARATOR) {
+) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(UniqueItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
         exoPlayer, mediaViewerViewModel, mediaViewerUIViewModel
@@ -76,7 +73,7 @@ class MediaViewerAdapter(
 
             updateDisplayedMedia()
 
-            val isNowVideoPlayer = isCurrentlyDisplayedView && media?.mediaType == MediaType.VIDEO
+            val isNowVideoPlayer = isCurrentlyDisplayedView && media?.fileType == FileType.VIDEO
 
             imageView.isVisible = !isNowVideoPlayer
             playerView.isVisible = isNowVideoPlayer
@@ -111,7 +108,7 @@ class MediaViewerAdapter(
 
         @androidx.media3.common.util.UnstableApi
         private val fullscreenModeObserver = { fullscreenMode: Boolean ->
-            if (media?.mediaType == MediaType.VIDEO) {
+            if (media?.fileType == FileType.VIDEO) {
                 playerControlView.fade(!fullscreenMode)
             }
         }
@@ -131,10 +128,8 @@ class MediaViewerAdapter(
             updateDisplayedMedia()
 
             imageView.load(media.uri) {
-                MediaStoreMedia::class.safeCast(media)?.let {
-                    memoryCacheKey("full_${it.id}")
-                    placeholderMemoryCacheKey("thumbnail_${it.id}")
-                }
+                memoryCacheKey("full_${media.uri}")
+                placeholderMemoryCacheKey("thumbnail_${media.uri}")
             }
         }
 
@@ -160,26 +155,6 @@ class MediaViewerAdapter(
         private fun updateDisplayedMedia() {
             if (isCurrentlyDisplayedView) {
                 mediaViewerUIViewModel.displayedMedia.value = media
-            }
-        }
-    }
-
-    companion object {
-        val DATA_TYPE_COMPARATOR = object : DiffUtil.ItemCallback<Media>() {
-            override fun areItemsTheSame(oldItem: Media, newItem: Media) = when {
-                oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
-                    oldItem.id == newItem.id
-
-                else -> oldItem.uri == oldItem.uri
-            }
-
-            override fun areContentsTheSame(oldItem: Media, newItem: Media) = when {
-                oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
-                    oldItem.id == newItem.id &&
-                            oldItem.dateModified == newItem.dateModified &&
-                            oldItem.isFavorite == newItem.isFavorite
-
-                else -> oldItem.uri == oldItem.uri
             }
         }
     }

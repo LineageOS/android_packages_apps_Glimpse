@@ -41,6 +41,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.lineageos.glimpse.ext.asArray
@@ -51,38 +52,26 @@ import org.lineageos.glimpse.ext.createDeleteRequest
 import org.lineageos.glimpse.ext.createFavoriteRequest
 import org.lineageos.glimpse.ext.createTrashRequest
 import org.lineageos.glimpse.ext.fade
+import org.lineageos.glimpse.ext.getParcelable
 import org.lineageos.glimpse.ext.setBarsVisibility
 import org.lineageos.glimpse.models.Media
-import org.lineageos.glimpse.models.MediaStoreMedia
-import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.models.UriMedia
-import org.lineageos.glimpse.recyclerview.MediaViewerAdapter
-import org.lineageos.glimpse.ui.MediaInfoBottomSheetDialog
+import org.lineageos.glimpse.models.FileType
+import org.lineageos.glimpse.models.RequestStatus
+import org.lineageos.glimpse.ui.recyclerview.MediaViewerAdapter
+import org.lineageos.glimpse.ui.dialogs.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.utils.MediaDialogsUtils
-import org.lineageos.glimpse.utils.MediaStoreBuckets
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
 import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
-import org.lineageos.glimpse.viewmodels.QueryResult.Data
-import org.lineageos.glimpse.viewmodels.QueryResult.Empty
 import java.text.SimpleDateFormat
-import kotlin.reflect.safeCast
 
 /**
  * An activity used to view one or mode medias.
  */
 class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     // View models
-    private val model: MediaViewerViewModel by viewModels {
-        albumId?.let {
-            assert(it != MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id) {
-                "MEDIA_STORE_BUCKET_PLACEHOLDER found, view model initialized too early"
-            }
-
-            MediaViewerViewModel.factory(application, it)
-        } ?: MediaViewerViewModel.factory(application)
-    }
-    private val uiModel: MediaViewerUIViewModel by viewModels()
+    private val viewModel by viewModels<MediaViewerViewModel>()
+    private val uiViewModel by viewModels<MediaViewerUIViewModel>()
 
     // Views
     private val adjustButton by lazy { findViewById<MaterialButton>(R.id.adjustButton) }
@@ -99,9 +88,6 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     // System services
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
-
-    // Coroutines
-    private val ioScope = CoroutineScope(Job() + Dispatchers.IO)
 
     // Player
     private val exoPlayerListener = object : Player.Listener {
@@ -131,7 +117,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     // Adapter
     private val mediaViewerAdapter by lazy {
-        MediaViewerAdapter(exoPlayerLazy, model, uiModel)
+        MediaViewerAdapter(exoPlayerLazy, viewModel, uiViewModel)
     }
 
     // okhttp
@@ -139,17 +125,17 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     // Intent values
     private var media: Media? = null
-    private var albumId: Int? = MediaStoreBuckets.MEDIA_STORE_BUCKET_PLACEHOLDER.id
-    private var additionalMedias: Array<MediaStoreMedia>? = null
+    private var albumUri: Uri? = null
+    private var additionalMedias: Array<Media>? = null
     private var secure = false
 
-    private var lastProcessedMedia: MediaStoreMedia? = null
+    private var lastProcessedMedia: Media? = null
 
     /**
      * Check if we're showing a static set of medias.
      */
     private val readOnly
-        get() = additionalMedias != null || albumId == null || secure
+        get() = additionalMedias != null || albumUri == null || secure
 
     // Contracts
     private val deleteUriContract =
@@ -211,7 +197,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                 return
             }
 
-            this@ViewActivity.model.mediaPosition = position
+            this@ViewActivity.viewModel.mediaPosition = position
         }
     }
 
@@ -219,40 +205,39 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     // Permissions
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
-        ioScope.launch {
-            val intentHandled = handleIntent(intent)
+        lifecycleScope.launch lifecycleCoroutine@{
+            val intentHandled = withContext(Dispatchers.IO) {
+                handleIntent(intent)
+            }
 
-            lifecycleScope.launch lifecycleCoroutine@{
-                if (!intentHandled) {
-                    finish()
-                    return@lifecycleCoroutine
-                }
+            if (!intentHandled) {
+                finish()
+                return@lifecycleCoroutine
+            }
 
-                // Here we now do a bunch of view model related stuff because we can now initialize it
-                // with the now correctly defined album ID
+            additionalMedias?.also { additionalMedias ->
+                val medias = media?.let {
+                    arrayOf(it) + additionalMedias
+                } ?: additionalMedias
 
-                // Attach the adapter to the view pager
-                viewPager.adapter = mediaViewerAdapter
-
-                additionalMedias?.also { additionalMedias ->
-                    val medias = MediaStoreMedia::class.safeCast(media)?.let {
-                        arrayOf(it) + additionalMedias
-                    } ?: additionalMedias
-
-                    initData(medias.distinct().sortedByDescending { it.dateModified })
-                } ?: albumId?.also {
-                    repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        model.media.collectLatest { data ->
-                            when (data) {
-                                is Data -> initData(data.values)
-                                is Empty -> Unit
+                initData(medias.distinct().sortedByDescending { it.dateModified })
+            } ?: albumUri?.also {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.media.collectLatest { data ->
+                        when (data) {
+                            is RequestStatus.Loading -> {
+                                // Do nothing
                             }
+
+                            is RequestStatus.Success -> initData(data.data.second)
+
+                            is RequestStatus.Error -> Unit
                         }
                     }
-                } ?: media?.also {
-                    initData(listOf(it))
-                } ?: initData(listOf())
-            }
+                }
+            } ?: media?.also {
+                initData(listOf(it))
+            } ?: initData(listOf())
         }
     }
 
@@ -269,7 +254,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         // Observe fullscreen mode
-        uiModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->
+        uiViewModel.fullscreenModeLiveData.observe(this@ViewActivity) { fullscreenMode ->
             appBarLayout.fade(!fullscreenMode)
             bottomSheetLinearLayout.fade(!fullscreenMode)
 
@@ -282,11 +267,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         // Observe displayed media
-        uiModel.displayedMedia.observe(this@ViewActivity) { displayedMedia ->
-            val mediaStoreMedia = MediaStoreMedia::class.safeCast(displayedMedia)
-
+        uiViewModel.displayedMedia.observe(this@ViewActivity) { displayedMedia ->
             // Update date and time text
-            mediaStoreMedia?.let {
+            displayedMedia?.let {
                 toolbar.title = dateFormatter.format(it.dateModified)
                 toolbar.subtitle = timeFormatter.format(it.dateModified)
             } ?: run {
@@ -295,8 +278,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             }
 
             // Update favorite button
-            favoriteButton.isVisible = !readOnly && mediaStoreMedia != null
-            mediaStoreMedia?.let {
+            favoriteButton.isVisible = !readOnly
+            displayedMedia?.let {
                 favoriteButton.isSelected = it.isFavorite
                 favoriteButton.setText(
                     when (it.isFavorite) {
@@ -313,14 +296,14 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             useAsButton.isVisible = !secure
 
             // Update info button
-            infoButton.isVisible = mediaStoreMedia != null
+            infoButton.isVisible = true
 
             // Update adjust button
-            adjustButton.isVisible = !readOnly && mediaStoreMedia != null
+            adjustButton.isVisible = !readOnly
 
             // Update delete button
-            deleteButton.isVisible = !readOnly && mediaStoreMedia != null
-            mediaStoreMedia?.let {
+            deleteButton.isVisible = !readOnly
+            displayedMedia?.let {
                 deleteButton.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     when (it.isTrashed) {
@@ -349,7 +332,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             // Avoid updating the sheets height when they're hidden.
             // Once the system bars will be made visible again, this function
             // will be called again.
-            if (uiModel.fullscreenModeLiveData.value != true) {
+            if (uiViewModel.fullscreenModeLiveData.value != true) {
                 bottomSheetLinearLayout.updatePadding(
                     left = insets.left,
                     right = insets.right,
@@ -362,10 +345,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             windowInsets
         }
 
+        // Attach the adapter to the view pager
+        viewPager.adapter = mediaViewerAdapter
+
         toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.info -> {
-                    MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
+                    uiViewModel.displayedMedia.value?.let {
                         MediaInfoBottomSheetDialog(
                             this@ViewActivity, it, mediaInfoBottomSheetDialogCallbacks, secure
                         ).show()
@@ -374,7 +360,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                 }
 
                 R.id.useAs -> {
-                    uiModel.displayedMedia.value?.let {
+                    uiViewModel.displayedMedia.value?.let {
                         startActivity(Intent.createChooser(buildUseAsIntent(it), null))
                     }
                     true
@@ -389,7 +375,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         favoriteButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
+            uiViewModel.displayedMedia.value?.let {
                 favoriteContract.launch(
                     contentResolver.createFavoriteRequest(
                         !it.isFavorite, it.uri
@@ -399,7 +385,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         shareButton.setOnClickListener {
-            uiModel.displayedMedia.value?.let {
+            uiViewModel.displayedMedia.value?.let {
                 startActivity(
                     Intent.createChooser(
                         buildShareIntent(it),
@@ -410,7 +396,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         adjustButton.setOnClickListener {
-            uiModel.displayedMedia.value?.let {
+            uiViewModel.displayedMedia.value?.let {
                 startActivity(
                     Intent.createChooser(
                         buildEditIntent(it),
@@ -421,13 +407,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
 
         deleteButton.setOnClickListener {
-            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
+            uiViewModel.displayedMedia.value?.let {
                 trashMedia(it)
             }
         }
 
         deleteButton.setOnLongClickListener {
-            MediaStoreMedia::class.safeCast(uiModel.displayedMedia.value)?.let {
+            uiViewModel.displayedMedia.value?.let {
                 MediaDialogsUtils.openDeleteForeverDialog(this, it.uri) { uris ->
                     deleteUriContract.launch(contentResolver.createDeleteRequest(*uris))
                 }
@@ -475,7 +461,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         // If we already have a position, keep that, else get one from
         // the passed media, else go to the first one
-        val mediaPosition = model.mediaPosition ?: media?.let { media ->
+        val mediaPosition = viewModel.mediaPosition ?: media?.let { media ->
             data.indexOfFirst {
                 it.uri == media.uri
             }.takeUnless {
@@ -483,7 +469,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             }
         } ?: 0
 
-        model.mediaPosition = mediaPosition
+        viewModel.mediaPosition = mediaPosition
 
         viewPager.setCurrentItem(mediaPosition, false)
         onPageChangeCallback.onPageSelected(mediaPosition)
@@ -494,7 +480,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
      * @param media The currently displayed [Media]
      */
     private fun updateExoPlayer(media: Media) {
-        if (media.mediaType == MediaType.VIDEO) {
+        if (media.fileType == FileType.VIDEO) {
             with(exoPlayerLazy.value) {
                 if (media.uri != lastVideoUriPlayed) {
                     lastVideoUriPlayed = media.uri
@@ -512,7 +498,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         }
     }
 
-    private fun trashMedia(media: MediaStoreMedia, trash: Boolean = !media.isTrashed) {
+    private fun trashMedia(media: Media, trash: Boolean = !media.isTrashed) {
         if (trash) {
             lastProcessedMedia = media
         }
@@ -535,7 +521,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED
         )
 
-        uiModel.sheetsHeightLiveData.value = Pair(
+        uiViewModel.sheetsHeightLiveData.value = Pair(
             appBarLayout.measuredHeight,
             bottomSheetLinearLayout.measuredHeight,
         )
@@ -596,7 +582,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             return false
         }
 
-        val uriType = MediaType.fromMimeType(dataType) ?: run {
+        val uriType = FileType.fromMimeType(dataType) ?: run {
             runOnUiThread {
                 Toast.makeText(
                     this,
@@ -608,10 +594,12 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             return false
         }
 
+        /*
         updateArguments(
-            media = UriMedia(uri, uriType, dataType),
+            media = Media(uri, dataType, uriType),
             secure = secure,
         )
+         */
 
         return true
     }
@@ -634,10 +622,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         updateArguments(
             media = media,
-            albumId = intent.extras?.getInt(KEY_ALBUM_ID, -1)?.takeUnless {
-                it == -1
-            } ?: media.bucketId.takeUnless { secure },
-            additionalMedias = additionalMedias?.toTypedArray()?.takeIf { it.isNotEmpty() },
+            albumUri = intent.extras?.getParcelable(ARG_ALBUM_URI, Uri::class)
+                /*?: media?.albumUri.takeUnless { secure }*/,
+            /*additionalMedias = additionalMedias?.toTypedArray()?.takeIf { it.isNotEmpty() },*/
             secure = secure,
         )
 
@@ -653,18 +640,18 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
      */
     private fun updateArguments(
         media: Media? = null,
-        albumId: Int? = null,
-        additionalMedias: Array<MediaStoreMedia>? = null,
+        albumUri: Uri? = null,
+        additionalMedias: Array<Media>? = null,
         secure: Boolean = false,
     ) {
         this.media = media
-        this.albumId = albumId
+        this.albumUri = albumUri
         this.additionalMedias = additionalMedias
         this.secure = secure
     }
 
     /**
-     * Given a [MediaStore] [Uri], parse its information and get a [MediaStoreMedia] object.
+     * Given a [MediaStore] [Uri], parse its information and get a [Media] object.
      * Must not be executed on main thread.
      * @param uri The [MediaStore] [Uri]
      */
@@ -712,8 +699,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             val displayName = it.getString(displayNameIndex)
             val isFavorite = it.getInt(isFavoriteIndex)
             val isTrashed = it.getInt(isTrashedIndex)
-            val mediaType = contentResolver.getType(uri)?.let { type ->
-                MediaType.fromMimeType(type)
+            val fileType = contentResolver.getType(uri)?.let { type ->
+                FileType.fromMimeType(type)
             } ?: return@use null
             val mimeType = it.getString(mimeTypeIndex)
             val dateAdded = it.getLong(dateAddedIndex)
@@ -722,13 +709,14 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             val height = it.getInt(heightIndex)
             val orientation = it.getInt(orientationIndex)
 
-            MediaStoreMedia.fromMediaStore(
+            /*
+            Media(
                 id,
                 bucketId,
                 displayName,
                 isFavorite,
                 isTrashed,
-                mediaType.mediaStoreValue,
+                fileType.mediaStoreValue,
                 mimeType,
                 dateAdded,
                 dateModified,
@@ -736,6 +724,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                 height,
                 orientation,
             )
+             */
+            null
         }
     }.getOrNull()
 
@@ -773,7 +763,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         /**
          * The album to show, defaults to [media]'s bucket ID.
          */
-        const val KEY_ALBUM_ID = "album_id"
+        const val ARG_ALBUM_URI = "album_uri"
 
         private val dateFormatter = SimpleDateFormat.getDateInstance()
         private val timeFormatter = SimpleDateFormat.getTimeInstance()

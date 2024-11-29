@@ -29,8 +29,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
+import org.lineageos.glimpse.models.RequestStatus
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailAdapter
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.viewmodels.AlbumsViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult.Data
@@ -43,9 +44,7 @@ import org.lineageos.glimpse.viewmodels.QueryResult.Empty
  */
 class AlbumsFragment : Fragment(R.layout.fragment_albums) {
     // View models
-    private val albumsViewModel: AlbumsViewModel by viewModels {
-        AlbumsViewModel.factory(requireActivity().application)
-    }
+    private val albumsViewModel by viewModels<AlbumsViewModel>()
 
     // Views
     private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
@@ -64,15 +63,15 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 albumsViewModel.albums.collectLatest {
                     when (it) {
-                        is Data -> {
-                            albumThumbnailAdapter.submitList(it.values)
+                        is RequestStatus.Success -> {
+                            albumThumbnailAdapter.submitList(it.data)
 
-                            val noMedia = it.values.isEmpty()
+                            val noMedia = it.data.isEmpty()
                             albumsRecyclerView.isVisible = !noMedia
                             noMediaLinearLayout.isVisible = noMedia
                         }
 
-                        is Empty -> Unit
+                        else -> Unit
                     }
                 }
             }
@@ -84,7 +83,7 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
         AlbumThumbnailAdapter { album ->
             parentNavController.navigate(
                 R.id.action_mainFragment_to_albumViewerFragment,
-                AlbumViewerFragment.createBundle(album.id)
+                AlbumFragment.createBundle(album.uri)
             )
         }
     }

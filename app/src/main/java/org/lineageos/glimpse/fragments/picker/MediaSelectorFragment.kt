@@ -39,13 +39,13 @@ import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
-import org.lineageos.glimpse.models.MediaStoreMedia
-import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
-import org.lineageos.glimpse.recyclerview.ThumbnailItemDetailsLookup
-import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
+import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.ui.recyclerview.ThumbnailAdapter
+import org.lineageos.glimpse.ui.recyclerview.ThumbnailItemDetailsLookup
+import org.lineageos.glimpse.ui.recyclerview.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
 import org.lineageos.glimpse.utils.PickerUtils
-import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel
+import org.lineageos.glimpse.viewmodels.AlbumViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult
 
 /**
@@ -55,11 +55,7 @@ import org.lineageos.glimpse.viewmodels.QueryResult
  */
 class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) {
     // View models
-    private val model: AlbumViewerViewModel by viewModels {
-        bucketId?.let {
-            AlbumViewerViewModel.factory(requireActivity().application, it, mimeType)
-        } ?: AlbumViewerViewModel.factory(requireActivity().application, mimeType = mimeType)
-    }
+    private val model by viewModels<AlbumViewModel>()
 
     // Views
     private val mediasRecyclerView by getViewProperty<RecyclerView>(R.id.mediasRecyclerView)
@@ -84,10 +80,10 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
     }
 
     // Selection
-    private var selectionTracker: SelectionTracker<MediaStoreMedia>? = null
+    private var selectionTracker: SelectionTracker<Media>? = null
 
     private val selectionTrackerObserver =
-        object : SelectionTracker.SelectionObserver<MediaStoreMedia>() {
+        object : SelectionTracker.SelectionObserver<Media>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
 
@@ -121,7 +117,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
 
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) =
-            MutableSelection<MediaStoreMedia>().apply {
+            MutableSelection<Media>().apply {
                 selectionTracker?.let {
                     it.copySelection(this)
                     it.clearSelection()
@@ -197,12 +193,13 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
             windowInsets
         }
 
+        /*
         selectionTracker = SelectionTracker.Builder(
             "thumbnail-${model.bucketId}",
             mediasRecyclerView,
             thumbnailAdapter.itemKeyProvider,
             ThumbnailItemDetailsLookup(mediasRecyclerView),
-            StorageStrategy.createParcelableStorage(MediaStoreMedia::class.java),
+            StorageStrategy.createParcelableStorage(Media::class.java),
         ).withSelectionPredicate(
             when (allowMultipleSelection) {
                 true -> SelectionPredicates.createSelectAnything()
@@ -212,6 +209,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
             thumbnailAdapter.selectionTracker = it
             it.addObserver(selectionTrackerObserver)
         }
+         */
 
         model.inSelectionMode.observe(viewLifecycleOwner, inSelectionModeObserver)
 
@@ -252,7 +250,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
      * Set the activity result and close the activity.
      * @param medias The selected medias
      */
-    private fun sendResult(vararg medias: MediaStoreMedia) {
+    private fun sendResult(vararg medias: Media) {
         val activity = activity ?: return
         val intent = activity.intent ?: return
 

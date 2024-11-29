@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.recyclerview
+package org.lineageos.glimpse.ui.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
@@ -20,7 +19,7 @@ import org.lineageos.glimpse.models.Album
 
 class AlbumThumbnailAdapter(
     private val onItemSelected: (album: Album) -> Unit,
-) : ListAdapter<Album, AlbumThumbnailAdapter.AlbumViewHolder>(ALBUM_COMPARATOR) {
+) : ListAdapter<Album, AlbumThumbnailAdapter.AlbumViewHolder>(UniqueItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
@@ -31,15 +30,6 @@ class AlbumThumbnailAdapter(
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         holder.bind(getItem(position))
-    }
-
-    companion object {
-        val ALBUM_COMPARATOR = object : DiffUtil.ItemCallback<Album>() {
-            override fun areItemsTheSame(oldItem: Album, newItem: Album) = oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: Album, newItem: Album) =
-                oldItem.id == newItem.id && oldItem.size == newItem.size
-        }
     }
 
     class AlbumViewHolder(
@@ -55,12 +45,12 @@ class AlbumThumbnailAdapter(
         fun bind(album: Album) {
             descriptionTextView.text = album.name
             itemsCountTextView.text = itemView.resources.getQuantityString(
-                R.plurals.album_thumbnail_items, album.size, album.size
+                R.plurals.album_thumbnail_items, 0, 0
             )
 
             thumbnailImageView.load(album.thumbnail?.uri) {
                 album.thumbnail?.let {
-                    memoryCacheKey("thumbnail_${it.id}")
+                    memoryCacheKey("thumbnail_${it.uri}")
                 }
                 size(DisplayAwareGridLayoutManager.MAX_THUMBNAIL_SIZE)
                 placeholder(R.drawable.thumbnail_placeholder)

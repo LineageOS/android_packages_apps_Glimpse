@@ -30,9 +30,11 @@ object MediaQuery {
 
     object Selection {
         val image =
-            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
+            MediaStore.Files.FileColumns.MEDIA_TYPE eq
+                    MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE.toString()
         val video =
-            MediaStore.Files.FileColumns.MEDIA_TYPE eq MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO
+            MediaStore.Files.FileColumns.MEDIA_TYPE eq
+                    MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO.toString()
         val imageOrVideo = image or video
     }
 }

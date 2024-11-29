@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.recyclerview
+package org.lineageos.glimpse.ui.recyclerview
 
 import android.graphics.RenderEffect
 import android.graphics.Shader
@@ -26,28 +26,28 @@ import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.request.placeholder
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.models.MediaStoreMedia
-import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel
-import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel.DataType
+import org.lineageos.glimpse.models.FileType
+import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.viewmodels.AlbumViewModel
+import org.lineageos.glimpse.viewmodels.AlbumViewModel.DataType
 import java.util.Date
 import kotlin.reflect.safeCast
 
 class ThumbnailAdapter(
-    private val model: AlbumViewerViewModel,
-    private val onItemSelected: (media: MediaStoreMedia) -> Unit,
+    private val model: AlbumViewModel,
+    private val onItemSelected: (media: Media) -> Unit,
 ) : ListAdapter<DataType, RecyclerView.ViewHolder>(DATA_TYPE_COMPARATOR) {
     // We store a reverse lookup list for performance reasons
-    private var mediaToIndex: Map<MediaStoreMedia, Int>? = null
+    private var mediaToIndex: Map<Media, Int>? = null
 
-    var selectionTracker: SelectionTracker<MediaStoreMedia>? = null
+    var selectionTracker: SelectionTracker<Media>? = null
 
-    val itemKeyProvider = object : ItemKeyProvider<MediaStoreMedia>(SCOPE_CACHED) {
+    val itemKeyProvider = object : ItemKeyProvider<Media>(SCOPE_CACHED) {
         override fun getKey(position: Int) = getItem(position).let {
             DataType.Thumbnail::class.safeCast(it)?.media
         }
 
-        override fun getPosition(key: MediaStoreMedia) = mediaToIndex?.get(key) ?: -1
+        override fun getPosition(key: Media) = mediaToIndex?.get(key) ?: -1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -94,7 +94,7 @@ class ThumbnailAdapter(
             return
         }
 
-        val dataTypeToIndex = mutableMapOf<MediaStoreMedia, Int>()
+        val dataTypeToIndex = mutableMapOf<Media, Int>()
         for (i in currentList.indices) {
             DataType.Thumbnail::class.safeCast(currentList[i])?.let {
                 dataTypeToIndex[it.media] = i
@@ -121,7 +121,7 @@ class ThumbnailAdapter(
         val DATA_TYPE_COMPARATOR = object : DiffUtil.ItemCallback<DataType>() {
             override fun areItemsTheSame(oldItem: DataType, newItem: DataType) = when {
                 oldItem is DataType.Thumbnail && newItem is DataType.Thumbnail ->
-                    oldItem.media.id == newItem.media.id
+                    oldItem.media.uri == newItem.media.uri
 
                 oldItem is DataType.DateHeader && newItem is DataType.DateHeader ->
                     oldItem.date == newItem.date
@@ -131,11 +131,10 @@ class ThumbnailAdapter(
 
             override fun areContentsTheSame(oldItem: DataType, newItem: DataType) = when {
                 oldItem is DataType.Thumbnail && newItem is DataType.Thumbnail ->
-                    oldItem.media.id == newItem.media.id &&
-                            oldItem.media.dateModified == newItem.media.dateModified
+                    oldItem.media.dateModified == newItem.media.dateModified
 
                 oldItem is DataType.DateHeader && newItem is DataType.DateHeader ->
-                    oldItem.date == newItem.date
+                    true
 
                 else -> false
             }
@@ -144,8 +143,8 @@ class ThumbnailAdapter(
 
     class ThumbnailViewHolder(
         private val view: View,
-        private val model: AlbumViewerViewModel,
-        private val onItemSelected: (media: MediaStoreMedia) -> Unit,
+        private val model: AlbumViewModel,
+        private val onItemSelected: (media: Media) -> Unit,
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val selectionCheckedImageView =
@@ -155,14 +154,14 @@ class ThumbnailAdapter(
             itemView.findViewById<ImageView>(R.id.videoOverlayImageView)!!
         private val thumbnailImageView = itemView.findViewById<ImageView>(R.id.thumbnailImageView)!!
 
-        private lateinit var media: MediaStoreMedia
+        private lateinit var media: Media
         private var isSelected = false
 
         private val inSelectionModeObserver = Observer { inSelectionMode: Boolean ->
             selectionCheckedImageView.isVisible = inSelectionMode
         }
 
-        val itemDetails = object : ItemDetailsLookup.ItemDetails<MediaStoreMedia>() {
+        val itemDetails = object : ItemDetailsLookup.ItemDetails<Media>() {
             override fun getPosition() = bindingAdapterPosition
             override fun getSelectionKey() = media
         }
@@ -177,7 +176,7 @@ class ThumbnailAdapter(
             model.inSelectionMode.removeObserver(inSelectionModeObserver)
         }
 
-        fun bind(media: MediaStoreMedia, isSelected: Boolean = false) {
+        fun bind(media: Media, isSelected: Boolean = false) {
             this.media = media
             this.isSelected = isSelected
 
@@ -186,11 +185,11 @@ class ThumbnailAdapter(
             }
 
             thumbnailImageView.load(media.uri) {
-                memoryCacheKey("thumbnail_${media.id}")
+                memoryCacheKey("thumbnail_${media.uri}")
                 size(DisplayAwareGridLayoutManager.MAX_THUMBNAIL_SIZE)
                 placeholder(R.drawable.thumbnail_placeholder)
             }
-            videoOverlayImageView.isVisible = media.mediaType == MediaType.VIDEO
+            videoOverlayImageView.isVisible = media.fileType == FileType.VIDEO
 
             if (isSelected) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
