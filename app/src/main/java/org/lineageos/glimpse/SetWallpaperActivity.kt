@@ -6,47 +6,63 @@
 package org.lineageos.glimpse
 
 import android.app.WallpaperManager
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Consumer
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
+import coil3.load
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.lineageos.glimpse.ext.updateMargin
 
 class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) {
     // Views
-    private val contentView by lazy { findViewById<View>(android.R.id.content)!! }
-    private val wallpaperImageView by lazy { findViewById<ImageView>(R.id.wallpaperImageView)!! }
-    private val setWallpaperButton by lazy { findViewById<MaterialButton>(R.id.setWallpaperButton)!! }
+    private val setWallpaperButton by lazy { findViewById<MaterialButton>(R.id.setWallpaperButton) }
+    private val wallpaperImageView by lazy { findViewById<ImageView>(R.id.wallpaperImageView) }
 
     // System services
     private val wallpaperManager by lazy { getSystemService(WallpaperManager::class.java) }
 
+    // Intents
+    private val intentListener = Consumer<Intent> { handleIntent(it) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Setup edge-to-edge
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        // Enable edge-to-edge
+        enableEdgeToEdge()
 
-        ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
+        // Insets
+        ViewCompat.setOnApplyWindowInsetsListener(setWallpaperButton) { _, windowInsets ->
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             )
 
-            setWallpaperButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = insets.bottom
-            }
+            setWallpaperButton.updateMargin(
+                insets,
+                bottom = true,
+            )
 
             windowInsets
         }
 
+        intentListener.accept(intent)
+        addOnNewIntentListener(intentListener)
+    }
+
+    override fun onDestroy() {
+        removeOnNewIntentListener(intentListener)
+
+        super.onDestroy()
+    }
+
+    private fun handleIntent(intent: Intent) {
         // Load wallpaper from intent
         val wallpaperUri = intent.data ?: run {
             Toast.makeText(this, R.string.intent_media_not_found, Toast.LENGTH_LONG).show()
@@ -72,14 +88,14 @@ class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) 
             return
         }
 
-        wallpaperImageView.setImageURI(wallpaperUri)
+        wallpaperImageView.load(wallpaperUri)
 
         // Set wallpaper
         setWallpaperButton.setOnClickListener {
             MaterialAlertDialogBuilder(this, R.style.Theme_Glimpse_SetWallpaperDialog)
                 .setTitle(R.string.set_wallpaper_dialog_title)
                 .setItems(R.array.set_wallpaper_items) { _, which ->
-                    val flags = POSITION_TO_FLAG[which] ?: throw Exception("Invalid position")
+                    val flags = positionToFlag[which]
                     setWallpaper(wallpaperUri, flags)
                     finish()
                 }.show()
@@ -93,10 +109,10 @@ class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) 
     }
 
     companion object {
-        private val POSITION_TO_FLAG = mapOf(
-            0 to WallpaperManager.FLAG_SYSTEM,
-            1 to WallpaperManager.FLAG_LOCK,
-            2 to (WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK)
+        private val positionToFlag = arrayOf(
+            WallpaperManager.FLAG_SYSTEM,
+            WallpaperManager.FLAG_LOCK,
+            WallpaperManager.FLAG_SYSTEM or WallpaperManager.FLAG_LOCK,
         )
     }
 }
