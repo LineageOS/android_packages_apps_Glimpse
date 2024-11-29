@@ -8,33 +8,54 @@ package org.lineageos.glimpse
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Consumer
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
-import com.google.android.material.appbar.AppBarLayout
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.shape.MaterialShapeDrawable
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.lineageos.glimpse.ext.updateMargin
 import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.utils.PickerUtils
+import org.lineageos.glimpse.utils.MimeUtils
+import org.lineageos.glimpse.viewmodels.IntentsViewModel
 
 class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
+    // View models
+    private val intentsViewModel by viewModels<IntentsViewModel>()
+
     // Views
-    private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.appBarLayout)!! }
-    private val contentView by lazy { findViewById<View>(android.R.id.content)!! }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar)!! }
+
+    // Intents
+    private val intentListener = Consumer<Intent> { intentsViewModel.onIntent(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Setup edge-to-edge
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        // Enable edge-to-edge
+        enableEdgeToEdge()
 
-        appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(this)
+        // Insets
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar) { _, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+
+            toolbar.updateMargin(
+                insets,
+                start = true,
+                end = true,
+            )
+
+            windowInsets
+        }
 
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -42,45 +63,20 @@ class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
             setDisplayShowHomeEnabled(true)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(contentView) { _, windowInsets ->
-            val insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-            )
+        intentListener.accept(intent)
+        addOnNewIntentListener(intentListener)
 
-            toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = insets.left
-                rightMargin = insets.right
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loadData()
             }
-
-            windowInsets
         }
+    }
 
-        // Parse intent
-        if (intent.action !in supportedIntentActions) {
-            Toast.makeText(
-                this, R.string.intent_action_not_supported, Toast.LENGTH_SHORT
-            ).show()
-            finish()
-            return
-        }
+    override fun onDestroy() {
+        removeOnNewIntentListener(intentListener)
 
-        val mimeType = PickerUtils.translateMimeType(intent) ?: run {
-            Toast.makeText(
-                this, R.string.intent_media_type_not_supported, Toast.LENGTH_SHORT
-            ).show()
-            finish()
-            return
-        }
-
-        val mediaType = MediaType.fromMimeType(mimeType)
-
-        toolbar.setTitle(
-            when (mediaType) {
-                MediaType.IMAGE -> R.string.pick_a_photo
-                MediaType.VIDEO -> R.string.pick_a_video
-                else -> R.string.pick_a_media
-            }
-        )
+        super.onDestroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -94,11 +90,32 @@ class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
         }
     }
 
-    companion object {
-        private val supportedIntentActions = listOf(
-            Intent.ACTION_GET_CONTENT,
-            Intent.ACTION_PICK,
-            Intent.ACTION_SET_WALLPAPER,
-        )
+    private suspend fun loadData() {
+        intentsViewModel.parsedIntent.collectLatest {
+            it?.handle { parsedIntent ->
+                when (parsedIntent) {
+                    is IntentsViewModel.ParsedIntent.PickIntent -> {
+                        val mediaType = parsedIntent.mimeType?.let { mimeType ->
+                            MimeUtils.mimeTypeToMediaType(mimeType)
+                        }
+
+                        toolbar.setTitle(
+                            when (mediaType) {
+                                MediaType.IMAGE -> R.string.pick_a_photo
+                                MediaType.VIDEO -> R.string.pick_a_video
+                                else -> R.string.pick_a_media
+                            }
+                        )
+                    }
+
+                    else -> {
+                        Toast.makeText(
+                            this, R.string.intent_action_not_supported, Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    }
+                }
+            }
+        }
     }
 }
