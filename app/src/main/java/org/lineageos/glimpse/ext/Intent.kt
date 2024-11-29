@@ -7,8 +7,7 @@ package org.lineageos.glimpse.ext
 
 import android.content.Intent
 import org.lineageos.glimpse.models.Media
-import org.lineageos.glimpse.models.MediaType.IMAGE
-import org.lineageos.glimpse.models.MediaType.VIDEO
+import org.lineageos.glimpse.models.MediaType
 
 fun buildShareIntent(vararg medias: Media) = Intent().apply {
     assert(medias.isNotEmpty()) { "No media" }
@@ -26,8 +25,8 @@ fun buildShareIntent(vararg medias: Media) = Intent().apply {
             medias.map { it.uri }.toCollection(ArrayList())
         )
         type = when {
-            medias.all { it.mediaType == IMAGE } -> "image/*"
-            medias.all { it.mediaType == VIDEO } -> "video/*"
+            medias.all { it.mediaType == MediaType.IMAGE } -> "image/*"
+            medias.all { it.mediaType == MediaType.VIDEO } -> "video/*"
             else -> {
                 putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
                 "*/*"
