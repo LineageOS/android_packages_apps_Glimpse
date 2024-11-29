@@ -33,6 +33,6 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:navGraph="@navigation/picker_navigation" />
+        app:navGraph="@navigation/activity_pick" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
