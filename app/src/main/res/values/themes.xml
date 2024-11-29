@@ -6,22 +6,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme -->
     <style name="Theme.Glimpse" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
-        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="windowActionModeOverlay">true</item>
-    </style>
-
-    <!-- Collapsing toolbar style -->
-    <style name="Theme.Glimpse.ToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="Theme.Glimpse.ToolbarExpanded" parent="Theme.Glimpse.ToolbarCollapsed">
-        <item name="android:textSize">36sp</item>
-        <item name="android:drawablePadding">10dp</item>
     </style>
 
     <!-- Top app bar option -->
@@ -38,10 +24,7 @@
 
     <!-- Media viewer -->
     <style name="Theme.Glimpse.MediaViewer" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
-        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
     <!-- Media viewer bottom sheet -->
