@@ -9,6 +9,7 @@ import android.app.Activity
 import android.app.WallpaperManager
 import android.content.ClipData
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.ActionMode
 import android.view.Menu
@@ -37,33 +38,27 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
+import org.lineageos.glimpse.ext.getParcelable
 import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.models.Album
-import org.lineageos.glimpse.models.MediaStoreMedia
-import org.lineageos.glimpse.recyclerview.ThumbnailAdapter
-import org.lineageos.glimpse.recyclerview.ThumbnailItemDetailsLookup
-import org.lineageos.glimpse.recyclerview.ThumbnailLayoutManager
+import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.RequestStatus
+import org.lineageos.glimpse.ui.recyclerview.ThumbnailAdapter
+import org.lineageos.glimpse.ui.recyclerview.ThumbnailItemDetailsLookup
+import org.lineageos.glimpse.ui.recyclerview.ThumbnailLayoutManager
 import org.lineageos.glimpse.utils.PermissionsGatedCallback
-import org.lineageos.glimpse.utils.PickerUtils
-import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel
-import org.lineageos.glimpse.viewmodels.QueryResult
+import org.lineageos.glimpse.viewmodels.AlbumViewModel
 
 /**
  * A fragment showing a list of media from a specific album with thumbnails.
- * Use the [MediaSelectorFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) {
     // View models
-    private val model: AlbumViewerViewModel by viewModels {
-        bucketId?.let {
-            AlbumViewerViewModel.factory(requireActivity().application, it, mimeType)
-        } ?: AlbumViewerViewModel.factory(requireActivity().application, mimeType = mimeType)
-    }
+    private val model by viewModels<AlbumViewModel>()
 
     // Views
-    private val mediasRecyclerView by getViewProperty<RecyclerView>(R.id.mediasRecyclerView)
     private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
+    private val recyclerView by getViewProperty<RecyclerView>(R.id.recyclerView)
 
     // System services
     private val wallpaperManager by lazy {
@@ -71,23 +66,20 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
     }
 
     // Arguments
-    private val bucketId by lazy { arguments?.getInt(KEY_BUCKET_ID) }
+    private val albumUri by lazy { arguments?.getParcelable(ARG_ALBUM_URI, Uri::class) }
 
-    // Intent data
-    private val mimeType by lazy { PickerUtils.translateMimeType(activity?.intent) }
-
-    // Recyclerview
-    private val thumbnailAdapter by lazy {
+    // RecyclerView
+    private val adapter by lazy {
         ThumbnailAdapter(model) { media ->
             selectionTracker?.select(media)
         }
     }
 
     // Selection
-    private var selectionTracker: SelectionTracker<MediaStoreMedia>? = null
+    private var selectionTracker: SelectionTracker<Media>? = null
 
     private val selectionTrackerObserver =
-        object : SelectionTracker.SelectionObserver<MediaStoreMedia>() {
+        object : SelectionTracker.SelectionObserver<Media>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
 
@@ -112,7 +104,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             requireActivity().menuInflater.inflate(
-                R.menu.picker_media_selector_action_bar,
+                R.menu.fragment_album_pick_action_bar,
                 menu
             )
             return true
@@ -121,7 +113,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
 
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) =
-            MutableSelection<MediaStoreMedia>().apply {
+            MutableSelection<Media>().apply {
                 selectionTracker?.let {
                     it.copySelection(this)
                     it.clearSelection()
@@ -156,17 +148,25 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                model.mediaWithHeaders.collectLatest {
+                model.album.collectLatest {
                     when (it) {
-                        is QueryResult.Data -> {
-                            thumbnailAdapter.submitList(it.values)
-
-                            val noMedia = it.values.isEmpty()
-                            mediasRecyclerView.isVisible = !noMedia
-                            noMediaLinearLayout.isVisible = noMedia
+                        is RequestStatus.Loading -> {
+                            // Do nothing
                         }
 
-                        is QueryResult.Empty -> Unit
+                        is RequestStatus.Success -> {
+                            val (_, medias) = it.data
+
+                            adapter.submitList(medias)
+
+                            val isEmpty = medias.isEmpty()
+                            recyclerView.isVisible = !isEmpty
+                            noMediaLinearLayout.isVisible = isEmpty
+                        }
+
+                        is RequestStatus.Error -> {
+
+                        }
                     }
                 }
             }
@@ -178,42 +178,42 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
 
         val context = requireContext()
 
-        mediasRecyclerView.layoutManager = ThumbnailLayoutManager(
-            context, thumbnailAdapter
+        recyclerView.layoutManager = ThumbnailLayoutManager(
+            context, adapter
         )
-        mediasRecyclerView.adapter = thumbnailAdapter
+        recyclerView.adapter = adapter
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             )
 
-            mediasRecyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+            recyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = insets.left
                 rightMargin = insets.right
             }
-            mediasRecyclerView.updatePadding(bottom = insets.bottom)
+            recyclerView.updatePadding(bottom = insets.bottom)
 
             windowInsets
         }
 
         selectionTracker = SelectionTracker.Builder(
-            "thumbnail-${model.bucketId}",
-            mediasRecyclerView,
-            thumbnailAdapter.itemKeyProvider,
-            ThumbnailItemDetailsLookup(mediasRecyclerView),
-            StorageStrategy.createParcelableStorage(MediaStoreMedia::class.java),
+            "thumbnail-${albumUri}",
+            recyclerView,
+            adapter.itemKeyProvider,
+            ThumbnailItemDetailsLookup(recyclerView),
+            StorageStrategy.createParcelableStorage(Media::class.java),
         ).withSelectionPredicate(
             when (allowMultipleSelection) {
                 true -> SelectionPredicates.createSelectAnything()
                 false -> SelectionPredicates.createSelectSingleAnything()
             }
         ).build().also {
-            thumbnailAdapter.selectionTracker = it
+            adapter.selectionTracker = it
             it.addObserver(selectionTrackerObserver)
         }
 
-        model.inSelectionMode.observe(viewLifecycleOwner, inSelectionModeObserver)
+        //model.inSelectionMode.observe(viewLifecycleOwner, inSelectionModeObserver)
 
         permissionsGatedCallback.runAfterPermissionsCheck()
     }
@@ -226,7 +226,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
     }
 
     private fun updateSelection() {
-        model.inSelectionMode.value = selectionTracker?.hasSelection() == true
+        model.setInSelectionMode(selectionTracker?.hasSelection() == true)
 
         selectionTracker?.selection?.count()?.takeIf { it > 0 }?.let {
             startSelectionMode()?.apply {
@@ -252,7 +252,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
      * Set the activity result and close the activity.
      * @param medias The selected medias
      */
-    private fun sendResult(vararg medias: MediaStoreMedia) {
+    private fun sendResult(vararg medias: Media) {
         val activity = activity ?: return
         val intent = activity.intent ?: return
 
@@ -323,31 +323,16 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
         } ?: false
 
     companion object {
-        private const val KEY_BUCKET_ID = "bucket_id"
+        private const val ARG_ALBUM_URI = "album_uri"
 
         /**
          * Create a [Bundle] to use as the arguments for this fragment.
-         * @param bucketId The [Album] to display's bucket ID, if null, reels will be shown
+         * @param albumUri The [Album] to display's URI, if null, reels will be shown
          */
         fun createBundle(
-            bucketId: Int? = null,
+            albumUri: Uri? = null,
         ) = bundleOf(
-            KEY_BUCKET_ID to bucketId,
+            ARG_ALBUM_URI to albumUri,
         )
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @see createBundle
-         * @return A new instance of fragment [MediaSelectorFragment].
-         */
-        fun newInstance(
-            bucketId: Int,
-        ) = MediaSelectorFragment().apply {
-            arguments = createBundle(
-                bucketId,
-            )
-        }
     }
 }
