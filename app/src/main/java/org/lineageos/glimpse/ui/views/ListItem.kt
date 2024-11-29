@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.ui
+package org.lineageos.glimpse.ui.views
 
 import android.content.Context
 import android.graphics.drawable.Drawable

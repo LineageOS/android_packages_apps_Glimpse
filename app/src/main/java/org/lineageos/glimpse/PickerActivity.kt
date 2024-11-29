@@ -11,15 +11,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.shape.MaterialShapeDrawable
-import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.FileType
 import org.lineageos.glimpse.utils.PickerUtils
 
 class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
@@ -31,8 +31,8 @@ class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Setup edge-to-edge
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        // Enable edge-to-edge
+        enableEdgeToEdge()
 
         appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(this)
 
@@ -72,12 +72,12 @@ class PickerActivity : AppCompatActivity(R.layout.activity_picker) {
             return
         }
 
-        val mediaType = MediaType.fromMimeType(mimeType)
+        val fileType = FileType.fromMimeType(mimeType)
 
         toolbar.setTitle(
-            when (mediaType) {
-                MediaType.IMAGE -> R.string.pick_a_photo
-                MediaType.VIDEO -> R.string.pick_a_video
+            when (fileType) {
+                FileType.IMAGE -> R.string.pick_a_photo
+                FileType.VIDEO -> R.string.pick_a_video
                 else -> R.string.pick_a_media
             }
         )

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.glimpse.recyclerview
+package org.lineageos.glimpse.ui.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,28 +14,25 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import com.github.panpf.zoomimage.CoilZoomImageView
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
+import org.lineageos.glimpse.models.FileType
 import org.lineageos.glimpse.models.Media
-import org.lineageos.glimpse.models.MediaStoreMedia
-import org.lineageos.glimpse.models.MediaType
-import org.lineageos.glimpse.viewmodels.MediaViewerUIViewModel
-import org.lineageos.glimpse.viewmodels.MediaViewerViewModel
-import kotlin.reflect.safeCast
+import org.lineageos.glimpse.viewmodels.ViewUiViewModel
+import org.lineageos.glimpse.viewmodels.ViewViewModel
 
 class MediaViewerAdapter(
     private val exoPlayer: Lazy<ExoPlayer>,
-    private val mediaViewerViewModel: MediaViewerViewModel,
-    private val mediaViewerUIViewModel: MediaViewerUIViewModel,
-) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(DATA_TYPE_COMPARATOR) {
+    private val viewViewModel: ViewViewModel,
+    private val viewUiViewModel: ViewUiViewModel,
+) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(UniqueItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
-        exoPlayer, mediaViewerViewModel, mediaViewerUIViewModel
+        exoPlayer, viewViewModel, viewUiViewModel
     )
 
     override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
@@ -57,8 +54,8 @@ class MediaViewerAdapter(
     class MediaViewHolder(
         private val view: View,
         private val exoPlayer: Lazy<ExoPlayer>,
-        private val mediaViewerViewModel: MediaViewerViewModel,
-        private val mediaViewerUIViewModel: MediaViewerUIViewModel,
+        private val viewViewModel: ViewViewModel,
+        private val viewUiViewModel: ViewUiViewModel,
     ) : RecyclerView.ViewHolder(view) {
         // Views
         private val imageView = view.findViewById<CoilZoomImageView>(R.id.imageView)
@@ -76,12 +73,12 @@ class MediaViewerAdapter(
 
             updateDisplayedMedia()
 
-            val isNowVideoPlayer = isCurrentlyDisplayedView && media?.mediaType == MediaType.VIDEO
+            val isNowVideoPlayer = isCurrentlyDisplayedView && media?.fileType == FileType.VIDEO
 
             imageView.isVisible = !isNowVideoPlayer
             playerView.isVisible = isNowVideoPlayer
 
-            if (!isNowVideoPlayer || mediaViewerUIViewModel.fullscreenModeLiveData.value == true) {
+            if (!isNowVideoPlayer || viewUiViewModel.fullscreenModeLiveData.value == true) {
                 playerControlView.hideImmediately()
             } else {
                 playerControlView.show()
@@ -98,7 +95,7 @@ class MediaViewerAdapter(
 
         @androidx.media3.common.util.UnstableApi
         private val sheetsHeightObserver = { sheetsHeight: Pair<Int, Int> ->
-            if (mediaViewerUIViewModel.fullscreenModeLiveData.value != true) {
+            if (viewUiViewModel.fullscreenModeLiveData.value != true) {
                 val (topHeight, bottomHeight) = sheetsHeight
 
                 // Place the player controls between the two sheets
@@ -111,17 +108,17 @@ class MediaViewerAdapter(
 
         @androidx.media3.common.util.UnstableApi
         private val fullscreenModeObserver = { fullscreenMode: Boolean ->
-            if (media?.mediaType == MediaType.VIDEO) {
+            if (media?.fileType == FileType.VIDEO) {
                 playerControlView.fade(!fullscreenMode)
             }
         }
 
         init {
             imageView.setOnClickListener {
-                mediaViewerUIViewModel.toggleFullscreenMode()
+                viewUiViewModel.toggleFullscreenMode()
             }
             playerView.setOnClickListener {
-                mediaViewerUIViewModel.toggleFullscreenMode()
+                viewUiViewModel.toggleFullscreenMode()
             }
         }
 
@@ -131,27 +128,25 @@ class MediaViewerAdapter(
             updateDisplayedMedia()
 
             imageView.load(media.uri) {
-                MediaStoreMedia::class.safeCast(media)?.let {
-                    memoryCacheKey("full_${it.id}")
-                    placeholderMemoryCacheKey("thumbnail_${it.id}")
-                }
+                memoryCacheKey("full_${media.uri}")
+                placeholderMemoryCacheKey("thumbnail_${media.uri}")
             }
         }
 
         @androidx.media3.common.util.UnstableApi
         fun onViewAttachedToWindow() {
             view.findViewTreeLifecycleOwner()?.let {
-                mediaViewerViewModel.mediaPositionLiveData.observe(it, mediaPositionObserver)
-                mediaViewerUIViewModel.sheetsHeightLiveData.observe(it, sheetsHeightObserver)
-                mediaViewerUIViewModel.fullscreenModeLiveData.observe(it, fullscreenModeObserver)
+                viewViewModel.mediaPositionLiveData.observe(it, mediaPositionObserver)
+                viewUiViewModel.sheetsHeightLiveData.observe(it, sheetsHeightObserver)
+                viewUiViewModel.fullscreenModeLiveData.observe(it, fullscreenModeObserver)
             }
         }
 
         @androidx.media3.common.util.UnstableApi
         fun onViewDetachedFromWindow() {
-            mediaViewerViewModel.mediaPositionLiveData.removeObserver(mediaPositionObserver)
-            mediaViewerUIViewModel.sheetsHeightLiveData.removeObserver(sheetsHeightObserver)
-            mediaViewerUIViewModel.fullscreenModeLiveData.removeObserver(fullscreenModeObserver)
+            viewViewModel.mediaPositionLiveData.removeObserver(mediaPositionObserver)
+            viewUiViewModel.sheetsHeightLiveData.removeObserver(sheetsHeightObserver)
+            viewUiViewModel.fullscreenModeLiveData.removeObserver(fullscreenModeObserver)
         }
 
         /**
@@ -159,27 +154,7 @@ class MediaViewerAdapter(
          */
         private fun updateDisplayedMedia() {
             if (isCurrentlyDisplayedView) {
-                mediaViewerUIViewModel.displayedMedia.value = media
-            }
-        }
-    }
-
-    companion object {
-        val DATA_TYPE_COMPARATOR = object : DiffUtil.ItemCallback<Media>() {
-            override fun areItemsTheSame(oldItem: Media, newItem: Media) = when {
-                oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
-                    oldItem.id == newItem.id
-
-                else -> oldItem.uri == oldItem.uri
-            }
-
-            override fun areContentsTheSame(oldItem: Media, newItem: Media) = when {
-                oldItem is MediaStoreMedia && newItem is MediaStoreMedia ->
-                    oldItem.id == newItem.id &&
-                            oldItem.dateModified == newItem.dateModified &&
-                            oldItem.isFavorite == newItem.isFavorite
-
-                else -> oldItem.uri == oldItem.uri
+                viewUiViewModel.displayedMedia.value = media
             }
         }
     }

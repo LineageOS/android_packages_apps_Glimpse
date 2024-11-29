@@ -5,10 +5,10 @@
 
 package org.lineageos.glimpse.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -19,13 +19,11 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.shape.MaterialShapeDrawable
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.ui.ListItem
+import org.lineageos.glimpse.ui.views.ListItem
 import org.lineageos.glimpse.utils.MediaStoreBuckets
 
 /**
  * A fragment showing a search bar with categories.
- * Use the [LibraryFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class LibraryFragment : Fragment(R.layout.fragment_library) {
     // Views
@@ -81,23 +79,9 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
     private fun openAlbum(mediaStoreBucket: MediaStoreBuckets) {
         parentNavController.navigate(
             R.id.action_mainFragment_to_albumViewerFragment,
-            AlbumViewerFragment.createBundle(
-                bucketId = mediaStoreBucket.id
+            AlbumFragment.createBundle(
+                albumUri = Uri.parse(mediaStoreBucket.id.toString())
             )
         )
-    }
-
-    companion object {
-        private fun createBundle() = bundleOf()
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment SearchFragment.
-         */
-        fun newInstance() = LibraryFragment().apply {
-            arguments = createBundle()
-        }
     }
 }

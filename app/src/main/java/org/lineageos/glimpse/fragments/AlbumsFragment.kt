@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -29,28 +28,24 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailAdapter
-import org.lineageos.glimpse.recyclerview.AlbumThumbnailLayoutManager
-import org.lineageos.glimpse.utils.PermissionsGatedCallback
+import org.lineageos.glimpse.models.RequestStatus
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailAdapter
+import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailLayoutManager
+import org.lineageos.glimpse.utils.PermissionsChecker
+import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.AlbumsViewModel
-import org.lineageos.glimpse.viewmodels.QueryResult.Data
-import org.lineageos.glimpse.viewmodels.QueryResult.Empty
 
 /**
  * An albums list visualizer.
- * Use the [AlbumsFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class AlbumsFragment : Fragment(R.layout.fragment_albums) {
     // View models
-    private val albumsViewModel: AlbumsViewModel by viewModels {
-        AlbumsViewModel.factory(requireActivity().application)
-    }
+    private val albumsViewModel by viewModels<AlbumsViewModel>()
 
     // Views
-    private val albumsRecyclerView by getViewProperty<RecyclerView>(R.id.albumsRecyclerView)
     private val appBarLayout by getViewProperty<AppBarLayout>(R.id.appBarLayout)
     private val noMediaLinearLayout by getViewProperty<LinearLayout>(R.id.noMediaLinearLayout)
+    private val recyclerView by getViewProperty<RecyclerView>(R.id.recyclerView)
     private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
     // Fragments
@@ -58,47 +53,23 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
         requireParentFragment().requireParentFragment().findNavController()
     }
 
-    // Permissions
-    private val permissionsGatedCallback = PermissionsGatedCallback(this) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                albumsViewModel.albums.collectLatest {
-                    when (it) {
-                        is Data -> {
-                            albumThumbnailAdapter.submitList(it.values)
-
-                            val noMedia = it.values.isEmpty()
-                            albumsRecyclerView.isVisible = !noMedia
-                            noMediaLinearLayout.isVisible = noMedia
-                        }
-
-                        is Empty -> Unit
-                    }
-                }
-            }
-        }
-    }
-
-    // MediaStore
-    private val albumThumbnailAdapter by lazy {
+    // RecyclerView
+    private val adapter by lazy {
         AlbumThumbnailAdapter { album ->
             parentNavController.navigate(
                 R.id.action_mainFragment_to_albumViewerFragment,
-                AlbumViewerFragment.createBundle(album.id)
+                AlbumFragment.createBundle(album.uri)
             )
         }
     }
 
+    // Permissions
+    private val permissionsChecker = PermissionsChecker(this, PermissionsUtils.mainPermissions)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val context = requireContext()
-
-        appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(context)
-
-        albumsRecyclerView.layoutManager = AlbumThumbnailLayoutManager(context)
-        albumsRecyclerView.adapter = albumThumbnailAdapter
-
+        // Insets
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
             val insets = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
@@ -109,7 +80,7 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
                 rightMargin = insets.right
             }
 
-            albumsRecyclerView.updateLayoutParams<MarginLayoutParams> {
+            recyclerView.updateLayoutParams<MarginLayoutParams> {
                 leftMargin = insets.left
                 rightMargin = insets.right
             }
@@ -117,26 +88,53 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
             windowInsets
         }
 
-        permissionsGatedCallback.runAfterPermissionsCheck()
+        val context = requireContext()
+
+        appBarLayout.statusBarForeground = MaterialShapeDrawable.createWithElevationOverlay(context)
+
+        recyclerView.layoutManager = AlbumThumbnailLayoutManager(context)
+        recyclerView.adapter = adapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                permissionsChecker.withPermissionsGranted {
+                    loadData()
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        recyclerView.adapter = null
+
+        super.onDestroyView()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
-        albumsRecyclerView.layoutManager = AlbumThumbnailLayoutManager(requireContext())
+        recyclerView.layoutManager = AlbumThumbnailLayoutManager(requireContext())
     }
 
-    companion object {
-        private fun createBundle() = bundleOf()
+    private suspend fun loadData() {
+        albumsViewModel.albums.collectLatest {
+            when (it) {
+                is RequestStatus.Loading -> {
+                    // Do nothing
+                }
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment AlbumsFragment.
-         */
-        fun newInstance() = AlbumsFragment().apply {
-            arguments = createBundle()
+                is RequestStatus.Success -> {
+                    adapter.submitList(it.data)
+
+                    val isEmpty = it.data.isEmpty()
+                    recyclerView.isVisible = !isEmpty
+                    noMediaLinearLayout.isVisible = isEmpty
+                }
+
+                is RequestStatus.Error -> {
+                    // TODO logging
+                }
+            }
         }
     }
 }

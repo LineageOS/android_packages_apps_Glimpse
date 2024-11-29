@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/albumViewerFragment"
-        android:name="org.lineageos.glimpse.fragments.AlbumViewerFragment"
+        android:name="org.lineageos.glimpse.fragments.AlbumFragment"
         tools:layout="@layout/fragment_album_viewer" />
 
 </navigation>
