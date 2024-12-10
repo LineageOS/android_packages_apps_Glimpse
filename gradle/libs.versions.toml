@@ -22,7 +22,7 @@ preference = "1.2.1"
 recyclerview = "1.3.2"
 recyclerview-selection = "1.1.0"
 viewpager2 = "1.1.0"
-zoomimage = "1.0.2"
+zoomimage = "1.1.0-rc03"
 
 [libraries]
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -51,7 +51,7 @@ coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp"
 coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version.ref = "coil" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-zoomimage-view-coil = { group = "io.github.panpf.zoomimage", name = "zoomimage-view-coil", version.ref = "zoomimage" }
+zoomimage-view-coil = { group = "io.github.panpf.zoomimage", name = "zoomimage-view-coil3", version.ref = "zoomimage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

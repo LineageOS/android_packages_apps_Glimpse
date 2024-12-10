@@ -65,7 +65,8 @@ android_app {
         "Glimpse_io.coil-kt.coil3_coil-network-okhttp",
         "Glimpse_io.coil-kt.coil3_coil-video",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android",
-        "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-core-coil3-android",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-view-coil3",
         "kotlin-stdlib",
     ],
 
