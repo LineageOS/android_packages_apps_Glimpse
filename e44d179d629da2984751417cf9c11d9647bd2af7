@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e58b9f1_518a1ea1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-12-10T09:55:41Z",
+      "side": 1,
+      "message": "Don\u0027t you need kotlin-serialize-compiler-plugin kotlin_plugin with @Parcelize?",
+      "revId": "e44d179d629da2984751417cf9c11d9647bd2af7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
