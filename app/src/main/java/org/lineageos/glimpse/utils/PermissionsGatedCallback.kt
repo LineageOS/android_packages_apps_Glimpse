@@ -43,11 +43,11 @@ class PermissionsGatedCallback private constructor(
         callback,
     )
 
-    private val mainPermissionsRequestLauncher = caller.registerForActivityResult(
+    private val permissionsRequestLauncher = caller.registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         if (it.isNotEmpty()) {
-            if (!PermissionsUtils.mainPermissionsGranted(getContext())) {
+            if (!PermissionsUtils.requiredPermissionsGranted(getContext())) {
                 Toast.makeText(
                     getContext(), R.string.app_permissions_toast, Toast.LENGTH_SHORT
                 ).show()
@@ -59,8 +59,12 @@ class PermissionsGatedCallback private constructor(
     }
 
     fun runAfterPermissionsCheck() {
-        if (!PermissionsUtils.mainPermissionsGranted(getContext())) {
-            mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
+        if (!PermissionsUtils.requiredPermissionsGranted(getContext())) {
+            permissionsRequestLauncher.launch(
+                PermissionsUtils.permissions.map {
+                    it.first
+                }.toTypedArray()
+            )
         } else {
             callback()
         }

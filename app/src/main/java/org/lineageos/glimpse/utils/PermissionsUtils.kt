@@ -19,31 +19,43 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.manageMediaPermissionDialogDismissed
 
+// Permission + required
+typealias Permission = Pair<String, Boolean>
+
 /**
  * App's permissions utils.
  */
 object PermissionsUtils {
-    fun mainPermissionsGranted(context: Context) = permissionsGranted(context, mainPermissions)
+    fun requiredPermissionsGranted(context: Context) =
+        permissionsGranted(
+            context,
+            permissions.filter {
+                it.second
+            }.toTypedArray()
+        )
 
     private fun permissionGranted(context: Context, permission: String) =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
-    private fun permissionsGranted(context: Context, permissions: Array<String>) = permissions.all {
-        permissionGranted(context, it)
-    }
+    private fun permissionsGranted(context: Context, permissions: Array<Permission>) =
+        permissions.all { permissionGranted(context, it.first) }
 
     /**
-     * Permissions required to run the app
+     * Permissions to run the app
      */
-    val mainPermissions = mutableListOf<String>().apply {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            add(Manifest.permission.READ_MEDIA_IMAGES)
-            add(Manifest.permission.READ_MEDIA_VIDEO)
+    val permissions = mutableListOf<Permission>().apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            add(Manifest.permission.READ_MEDIA_IMAGES to false)
+            add(Manifest.permission.READ_MEDIA_VIDEO to false)
+            add(Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED to true)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            add(Manifest.permission.READ_MEDIA_IMAGES to true)
+            add(Manifest.permission.READ_MEDIA_VIDEO to true)
         } else {
-            add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            add(Manifest.permission.READ_EXTERNAL_STORAGE to true)
         }
 
-        add(Manifest.permission.ACCESS_MEDIA_LOCATION)
+        add(Manifest.permission.ACCESS_MEDIA_LOCATION to true)
     }.toTypedArray()
 
     fun showManageMediaPermissionDialogIfNeeded(context: Context) {
