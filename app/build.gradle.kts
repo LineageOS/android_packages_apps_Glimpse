@@ -19,7 +19,8 @@ apply {
 
 buildscript {
     repositories {
-        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.16/.m2")
+        //maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.16/.m2")
+        mavenLocal()
     }
 
     dependencies {
@@ -105,6 +106,7 @@ dependencies {
 
 configure<GenerateBpPluginExtension> {
     targetSdk.set(android.defaultConfig.targetSdk!!)
+    minSdk.set(android.defaultConfig.minSdk!!)
     availableInAOSP.set { module: Module ->
         when {
             module.group.startsWith("androidx") -> {
