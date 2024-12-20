@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbb75189_8d3e7912",
+        "filename": "app/Android.bp",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-12-20T18:06:25Z",
+      "side": 1,
+      "message": "```suggestion\n    kotlin_plugins: [\n        \"kotlin-parcelize-compiler-plugin\",\n    ],\n```\n\nNeeds https://review.lineageos.org/c/LineageOS/android_external_kotlinc/+/412136 (https://android-review.googlesource.com/c/platform/external/kotlinc/+/3428960)",
+      "revId": "eca889a98147351114ee4728a4b52091ccbfe03c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
