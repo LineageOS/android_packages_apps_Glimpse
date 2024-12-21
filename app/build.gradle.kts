@@ -101,6 +101,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.okhttp)
     implementation(libs.zoomimage.view.coil)
+    debugImplementation(libs.leakcanary.android)
 }
 
 configure<GenerateBpPluginExtension> {
