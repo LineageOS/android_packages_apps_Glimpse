@@ -13,6 +13,7 @@ constraintlayout = "2.1.4"
 core = "1.13.1"
 exifinterface = "1.3.7"
 fragment = "1.8.3"
+leakcanary = "2.14"
 lifecycle = "2.8.5"
 material = "1.12.0"
 media3 = "1.5.0"
@@ -49,6 +50,7 @@ coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version.ref = "coil" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version.ref = "coil" }
+leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 zoomimage-view-coil = { group = "io.github.panpf.zoomimage", name = "zoomimage-view-coil", version.ref = "zoomimage" }
