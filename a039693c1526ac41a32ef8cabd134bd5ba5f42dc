@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fce2a9f4_89c1b1a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-01-01T21:19:10Z",
+      "side": 1,
+      "message": "One day we\u0027ll have external services integration like Nextcloud, I promise",
+      "revId": "a039693c1526ac41a32ef8cabd134bd5ba5f42dc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
