@@ -16,6 +16,23 @@
       "message": "ping :)",
       "revId": "b41111e2690f8231b336578b69e155d87fb1623a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1821073c_d7ff58cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2025-01-01T09:37:53Z",
+      "side": 1,
+      "message": "Move to 22.1?",
+      "revId": "b41111e2690f8231b336578b69e155d87fb1623a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
