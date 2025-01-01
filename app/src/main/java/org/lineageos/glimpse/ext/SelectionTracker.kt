@@ -9,18 +9,13 @@ import androidx.recyclerview.selection.DefaultSelectionTracker
 import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.SelectionTracker.SelectionObserver
+import androidx.recyclerview.selection.adapterDataObserverExt
 import androidx.recyclerview.widget.RecyclerView
 
 private val <K> SelectionTracker<K>.observers: ArrayList<SelectionObserver<K>>
     get() = DefaultSelectionTracker::class.java.getDeclaredField("mObservers").let {
         it.isAccessible = true
         it.get(this) as ArrayList<SelectionObserver<K>>
-    }
-
-private val <K> SelectionTracker<K>.adapterDataObserverExt: RecyclerView.AdapterDataObserver
-    get() = SelectionTracker::class.java.getDeclaredMethod("getAdapterDataObserver").let {
-        it.isAccessible = true
-        it.invoke(this) as RecyclerView.AdapterDataObserver
     }
 
 private var <K> SelectionTracker<K>.keyProvider: ItemKeyProvider<K>
