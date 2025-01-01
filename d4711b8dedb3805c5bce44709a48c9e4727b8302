@@ -16,6 +16,23 @@
       "message": "is this ok?",
       "revId": "d4711b8dedb3805c5bce44709a48c9e4727b8302",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7a18481_d01dbdb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-01-01T13:10:00Z",
+      "side": 1,
+      "message": "Was sure getAdapterDataObserver was a SelectionTracker field, fine if it works",
+      "revId": "d4711b8dedb3805c5bce44709a48c9e4727b8302",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
