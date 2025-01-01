@@ -9,7 +9,7 @@
     android:layout_height="match_parent">
 
     <!-- Images -->
-    <com.github.panpf.zoomimage.CoilZoomImageView
+    <com.github.panpf.zoomimage.GlideZoomImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
