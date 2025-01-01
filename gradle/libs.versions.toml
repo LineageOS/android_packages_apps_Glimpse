@@ -1,5 +1,5 @@
 #
-# SPDX-FileCopyrightText: 2024 The LineageOS Project
+# SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
 # SPDX-License-Identifier: Apache-2.0
 #
 
@@ -8,11 +8,11 @@ agp = "8.7.2"
 kotlin = "1.9.23"
 activity = "1.9.2"
 appcompat = "1.7.0"
-coil = "3.0.4"
 constraintlayout = "2.1.4"
 core = "1.13.1"
 exifinterface = "1.3.7"
 fragment = "1.8.3"
+glide = "4.14.2"
 lifecycle = "2.8.5"
 material = "1.12.0"
 media3 = "1.5.0"
@@ -45,13 +45,11 @@ androidx-preference = { group = "androidx.preference", name = "preference", vers
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-recyclerview-selection = { group = "androidx.recyclerview", name = "recyclerview-selection", version.ref = "recyclerview-selection" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
-coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
-coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version.ref = "coil" }
-coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
-coil-video = { group = "io.coil-kt.coil3", name = "coil-video", version.ref = "coil" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhttp3-integration", version.ref = "glide" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-zoomimage-view-coil = { group = "io.github.panpf.zoomimage", name = "zoomimage-view-coil", version.ref = "zoomimage" }
+zoomimage-view-glide = { group = "io.github.panpf.zoomimage", name = "zoomimage-view-glide", version.ref = "zoomimage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

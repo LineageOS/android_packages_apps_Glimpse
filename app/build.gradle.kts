@@ -94,13 +94,11 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.recyclerview.selection)
     implementation(libs.androidx.viewpager2)
-    implementation(libs.coil)
-    implementation(libs.coil.gif)
-    implementation(libs.coil.network.okhttp)
-    implementation(libs.coil.video)
+    implementation(libs.glide)
+    implementation(libs.glide.okhttp3.integration)
     implementation(libs.material)
     implementation(libs.okhttp)
-    implementation(libs.zoomimage.view.coil)
+    implementation(libs.zoomimage.view.glide)
 }
 
 configure<GenerateBpPluginExtension> {

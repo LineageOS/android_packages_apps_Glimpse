@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -23,10 +23,8 @@ import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil3.load
-import coil3.request.Disposable
-import coil3.request.placeholder
 import org.lineageos.glimpse.R
+import org.lineageos.glimpse.ext.load
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.viewmodels.AlbumViewModel
@@ -134,8 +132,6 @@ class ThumbnailAdapter : ListAdapter<AlbumViewModel.AlbumContent, RecyclerView.V
         private lateinit var media: Media
         private var isSelected = false
 
-        private var disposable: Disposable? = null
-
         private val inSelectionModeObserver = Observer { inSelectionMode: Boolean ->
             selectionCheckedImageView.isVisible = inSelectionMode
         }
@@ -151,8 +147,6 @@ class ThumbnailAdapter : ListAdapter<AlbumViewModel.AlbumContent, RecyclerView.V
 
         fun onViewDetachedFromWindow() {
             inSelectionMode.removeObserver(inSelectionModeObserver)
-
-            dispose()
         }
 
         fun bind(media: Media, isSelected: Boolean = false) {
@@ -163,12 +157,7 @@ class ThumbnailAdapter : ListAdapter<AlbumViewModel.AlbumContent, RecyclerView.V
                 onItemSelected(media)
             }
 
-            dispose()
-            disposable = thumbnailImageView.load(media.uri) {
-                memoryCacheKey("thumbnail_${media.uri}")
-                size(DisplayAwareGridLayoutManager.MAX_THUMBNAIL_SIZE)
-                placeholder(R.drawable.thumbnail_placeholder)
-            }
+            thumbnailImageView.load(media.uri)
             videoOverlayImageView.isVisible = media.mediaType == MediaType.VIDEO
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -188,11 +177,6 @@ class ThumbnailAdapter : ListAdapter<AlbumViewModel.AlbumContent, RecyclerView.V
                     false -> R.drawable.ic_check_circle_outline
                 }
             )
-        }
-
-        private fun dispose() {
-            disposable?.dispose()
-            disposable = null
         }
     }
 

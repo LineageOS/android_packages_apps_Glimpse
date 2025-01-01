@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -25,7 +25,7 @@ open class DisplayAwareGridLayoutManager(
         /**
          * Maximum thumbnail size, useful for high density screens.
          */
-        val MAX_THUMBNAIL_SIZE
+        private val MAX_THUMBNAIL_SIZE
             get() = 128.px
 
         private enum class Orientation {

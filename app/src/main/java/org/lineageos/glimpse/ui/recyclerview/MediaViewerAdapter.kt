@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -17,14 +17,13 @@ import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil3.load
-import coil3.request.Disposable
-import com.github.panpf.zoomimage.CoilZoomImageView
+import com.github.panpf.zoomimage.GlideZoomImageView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
+import org.lineageos.glimpse.ext.load
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
@@ -54,7 +53,7 @@ class MediaViewerAdapter(
 
     inner class MediaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         // Views
-        private val imageView = view.findViewById<CoilZoomImageView>(R.id.imageView)
+        private val imageView = view.findViewById<GlideZoomImageView>(R.id.imageView)
 
         @OptIn(androidx.media3.common.util.UnstableApi::class)
         private val playerControlView =
@@ -63,8 +62,6 @@ class MediaViewerAdapter(
 
         private var media: Media? = null
         private var isCurrentlyDisplayedView = false
-
-        private var disposable: Disposable? = null
 
         @OptIn(androidx.media3.common.util.UnstableApi::class)
         private val mediaPositionObserver: (Int?) -> Unit = { currentPosition: Int? ->
@@ -123,11 +120,7 @@ class MediaViewerAdapter(
         fun bind(media: Media) {
             this.media = media
 
-            dispose()
-            disposable = imageView.load(media.uri) {
-                memoryCacheKey("full_${media.uri}")
-                placeholderMemoryCacheKey("thumbnail_${media.uri}")
-            }
+            imageView.load(media.uri)
         }
 
         fun onViewAttachedToWindow() {
@@ -151,13 +144,6 @@ class MediaViewerAdapter(
 
             playerView.player = null
             playerControlView.player = null
-
-            dispose()
-        }
-
-        private fun dispose() {
-            disposable?.dispose()
-            disposable = null
         }
     }
 }

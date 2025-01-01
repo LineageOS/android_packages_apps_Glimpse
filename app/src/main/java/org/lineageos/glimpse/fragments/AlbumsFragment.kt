@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -24,9 +24,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import coil3.dispose
-import coil3.load
-import coil3.request.placeholder
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -35,11 +32,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.getViewProperty
+import org.lineageos.glimpse.ext.loadThumbnail
 import org.lineageos.glimpse.ext.updatePadding
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailLayoutManager
-import org.lineageos.glimpse.ui.recyclerview.DisplayAwareGridLayoutManager
 import org.lineageos.glimpse.ui.recyclerview.SimpleListAdapter
 import org.lineageos.glimpse.ui.recyclerview.UniqueItemDiffCallback
 import org.lineageos.glimpse.utils.PermissionsChecker
@@ -105,19 +102,7 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
                     )
                 }
 
-                thumbnailImageView.load(item.thumbnail) {
-                    item.thumbnail?.let {
-                        memoryCacheKey("thumbnail_${it.uri}")
-                    }
-                    size(DisplayAwareGridLayoutManager.MAX_THUMBNAIL_SIZE)
-                    placeholder(R.drawable.thumbnail_placeholder)
-                }
-            }
-
-            override fun onViewDetachedFromWindow(holder: ViewHolder) {
-                holder.thumbnailImageView.dispose()
-
-                super.onViewDetachedFromWindow(holder)
+                thumbnailImageView.loadThumbnail(item.thumbnail)
             }
         }
     }
