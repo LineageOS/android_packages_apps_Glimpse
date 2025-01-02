@@ -33,6 +33,24 @@
       "message": "```suggestion\nzoomimage \u003d \"1.0.2\"\n```\n\nNew one requires new kotlin bits we don\u0027t have and uses kmp deps",
       "revId": "a89d729e9b8392530cf436aaadd7329f5927d09a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24e63270_71259278",
+        "filename": "gradle/libs.versions.toml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-01-02T08:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af511c6_6994d4c1",
+      "revId": "a89d729e9b8392530cf436aaadd7329f5927d09a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
