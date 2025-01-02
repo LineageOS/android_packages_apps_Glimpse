@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.ext.load
+import org.lineageos.glimpse.ext.loadThumbnail
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel

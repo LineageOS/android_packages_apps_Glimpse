@@ -18,7 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.lineageos.glimpse.ext.load
+import org.lineageos.glimpse.ext.loadThumbnail
 import org.lineageos.glimpse.ext.updateMargin
 
 class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) {
@@ -88,7 +88,7 @@ class SetWallpaperActivity : AppCompatActivity(R.layout.activity_set_wallpaper) 
             return
         }
 
-        wallpaperImageView.load(wallpaperUri)
+        wallpaperImageView.loadThumbnail(wallpaperUri)
 
         // Set wallpaper
         setWallpaperButton.setOnClickListener {
