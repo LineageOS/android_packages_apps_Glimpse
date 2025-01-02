@@ -13,4 +13,10 @@ fun ImageView.load(model: Any?) = Glide.with(this)
     .load(model)
     .into(this)
 
-fun ImageView.loadThumbnail(thumbnail: Thumbnail?) = load(thumbnail?.bitmap ?: thumbnail?.uri)
+fun ImageView.loadThumbnail(model: Any?) = Glide.with(this)
+    .load(model)
+    .override(Thumbnail.MAX_THUMBNAIL_SIZE, Thumbnail.MAX_THUMBNAIL_SIZE)
+    .into(this)
+
+fun ImageView.loadThumbnail(thumbnail: Thumbnail?) =
+    loadThumbnail(thumbnail?.bitmap ?: thumbnail?.uri)

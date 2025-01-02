@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import org.lineageos.glimpse.ext.px
 
 /**
  * A thumbnail for a media item. It can be a URI or a bitmap. Both can be defined, in that case the
@@ -44,5 +45,12 @@ data class Thumbnail(
         } else {
             it
         }
+    }
+
+    companion object {
+        /**
+         * Maximum thumbnail size, useful for high density screens.
+         */
+        val MAX_THUMBNAIL_SIZE = 128.px
     }
 }
