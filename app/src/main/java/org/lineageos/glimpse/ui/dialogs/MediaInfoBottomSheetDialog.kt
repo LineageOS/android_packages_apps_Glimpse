@@ -114,7 +114,7 @@ class MediaInfoBottomSheetDialog(
             },
             null
         )
-        mediaInfoListItem.headlineText = media.displayName
+        mediaInfoListItem.headlineText = media.displayName ?: unknownString
 
         val contentResolver = context.contentResolver
 

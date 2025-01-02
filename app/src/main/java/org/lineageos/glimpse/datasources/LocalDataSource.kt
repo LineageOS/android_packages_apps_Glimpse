@@ -73,7 +73,7 @@ class LocalDataSource(
         val bucketDisplayName = columnIndexCache.getString(
             MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME
         )
-        val displayName = columnIndexCache.getString(MediaStore.Files.FileColumns.DISPLAY_NAME)
+        val displayName = columnIndexCache.getStringOrNull(MediaStore.Files.FileColumns.DISPLAY_NAME)
         val isFavorite = columnIndexCache.getBoolean(MediaStore.Files.FileColumns.IS_FAVORITE)
         val isTrashed = columnIndexCache.getBoolean(MediaStore.Files.FileColumns.IS_TRASHED)
         val mediaType = columnIndexCache.getInt(MediaStore.Files.FileColumns.MEDIA_TYPE)
