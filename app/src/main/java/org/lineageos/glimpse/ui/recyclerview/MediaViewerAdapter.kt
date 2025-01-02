@@ -128,6 +128,7 @@ class MediaViewerAdapter(
                         Thumbnail.MAX_THUMBNAIL_SIZE,
                         Thumbnail.MAX_THUMBNAIL_SIZE
                     )
+                    .centerCrop()
             )
         }
 
