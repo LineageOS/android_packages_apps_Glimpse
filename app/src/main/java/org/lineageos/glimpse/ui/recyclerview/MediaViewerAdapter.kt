@@ -17,6 +17,7 @@ import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.request.RequestOptions
 import com.github.panpf.zoomimage.GlideZoomImageView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -26,6 +27,7 @@ import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.ext.load
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.Thumbnail
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
 
 class MediaViewerAdapter(
@@ -119,8 +121,14 @@ class MediaViewerAdapter(
 
         fun bind(media: Media) {
             this.media = media
-
-            imageView.load(media.uri)
+            imageView.load(
+                media.uri,
+                options = RequestOptions()
+                    .override(
+                        Thumbnail.MAX_THUMBNAIL_SIZE,
+                        Thumbnail.MAX_THUMBNAIL_SIZE
+                    )
+            )
         }
 
         fun onViewAttachedToWindow() {

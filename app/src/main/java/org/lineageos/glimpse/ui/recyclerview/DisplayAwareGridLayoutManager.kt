@@ -7,7 +7,7 @@ package org.lineageos.glimpse.ui.recyclerview
 
 import android.content.Context
 import androidx.recyclerview.widget.GridLayoutManager
-import org.lineageos.glimpse.ext.px
+import org.lineageos.glimpse.models.Thumbnail
 
 /**
  * GridLayoutManager that uses a proper span count based on the display orientation and DPI.
@@ -22,12 +22,6 @@ open class DisplayAwareGridLayoutManager(
     thumbnailPaddingPx: Int,
 ) : GridLayoutManager(context, getSpanCount(context, targetSpanCount, thumbnailPaddingPx)) {
     companion object {
-        /**
-         * Maximum thumbnail size, useful for high density screens.
-         */
-        private val MAX_THUMBNAIL_SIZE
-            get() = 128.px
-
         private enum class Orientation {
             VERTICAL,
             HORIZONTAL,
@@ -56,7 +50,7 @@ open class DisplayAwareGridLayoutManager(
             }
 
             val thumbnailSize =
-                (columnsSpace / targetSpanCount).coerceAtMost(MAX_THUMBNAIL_SIZE.px)
+                (columnsSpace / targetSpanCount).coerceAtMost(Thumbnail.MAX_THUMBNAIL_SIZE)
 
             return (availableWidth / thumbnailSize).coerceAtLeast(targetSpanCount)
         }

@@ -24,7 +24,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.lineageos.glimpse.R
-import org.lineageos.glimpse.ext.load
+import org.lineageos.glimpse.ext.loadThumbnail
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.viewmodels.AlbumViewModel
@@ -157,7 +157,7 @@ class ThumbnailAdapter : ListAdapter<AlbumViewModel.AlbumContent, RecyclerView.V
                 onItemSelected(media)
             }
 
-            thumbnailImageView.load(media.uri)
+            thumbnailImageView.loadThumbnail(media.uri)
             videoOverlayImageView.isVisible = media.mediaType == MediaType.VIDEO
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
