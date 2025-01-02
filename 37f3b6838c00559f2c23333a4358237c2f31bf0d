@@ -22,6 +22,30 @@
       },
       "revId": "37f3b6838c00559f2c23333a4358237c2f31bf0d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a683c85_cfe932d2",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ui/recyclerview/DisplayAwareGridLayoutManager.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-01-02T15:12:09Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "9c41e773_3271a84d",
+      "range": {
+        "startLine": 59,
+        "startChar": 80,
+        "endLine": 59,
+        "endChar": 83
+      },
+      "revId": "37f3b6838c00559f2c23333a4358237c2f31bf0d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
