@@ -11,6 +11,7 @@ import org.lineageos.glimpse.models.Thumbnail
 
 fun ImageView.load(model: Any?) = Glide.with(this)
     .load(model)
+    .override(Thumbnail.MAX_THUMBNAIL_SIZE, Thumbnail.MAX_THUMBNAIL_SIZE)
     .into(this)
 
 fun ImageView.loadThumbnail(thumbnail: Thumbnail?) = load(thumbnail?.bitmap ?: thumbnail?.uri)
