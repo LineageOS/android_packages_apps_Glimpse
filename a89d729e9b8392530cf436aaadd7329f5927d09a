@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "401f1670_474ba0ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-01-02T03:09:49Z",
+      "side": 1,
+      "message": "Works fine, didn\u0027t test inline building yet",
+      "revId": "a89d729e9b8392530cf436aaadd7329f5927d09a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
