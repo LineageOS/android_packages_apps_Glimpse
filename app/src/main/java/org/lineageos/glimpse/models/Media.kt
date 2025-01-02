@@ -32,7 +32,7 @@ data class Media(
     val mimeType: String,
     val albumUri: Uri,
     val albumName: String?,
-    val displayName: String,
+    val displayName: String?,
     val isFavorite: Boolean,
     val isTrashed: Boolean,
     val dateAdded: Date,
