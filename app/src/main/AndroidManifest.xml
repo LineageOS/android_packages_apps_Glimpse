@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -55,6 +55,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.provider.action.REVIEW" />
                 <action android:name="android.provider.action.REVIEW_SECURE" />
+                <action android:name="com.android.camera.action.REVIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

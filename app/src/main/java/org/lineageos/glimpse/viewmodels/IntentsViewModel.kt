@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -161,7 +161,8 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                 Intent.ACTION_VIEW -> ParsedIntent.ViewIntent(mediaItems.filterIsInstance<Media>())
 
                 MediaStore.ACTION_REVIEW,
-                MediaStore.ACTION_REVIEW_SECURE -> ParsedIntent.ReviewIntent(
+                MediaStore.ACTION_REVIEW_SECURE,
+                ACTION_REVIEW_LEGACY -> ParsedIntent.ReviewIntent(
                     AlbumViewModel.AlbumRequest(
                         intent.extras?.getSerializable(
                             ViewActivity.EXTRA_ALBUM_TYPE, AlbumType::class
@@ -312,5 +313,6 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
 
     companion object {
         private val LOG_TAG = IntentsViewModel::class.simpleName!!
+        private const val ACTION_REVIEW_LEGACY = "com.android.camera.action.REVIEW"
     }
 }
