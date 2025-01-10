@@ -39,6 +39,30 @@
       },
       "revId": "c45c86f2f0ff627f10ff8f5d6a6747e4fbe317c2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b5135e8_c61b52e6",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/IntentsViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 21070
+      },
+      "writtenOn": "2025-01-10T15:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633242ea_4b680383",
+      "range": {
+        "startLine": 165,
+        "startChar": 16,
+        "endLine": 165,
+        "endChar": 50
+      },
+      "revId": "c45c86f2f0ff627f10ff8f5d6a6747e4fbe317c2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
