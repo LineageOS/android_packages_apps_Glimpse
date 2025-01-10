@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebdf2d6f_46292a83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 21070
+      },
+      "writtenOn": "2025-01-10T15:23:09Z",
+      "side": 1,
+      "message": "We can\u0027t use LOS gallery for an custom camera app like Open Camera\nBecause it doesn\u0027t handle com.android.camera.action.REVIEW intent",
+      "revId": "c45c86f2f0ff627f10ff8f5d6a6747e4fbe317c2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
