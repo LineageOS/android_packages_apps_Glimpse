@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2ded50e_eecf35ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-01-10T16:00:50Z",
+      "side": 1,
+      "message": "if we want it, let\u0027s restore previous change instead.",
+      "revId": "267f542fd8e9606d7fae4dab2745f71ba3ca3eec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
