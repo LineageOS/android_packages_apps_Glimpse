@@ -161,7 +161,8 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                 Intent.ACTION_VIEW -> ParsedIntent.ViewIntent(mediaItems.filterIsInstance<Media>())
 
                 MediaStore.ACTION_REVIEW,
-                MediaStore.ACTION_REVIEW_SECURE -> ParsedIntent.ReviewIntent(
+                MediaStore.ACTION_REVIEW_SECURE,
+                "com.android.camera.action.REVIEW" -> ParsedIntent.ReviewIntent(
                     AlbumViewModel.AlbumRequest(
                         intent.extras?.getSerializable(
                             ViewActivity.EXTRA_ALBUM_TYPE, AlbumType::class
