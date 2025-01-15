@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galeria</string>
+    <string name="app_permissions_toast">Permissões não concedidas pelo utilizador.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Álbuns</string>
+    <string name="categories_title">Categorias</string>
+    <string name="library_title">Biblioteca</string>
+    <string name="album_favorites">Favoritos</string>
+    <string name="album_trash">Reciclagem</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Fotos</string>
+    <string name="album_videos">Vídeos</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d itens</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Tem a certeza que deseja eliminar permanentemente este ficheiro?</item>
+        <item quantity="other">Tem a certeza que deseja eliminar permanentemente %d ficheiros?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Ficheiro eliminado permanentemente</item>
+        <item quantity="other">%d ficheiros eliminados permanentemente</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Não foi possível eliminar permanentemente o ficheiro</item>
+        <item quantity="other">Não foi possível eliminar permanentemente %d ficheiros</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Tem a certeza que quer mover o ficheiro para a reciclagem?</item>
+        <item quantity="other">Tem a certeza que quer mover %d ficheiros para a reciclagem?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Ficheiro movido para a reciclagem</item>
+        <item quantity="other">%d ficheiros movidos para a reciclagem</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Não foi possível mover o ficheiro para a reciclagem</item>
+        <item quantity="other">Não foi possível mover %d ficheiros para a reciclagem</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Tem a certeza que quer restaurar um ficheiro da reciclagem?</item>
+        <item quantity="other">Tem a certeza que quer restaurar %d ficheiros da reciclagem?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Ficheiro restaurado da reciclagem</item>
+        <item quantity="other">%d ficheiros restaurados da reciclagem</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Não foi possível restaurar o ficheiro da reciclagem</item>
+        <item quantity="other">Não foi possível restaurar %d ficheiros da reciclagem</item>
+    </plurals>
+    <string name="manage_media_permission_title">Gerir permissões de multimédia</string>
+    <string name="manage_media_permission_message">Para uma melhor gestão das suas imagens e vídeos, permita que a aplicação gira os seus ficheiros multimédia</string>
+    <string name="media_info_unknown">Desconhecido</string>
+    <string name="media_info_add_description_hint">Adicionar uma descrição</string>
+    <string name="media_info_write_description_failed">Falha ao alterar a descrição do ficheiro multimédia</string>
+    <string name="media_info_location_loading_placeholder">A carregar…</string>
+    <string name="media_info_location_open_with">Ver a localização com</string>
+    <string name="intent_action_not_supported">Ação não suportada</string>
+    <string name="intent_media_not_found">Multimédia não encontrada</string>
+    <string name="intent_media_type_not_found">Tipo de média não encontrado</string>
+    <string name="intent_media_type_not_supported">Tipo de multimédia não suportado</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Não existe aplicação de sistema para recortar a imagem</string>
+    <string name="intent_wallpaper_cannot_be_changed">O papel de parede não pode ser alterado</string>
+    <string name="file_action_add_to_favorites">Adicionar aos favoritos</string>
+    <string name="file_action_delete_forever">Eliminar permanentemente</string>
+    <string name="file_action_edit">Editar</string>
+    <string name="file_action_empty_trash">Esvaziar reciclagem</string>
+    <string name="file_action_information">Informação</string>
+    <string name="file_action_move_to_trash">Mover para a reciclagem</string>
+    <string name="file_action_remove_from_favorites">Remover dos favoritos</string>
+    <string name="file_action_restore_from_trash">Restaurar da reciclagem</string>
+    <string name="file_action_share">Partilhar</string>
+    <string name="file_action_use_as">Usar como</string>
+    <string name="file_action_undo_action">Desfazer</string>
+    <string name="no_media">Sem multimédia</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d selecionado(a)</item>
+        <item quantity="other">%d selecionados(as)</item>
+    </plurals>
+    <string name="pick_a_photo">Escolha uma foto</string>
+    <string name="pick_a_video">Escolha um vídeo</string>
+    <string name="pick_a_media">Escolher multimédia</string>
+    <string name="picker_done">Feito</string>
+    <string name="set_wallpaper_label">Papel de parede</string>
+    <string name="set_wallpaper">Definir papel de parede</string>
+    <string name="set_wallpaper_dialog_title">Definir papel de parede em</string>
+    <string name="set_wallpaper_home_screen">Ecrã inicial</string>
+    <string name="set_wallpaper_lock_screen">Ecrã de bloqueio</string>
+    <string name="set_wallpaper_both">Ecrã inicial e ecrã de bloqueio</string>
+</resources>
