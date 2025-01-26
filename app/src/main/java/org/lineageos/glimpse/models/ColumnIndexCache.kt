@@ -9,7 +9,11 @@ import android.database.Cursor
 import androidx.core.database.getStringOrNull
 
 class ColumnIndexCache(private val cursor: Cursor, projection: Array<String>) {
-    private val indexMap = projection.associateWith { cursor.getColumnIndexOrThrow(it) }
+    private val indexMap = projection.map {
+        it.lowercase()
+    }.associateWith {
+        cursor.getColumnIndexOrThrow(it)
+    }
 
     fun getInt(columnName: String) = cursor.getInt(indexMap[columnName]!!)
     fun getLong(columnName: String) = cursor.getLong(indexMap[columnName]!!)
