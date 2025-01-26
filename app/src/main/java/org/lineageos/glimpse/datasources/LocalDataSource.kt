@@ -49,12 +49,12 @@ class LocalDataSource(
         .build()
 
     private val mapAlbum = { columnIndexCache: ColumnIndexCache ->
-        val id = columnIndexCache.getLong(MediaStore.Files.FileColumns._ID)
+        val id = columnIndexCache.getLong(ALBUM_MAX_ID)
         val bucketId = columnIndexCache.getLong(MediaStore.Files.FileColumns.BUCKET_ID)
         val bucketDisplayName = columnIndexCache.getStringOrNull(
             MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME
         )
-        val count = columnIndexCache.getInt(ID_SQL_COUNT)
+        val count = columnIndexCache.getInt(ALBUM_COUNT_ID)
 
         val uri = ContentUris.withAppendedId(albumsUri, bucketId)
         val thumbnailUri = ContentUris.withAppendedId(filesUri, id)
@@ -210,6 +210,7 @@ class LocalDataSource(
             ).toTypedArray(),
             ContentResolver.QUERY_ARG_GROUP_COLUMNS to arrayOf(
                 MediaStore.Files.FileColumns.BUCKET_ID,
+                MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
             ),
             ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(
                 "${MediaStore.Files.FileColumns.DATE_MODIFIED} DESC",
@@ -267,17 +268,19 @@ class LocalDataSource(
     companion object {
         private const val ALBUMS_PATH = "albums"
 
-        private const val ID_SQL_COUNT = "COUNT(${MediaStore.Files.FileColumns._ID})"
-        private const val MAX_DATE_MODIFIED = "MAX(${MediaStore.Files.FileColumns.DATE_MODIFIED})"
+        private const val ALBUM_MAX_ID = "max(${MediaStore.Files.FileColumns._ID})"
+        private const val ALBUM_COUNT_ID = "count(${MediaStore.Files.FileColumns._ID})"
+        private const val ALBUM_MAX_DATE_MODIFIED =
+            "max(${MediaStore.Files.FileColumns.DATE_MODIFIED})"
 
         private val albumProjection = arrayOf(
-            MediaStore.Files.FileColumns._ID,
+            ALBUM_MAX_ID,
             MediaStore.Files.FileColumns.BUCKET_ID,
             MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME,
-            ID_SQL_COUNT,
+            ALBUM_COUNT_ID,
 
             // GIANT HACK TO GET SQLITE TO ORDER BY DATE_MODIFIED
-            MAX_DATE_MODIFIED,
+            ALBUM_MAX_DATE_MODIFIED,
         )
 
         private val mediaProjection = arrayOf(
