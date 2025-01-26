@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5b428f6_ae5c7734",
+        "filename": "app/src/main/java/org/lineageos/glimpse/datasources/LocalDataSource.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-01-26T21:24:57Z",
+      "side": 1,
+      "message": "Why are we mapping the album ID to the max value??",
+      "revId": "2fca29d2b18f5ced5bcfad569dd59ef088a9a741",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
