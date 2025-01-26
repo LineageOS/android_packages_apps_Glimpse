@@ -15,7 +15,7 @@ fun <T> Cursor?.mapEachRow(
         return@use emptyList<T>()
     }
 
-    val columnIndexCache = ColumnIndexCache(cursor, cursor.columnNames)
+    val columnIndexCache = ColumnIndexCache(cursor)
 
     val data = mutableListOf<T>()
     do {
