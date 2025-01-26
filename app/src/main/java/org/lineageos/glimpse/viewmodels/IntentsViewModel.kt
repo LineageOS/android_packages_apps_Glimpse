@@ -222,7 +222,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(),
+            SharingStarted.Eagerly,
             false,
         )
 
@@ -235,7 +235,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(),
+            SharingStarted.Eagerly,
             true,
         )
 
