@@ -189,7 +189,7 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
                         is IntentsViewModel.ParsedIntent.PickIntent -> {
                             albumsViewModel.loadAlbums(
                                 AlbumsViewModel.AlbumsRequest(
-                                    null,
+                                    mediaType = it.mediaType,
                                     mimeType = it.mimeType,
                                 )
                             )

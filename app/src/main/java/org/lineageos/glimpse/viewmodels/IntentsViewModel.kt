@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -71,10 +71,12 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
         /**
          * Pick a content.
          *
+         * @param mediaType The file type to filter for
          * @param mimeType The type to select, null to avoid filtering
          * @param multiple Whether multiple items can be selected
          */
         class PickIntent(
+            val mediaType: MediaType? = null,
             val mimeType: String? = null,
             val multiple: Boolean = false,
         ) : ParsedIntent()
@@ -189,7 +191,8 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
 
                 Intent.ACTION_GET_CONTENT,
                 Intent.ACTION_PICK -> ParsedIntent.PickIntent(
-                    mimeType,
+                    mimeType?.let { MimeUtils.mimeTypeToMediaType(it) },
+                    mimeType?.takeUnless { it.endsWith("/*") },
                     intent.extras?.getBoolean(
                         Intent.EXTRA_ALLOW_MULTIPLE, false
                     ) ?: false,
