@@ -147,8 +147,8 @@ class LocalPlayerViewModel(
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = false,
+            started = SharingStarted.Eagerly,
+            initialValue = true,
         )
 
     /**
@@ -165,7 +165,7 @@ class LocalPlayerViewModel(
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
+            started = SharingStarted.Eagerly,
             initialValue = true,
         )
 
