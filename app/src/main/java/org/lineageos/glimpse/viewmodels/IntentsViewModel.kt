@@ -35,6 +35,7 @@ import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.models.RequestStatus.Companion.map
 import org.lineageos.glimpse.utils.MimeUtils
+import java.util.Dateaaa
 
 /**
  * A view model used by activities to handle intents.
@@ -265,8 +266,38 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                 is RequestStatus.Success -> it.data
 
                 is RequestStatus.Error -> {
-                    Log.e(LOG_TAG, "Cannot get media of $uri, error: ${it.error}")
-                    null
+                    // Build a `Media` object with the available data
+                    Log.i(
+                        LOG_TAG,
+                        "Cannot get media object from media provider, trying manual fallback"
+                    )
+                    when (type) {
+                        MediaType.IMAGE,
+                        MediaType.VIDEO ->
+                            Media(
+                                uri,
+                                type,
+                                applicationContext.contentResolver.getType(uri) ?: run {
+                                    Log.e(LOG_TAG, "Cannot get media type of $uri")
+                                    return null
+                                },
+                                uri,
+                                albumName = null,
+                                displayName = null,
+                                isFavorite = false,
+                                isTrashed = false,
+                                dateAdded = Date(),
+                                dateModified = Date(),
+                                width = 0,
+                                height = 0,
+                                orientation = 0,
+                            )
+
+                        else -> {
+                            Log.e(LOG_TAG, "Cannot build media object for $uri")
+                            null
+                        }
+                    }
                 }
             }
         }
