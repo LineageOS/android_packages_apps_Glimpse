@@ -48,6 +48,7 @@ import org.lineageos.glimpse.ext.setBarsVisibility
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.AlbumType
 import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaItem
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.ui.dialogs.MediaInfoBottomSheetDialog
@@ -59,6 +60,7 @@ import org.lineageos.glimpse.viewmodels.IntentsViewModel
 import org.lineageos.glimpse.viewmodels.IntentsViewModel.ParsedIntent
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
 import java.text.SimpleDateFormat
+import kotlin.reflect.safeCast
 
 /**
  * An activity used to view one or mode medias.
@@ -225,9 +227,10 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         favoriteButton.setOnClickListener {
             viewModel.displayedMedia.value?.let {
+                val isFavorite = Media::class.safeCast(it)?.isFavorite ?: return@let
                 favoriteContract.launch(
                     contentResolver.createFavoriteRequest(
-                        !it.isFavorite, it.uri
+                        !isFavorite, it.uri
                     )
                 )
             }
@@ -257,7 +260,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         deleteButton.setOnClickListener {
             viewModel.displayedMedia.value?.let {
-                trashMedia(it)
+                val media = Media::class.safeCast(it) ?: return@let
+                trashMedia(media)
             }
         }
 
@@ -401,7 +405,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             launch {
                 viewModel.displayedMedia.collectLatest { displayedMedia ->
                     // Update date and time text
-                    displayedMedia?.also {
+                    Media::class.safeCast(displayedMedia)?.also {
                         toolbar.title = dateFormatter.format(it.dateModified)
                         toolbar.subtitle = timeFormatter.format(it.dateModified)
                     } ?: run {
@@ -410,7 +414,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     }
 
                     // Update favorite button
-                    val isFavorite = displayedMedia?.isFavorite ?: false
+                    val isFavorite = Media::class.safeCast(displayedMedia)?.isFavorite ?: false
                     favoriteButton.isSelected = isFavorite
                     favoriteButton.setText(
                         when (isFavorite) {
@@ -423,7 +427,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     infoButton.isVisible = displayedMedia != null
 
                     // Update delete button
-                    val isTrashed = displayedMedia?.isTrashed ?: false
+                    val isTrashed = Media::class.safeCast(displayedMedia)?.isTrashed ?: false
                     deleteButton.text = when (isTrashed) {
                         true -> getString(R.string.file_action_restore_from_trash)
                         false -> getString(R.string.file_action_move_to_trash)
@@ -477,7 +481,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
      * Update exoPlayer's status.
      * @param media The currently displayed [Media]
      */
-    private fun updateExoPlayer(media: Media) {
+    private fun updateExoPlayer(media: MediaItem<*>) {
         if (media.mediaType == MediaType.VIDEO) {
             if (media.uri != lastVideoUriPlayed) {
                 lastVideoUriPlayed = media.uri

@@ -47,14 +47,16 @@ import org.lineageos.glimpse.ext.software
 import org.lineageos.glimpse.ext.toFraction
 import org.lineageos.glimpse.ext.userComment
 import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaItem
 import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.UriMedia
 import org.lineageos.glimpse.ui.views.ListItem
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class MediaInfoBottomSheetDialog(
     context: Context,
-    media: Media,
+    media: MediaItem<*>,
     callbacks: Callbacks,
     secure: Boolean = false,
 ) : BottomSheetDialog(context) {
@@ -102,8 +104,17 @@ class MediaInfoBottomSheetDialog(
 
         val unknownString = unknownString
 
-        dateTextView.text = dateFormatter.format(media.dateModified)
-        timeTextView.text = timeFormatter.format(media.dateModified)
+        when (media) {
+            is Media -> {
+                dateTextView.text = dateFormatter.format(media.dateAdded)
+                timeTextView.text = timeFormatter.format(media.dateAdded)
+            }
+
+            else -> {
+                dateTextView.isVisible = false
+                timeTextView.isVisible = false
+            }
+        }
 
         mediaInfoListItem.leadingIconImage = ResourcesCompat.getDrawable(
             context.resources,
@@ -114,7 +125,14 @@ class MediaInfoBottomSheetDialog(
             },
             null
         )
-        mediaInfoListItem.headlineText = media.displayName ?: unknownString
+
+        when (media) {
+            is Media -> {
+                mediaInfoListItem.headlineText = media.displayName ?: unknownString
+            }
+
+            else -> {}
+        }
 
         val contentResolver = context.contentResolver
 
@@ -163,11 +181,23 @@ class MediaInfoBottomSheetDialog(
                 cameraInfoListItem.supportingText,
             ).any { !it.isNullOrBlank() && it != unknownString }
 
-            mediaInfoListItem.supportingText = listOf(
-                media.mimeType,
-                "${((media.width.toDouble() * media.height) / 1024000).round(1)}MP",
-                "${media.width} x ${media.height}",
-            ).joinToString(SEPARATOR)
+            mediaInfoListItem.supportingText = when (media) {
+                is Media -> {
+                    listOf(
+                        media.mimeType,
+                        "${((media.width.toDouble() * media.height) / 1024000).round(1)}MP",
+                        "${media.width} x ${media.height}",
+                    ).joinToString(SEPARATOR)
+                }
+
+                is UriMedia -> {
+                    listOf(
+                        media.mimeType,
+                    ).joinToString(SEPARATOR)
+                }
+
+                else -> unknownString
+            }
 
             exifInterface.latLong?.let {
                 val (lat, long) = it
@@ -236,7 +266,7 @@ class MediaInfoBottomSheetDialog(
     }
 
     class Callbacks(private val activity: AppCompatActivity) {
-        private lateinit var editDescriptionMedia: Media
+        private lateinit var editDescriptionMedia: MediaItem<*>
         private lateinit var editDescriptionDescription: String
 
         private val editDescriptionCallback = activity.registerForActivityResult(
@@ -247,7 +277,7 @@ class MediaInfoBottomSheetDialog(
             }
         }
 
-        fun onEditDescription(media: Media, description: String = "") {
+        fun onEditDescription(media: MediaItem<*>, description: String = "") {
             editDescriptionMedia = media
             editDescriptionDescription = description
 
@@ -258,7 +288,7 @@ class MediaInfoBottomSheetDialog(
             )
         }
 
-        private fun editDescription(media: Media, description: String) {
+        private fun editDescription(media: MediaItem<*>, description: String) {
             val contentResolver = activity.contentResolver
 
             contentResolver.openFileDescriptor(
