@@ -39,6 +39,30 @@
       },
       "revId": "8f0b10376b8b41ecaab5f656eaec99b64acfd2f2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8445db3c_97a1bfbb",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/IntentsViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-01-31T11:11:00Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "bbd92af8_9851ec93",
+      "range": {
+        "startLine": 285,
+        "startChar": 28,
+        "endLine": 286,
+        "endChar": 37
+      },
+      "revId": "8f0b10376b8b41ecaab5f656eaec99b64acfd2f2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
