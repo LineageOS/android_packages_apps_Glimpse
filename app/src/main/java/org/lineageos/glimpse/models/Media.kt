@@ -29,7 +29,7 @@ import java.util.Date
 data class Media(
     override val uri: Uri,
     override val mediaType: MediaType,
-    val mimeType: String,
+    override val mimeType: String,
     val albumUri: Uri,
     val albumName: String?,
     val displayName: String?,

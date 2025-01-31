@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -26,6 +26,10 @@ data class Album(
 ) : MediaItem<Album>, Parcelable {
     @IgnoredOnParcel
     override val mediaType = MediaType.ALBUM
+
+    @IgnoredOnParcel
+    override val mimeType: String
+        get() = error("Albums do not have a MIME type")
 
     override fun areContentsTheSame(other: Album) = compareValuesBy(
         this, other,

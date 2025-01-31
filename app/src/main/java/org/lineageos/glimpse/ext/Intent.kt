@@ -1,15 +1,15 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.glimpse.ext
 
 import android.content.Intent
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaItem
 import org.lineageos.glimpse.models.MediaType
 
-fun buildShareIntent(vararg medias: Media) = Intent().apply {
+fun buildShareIntent(vararg medias: MediaItem<*>) = Intent().apply {
     assert(medias.isNotEmpty()) { "No media" }
 
     if (medias.size == 1) {
@@ -36,13 +36,13 @@ fun buildShareIntent(vararg medias: Media) = Intent().apply {
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
 
-fun buildEditIntent(media: Media) = Intent().apply {
+fun buildEditIntent(media: MediaItem<*>) = Intent().apply {
     action = Intent.ACTION_EDIT
     setDataAndType(media.uri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
 }
 
-fun buildUseAsIntent(media: Media) = Intent().apply {
+fun buildUseAsIntent(media: MediaItem<*>) = Intent().apply {
     action = Intent.ACTION_ATTACH_DATA
     setDataAndType(media.uri, media.mimeType)
     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION

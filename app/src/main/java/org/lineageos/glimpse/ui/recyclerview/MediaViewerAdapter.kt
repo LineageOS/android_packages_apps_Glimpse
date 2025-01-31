@@ -15,6 +15,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.panpf.zoomimage.GlideZoomImageView
@@ -24,13 +25,15 @@ import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.ext.load
-import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MediaItem
 import org.lineageos.glimpse.models.MediaType
+import org.lineageos.glimpse.models.areContentsTheSame
+import org.lineageos.glimpse.models.areItemsTheSame
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
 
 class MediaViewerAdapter(
     private val localPlayerViewModel: LocalPlayerViewModel,
-) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(UniqueItemDiffCallback()) {
+) : ListAdapter<MediaItem<*>, MediaViewerAdapter.MediaViewHolder>(MediaItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
     )
@@ -60,7 +63,7 @@ class MediaViewerAdapter(
             view.findViewById<PlayerControlView>(androidx.media3.ui.R.id.exo_controller)
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
 
-        private var media: Media? = null
+        private var media: MediaItem<*>? = null
         private var isCurrentlyDisplayedView = false
 
         @OptIn(androidx.media3.common.util.UnstableApi::class)
@@ -117,7 +120,7 @@ class MediaViewerAdapter(
             }
         }
 
-        fun bind(media: Media) {
+        fun bind(media: MediaItem<*>) {
             this.media = media
 
             imageView.load(media.uri)
@@ -145,5 +148,13 @@ class MediaViewerAdapter(
             playerView.player = null
             playerControlView.player = null
         }
+    }
+
+    private class MediaItemDiffCallback : DiffUtil.ItemCallback<MediaItem<*>>() {
+        override fun areItemsTheSame(oldItem: MediaItem<*>, newItem: MediaItem<*>) =
+            oldItem.areItemsTheSame(newItem)
+
+        override fun areContentsTheSame(oldItem: MediaItem<*>, newItem: MediaItem<*>) =
+            oldItem.areContentsTheSame(newItem)
     }
 }

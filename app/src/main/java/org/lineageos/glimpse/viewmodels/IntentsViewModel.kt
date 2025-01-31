@@ -34,8 +34,8 @@ import org.lineageos.glimpse.models.MediaItem
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.models.RequestStatus.Companion.map
+import org.lineageos.glimpse.models.UriMedia
 import org.lineageos.glimpse.utils.MimeUtils
-import java.util.Date
 
 /**
  * A view model used by activities to handle intents.
@@ -53,7 +53,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
          * @param medias The items to show
          */
         class ViewIntent(
-            val medias: List<Media>,
+            val medias: List<MediaItem<*>>,
         ) : ParsedIntent()
 
         /**
@@ -65,7 +65,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
          */
         class ReviewIntent(
             val albumRequest: AlbumViewModel.AlbumRequest? = null,
-            val initialMedia: Media? = null,
+            val initialMedia: MediaItem<*>? = null,
             val secure: Boolean = false,
         ) : ParsedIntent()
 
@@ -161,7 +161,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                 null,
                 Intent.ACTION_MAIN -> ParsedIntent.MainIntent()
 
-                Intent.ACTION_VIEW -> ParsedIntent.ViewIntent(mediaItems.filterIsInstance<Media>())
+                Intent.ACTION_VIEW -> ParsedIntent.ViewIntent(mediaItems)
 
                 MediaStore.ACTION_REVIEW,
                 MediaStore.ACTION_REVIEW_SECURE -> ParsedIntent.ReviewIntent(
@@ -177,8 +177,9 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                             }
 
                             when (val mediaItem = it.first()) {
-                                is Album -> mediaItem.uri
                                 is Media -> mediaItem.albumUri
+                                is Album -> mediaItem.uri
+                                else -> return@let null
                             }
                         },
                         intent.extras?.getSerializable(
@@ -186,7 +187,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                         ),
                         intent.extras?.getString(ViewActivity.EXTRA_MIME_TYPE),
                     ),
-                    mediaItems.filterIsInstance<Media>().firstOrNull(),
+                    mediaItems.firstOrNull(),
                     intent.action == MediaStore.ACTION_REVIEW_SECURE,
                 )
 
@@ -273,25 +274,14 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                     )
                     when (type) {
                         MediaType.IMAGE,
-                        MediaType.VIDEO ->
-                            Media(
-                                uri,
-                                type,
-                                applicationContext.contentResolver.getType(uri) ?: run {
-                                    Log.e(LOG_TAG, "Cannot get media type of $uri")
-                                    return null
-                                },
-                                uri,
-                                albumName = null,
-                                displayName = null,
-                                isFavorite = false,
-                                isTrashed = false,
-                                dateAdded = Date(),
-                                dateModified = Date(),
-                                width = 0,
-                                height = 0,
-                                orientation = 0,
-                            )
+                        MediaType.VIDEO -> UriMedia(
+                            uri,
+                            type,
+                            applicationContext.contentResolver.getType(uri) ?: run {
+                                Log.e(LOG_TAG, "Cannot get media type of $uri")
+                                return null
+                            }
+                        )
 
                         else -> {
                             Log.e(LOG_TAG, "Cannot build media object for $uri")

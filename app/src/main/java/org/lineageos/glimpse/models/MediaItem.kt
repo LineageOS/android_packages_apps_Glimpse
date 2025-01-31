@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -12,6 +12,11 @@ sealed interface MediaItem<T : MediaItem<T>> : UniqueItem<T> {
      * The media type.
      */
     val mediaType: MediaType
+
+    /**
+     * The mime type of the media item.
+     */
+    val mimeType: String
 
     /**
      * A [Uri] identifying this media item.
