@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Галерия</string>
+    <string name="app_permissions_toast">Позволения отказани от потребител.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Албуми</string>
+    <string name="categories_title">Категории</string>
+    <string name="library_title">Библиотека</string>
+    <string name="album_favorites">Любими</string>
+    <string name="album_trash">Кошче</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">Снимки</string>
+    <string name="album_videos">Видео</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d елемент</item>
+        <item quantity="other">%d елемента</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Наистина ли искате да изтриете този файл?</item>
+        <item quantity="other">Наистина ли искате да изтриете %d файла?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Файлът е изтрит</item>
+        <item quantity="other">%d файла изтрити</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Файлът не успя да бъде изтрит</item>
+        <item quantity="other">%d файла не успяха да бъдат изтрити</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Наистина ли искате да преместите файла в кошчето?</item>
+        <item quantity="other">Наистина ли искате да преместите %d файла в кошчето?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Файлът е преместен в кошчето</item>
+        <item quantity="other">%d файла преместени в кошчето</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Файлът не успя да бъде преместен в кошчето</item>
+        <item quantity="other">%d файла не успяха да бъдат преместени в кошчето</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Наистина ли искате да извадите файла от кошчето?</item>
+        <item quantity="other">Наистина ли искате да извадите %d файла от кошчето?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Файлът е изваден от кошчето</item>
+        <item quantity="other">%d файла извадени от кошчето</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Файлът не успя да бъде изваден от кошчето</item>
+        <item quantity="other">%d файла не успяха да бъдат извадени от кошчето</item>
+    </plurals>
+    <string name="manage_media_permission_title">Управление на достъп до медия</string>
+    <string name="manage_media_permission_message">За да управлявате снимките и видеата си по- лесно, позволете на приложението да управлява вашите медия файлове</string>
+    <string name="media_info_unknown">Неизвестно</string>
+    <string name="media_info_add_description_hint">Добавяне на описание</string>
+    <string name="media_info_write_description_failed">Неуспешно редактиране на описанието на медията</string>
+    <string name="media_info_location_loading_placeholder">Зарежда се...</string>
+    <string name="media_info_location_open_with">Покажи местоположението с</string>
+    <string name="intent_action_not_supported">Действието не се поддържа</string>
+    <string name="intent_media_not_found">Медията не е открита</string>
+    <string name="intent_media_type_not_found">Типът медия не е открит</string>
+    <string name="intent_media_type_not_supported">Типът медия не се поддържа</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Няма наличен системен рамкировач</string>
+    <string name="intent_wallpaper_cannot_be_changed">Тапетът не може да бъде променен</string>
+    <string name="file_action_add_to_favorites">Добави към Любими</string>
+    <string name="file_action_delete_forever">Унищожаване</string>
+    <string name="file_action_edit">Редактиране</string>
+    <string name="file_action_empty_trash">Изпразване на кошчето</string>
+    <string name="file_action_information">Информация</string>
+    <string name="file_action_move_to_trash">Преместване в кошчето</string>
+    <string name="file_action_remove_from_favorites">Премахване от любими</string>
+    <string name="file_action_restore_from_trash">Изваждане от кошчето</string>
+    <string name="file_action_share">Споделяне</string>
+    <string name="file_action_use_as">Използване като</string>
+    <string name="file_action_undo_action">Отмени</string>
+    <string name="no_media">Няма съдържание</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d избран</item>
+        <item quantity="other">%d избрани</item>
+    </plurals>
+    <string name="pick_a_photo">Изберете снимка</string>
+    <string name="pick_a_video">Изберете видео</string>
+    <string name="pick_a_media">Изберете медия</string>
+    <string name="picker_done">Готово</string>
+    <string name="set_wallpaper_label">Тапет</string>
+    <string name="set_wallpaper">Задаване като тапет</string>
+    <string name="set_wallpaper_dialog_title">Задаване като тапет на</string>
+    <string name="set_wallpaper_home_screen">Начален екран</string>
+    <string name="set_wallpaper_lock_screen">Заключен екран</string>
+    <string name="set_wallpaper_both">Начален и заключен екран</string>
+</resources>
