@@ -73,6 +73,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.appBarLayout) }
     private val bottomSheetLinearLayout by lazy { findViewById<LinearLayout>(R.id.bottomSheetLinearLayout) }
     private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
+    private val trashButton by lazy { findViewById<MaterialButton>(R.id.trashButton) }
     private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
     private val infoButton by lazy { toolbar.menu.findItem(R.id.info) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
@@ -257,11 +258,19 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         deleteButton.setOnClickListener {
             viewModel.displayedMedia.value?.let {
+                MediaDialogsUtils.openDeleteForeverDialog(this, it.uri) { uris ->
+                    deleteUriContract.launch(contentResolver.createDeleteRequest(*uris))
+                }
+            }
+        }
+
+        trashButton.setOnClickListener {
+            viewModel.displayedMedia.value?.let {
                 trashMedia(it)
             }
         }
 
-        deleteButton.setOnLongClickListener {
+        trashButton.setOnLongClickListener {
             viewModel.displayedMedia.value?.let {
                 MediaDialogsUtils.openDeleteForeverDialog(this, it.uri) { uris ->
                     deleteUriContract.launch(contentResolver.createDeleteRequest(*uris))
@@ -424,11 +433,11 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
                     // Update delete button
                     val isTrashed = displayedMedia?.isTrashed ?: false
-                    deleteButton.text = when (isTrashed) {
+                    trashButton.text = when (isTrashed) {
                         true -> getString(R.string.file_action_restore_from_trash)
                         false -> getString(R.string.file_action_move_to_trash)
                     }
-                    deleteButton.setCompoundDrawablesWithIntrinsicBounds(
+                    trashButton.setCompoundDrawablesWithIntrinsicBounds(
                         0,
                         when (isTrashed) {
                             true -> R.drawable.ic_restore_from_trash
@@ -443,6 +452,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     favoriteButton.isVisible = !isTrashed
                     shareButton.isVisible = !isTrashed
                     useAsButton.isVisible = !isTrashed
+                    deleteButton.isVisible = isTrashed
 
                     // Update ExoPlayer
                     displayedMedia?.let {
@@ -473,7 +483,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     adjustButton.isVisible = !readOnly
 
                     // Update delete button
-                    deleteButton.isVisible = !readOnly
+                    trashButton.isVisible = !readOnly
                 }
             }
         }

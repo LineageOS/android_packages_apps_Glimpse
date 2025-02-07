@@ -74,6 +74,14 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/deleteButton"
             style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/file_action_delete_forever"
+            android:drawableTop="@drawable/ic_delete"
+            android:text="@string/file_action_delete_forever"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/trashButton"
+            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
             android:contentDescription="@string/file_action_move_to_trash"
             android:drawableTop="@drawable/ic_delete"
             android:text="@string/file_action_move_to_trash" />
