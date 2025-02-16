@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e737247_a8107e3f",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/IntentsViewModel.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-02-16T14:37:54Z",
+      "side": 1,
+      "message": "Wait why?\n\n```\nInput: Intent.getData is URI of the primary media item to initially display.\nIntent.getClipData is the limited list of secondary media items that the user is\nallowed to review. If Intent.getClipData is undefined, then no other media access\nshould be allowed.\n```\n\nThis should rather be fixed in Aperture",
+      "revId": "0529e93db2d47a8d2023a6f6e3d1739ee6510e2b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
