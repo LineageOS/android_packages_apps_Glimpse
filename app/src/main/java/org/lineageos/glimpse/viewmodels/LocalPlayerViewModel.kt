@@ -121,7 +121,13 @@ class LocalPlayerViewModel(
                     flowOf(RequestStatus.Success(it.medias))
                 }
 
-                is IntentsViewModel.ParsedIntent.ReviewIntent -> album
+                is IntentsViewModel.ParsedIntent.ReviewIntent -> {
+                    if (it.secure && it.initialMedia != null) {
+                        flowOf(RequestStatus.Success(listOf(it.initialMedia)))
+                    } else {
+                        album
+                    }
+                }
 
                 else -> flowOf(RequestStatus.Loading())
             }
