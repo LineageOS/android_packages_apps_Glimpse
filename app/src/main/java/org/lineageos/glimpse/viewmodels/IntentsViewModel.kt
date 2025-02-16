@@ -61,12 +61,19 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
          *
          * @param albumRequest The [AlbumViewModel.AlbumRequest] to show
          * @param initialMedia The [Media] from which we should start
-         * @param secure Whether we can show item with a locked status
          */
         class ReviewIntent(
             val albumRequest: AlbumViewModel.AlbumRequest? = null,
             val initialMedia: Media? = null,
-            val secure: Boolean = false,
+        ) : ParsedIntent()
+
+        /**
+         * Review content securely.
+         *
+         * @param medias The list of [Media] to show
+         */
+        class SecureReviewIntent(
+            val medias: List<Media>,
         ) : ParsedIntent()
 
         /**
@@ -163,8 +170,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
 
                 Intent.ACTION_VIEW -> ParsedIntent.ViewIntent(mediaItems.filterIsInstance<Media>())
 
-                MediaStore.ACTION_REVIEW,
-                MediaStore.ACTION_REVIEW_SECURE -> ParsedIntent.ReviewIntent(
+                MediaStore.ACTION_REVIEW -> ParsedIntent.ReviewIntent(
                     AlbumViewModel.AlbumRequest(
                         intent.extras?.getSerializable(
                             ViewActivity.EXTRA_ALBUM_TYPE, AlbumType::class
@@ -187,7 +193,10 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                         intent.extras?.getString(ViewActivity.EXTRA_MIME_TYPE),
                     ),
                     mediaItems.filterIsInstance<Media>().firstOrNull(),
-                    intent.action == MediaStore.ACTION_REVIEW_SECURE,
+                )
+
+                MediaStore.ACTION_REVIEW_SECURE -> ParsedIntent.SecureReviewIntent(
+                    mediaItems.filterIsInstance<Media>(),
                 )
 
                 Intent.ACTION_GET_CONTENT,
