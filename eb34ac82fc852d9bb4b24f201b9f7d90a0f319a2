@@ -22,6 +22,30 @@
       },
       "revId": "eb34ac82fc852d9bb4b24f201b9f7d90a0f319a2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7bdef7a_1bf9e5ee",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/LocalPlayerViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-02-16T14:35:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7578654a_bc6c400d",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 17
+      },
+      "revId": "eb34ac82fc852d9bb4b24f201b9f7d90a0f319a2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
