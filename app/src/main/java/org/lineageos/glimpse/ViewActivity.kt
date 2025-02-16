@@ -321,7 +321,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     parsedIntent?.handle {
                         when (it) {
                             is ParsedIntent.ViewIntent,
-                            is ParsedIntent.ReviewIntent -> {
+                            is ParsedIntent.ReviewIntent,
+                            is ParsedIntent.SecureReviewIntent -> {
                                 viewModel.setParsedIntent(it)
                             }
 
