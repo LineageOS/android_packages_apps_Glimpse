@@ -123,6 +123,10 @@ class LocalPlayerViewModel(
 
                 is IntentsViewModel.ParsedIntent.ReviewIntent -> album
 
+                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> flowOf(
+                    RequestStatus.Success(it.medias)
+                )
+
                 else -> flowOf(RequestStatus.Loading())
             }
         }
@@ -140,7 +144,7 @@ class LocalPlayerViewModel(
     val secure = parsedIntent
         .mapLatest {
             when (it) {
-                is IntentsViewModel.ParsedIntent.ReviewIntent -> it.secure
+                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> true
                 else -> false
             }
         }
@@ -158,7 +162,8 @@ class LocalPlayerViewModel(
     val readOnly = parsedIntent
         .mapLatest {
             when (it) {
-                is IntentsViewModel.ParsedIntent.ReviewIntent -> it.secure
+                is IntentsViewModel.ParsedIntent.ReviewIntent,
+                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> false
                 else -> true
             }
         }
