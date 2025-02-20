@@ -121,7 +121,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                 return@mapLatest null
             }
 
-            val mediaItems = mutableListOf<MediaItem<*>>().apply {
+            val mediaItems = buildList {
                 intent.data?.let { data ->
                     uriToContent(
                         data,
