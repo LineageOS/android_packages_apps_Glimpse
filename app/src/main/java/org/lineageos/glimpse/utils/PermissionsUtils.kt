@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -35,7 +35,7 @@ object PermissionsUtils {
     /**
      * Permissions required to run the app
      */
-    val mainPermissions = mutableListOf<String>().apply {
+    val mainPermissions = buildList {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             add(Manifest.permission.READ_MEDIA_IMAGES)
             add(Manifest.permission.READ_MEDIA_VIDEO)
