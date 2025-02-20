@@ -6,6 +6,7 @@
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
+import android.content.ContentUris
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
@@ -141,6 +142,40 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                     clipData.asArray().forEach { item ->
                         uriToContent(item.uri, mediaType)?.let {
                             add(it)
+                        }
+                    }
+                }
+
+                // Handle Pixel Camera non-standard way of getting secure media
+                if (intent.hasExtra(EXTRA_SECURE_IDS)) {
+                    val filesUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
+                    val imagesUri =
+                        MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+                    val videosUri = MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+
+                    val secureIds =
+                        intent.extras?.getSerializable(EXTRA_SECURE_IDS, LongArray::class)
+                    secureIds?.forEach { secureId ->
+                        val fileUri = ContentUris.withAppendedId(filesUri, secureId)
+                        val mimeType = applicationContext.contentResolver.getType(fileUri) ?: run {
+                            Log.e(LOG_TAG, "Cannot get media type of $fileUri")
+                            return@forEach
+                        }
+
+                        val uri = when (MimeUtils.mimeTypeToMediaType(mimeType)) {
+                            MediaType.IMAGE -> ContentUris.withAppendedId(imagesUri, secureId)
+                            MediaType.VIDEO -> ContentUris.withAppendedId(videosUri, secureId)
+                            else -> {
+                                Log.e(LOG_TAG, "Unsupported media type for $fileUri")
+                                return@forEach
+                            }
+                        }
+
+                        // Don't add the "main" URI again
+                        if (uri != intent.data) {
+                            uriToContent(uri, null)?.let {
+                                add(it)
+                            }
                         }
                     }
                 }
@@ -357,5 +392,10 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
 
     companion object {
         private val LOG_TAG = IntentsViewModel::class.simpleName!!
+
+        /**
+         * Extra of MediaProvider IDs as [LongArray] used by Pixel Camera app instead of ClipData.
+         */
+        private const val EXTRA_SECURE_IDS = "com.google.android.apps.photos.api.secure_mode_ids"
     }
 }
