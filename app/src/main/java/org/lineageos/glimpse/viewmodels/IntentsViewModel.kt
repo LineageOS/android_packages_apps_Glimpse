@@ -139,6 +139,9 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                         MimeUtils.mimeTypeToMediaType(mimeType)?.let { type ->
                             mediaType = type
                         }
+                        if (mediaType != null) {
+                            break
+                        }
                     }
 
                     clipData.asArray().forEach { item ->
