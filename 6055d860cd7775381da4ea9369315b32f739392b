@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54aee6eb_4123be8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-02-20T11:10:50Z",
+      "side": 1,
+      "message": "Looks fine, the icon is used only in the action menu (not even shown atm), I forced it to be shown and it still uses the proper color",
+      "revId": "6055d860cd7775381da4ea9369315b32f739392b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
