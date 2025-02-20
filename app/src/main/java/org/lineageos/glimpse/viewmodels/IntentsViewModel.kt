@@ -6,9 +6,12 @@
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
+import android.content.ContentUris
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
+import android.provider.MediaStore.Files
+import android.provider.MediaStore.VOLUME_EXTERNAL
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +39,11 @@ import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.models.RequestStatus.Companion.map
 import org.lineageos.glimpse.utils.MimeUtils
 import java.util.Date
+
+/**
+ * Extra of MediaProvider IDs as [LongArray] used by Pixel Camera app instead of ClipData.
+ */
+private const val EXTRA_SECURE_IDS = "com.google.android.apps.photos.api.secure_mode_ids"
 
 /**
  * A view model used by activities to handle intents.
@@ -143,6 +151,29 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
 
                     clipData.asArray().forEach { item ->
                         uriToContent(item.uri, mediaType)?.let {
+                            add(it)
+                        }
+                    }
+                }
+
+                // also support Pixel Camera non-standard way of getting secure media
+                if (intent.hasExtra(EXTRA_SECURE_IDS)) {
+                    fun getUriFromId(id: Long, mimeType: String?): Uri = when {
+                        mimeType?.startsWith("image") == true -> {
+                            ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                        }
+                        mimeType?.startsWith("video") == true -> {
+                            ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
+                        }
+                        else -> {
+                            ContentUris.withAppendedId(Files.getContentUri(VOLUME_EXTERNAL), id)
+                        }
+                    }
+                    intent.extras?.getSerializable(EXTRA_SECURE_IDS, LongArray::class)?.forEach { secureId ->
+                        val fileUri = ContentUris.withAppendedId(Files.getContentUri(VOLUME_EXTERNAL), secureId)
+                        val mimeType = applicationContext.contentResolver.getType(fileUri)
+                        val uri = getUriFromId(secureId, mimeType)
+                        if (uri != intent.data) uriToContent(uri, null)?.let {
                             add(it)
                         }
                     }
