@@ -15,6 +15,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -113,6 +114,42 @@ class LocalPlayerViewModel(
             initialValue = RequestStatus.Loading(),
         )
 
+    private fun <T, E> List<Flow<RequestStatus<T, E>>>.toFlowOfRequestStatusList(): Flow<RequestStatus<List<T>, E>> =
+        flow {
+            if (isEmpty()) {
+                emit(RequestStatus.Loading())
+                return@flow
+            }
+
+            combine(this@toFlowOfRequestStatusList) { wrappers ->
+                // Filter out errors
+                wrappers.filterIsInstance<RequestStatus.Success<T, E>>().map { it.data }
+            }.collect { wrappedList ->
+                emit(RequestStatus.Success(wrappedList))
+            }
+        }
+
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val uriMedia = parsedIntent
+        .flatMapLatest {
+            when (it) {
+                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> {
+                    it.medias.map { media ->
+                        mediaRepository.media(media.uri)
+                    }.toFlowOfRequestStatusList()
+                }
+
+                else -> flowOf(RequestStatus.Loading())
+            }
+        }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = RequestStatus.Loading(),
+        )
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val medias = parsedIntent
         .flatMapLatest {
@@ -123,9 +160,7 @@ class LocalPlayerViewModel(
 
                 is IntentsViewModel.ParsedIntent.ReviewIntent -> album
 
-                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> {
-                    flowOf(RequestStatus.Success(it.medias))
-                }
+                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> uriMedia
 
                 else -> flowOf(RequestStatus.Loading())
             }
