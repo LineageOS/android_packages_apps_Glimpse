@@ -15,6 +15,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -113,6 +114,58 @@ class LocalPlayerViewModel(
             initialValue = RequestStatus.Loading(),
         )
 
+    private fun <T, E> List<Flow<RequestStatus<T, E>>>.toFlowOfRequestStatusList() = flow {
+        if (isEmpty()) {
+            emit(RequestStatus.Success(emptyList()))
+            return@flow
+        }
+
+        emit(RequestStatus.Loading())
+
+        combine(this@toFlowOfRequestStatusList) { statusArray ->
+            // Check if any item is still loading
+            if (statusArray.any { it is RequestStatus.Loading }) {
+                return@combine RequestStatus.Loading<List<T>, E>()
+            }
+
+            // Collect all successful data, ignoring errors
+            statusArray
+                .filterIsInstance<RequestStatus.Success<T, E>>()
+                .map { it.data }
+                .let {
+                    RequestStatus.Success(it)
+                }
+        }.collect { combinedStatus ->
+            emit(combinedStatus)
+        }
+    }
+
+    /**
+     * Collect secure media via Uri to update its list after deletion/restore.
+     * Needed because we can't use the album to observe for changes.
+     *
+     * NOTE: This _will_ be slow for large amounts of media.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val secureMedias = parsedIntent
+        .flatMapLatest {
+            when (it) {
+                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> {
+                    it.medias.map { media ->
+                        mediaRepository.media(media.uri)
+                    }.toFlowOfRequestStatusList()
+                }
+
+                else -> flowOf(RequestStatus.Loading())
+            }
+        }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = RequestStatus.Loading(),
+        )
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val medias = parsedIntent
         .flatMapLatest {
@@ -123,9 +176,7 @@ class LocalPlayerViewModel(
 
                 is IntentsViewModel.ParsedIntent.ReviewIntent -> album
 
-                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> {
-                    flowOf(RequestStatus.Success(it.medias))
-                }
+                is IntentsViewModel.ParsedIntent.SecureReviewIntent -> secureMedias
 
                 else -> flowOf(RequestStatus.Loading())
             }
