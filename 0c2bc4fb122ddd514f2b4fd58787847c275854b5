@@ -16,6 +16,23 @@
       "message": "We don\u0027t nor want to encourage the usage of deprecated or third party intent actions",
       "revId": "0c2bc4fb122ddd514f2b4fd58787847c275854b5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56ec5fa3_61121602",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34918
+      },
+      "writtenOn": "2025-02-21T12:07:49Z",
+      "side": 1,
+      "message": "ok, I think I found another way that doesn\u0027t require glimpse changes to support third party Intent Uri passing: GCamPreview found a way redirect the GCam intent and rewriting it in such a way that the system doesn\u0027t complain about missing Uri permissions when starting Glimpse. The trick is to not use Intent.FLAG_GRANT_READ_URI_PERMISSION, then it doesn\u0027t matter that you don\u0027t have permissions to access these Uris in ClipData.",
+      "revId": "0c2bc4fb122ddd514f2b4fd58787847c275854b5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
