@@ -119,6 +119,17 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                 },
             )
 
+            if (succeeded && keyguardManager.isKeyguardLocked && intent.action == MediaStore.ACTION_REVIEW_SECURE) {
+                lifecycleScope.launch {
+                    // Collect secure Uri media to update its list after deletion.
+                    // This is needed, because for secure media, we can't use the album to observe for changes
+                    // like we do for other intents.
+                    viewModel.uriMedia.collectLatest {
+                        // this just updates uriMedia which is used by medias
+                    }
+                }
+            }
+
             lastProcessedMedia = null
         }
 
