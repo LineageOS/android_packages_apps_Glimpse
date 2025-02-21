@@ -16,6 +16,23 @@
       "message": "This is the least cursed idea I came up with.\nThis will break in case the URIs are not from the media provider in the secure intent, but is that even possible?",
       "revId": "ebdc310a7afbe6cd27cbfdf699a6033a18f85225",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d836efb3_5faa9dd4",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/LocalPlayerViewModel.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-02-21T15:35:54Z",
+      "side": 1,
+      "message": "This is specifically not in any Ext class because I don\u0027t want it to be used elsewhere.",
+      "revId": "ebdc310a7afbe6cd27cbfdf699a6033a18f85225",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
