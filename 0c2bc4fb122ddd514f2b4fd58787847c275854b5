@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9635a579_08e1605f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-02-21T00:27:27Z",
+      "side": 1,
+      "message": "We don\u0027t nor want to encourage the usage of deprecated or third party intent actions",
+      "revId": "0c2bc4fb122ddd514f2b4fd58787847c275854b5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
