@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf5fe9c4_d332f2d8",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/LocalPlayerViewModel.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-02-23T10:14:07Z",
+      "side": 1,
+      "message": "```suggestion\n                    mediaRepository.medias(it.medias.map { media -\u003e\n                        media.uri\n                    })\n```",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 21
+      },
+      "revId": "ef01589be9e1f9762f616f1b0ccfcd856a44b3a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
