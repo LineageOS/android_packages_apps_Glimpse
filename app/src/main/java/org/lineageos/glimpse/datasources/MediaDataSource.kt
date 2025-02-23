@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -75,4 +75,9 @@ interface MediaDataSource {
      * Get the media information of the given media.
      */
     fun media(mediaUri: Uri): Flow<MediaRequestStatus<Media>>
+
+    /**
+     * Get the media information of the given medias.
+     */
+    fun medias(mediaUris: List<Uri>): Flow<MediaRequestStatus<List<Media>>>
 }

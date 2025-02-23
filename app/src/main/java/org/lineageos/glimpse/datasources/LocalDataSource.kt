@@ -24,6 +24,7 @@ import org.lineageos.glimpse.models.Thumbnail
 import org.lineageos.glimpse.query.Query
 import org.lineageos.glimpse.query.and
 import org.lineageos.glimpse.query.eq
+import org.lineageos.glimpse.query.`in`
 import org.lineageos.glimpse.query.or
 import org.lineageos.glimpse.query.query
 import org.lineageos.glimpse.utils.MimeUtils
@@ -263,6 +264,26 @@ class LocalDataSource(
         it.firstOrNull()?.let { media ->
             RequestStatus.Success<_, MediaError>(media)
         } ?: RequestStatus.Error(MediaError.NOT_FOUND)
+    }
+
+    override fun medias(mediaUris: List<Uri>) = contentResolver.queryFlow(
+        filesUri,
+        mediaProjection,
+        bundleOf(
+            ContentResolver.QUERY_ARG_SQL_SELECTION to query {
+                (MediaStore.Files.FileColumns._ID `in` List(mediaUris.size) {
+                    Query.ARG
+                }) and isImageOrVideo
+            },
+            ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS to mediaUris.map {
+                it.lastPathSegment!!
+            }.toTypedArray(),
+            ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(
+                "${MediaStore.Files.FileColumns.DATE_MODIFIED} DESC",
+            ),
+        ),
+    ).mapEachRow(mapMedia).mapLatest {
+        RequestStatus.Success<_, MediaError>(it)
     }
 
     companion object {

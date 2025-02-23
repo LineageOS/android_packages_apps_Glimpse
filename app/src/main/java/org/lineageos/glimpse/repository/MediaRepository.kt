@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -79,4 +79,9 @@ class MediaRepository(
      * @see MediaDataSource.media
      */
     fun media(mediaUri: Uri) = localDataSource.media(mediaUri)
+
+    /**
+     * @see MediaDataSource.medias
+     */
+    fun medias(mediaUris: List<Uri>) = localDataSource.medias(mediaUris)
 }
