@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -38,7 +38,7 @@ private var <K> SelectionTracker<K>.keyProvider: ItemKeyProvider<K>
 /**
  * Destroy this object.
  */
-fun <K> SelectionTracker<K>.kill(adapter: RecyclerView.Adapter<*>) {
+fun <K: Any> SelectionTracker<K>.kill(adapter: RecyclerView.Adapter<*>) {
     adapter.unregisterAdapterDataObserver(adapterDataObserverExt)
 
     observers.clear()
@@ -46,6 +46,6 @@ fun <K> SelectionTracker<K>.kill(adapter: RecyclerView.Adapter<*>) {
     keyProvider = object : ItemKeyProvider<K>(SCOPE_CACHED) {
         override fun getKey(position: Int) = null
 
-        override fun getPosition(key: K & Any) = RecyclerView.NO_POSITION
+        override fun getPosition(key: K) = RecyclerView.NO_POSITION
     }
 }
