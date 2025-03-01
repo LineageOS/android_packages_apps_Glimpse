@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">گالری</string>
+    <string name="app_permissions_toast">مجوز توسط کاربر داده نشد.</string>
+    <string name="reels_title">ریلز</string>
+    <string name="albums_title">آلبوم‌ها</string>
+    <string name="categories_title">دسته بندی‌ها</string>
+    <string name="library_title">کتابخانه</string>
+    <string name="album_favorites">موارد دلخواه</string>
+    <string name="album_trash">زباله</string>
+    <string name="album_reels">ریلز</string>
+    <string name="album_photos">تصاویر</string>
+    <string name="album_videos">ویدیوها</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d مورد</item>
+        <item quantity="other">%d مورد</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">آیا مطمئنید که می‌خواهید این فایل را برای همیشه حذف کنید؟</item>
+        <item quantity="other">آیا مطمئنید که می‌خواهید %d فایل را برای همیشه حذف کنید؟</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">فایل کامل حذف شد</item>
+        <item quantity="other">%d فایل کامل حذف شد</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">فایل را نمی توان برای همیشه حذف کرد</item>
+        <item quantity="other">%d فایل را نمی توان برای همیشه حذف کرد</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">آیا مطمئنید که می‌خواهید یک فایل را به حذف‌شده‌ها منتقل کنید؟</item>
+        <item quantity="other">آیا مطمئنید که می‌خواهید %d فایل را به حذف‌شده‌ها منتقل کنید؟</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">فایل به سطل زباله منتقل شد</item>
+        <item quantity="other">%d فایل به سطل زباله منتقل شد</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">فایل به سطل زباله منتقل نشد</item>
+        <item quantity="other">%d فایل به سطل زباله منتقل نشد</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">آیا مطمئنید که می‌خواهید یک فایل را از سطل زباله بازیابی کنید؟</item>
+        <item quantity="other">آیا مطمئنید که می‌خواهید %d فایل را از سطل زباله بازیابی کنید؟</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">فایل از سطل زباله بازیابی شد</item>
+        <item quantity="other">%d فایل از سطل زباله بازیابی شد</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">فایل از سطل زباله بازیابی نشد</item>
+        <item quantity="other">%d فایل از سطل زباله بازیابی نشد</item>
+    </plurals>
+    <string name="manage_media_permission_title">مدیریت مجوز رسانه</string>
+    <string name="manage_media_permission_message">برای مدیریت بهتر تصاویر و ویدیوهای خود، به برنامه اجازه دهید فایل های رسانه ای شما را مدیریت کند</string>
+    <string name="media_info_unknown">ناشناخته</string>
+    <string name="media_info_add_description_hint">توضیحاتی اضافه کنید</string>
+    <string name="media_info_write_description_failed">توضیح رسانه تغییر نکرد</string>
+    <string name="media_info_location_loading_placeholder">بارگذاری…</string>
+    <string name="media_info_location_open_with">مشاهده مکان با</string>
+    <string name="intent_action_not_supported">اقدام پشتیبانی نمی شود</string>
+    <string name="intent_media_not_found">رسانه یافت نشد</string>
+    <string name="intent_media_type_not_found">نوع رسانه یافت نشد</string>
+    <string name="intent_media_type_not_supported">نوع رسانه پشتیبانی نمی‌شود</string>
+    <string name="intent_no_system_wallpaper_cropper_available">برش دهنده سیستم موجود نیست</string>
+    <string name="intent_wallpaper_cannot_be_changed">تصویر زمینه قابل تغییر نیست</string>
+    <string name="file_action_add_to_favorites">افزودن به علاقه‌مندی‌ها</string>
+    <string name="file_action_delete_forever">حذف برای همیشه</string>
+    <string name="file_action_edit">ویرایش</string>
+    <string name="file_action_empty_trash">خالی کردن زباله‌دان</string>
+    <string name="file_action_information">اطلاعات</string>
+    <string name="file_action_move_to_trash">انتقال به سطل زباله</string>
+    <string name="file_action_remove_from_favorites">حذف از لیست دلخواه</string>
+    <string name="file_action_restore_from_trash">بازیابی از سطل زباله</string>
+    <string name="file_action_share">هم‌رسانی</string>
+    <string name="file_action_use_as">استفاده برای</string>
+    <string name="file_action_undo_action">بازگرد</string>
+    <string name="no_media">بدون رسانه</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d انتخاب شده</item>
+        <item quantity="other">%d انتخاب شده</item>
+    </plurals>
+    <string name="pick_a_photo">گزینش عکس</string>
+    <string name="pick_a_video">گزینش ویدئو</string>
+    <string name="pick_a_media">گزینش رسانه</string>
+    <string name="picker_done">انجام شد</string>
+    <string name="set_wallpaper_label">تصویر زمینه</string>
+    <string name="set_wallpaper">تنظیم تصویر زمینه</string>
+    <string name="set_wallpaper_dialog_title">تنظیم تصویر زمینه در</string>
+    <string name="set_wallpaper_home_screen">صفحه اصلی</string>
+    <string name="set_wallpaper_lock_screen">صفحه قفل</string>
+    <string name="set_wallpaper_both">صفحه اصلی و قفل</string>
+    <string name="warning_bin_time_period">فایل‌ها پس از ۳۰ روز به طور دائمی حذف خواهند شد.</string>
+</resources>
