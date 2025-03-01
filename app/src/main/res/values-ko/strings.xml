@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -77,4 +77,5 @@
     <string name="set_wallpaper_home_screen">홈 화면</string>
     <string name="set_wallpaper_lock_screen">잠금 화면</string>
     <string name="set_wallpaper_both">홈 및 잠금 화면</string>
+    <string name="warning_bin_time_period">파일은 30일 뒤에 완전히 삭제됩니다.</string>
 </resources>
