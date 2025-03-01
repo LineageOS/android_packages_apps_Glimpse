@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -94,4 +94,5 @@
     <string name="set_wallpaper_home_screen">Pantalla d\'inici</string>
     <string name="set_wallpaper_lock_screen">Pantalla de bloqueig</string>
     <string name="set_wallpaper_both">Pantalla d\'inici i de bloqueig</string>
+    <string name="warning_bin_time_period">Els fitxers se suprimiran permanentment al cap de 30 dies.</string>
 </resources>

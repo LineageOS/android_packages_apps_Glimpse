@@ -4,5 +4,5 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="library_title">Kirjasto</string>
+    <string name="warning_bin_time_period">הקבצים יימחקו לצמיתות לאחר 30 יום.</string>
 </resources>

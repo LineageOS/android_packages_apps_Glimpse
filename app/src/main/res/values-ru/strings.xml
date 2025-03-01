@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -116,4 +116,5 @@
     <string name="set_wallpaper_home_screen">Домашний экран</string>
     <string name="set_wallpaper_lock_screen">Экран блокировки</string>
     <string name="set_wallpaper_both">Домашний экран и экран блокировки</string>
+    <string name="warning_bin_time_period">Файлы будут безвозвратно удалены через 30 дней.</string>
 </resources>
