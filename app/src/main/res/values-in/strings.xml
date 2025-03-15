@@ -41,16 +41,20 @@
     <plurals name="restore_file_from_trash_unsuccessful">
         <item quantity="other">File tidak dapat dipulihkan dari sampah</item>
     </plurals>
+    <string name="manage_media_permission_title">Kelola izin media</string>
     <string name="media_info_unknown">Tak dikenal</string>
     <string name="media_info_add_description_hint">Tambahkan deskripsi</string>
     <string name="media_info_location_loading_placeholder">Memuat...</string>
     <string name="intent_media_not_found">Media tidak ditemukan</string>
+    <string name="file_action_delete_forever">Hapus selamanya</string>
+    <string name="file_action_empty_trash">Kosongkan Sampah</string>
     <string name="file_action_move_to_trash">Pindah ke sampah</string>
     <string name="file_action_remove_from_favorites">Hapus dari favorit</string>
     <string name="file_action_restore_from_trash">Pulihkan dari sampah</string>
     <string name="file_action_share">Bagikan</string>
     <string name="file_action_use_as">Gunakan sebagai</string>
     <string name="file_action_undo_action">Urungkan</string>
+    <string name="no_media">Tidak ada media</string>
     <plurals name="thumbnail_selection_count">
         <item quantity="other">%d dipilih</item>
     </plurals>
