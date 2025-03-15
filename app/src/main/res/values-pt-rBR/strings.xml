@@ -61,7 +61,7 @@
     <string name="media_info_add_description_hint">Adicionar uma descrição</string>
     <string name="media_info_write_description_failed">Falha ao alterar descrição da mídia</string>
     <string name="media_info_location_loading_placeholder">Carregando…</string>
-    <string name="media_info_location_open_with">Veja a localização com</string>
+    <string name="media_info_location_open_with">Ver a localização com</string>
     <string name="intent_action_not_supported">Ação não suportada</string>
     <string name="intent_media_not_found">Mídia não encontrada</string>
     <string name="intent_media_type_not_found">Tipo de mídia não encontrado</string>
@@ -90,7 +90,7 @@
     <string name="picker_done">Pronto</string>
     <string name="set_wallpaper_label">Plano de fundo</string>
     <string name="set_wallpaper">Definir plano de fundo</string>
-    <string name="set_wallpaper_dialog_title">Definir plano de fundo</string>
+    <string name="set_wallpaper_dialog_title">Definir plano de fundo na</string>
     <string name="set_wallpaper_home_screen">Tela inicial</string>
     <string name="set_wallpaper_lock_screen">Tela de bloqueio</string>
     <string name="set_wallpaper_both">Tela inicial e de bloqueio</string>
