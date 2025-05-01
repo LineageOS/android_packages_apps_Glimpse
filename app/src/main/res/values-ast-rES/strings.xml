@@ -81,4 +81,5 @@
     <string name="set_wallpaper_home_screen">Pantalla d\'aniciu</string>
     <string name="set_wallpaper_lock_screen">Pantalla de bloquéu</string>
     <string name="set_wallpaper_both">Pantalla d\'aniciu y de bloquéu</string>
+    <string name="warning_bin_time_period">Los ficheros van desaniciase permanentemente dempués de 30 díes.</string>
 </resources>
