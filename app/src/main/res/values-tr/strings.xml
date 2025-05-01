@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galeri</string>
+    <string name="app_permissions_toast">Kullanıcı izinleri vermedi.</string>
+    <string name="reels_title">Reels</string>
+    <string name="albums_title">Albümler</string>
+    <string name="categories_title">Kategoriler</string>
+    <string name="library_title">Kütüphane</string>
+    <string name="album_favorites">Sık Kullanılanlar</string>
+    <string name="album_trash">Çöp Kutusu</string>
+    <string name="album_reels">Makaralar</string>
+    <string name="album_photos">Fotoğraflar</string>
+    <string name="album_videos">Videolar</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d öge</item>
+        <item quantity="other">%d öge</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Bu dosyayı kalıcı olarak silmek istiyor musunuz?</item>
+        <item quantity="other">%d dosyayı kalıcı olarak silmek istiyor musunuz?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Dosya kalıcı olarak silindi</item>
+        <item quantity="other">%d dosya kalıcı olarak silindi</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Dosya kalıcı olarak silinemedi</item>
+        <item quantity="other">%d dosya kalıcı olarak silinemedi</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Dosyayı çöp kutusuna taşımak istediğinize emin misiniz?</item>
+        <item quantity="other">%d dosyayı çöp kutusuna taşımak istediğinize emin misiniz?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Dosya çöp kutusuna taşındı</item>
+        <item quantity="other">%d dosya çöp kutusuna taşındı</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Dosya çöp kutusuna taşınamadı</item>
+        <item quantity="other">%d dosya çöp kutusuna taşınamadı</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Dosyayı çöp kutusundan geri yüklemek istediğinize emin misiniz?</item>
+        <item quantity="other">%d dosyayı çöp kutusundan geri yüklemek istediğinize emin misiniz?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Dosya çöp kutusundan geri yüklendi</item>
+        <item quantity="other">%d dosya çöp kutusundan geri yüklendi</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Dosya çöp kutusundan geri yüklenemedi</item>
+        <item quantity="other">%d dosya çöp kutusundan geri yüklenemedi</item>
+    </plurals>
+    <string name="manage_media_permission_title">Medya izinlerini yönet</string>
+    <string name="manage_media_permission_message">Resim ve videolarınızı daha iyi yönetmesi için uygulamaya medya dosyalarınızı yönetme izni verin</string>
+    <string name="media_info_unknown">Bilinmeyen</string>
+    <string name="media_info_add_description_hint">Bir açıklama ekle</string>
+    <string name="media_info_write_description_failed">Medyanın açıklaması değiştirilemedi</string>
+    <string name="media_info_location_loading_placeholder">Yükleniyor...</string>
+    <string name="media_info_location_open_with">Konumu görüntülemek için</string>
+    <string name="intent_action_not_supported">Eylem desteklenmiyor</string>
+    <string name="intent_media_not_found">Medya bulunamadı</string>
+    <string name="intent_media_type_not_found">Medya türü bulunamadı</string>
+    <string name="intent_media_type_not_supported">Medya türü desteklenmiyor</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Sistem kırpıcı mevcut değil</string>
+    <string name="intent_wallpaper_cannot_be_changed">Duvar kâğıdı değiştirilemiyor</string>
+    <string name="file_action_add_to_favorites">Sık kullanılanlara ekle</string>
+    <string name="file_action_delete_forever">Tamamen sil</string>
+    <string name="file_action_edit">Düzenle</string>
+    <string name="file_action_empty_trash">Çöp kutusunu boşalt</string>
+    <string name="file_action_information">Bilgi</string>
+    <string name="file_action_move_to_trash">Çöp kutusuna taşı</string>
+    <string name="file_action_remove_from_favorites">Sık kullanılanlardan kaldır</string>
+    <string name="file_action_restore_from_trash">Çöp kutusundan geri yükle</string>
+    <string name="file_action_share">Paylaş</string>
+    <string name="file_action_use_as">Olarak kullanın</string>
+    <string name="file_action_undo_action">Geri al</string>
+    <string name="no_media">Medya yok</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d seçildi</item>
+        <item quantity="other">%d seçildi</item>
+    </plurals>
+    <string name="pick_a_photo">Bir fotoğraf seç</string>
+    <string name="pick_a_video">Bir video seç</string>
+    <string name="pick_a_media">Medya seç</string>
+    <string name="picker_done">Bitti</string>
+    <string name="set_wallpaper_label">Duvar kâğıdı</string>
+    <string name="set_wallpaper">Duvar kâğıdını ayarla</string>
+    <string name="set_wallpaper_dialog_title">Duvar kâğıdının ayarlanacağı yer</string>
+    <string name="set_wallpaper_home_screen">Ana ekran</string>
+    <string name="set_wallpaper_lock_screen">Kilit ekranı</string>
+    <string name="set_wallpaper_both">Ana ekran ve kilit ekranı</string>
+</resources>
