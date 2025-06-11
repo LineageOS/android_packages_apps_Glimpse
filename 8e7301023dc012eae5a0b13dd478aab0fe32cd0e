@@ -16,6 +16,24 @@
       "message": "jspecify is in AOSP",
       "revId": "8e7301023dc012eae5a0b13dd478aab0fe32cd0e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf89a18c_f2bf56ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-06-11T21:22:50Z",
+      "side": 1,
+      "message": "https://android-review.googlesource.com/c/platform/external/jspecify/+/3599134\nnot for us",
+      "parentUuid": "c302556e_8bf3b109",
+      "revId": "8e7301023dc012eae5a0b13dd478aab0fe32cd0e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
