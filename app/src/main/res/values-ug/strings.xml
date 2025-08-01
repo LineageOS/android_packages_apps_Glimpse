@@ -4,5 +4,95 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">سۈرەتدان</string>
+    <string name="app_permissions_toast">ئىشلەتكۈچى ئىجازەت بەرمىگەن</string>
+    <string name="reels_title">ۋاقىت ئوقى</string>
+    <string name="albums_title">سۈرەت توپلىمى</string>
+    <string name="categories_title">سەھىپە</string>
+    <string name="library_title">ئامبار</string>
+    <string name="album_favorites">يىغقۇچ</string>
+    <string name="album_trash">ئەخلەتخانا</string>
+    <string name="album_reels">ۋاقىت ئوقى</string>
+    <string name="album_photos">سۈرەت</string>
+    <string name="album_videos">سىن</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">‏‏%d تۈر</item>
+        <item quantity="other">‏‏%d تۈر</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">بۇ ھۆججەتنى راستتىنلا مەڭگۈلۈك ئۆچۈرەمسىز؟</item>
+        <item quantity="other">راستتىنلا %d ھۆججەتنى مەڭگۈلۈك ئۆچۈرەمسىز؟</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">ھۆججەت مەڭگۈلۈك ئۆچۈرۈلدى</item>
+        <item quantity="other">%d ھۆججەت مەڭگۈلۈك ئۆچۈرۈلدى</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">ھۆججەتنى مەڭگۈلۈك ئۆچۈرگىلى بولمايدۇ</item>
+        <item quantity="other">%d ھۆججەتنى مەڭگۈلۈك ئۆچۈرگىلى بولمايدۇ</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">بىر ھۆججەتنى راستتىنلا ئەخلەتخانىغا يۆتكەمسىز؟</item>
+        <item quantity="other">%d ھۆججەتنى راستتىنلا ئەخلەتخانىغا يۆتكەمسىز؟</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">ھۆججەت ئەخلەتخانىغا يۆتكەلدى</item>
+        <item quantity="other">%d ھۆججەت ئەخلەتخانىغا يۆتكەلدى</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">ھۆججەتنى ئەخلەتخانىغا يۆتكىيەلمەيدۇ</item>
+        <item quantity="other">%d ھۆججەتنى ئەخلەتخانىغا يۆتكىيەلمەيدۇ</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">ئەخلەتخانىدىن بىر ھۆججەتنى راستتىنلا ئەسلىگە كەلتۈرەمسىز؟</item>
+        <item quantity="other">ئەخلەتخانىدىن %d ھۆججەتنى راستتىنلا ئەسلىگە كەلتۈرەمسىز؟</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">ھۆججەت ئەخلەتخانىدىن ئەسلىگە قايتۇرۇلدى</item>
+        <item quantity="other">%d ھۆججەت ئەخلەتخانىدىن ئەسلىگە قايتۇرۇلدى</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">ھۆججەتنى ئەخلەتخانىدىن ئەسلىگە قايتۇرالمايدۇ</item>
+        <item quantity="other">%d ھۆججەتنى ئەخلەتخانىدىن ئەسلىگە قايتۇرالمايدۇ</item>
+    </plurals>
+    <string name="manage_media_permission_title">ۋاسىتە ئىجازىتىنى باشقۇرۇش</string>
+    <string name="manage_media_permission_message">سۈرەت ۋە سىنلىرىڭىزنى تېخىمۇ ياخشى باشقۇرۇش ئۈچۈن، ئەپنىڭ ۋاسىتە ھۆججەتلىرىڭىزنى باشقۇرۇشقاي يول قويۇڭ</string>
+    <string name="media_info_unknown">يوچۇن</string>
+    <string name="media_info_add_description_hint">چۈشەندۈرۈش قوش</string>
+    <string name="media_info_write_description_failed">ۋاسىتە چۈشەندۈرۈشىنى ئۆزگەرتەلمىدى</string>
+    <string name="media_info_location_loading_placeholder">يۈكلەۋاتىدۇ…</string>
+    <string name="media_info_location_open_with">ئورۇننى كۆرسەت</string>
+    <string name="intent_action_not_supported">مەشغۇلاتنى قوللىمايدۇ</string>
+    <string name="intent_media_not_found">ۋاسىتە تېپىلدى</string>
+    <string name="intent_media_type_not_found">ۋاسىتە تۈرى تېپىلدى</string>
+    <string name="intent_media_type_not_supported">ۋاسىتە تۈرىنى قوللىمايدۇ</string>
+    <string name="intent_no_system_wallpaper_cropper_available">ئىشلىتىلىشچان سىستېما قىرقىغۇچ يوق</string>
+    <string name="intent_wallpaper_cannot_be_changed">تام قەغەزنى ئۆزگەرتكىلى بولمايدۇ</string>
+    <string name="file_action_add_to_favorites">يىغقۇچقا قوش</string>
+    <string name="file_action_delete_forever">مەڭگۈلۈك ئۆچۈر</string>
+    <string name="file_action_edit">تەھرىر</string>
+    <string name="file_action_empty_trash">ئەخلەتخانىنى بوشات</string>
+    <string name="file_action_information">ئۇچۇر</string>
+    <string name="file_action_move_to_trash">ئەخلەتخانىغا يۆتكە</string>
+    <string name="file_action_remove_from_favorites">يىغقۇچتىن چىقىرىۋەت</string>
+    <string name="file_action_restore_from_trash">ئەخلەتخانىدىن ئەسلىگە كەلتۈر</string>
+    <string name="file_action_share">ھەمبەھىر</string>
+    <string name="file_action_use_as">ئىشلەت</string>
+    <string name="file_action_undo_action">يېنىۋال</string>
+    <string name="no_media">ۋاسىتە يوق</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d تاللاندى</item>
+        <item quantity="other">%d تاللاندى</item>
+    </plurals>
+    <string name="pick_a_photo">بىر سۈرەت تاللىنىدۇ</string>
+    <string name="pick_a_video">بىر سىن تاللىنىدۇ</string>
+    <string name="pick_a_media">بىر ۋاسىتە تاللىنىدۇ</string>
+    <string name="picker_done">تامام</string>
+    <string name="set_wallpaper_label">تام قەغەز</string>
+    <string name="set_wallpaper">تام قەغەز تەڭشىكى</string>
+    <string name="set_wallpaper_dialog_title">تام قەغەز تەڭشىكى ئوچۇق</string>
+    <string name="set_wallpaper_home_screen">باش ئېكران</string>
+    <string name="set_wallpaper_lock_screen">قۇلۇپ ئېكران</string>
+    <string name="set_wallpaper_both">باش ئېكران ۋە قۇلۇپ ئېكران</string>
     <string name="warning_bin_time_period">ھۆججەت 30 كۈندىن كېيىن مەڭگۈلۈك ئۆچۈرۈلىدۇ.</string>
 </resources>
