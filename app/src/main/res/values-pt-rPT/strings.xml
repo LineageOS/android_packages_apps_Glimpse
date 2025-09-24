@@ -91,8 +91,8 @@
     <string name="set_wallpaper_label">Papel de parede</string>
     <string name="set_wallpaper">Definir papel de parede</string>
     <string name="set_wallpaper_dialog_title">Definir papel de parede em</string>
-    <string name="set_wallpaper_home_screen">Ecrã inicial</string>
+    <string name="set_wallpaper_home_screen">Página Inicial</string>
     <string name="set_wallpaper_lock_screen">Ecrã de bloqueio</string>
-    <string name="set_wallpaper_both">Ecrã inicial e ecrã de bloqueio</string>
+    <string name="set_wallpaper_both">Página Inicial e ecrã de bloqueio</string>
     <string name="warning_bin_time_period">Os ficheiros serão apagados permanentemente passados 30 dias.</string>
 </resources>
