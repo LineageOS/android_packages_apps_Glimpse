@@ -31,9 +31,9 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
+        "androidx.core_core",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-exoplayer",
-        "androidx.core_core",
         "kotlinx-coroutines-android",
         "kotlinx-coroutines-core",
     ],
@@ -49,8 +49,8 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-common",
         "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-common",
     ],
 }
 
@@ -64,8 +64,8 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-common",
         "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-common",
     ],
 }
 
@@ -79,10 +79,10 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-common",
-        "Glimpse_androidx.media3_media3-database",
         "androidx.annotation_annotation",
         "androidx.exifinterface_exifinterface",
+        "Glimpse_androidx.media3_media3-common",
+        "Glimpse_androidx.media3_media3-database",
     ],
 }
 
@@ -96,8 +96,8 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-common",
         "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-common",
     ],
 }
 
@@ -111,16 +111,16 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
+        "androidx.annotation_annotation",
+        "androidx.collection_collection",
+        "androidx.core_core",
+        "androidx.exifinterface_exifinterface",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-container",
         "Glimpse_androidx.media3_media3-database",
         "Glimpse_androidx.media3_media3-datasource",
         "Glimpse_androidx.media3_media3-decoder",
         "Glimpse_androidx.media3_media3-extractor",
-        "androidx.annotation_annotation",
-        "androidx.collection_collection",
-        "androidx.core_core",
-        "androidx.exifinterface_exifinterface",
     ],
 }
 
@@ -134,8 +134,8 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-exoplayer",
         "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-exoplayer",
     ],
 }
 
@@ -149,8 +149,8 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-exoplayer",
         "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-exoplayer",
     ],
 }
 
@@ -164,8 +164,8 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-exoplayer",
         "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-exoplayer",
     ],
 }
 
@@ -179,8 +179,8 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-exoplayer",
         "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-exoplayer",
     ],
 }
 
@@ -194,10 +194,10 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
+        "androidx.annotation_annotation",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-container",
         "Glimpse_androidx.media3_media3-decoder",
-        "androidx.annotation_annotation",
     ],
 }
 
@@ -211,9 +211,9 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_androidx.media3_media3-common",
         "androidx.annotation_annotation",
         "androidx.media_media",
+        "Glimpse_androidx.media3_media3-common",
         "androidx.recyclerview_recyclerview",
     ],
 }
@@ -268,13 +268,13 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_com.github.bumptech.glide_annotations",
-        "Glimpse_com.github.bumptech.glide_disklrucache",
-        "Glimpse_com.github.bumptech.glide_gifdecoder",
         "androidx.exifinterface_exifinterface",
         "androidx.fragment_fragment",
         "androidx.tracing_tracing",
         "androidx.vectordrawable_vectordrawable-animated",
+        "Glimpse_com.github.bumptech.glide_annotations",
+        "Glimpse_com.github.bumptech.glide_disklrucache",
+        "Glimpse_com.github.bumptech.glide_gifdecoder",
     ],
 }
 
@@ -288,9 +288,9 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
+        "androidx.annotation_annotation",
         "Glimpse_com.github.bumptech.glide_glide",
         "Glimpse_com.squareup.okhttp3_okhttp",
-        "androidx.annotation_annotation",
     ],
 }
 
@@ -332,6 +332,7 @@ java_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
+        "kotlin-stdlib",
         "kotlin-stdlib-jdk8",
     ],
 }
@@ -362,6 +363,7 @@ android_library_import {
         "androidx.annotation_annotation",
         "androidx.exifinterface_exifinterface",
         "androidx.lifecycle_lifecycle-common",
+        "kotlin-stdlib",
         "kotlin-stdlib-jdk8",
         "kotlinx-coroutines-android",
         "kotlinx-coroutines-core",
@@ -394,10 +396,10 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "Glimpse_io.github.panpf.zoomimage_zoomimage-core",
         "androidx.appcompat_appcompat",
         "androidx.core_core-ktx",
         "androidx.lifecycle_lifecycle-runtime-ktx",
+        "Glimpse_io.github.panpf.zoomimage_zoomimage-core",
         "kotlin-stdlib-jdk8",
     ],
 }
