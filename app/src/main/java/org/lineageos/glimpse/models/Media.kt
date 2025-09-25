@@ -24,6 +24,7 @@ import java.util.Date
  * @param width The width of the item
  * @param height The height of the item
  * @param orientation The orientation of the item
+ * @param sizeBytes The size of the item in bytes
  */
 @Parcelize
 data class Media(
@@ -40,6 +41,7 @@ data class Media(
     val width: Int,
     val height: Int,
     val orientation: Int,
+    val sizeBytes: Long,
 ) : MediaItem<Media>, Parcelable {
     init {
         require(mediaType in allowedMediaTypes) {
@@ -61,6 +63,7 @@ data class Media(
         Media::width,
         Media::height,
         Media::orientation,
+        Media::sizeBytes,
     ) == 0
 
     companion object {

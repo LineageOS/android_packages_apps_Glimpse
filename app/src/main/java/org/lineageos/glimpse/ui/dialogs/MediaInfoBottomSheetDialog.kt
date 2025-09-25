@@ -13,6 +13,7 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.text.InputType
+import android.text.format.Formatter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -64,6 +65,7 @@ class MediaInfoBottomSheetDialog(
     private val contentView by lazy { findViewById<View>(android.R.id.content)!! }
     private val dateTextView by lazy { findViewById<TextView>(R.id.dateTextView)!! }
     private val descriptionEditText by lazy { findViewById<EditText>(R.id.descriptionEditText)!! }
+    private val fileSizeListItem by lazy { findViewById<ListItem>(R.id.fileSizeListItem)!! }
     private val locationInfoListItem by lazy { findViewById<ListItem>(R.id.locationInfoListItem)!! }
     private val mediaInfoListItem by lazy { findViewById<ListItem>(R.id.mediaInfoListItem)!! }
     private val timeTextView by lazy { findViewById<TextView>(R.id.timeTextView)!! }
@@ -213,6 +215,8 @@ class MediaInfoBottomSheetDialog(
                 locationInfoListItem.isVisible = true
             }
         }
+
+        fileSizeListItem.headlineText = Formatter.formatFileSize(context, media.sizeBytes)
     }
 
     private fun updateLocation(addresses: List<Address>) {

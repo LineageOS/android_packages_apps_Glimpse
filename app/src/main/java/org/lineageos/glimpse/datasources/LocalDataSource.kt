@@ -85,6 +85,7 @@ class LocalDataSource(
         val width = columnIndexCache.getInt(MediaStore.Files.FileColumns.WIDTH)
         val height = columnIndexCache.getInt(MediaStore.Files.FileColumns.HEIGHT)
         val orientation = columnIndexCache.getInt(MediaStore.Files.FileColumns.ORIENTATION)
+        val size = columnIndexCache.getLong(MediaStore.Files.FileColumns.SIZE)
 
         val typedMediaType = when (mediaType) {
             MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE -> MediaType.IMAGE
@@ -113,6 +114,7 @@ class LocalDataSource(
             width,
             height,
             orientation,
+            size,
         )
     }
 
@@ -317,6 +319,7 @@ class LocalDataSource(
             MediaStore.Files.FileColumns.WIDTH,
             MediaStore.Files.FileColumns.HEIGHT,
             MediaStore.Files.FileColumns.ORIENTATION,
+            MediaStore.Files.FileColumns.SIZE,
         )
 
         private val isImage =
