@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,6 +90,13 @@
             app:headlineText="Ohio, US"
             app:leadingIconImage="@drawable/ic_location_on"
             app:supportingText="39.961152990628904 • -82.9963749073814" />
+
+        <org.lineageos.glimpse.ui.views.ListItem
+            android:id="@+id/fileSizeListItem"
+            style="@style/Theme.Glimpse.MediaInfoBottomSheetDialog.ListItem"
+            app:headlineText="@string/media_info_file_size"
+            app:leadingIconImage="@drawable/ic_storage"
+            app:supportingText="2.1 MB" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

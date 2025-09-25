@@ -80,6 +80,7 @@
     <string name="media_info_write_description_failed">Failed to change media description</string>
     <string name="media_info_location_loading_placeholder">Loading…</string>
     <string name="media_info_location_open_with">View the location with</string>
+    <string name="media_info_file_size">File size</string>
 
     <!-- Intents handling -->
     <string name="intent_action_not_supported">Action not supported</string>

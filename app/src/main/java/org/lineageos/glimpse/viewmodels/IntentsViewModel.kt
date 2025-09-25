@@ -302,6 +302,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                                 width = 0,
                                 height = 0,
                                 orientation = 0,
+                                sizeBytes = 0,
                             )
 
                         else -> {
