@@ -371,6 +371,19 @@ android_library_import {
 }
 
 java_import {
+    name: "Glimpse_com.adobe.xmp_xmpcore",
+    jars: ["com/adobe/xmp/xmpcore/6.1.11/xmpcore-6.1.11.jar"],
+    sdk_version: "36",
+    min_sdk_version: "30",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+    ],
+}
+
+java_import {
     name: "Glimpse_com.github.bumptech.glide_annotations",
     jars: ["com/github/bumptech/glide/annotations/4.15.1/annotations-4.15.1.jar"],
     sdk_version: "36",

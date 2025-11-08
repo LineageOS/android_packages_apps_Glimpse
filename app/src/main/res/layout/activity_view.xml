@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -63,6 +63,15 @@
             android:contentDescription="@string/file_action_share"
             android:drawableTop="@drawable/ic_share"
             android:text="@string/file_action_share" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/motionPhotoToggleButton"
+            style="@style/Theme.Glimpse.MediaViewer.BottomSheet.Button"
+            android:contentDescription="@string/motion_photo_show_video"
+            android:drawableTop="@drawable/ic_motion_play"
+            android:text="@string/motion_photo_show_video"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/adjustButton"

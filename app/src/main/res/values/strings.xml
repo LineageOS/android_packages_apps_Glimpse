@@ -129,4 +129,8 @@
 
     <!-- Warnings and information -->
     <string name="warning_bin_time_period">Files will be permanently deleted after 30 days.</string>
+
+    <!-- Motion Photo -->
+    <string name="motion_photo_show_video">Show video</string>
+    <string name="motion_photo_show_photo">Show photo</string>
 </resources>
