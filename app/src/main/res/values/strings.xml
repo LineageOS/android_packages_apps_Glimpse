@@ -133,4 +133,9 @@
     <!-- Motion Photo -->
     <string name="motion_photo_show_video">Show video</string>
     <string name="motion_photo_show_photo">Show photo</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_empty_message">No settings available</string>
+
 </resources>
