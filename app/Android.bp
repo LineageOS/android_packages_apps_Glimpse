@@ -63,6 +63,7 @@ android_app {
         "androidx.recyclerview_recyclerview-selection",
         "androidx.savedstate_savedstate",
         "androidx.viewpager2_viewpager2",
+        "Glimpse_com.adobe.xmp_xmpcore",
         "Glimpse_com.github.bumptech.glide_glide",
         "Glimpse_com.github.bumptech.glide_okhttp3-integration",
         "com.google.android.material_material",

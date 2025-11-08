@@ -26,11 +26,13 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import org.lineageos.glimpse.ext.applicationContext
 import org.lineageos.glimpse.ext.isPlayingFlow
 import org.lineageos.glimpse.models.AlbumType
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.models.RequestStatus.Companion.map
+import org.lineageos.glimpse.utils.MotionPhotoExtractor
 
 class LocalPlayerViewModel(
     application: Application,
@@ -300,6 +302,22 @@ class LocalPlayerViewModel(
             playWhenReady = true
         }
     }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val motionPhoto = displayedMedia
+        .mapLatest { media ->
+            media?.let {
+                withContext(Dispatchers.IO) {
+                    MotionPhotoExtractor.extractMotionPhoto(applicationContext, it)
+                }
+            }
+        }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null,
+        )
 
     /**
      * @see ExoPlayer.play

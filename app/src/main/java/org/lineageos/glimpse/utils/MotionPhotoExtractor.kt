@@ -1,0 +1,165 @@
+/*
+ * SPDX-FileCopyrightText: 2025 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+package org.lineageos.glimpse.utils
+
+import android.content.Context
+import androidx.exifinterface.media.ExifInterface
+import com.adobe.internal.xmp.XMPMeta
+import com.adobe.internal.xmp.XMPMetaFactory
+import org.lineageos.glimpse.models.Media
+import org.lineageos.glimpse.models.MotionPhotoData
+import org.lineageos.glimpse.models.MotionPhotoMetadata
+import java.io.FileInputStream
+import java.nio.ByteBuffer
+
+object MotionPhotoExtractor {
+    fun extractMotionPhoto(context: Context, media: Media): MotionPhotoData? = runCatching {
+        val pfd = context.contentResolver.openFileDescriptor(media.uri, "r") ?: return null
+        pfd.use { parcel ->
+            FileInputStream(parcel.fileDescriptor).use { fis ->
+                val exif = ExifInterface(fis)
+                val xmpBytes = exif.getAttributeBytes(ExifInterface.TAG_XMP) ?: return null
+
+                val xmpMeta = XMPMetaFactory.parseFromBuffer(xmpBytes)
+                val metadata = extractMetadata(xmpMeta) ?: return null
+
+                val videoBuffer = ByteBuffer.allocate(metadata.videoLength)
+
+                val channel = fis.channel
+                channel.position(channel.size() - metadata.videoLength)
+                val bytesRead = channel.read(videoBuffer)
+                if (bytesRead != metadata.videoLength) {
+                    return null
+                }
+
+                MotionPhotoData(metadata, videoBuffer)
+            }
+        }
+    }.getOrNull()
+
+    private fun extractMetadata(xmpMeta: XMPMeta): MotionPhotoMetadata? {
+        // Register namespaces
+        val schemaRegistry = XMPMetaFactory.getSchemaRegistry()
+        runCatching {
+            schemaRegistry.registerNamespace(CAMERA_NAMESPACE, CAMERA_PREFIX)
+            schemaRegistry.registerNamespace(CONTAINER_NAMESPACE, CONTAINER_PREFIX)
+            schemaRegistry.registerNamespace(ITEM_NAMESPACE, ITEM_PREFIX)
+        }.getOrNull() ?: return null
+
+        // Name: Camera:MotionPhoto
+        // Type: Integer
+        // 0: Indicates that the file shouldn't be treated as a Motion Photo.
+        // 1: Indicates that the file should be treated as a Motion Photo.
+        // All other values are undefined and are treated equivalently to 0.
+        val motionPhoto = runCatching {
+            xmpMeta.getPropertyInteger(CAMERA_NAMESPACE, MOTION_PHOTO)
+        }.getOrNull()
+
+        if (motionPhoto == null || motionPhoto != 1) {
+            return null
+        }
+
+        // Name: Camera:MotionPhotoVersion
+        // Type: Integer
+        // This specification defines version "1".
+        val version = runCatching {
+            xmpMeta.getPropertyInteger(CAMERA_NAMESPACE, MOTION_PHOTO_VERSION)
+        }.getOrNull()
+
+        if (version == null || version != 1) {
+            return null
+        }
+
+        // Name: Camera:MotionPhotoPresentationTimestampUs
+        // Type: Long
+        // Value can be -1 to denote unset/unspecified.
+        val presentationTimestampUs = runCatching {
+            xmpMeta.getPropertyLong(CAMERA_NAMESPACE, MOTION_PHOTO_PRESENTATION_TIMESTAMP_US)
+        }.getOrNull()?.takeIf { it != -1L }
+
+        var videoLength: Int? = null
+        var videoMimeType: String? = null
+
+        runCatching {
+            // Element name: Container:Directory
+            // Type: Ordered Array of Structures
+            val itemCount = xmpMeta.countArrayItems(CONTAINER_NAMESPACE, DIRECTORY)
+
+            for (i in 1..itemCount) {
+                val basePath = "$DIRECTORY[$i]/Container:Item"
+
+                // Element name: Item:Semantic
+                // Type: String
+                // Required.
+                val semantic = runCatching {
+                    xmpMeta.getStructField(
+                        CONTAINER_NAMESPACE, basePath,
+                        ITEM_NAMESPACE, ITEM_SEMANTIC
+                    )?.value
+                }.getOrNull()
+
+                // We only care about Semantic == MotionPhoto
+                if (semantic != SEMANTIC_MOTION_PHOTO) continue
+
+                // Attribute name: Item:Mime
+                // Type: String
+                // Required.
+                videoMimeType = runCatching {
+                    xmpMeta.getStructField(
+                        CONTAINER_NAMESPACE, basePath,
+                        ITEM_NAMESPACE, ITEM_MIME
+                    )?.value
+                }.getOrNull()
+
+                // Attribute name: Item:Length
+                // Type: Integer
+                // Required for secondary media items, including the video container.
+                videoLength = runCatching {
+                    xmpMeta.getStructField(
+                        CONTAINER_NAMESPACE, basePath,
+                        ITEM_NAMESPACE, ITEM_LENGTH
+                    )?.value?.toInt()
+                }.getOrNull()
+            }
+        }
+
+        // Return only if valid video metadata found
+        if (videoLength == null || videoMimeType == null) {
+            return null
+        }
+
+        return MotionPhotoMetadata(
+            version = version,
+            presentationTimestampUs = presentationTimestampUs,
+            videoLength = videoLength,
+            videoMimeType = videoMimeType,
+        )
+    }
+
+    // Camera namespace
+    private const val CAMERA_NAMESPACE = "http://ns.google.com/photos/1.0/camera/"
+    private const val CAMERA_PREFIX = "Camera"
+
+    private const val MOTION_PHOTO = "MotionPhoto"
+    private const val MOTION_PHOTO_VERSION = "MotionPhotoVersion"
+    private const val MOTION_PHOTO_PRESENTATION_TIMESTAMP_US =
+        "MotionPhotoPresentationTimestampUs"
+
+    // Container namespace
+    private const val CONTAINER_NAMESPACE = "http://ns.google.com/photos/1.0/container/"
+    private const val CONTAINER_PREFIX = "Container"
+    private const val DIRECTORY = "Directory"
+
+    // Item namespace
+    private const val ITEM_NAMESPACE = "http://ns.google.com/photos/1.0/container/item/"
+    private const val ITEM_PREFIX = "Item"
+    private const val ITEM_MIME = "Mime"
+    private const val ITEM_SEMANTIC = "Semantic"
+    private const val ITEM_LENGTH = "Length"
+
+    // Semantic values
+    private const val SEMANTIC_MOTION_PHOTO = "MotionPhoto"
+}

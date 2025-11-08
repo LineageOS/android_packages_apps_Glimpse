@@ -471,6 +471,13 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     deleteButton.isVisible = !readOnly
                 }
             }
+
+            launch {
+                viewModel.motionPhoto.collectLatest { motionPhoto ->
+                    println("Motion photo: $motionPhoto")
+                    // WHAT NOW?
+                }
+            }
         }
     }
 
