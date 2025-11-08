@@ -22,6 +22,7 @@ preference = "1.2.1"
 recyclerview = "1.3.2"
 recyclerview-selection = "1.1.0"
 viewpager2 = "1.1.0"
+xmpcore = "6.1.11"
 zoomimage = "1.0.2"
 generateBp = "+"
 
@@ -51,6 +52,7 @@ glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhtt
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 zoomimage-view-glide = { group = "io.github.panpf.zoomimage", name = "zoomimage-view-glide", version.ref = "zoomimage" }
+adobe-xmpcore = { group = "com.adobe.xmp", name = "xmpcore", version.ref = "xmpcore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

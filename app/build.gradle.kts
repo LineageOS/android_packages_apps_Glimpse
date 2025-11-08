@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.okhttp)
     implementation(libs.zoomimage.view.glide)
+    implementation(libs.adobe.xmpcore)
 }
 
 configure<GenerateBpPluginExtension> {
