@@ -10,6 +10,12 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <!-- Main toolbar without elevation -->
+    <style name="Theme.Glimpse.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
     <!-- Top app bar option -->
     <style name="Theme.Glimpse.TopAppBarOption">
         <item name="android:iconTint">?attr/colorOnSurface</item>
