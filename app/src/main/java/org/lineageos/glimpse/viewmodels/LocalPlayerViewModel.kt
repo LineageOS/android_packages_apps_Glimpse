@@ -13,6 +13,7 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,11 +27,15 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import org.lineageos.glimpse.ext.applicationContext
 import org.lineageos.glimpse.ext.isPlayingFlow
 import org.lineageos.glimpse.models.AlbumType
+import org.lineageos.glimpse.models.MotionPhoto
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.models.RequestStatus.Companion.map
+import org.lineageos.glimpse.utils.ByteBufferDataSourceFactory
+import org.lineageos.glimpse.utils.MotionPhotoExtractor
 
 class LocalPlayerViewModel(
     application: Application,
@@ -299,6 +304,47 @@ class LocalPlayerViewModel(
             prepare()
             playWhenReady = true
         }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val motionPhoto = displayedMedia
+        .mapLatest { media ->
+            media?.let {
+                withContext(Dispatchers.IO) {
+                    MotionPhotoExtractor.extractMotionPhoto(applicationContext, it)
+                }
+            }
+        }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null,
+        )
+
+    /**
+     * Whether we're currently playing a motion photo video.
+     */
+    private val _isPlayingMotionPhoto = MutableStateFlow(false)
+    val isPlayingMotionPhoto = _isPlayingMotionPhoto.asStateFlow()
+
+    fun playMotionPhoto(motionPhoto: MotionPhoto) {
+        val dataSourceFactory = ByteBufferDataSourceFactory(motionPhoto.videoBuffer)
+        val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(MediaItem.fromUri("motion-photo://video"))
+
+        exoPlayer.apply {
+            setMediaSource(mediaSource)
+            prepare()
+            playWhenReady = true
+        }
+
+        _isPlayingMotionPhoto.value = true
+    }
+
+    fun stopMotionPhotoVideo() {
+        exoPlayer.stop()
+        _isPlayingMotionPhoto.value = false
     }
 
     /**

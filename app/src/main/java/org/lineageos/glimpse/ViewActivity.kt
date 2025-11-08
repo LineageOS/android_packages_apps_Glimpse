@@ -75,6 +75,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
     private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
     private val infoButton by lazy { toolbar.menu.findItem(R.id.info) }
+    private val motionPhotoToggleButton by lazy { findViewById<MaterialButton>(R.id.motionPhotoToggleButton) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
     private val useAsButton by lazy { toolbar.menu.findItem(R.id.useAs) }
@@ -439,6 +440,10 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                         0
                     )
 
+                    // Reset motion photo toggle button
+                    motionPhotoToggleButton.isSelected = false
+                    motionPhotoToggleButton.setText(R.string.motion_photo_show_video)
+
                     // Update ExoPlayer
                     displayedMedia?.let {
                         updateExoPlayer(it)
@@ -469,6 +474,45 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
                     // Update delete button
                     deleteButton.isVisible = !readOnly
+                }
+            }
+
+            launch {
+                viewModel.motionPhoto.collectLatest { motionPhoto ->
+                    if (motionPhoto != null) {
+                        // Show motion photo toggle button
+                        motionPhotoToggleButton.isVisible = true
+
+                        // Initially show the photo (not video)
+                        motionPhotoToggleButton.isSelected = false
+                        motionPhotoToggleButton.setText(R.string.motion_photo_show_video)
+
+                        motionPhotoToggleButton.setOnClickListener {
+                            val showingVideo = motionPhotoToggleButton.isSelected
+
+                            if (showingVideo) {
+                                // Now showing photo
+                                motionPhotoToggleButton.isSelected = false
+                                motionPhotoToggleButton.setText(R.string.motion_photo_show_video)
+
+                                // Stop video and show the still image
+                                viewModel.stopMotionPhotoVideo()
+                                viewModel.displayedMedia.value?.let { media ->
+                                    updateExoPlayer(media)
+                                }
+                            } else {
+                                // Now showing video
+                                motionPhotoToggleButton.isSelected = true
+                                motionPhotoToggleButton.setText(R.string.motion_photo_show_photo)
+
+                                viewModel.playMotionPhoto(motionPhoto)
+                            }
+                        }
+                    } else {
+                        // Hide motion photo toggle button
+                        motionPhotoToggleButton.isVisible = false
+                        motionPhotoToggleButton.setOnClickListener(null)
+                    }
                 }
             }
         }
