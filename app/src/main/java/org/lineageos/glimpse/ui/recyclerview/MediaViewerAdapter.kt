@@ -15,6 +15,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.panpf.zoomimage.GlideZoomImageView
@@ -22,11 +23,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
+import org.lineageos.glimpse.ext.doubleTapSeekEnabled
+import org.lineageos.glimpse.ext.doubleTapSeekTime
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.ext.load
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.MotionPhoto
+import org.lineageos.glimpse.ui.MediaGestureListener
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
 
 class MediaViewerAdapter(
@@ -64,6 +68,7 @@ class MediaViewerAdapter(
         private var media: Media? = null
         private var motionPhoto: MotionPhoto? = null
         private var isCurrentlyDisplayedView = false
+        private val mediaGestureListener = MediaGestureListener(itemView.context)
 
         @OptIn(androidx.media3.common.util.UnstableApi::class)
         private val mediaPositionObserver: (Int?) -> Unit = { currentPosition: Int? ->
@@ -88,6 +93,9 @@ class MediaViewerAdapter(
 
             playerView.player = player
             playerControlView.player = player
+
+            // Update media gesture listener
+            updateMediaGestureListener(isNowVideoPlayer)
         }
 
         private val sheetsHeightObserver = { sheetsHeight: Pair<Int, Int> ->
@@ -125,6 +133,19 @@ class MediaViewerAdapter(
             playerView.setOnClickListener {
                 localPlayerViewModel.toggleFullscreenMode()
             }
+            playerView.setOnTouchListener(mediaGestureListener)
+        }
+
+        @OptIn(androidx.media3.common.util.UnstableApi::class)
+        private fun updateMediaGestureListener(isVideoPlayer: Boolean) {
+            val context = itemView.context
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val isEnabled = sharedPreferences.doubleTapSeekEnabled
+            val seekTime = sharedPreferences.doubleTapSeekTime
+
+            mediaGestureListener.seekTimeSeconds = seekTime
+            mediaGestureListener.player =
+                if (isVideoPlayer && isEnabled) localPlayerViewModel.exoPlayer else null
         }
 
         fun bind(media: Media) {
@@ -157,6 +178,7 @@ class MediaViewerAdapter(
             observersJob?.cancel()
             observersJob = null
 
+            mediaGestureListener.player = null
             playerView.player = null
             playerControlView.player = null
         }

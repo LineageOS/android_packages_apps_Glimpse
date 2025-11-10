@@ -136,6 +136,23 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
-    <string name="settings_empty_message">No settings available</string>
+    <string name="settings_video_section">Video</string>
+
+    <!-- Double-tap to seek -->
+    <string name="double_tap_seek_title">Double-tap to seek</string>
+    <string name="double_tap_seek_description">Double Tap left or right side of video to skip backward or forward</string>
+    <string name="double_tap_seek_time_title">Seek duration</string>
+    <string-array name="double_tap_seek_time_entries">
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>15 seconds</item>
+        <item>30 seconds</item>
+    </string-array>
+    <string-array name="double_tap_seek_time_values" translatable="false">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+    </string-array>
 
 </resources>

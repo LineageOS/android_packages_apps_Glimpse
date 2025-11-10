@@ -5,4 +5,23 @@
 -->
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory app:title="@string/settings_video_section">
+
+        <SwitchPreferenceCompat
+            app:key="double_tap_seek_enabled"
+            app:title="@string/double_tap_seek_title"
+            app:summary="@string/double_tap_seek_description"
+            app:defaultValue="false" />
+
+        <ListPreference
+            app:key="double_tap_seek_time"
+            app:title="@string/double_tap_seek_time_title"
+            app:summary="%s"
+            app:entries="@array/double_tap_seek_time_entries"
+            app:entryValues="@array/double_tap_seek_time_values"
+            app:defaultValue="10"
+            app:dependency="double_tap_seek_enabled" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
