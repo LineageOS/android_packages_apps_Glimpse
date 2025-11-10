@@ -122,6 +122,33 @@
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?attr/colorOnSurfaceVariant" />
 
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="?attr/colorOutlineVariant" />
+
+            <!-- Edge tap navigation -->
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/edgeTapNavigationSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:paddingHorizontal="16dp"
+                android:text="@string/edge_tap_navigation_title"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/edge_tap_navigation_description"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

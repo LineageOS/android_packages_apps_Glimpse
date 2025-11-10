@@ -56,3 +56,15 @@ var SharedPreferences.hideNativeSeekButtons: Boolean
     set(value) = edit {
         putBoolean(HIDE_NATIVE_SEEK_BUTTONS_KEY, value)
     }
+
+// Edge tap navigation (tap on screen edges to navigate media)
+private const val EDGE_TAP_NAVIGATION_ENABLED_KEY = "edge_tap_navigation_enabled"
+private const val EDGE_TAP_NAVIGATION_ENABLED_DEFAULT = false
+var SharedPreferences.edgeTapNavigationEnabled: Boolean
+    get() = getBoolean(
+        EDGE_TAP_NAVIGATION_ENABLED_KEY,
+        EDGE_TAP_NAVIGATION_ENABLED_DEFAULT
+    )
+    set(value) = edit {
+        putBoolean(EDGE_TAP_NAVIGATION_ENABLED_KEY, value)
+    }
