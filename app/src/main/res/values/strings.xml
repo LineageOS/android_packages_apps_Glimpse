@@ -159,4 +159,8 @@
     <string name="hide_native_seek_buttons_title">Hide native seek buttons</string>
     <string name="hide_native_seek_buttons_description">Hide rewind and fast-forward buttons from video player controls</string>
 
+    <!-- Edge tap navigation -->
+    <string name="edge_tap_navigation_title">Edge tap navigation</string>
+    <string name="edge_tap_navigation_description">Tap left or right edge of screen to navigate between media</string>
+
 </resources>

@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.doubleTapSeekEnabled
 import org.lineageos.glimpse.ext.doubleTapSeekTime
+import org.lineageos.glimpse.ext.edgeTapNavigationEnabled
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.ext.hideNativeSeekButtons
 import org.lineageos.glimpse.ext.load
@@ -37,6 +38,7 @@ import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
 class MediaViewerAdapter(
     private val localPlayerViewModel: LocalPlayerViewModel,
     private val sharedPreferences: SharedPreferences,
+    private val onNavigate: ((forward: Boolean) -> Unit)? = null,
 ) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(UniqueItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
@@ -70,7 +72,10 @@ class MediaViewerAdapter(
         private var media: Media? = null
         private var motionPhoto: MotionPhoto? = null
         private var isCurrentlyDisplayedView = false
-        private val mediaGestureListener = MediaGestureListener(itemView.context)
+        private val mediaGestureListener = MediaGestureListener(
+            context = itemView.context,
+            onNavigate = onNavigate,
+        )
 
         @OptIn(androidx.media3.common.util.UnstableApi::class)
         private val mediaPositionObserver: (Int?) -> Unit = { currentPosition: Int? ->
@@ -125,7 +130,7 @@ class MediaViewerAdapter(
         }
 
         private val displayedMediaToMotionPhotoObserver = { it: Pair<Media?, MotionPhoto?> ->
-            val (displayedMedia, motionPhoto) = it
+            val (_, motionPhoto) = it
             this.motionPhoto = motionPhoto
             // Trigger a refresh of the UI
             mediaPositionObserver(localPlayerViewModel.mediaPosition.value)
@@ -140,17 +145,24 @@ class MediaViewerAdapter(
             playerView.setOnClickListener {
                 localPlayerViewModel.toggleFullscreenMode()
             }
+
+            // A single touch listener handles both edge taps and double taps.
+            imageView.setOnTouchListener(mediaGestureListener)
             playerView.setOnTouchListener(mediaGestureListener)
         }
 
         @OptIn(androidx.media3.common.util.UnstableApi::class)
         private fun updateMediaGestureListener(isVideoPlayer: Boolean) {
-            val isEnabled = sharedPreferences.doubleTapSeekEnabled
-            val seekTime = sharedPreferences.doubleTapSeekTime
+            mediaGestureListener.edgeTapEnabled =
+                sharedPreferences.edgeTapNavigationEnabled && onNavigate != null
 
-            mediaGestureListener.seekTimeSeconds = seekTime
+            mediaGestureListener.doubleTapSeekEnabled =
+                isVideoPlayer && sharedPreferences.doubleTapSeekEnabled
+
+            mediaGestureListener.seekTimeSeconds = sharedPreferences.doubleTapSeekTime
+
             mediaGestureListener.player =
-                if (isVideoPlayer && isEnabled) localPlayerViewModel.exoPlayer else null
+                if (mediaGestureListener.doubleTapSeekEnabled) localPlayerViewModel.exoPlayer else null
         }
 
         @OptIn(androidx.media3.common.util.UnstableApi::class)

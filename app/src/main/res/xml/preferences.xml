@@ -28,6 +28,12 @@
             app:summary="@string/hide_native_seek_buttons_description"
             app:defaultValue="false" />
 
+        <SwitchPreferenceCompat
+            app:key="edge_tap_navigation_enabled"
+            app:title="@string/edge_tap_navigation_title"
+            app:summary="@string/edge_tap_navigation_description"
+            app:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
