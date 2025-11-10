@@ -147,4 +147,8 @@
     <string name="double_tap_seek_forward">+%d seconds</string>
     <string name="double_tap_seek_backward">-%d seconds</string>
 
+    <!-- Hide native seek buttons -->
+    <string name="hide_native_seek_buttons_title">Hide native seek buttons</string>
+    <string name="hide_native_seek_buttons_description">Hide rewind and fast-forward buttons from video player controls</string>
+
 </resources>

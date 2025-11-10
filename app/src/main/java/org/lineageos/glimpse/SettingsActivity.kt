@@ -16,6 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
 import org.lineageos.glimpse.ext.doubleTapSeekEnabled
 import org.lineageos.glimpse.ext.doubleTapSeekTime
+import org.lineageos.glimpse.ext.hideNativeSeekButtons
 
 /**
  * Settings activity for configuration options.
@@ -26,6 +27,7 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
     private val doubleTapSeekSwitch by lazy { findViewById<MaterialSwitch>(R.id.doubleTapSeekSwitch) }
     private val seekTimeLayout by lazy { findViewById<LinearLayout>(R.id.seekTimeLayout) }
     private val seekTimeSummary by lazy { findViewById<TextView>(R.id.seekTimeSummary) }
+    private val hideNativeSeekButtonsSwitch by lazy { findViewById<MaterialSwitch>(R.id.hideNativeSeekButtonsSwitch) }
     
     private val seekTimeOptions = intArrayOf(5, 10, 15, 30)
     
@@ -56,6 +58,12 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         
         seekTimeLayout.setOnClickListener {
             showSeekTimeDialog()
+        }
+        
+        // Set up hide native seek buttons switch
+        hideNativeSeekButtonsSwitch.isChecked = sharedPreferences.hideNativeSeekButtons
+        hideNativeSeekButtonsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.hideNativeSeekButtons = isChecked
         }
     }
     

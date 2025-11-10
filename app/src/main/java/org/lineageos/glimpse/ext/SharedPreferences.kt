@@ -44,3 +44,15 @@ var SharedPreferences.doubleTapSeekTime: Int
     set(value) = edit {
         putInt(DOUBLE_TAP_SEEK_TIME_KEY, value)
     }
+
+// Hide native video seek buttons
+private const val HIDE_NATIVE_SEEK_BUTTONS_KEY = "hide_native_seek_buttons"
+private const val HIDE_NATIVE_SEEK_BUTTONS_DEFAULT = false
+var SharedPreferences.hideNativeSeekButtons: Boolean
+    get() = getBoolean(
+        HIDE_NATIVE_SEEK_BUTTONS_KEY,
+        HIDE_NATIVE_SEEK_BUTTONS_DEFAULT
+    )
+    set(value) = edit {
+        putBoolean(HIDE_NATIVE_SEEK_BUTTONS_KEY, value)
+    }
