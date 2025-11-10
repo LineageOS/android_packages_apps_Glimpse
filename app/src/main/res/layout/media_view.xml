@@ -22,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
+        app:show_rewind_button="true"
+        app:show_fastforward_button="true"
         app:show_next_button="false"
         app:show_previous_button="false"
         app:show_shuffle_button="false"
