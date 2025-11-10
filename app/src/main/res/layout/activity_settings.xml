@@ -33,16 +33,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp">
+
+            <!-- Video Settings Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/settings_video_section"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorPrimary" />
+
+            <!-- Double-tap to seek -->
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/doubleTapSeekSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:paddingHorizontal="16dp"
+                android:text="@string/double_tap_seek_title"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingVertical="32dp"
-                android:text="@string/settings_empty_message"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/double_tap_seek_description"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <!-- Seek duration selector -->
+            <LinearLayout
+                android:id="@+id/seekTimeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/double_tap_seek_time_title"
+                    android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+                <TextView
+                    android:id="@+id/seekTimeSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
