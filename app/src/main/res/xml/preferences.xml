@@ -22,6 +22,12 @@
             app:defaultValue="10"
             app:dependency="double_tap_seek_enabled" />
 
+        <SwitchPreferenceCompat
+            app:key="hide_native_seek_buttons"
+            app:title="@string/hide_native_seek_buttons_title"
+            app:summary="@string/hide_native_seek_buttons_description"
+            app:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

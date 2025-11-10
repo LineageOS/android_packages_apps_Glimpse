@@ -28,6 +28,7 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
@@ -88,7 +89,10 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
     // Adapter
     private val mediaViewerAdapter by lazy {
-        MediaViewerAdapter(viewModel)
+        MediaViewerAdapter(
+            localPlayerViewModel = viewModel,
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this),
+        )
     }
 
     private var lastProcessedMedia: Media? = null
