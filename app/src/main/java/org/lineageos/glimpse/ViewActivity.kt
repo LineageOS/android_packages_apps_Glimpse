@@ -92,6 +92,15 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         MediaViewerAdapter(
             localPlayerViewModel = viewModel,
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this),
+            onNavigate = { forward ->
+                val currentPosition = viewPager.currentItem
+                val newPosition = if (forward) currentPosition + 1 else currentPosition - 1
+
+                val adapter = viewPager.adapter
+                if (adapter != null && newPosition in 0 until adapter.itemCount) {
+                    viewPager.setCurrentItem(newPosition, true)
+                }
+            },
         )
     }
 

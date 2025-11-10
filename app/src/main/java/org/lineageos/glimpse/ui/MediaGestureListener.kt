@@ -12,23 +12,63 @@ import android.view.View
 import androidx.media3.common.Player
 
 /**
- * Double-tap gesture listener for video seeking.
- * Tapping on the left side seeks backward, right side seeks forward.
+ * Unified media gesture listener.
+ * - Single tap on screen edges navigates between media.
+ * - Double tap seeks backward or forward for video playback.
  */
 
 class MediaGestureListener(
     context: Context,
+    private val onNavigate: ((forward: Boolean) -> Unit)? = null,
 ) : View.OnTouchListener {
 
+    private val edgePercent = 0.2f
     private var currentView: View? = null
 
+    var edgeTapEnabled: Boolean = false
+    var doubleTapSeekEnabled: Boolean = false
     var seekTimeSeconds: Int = 10
     var player: Player? = null
 
     private val gestureDetector = GestureDetector(
         context,
         object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDown(e: MotionEvent): Boolean = true
+
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                if (!edgeTapEnabled || onNavigate == null) {
+                    return false
+                }
+
+                val view = currentView ?: return false
+                val viewWidth = view.width
+                if (viewWidth <= 0) {
+                    return false
+                }
+
+                val leftEdgeThreshold = viewWidth * edgePercent
+                val rightEdgeThreshold = viewWidth * (1 - edgePercent)
+
+                return when {
+                    e.x < leftEdgeThreshold -> {
+                        onNavigate(false)
+                        true
+                    }
+
+                    e.x > rightEdgeThreshold -> {
+                        onNavigate(true)
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
             override fun onDoubleTap(e: MotionEvent): Boolean {
+                if (!doubleTapSeekEnabled) {
+                    return false
+                }
+
                 val player = player ?: return false
                 val view = currentView ?: return false
 
@@ -50,11 +90,6 @@ class MediaGestureListener(
                 player.seekTo(newPosition)
                 return true
             }
-
-            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                // Allow single tap to propagate (for fullscreen toggle)
-                return false
-            }
         }
     )
 
@@ -64,8 +99,9 @@ class MediaGestureListener(
             return false
         }
 
-        gestureDetector.onTouchEvent(event)
-        // Return false to allow other touch listeners to handle the event.
-        return false
+        val handled = gestureDetector.onTouchEvent(event)
+
+        // Do not consume ACTION_DOWN so regular pressed/click behavior still works.
+        return if (event.actionMasked == MotionEvent.ACTION_DOWN) false else handled
     }
 }
