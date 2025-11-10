@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse.ui.recyclerview
 
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,6 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.ui.PlayerControlView
 import androidx.media3.ui.PlayerView
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.panpf.zoomimage.GlideZoomImageView
@@ -26,6 +26,7 @@ import org.lineageos.glimpse.R
 import org.lineageos.glimpse.ext.doubleTapSeekEnabled
 import org.lineageos.glimpse.ext.doubleTapSeekTime
 import org.lineageos.glimpse.ext.fade
+import org.lineageos.glimpse.ext.hideNativeSeekButtons
 import org.lineageos.glimpse.ext.load
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
@@ -35,6 +36,7 @@ import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
 
 class MediaViewerAdapter(
     private val localPlayerViewModel: LocalPlayerViewModel,
+    private val sharedPreferences: SharedPreferences,
 ) : ListAdapter<Media, MediaViewerAdapter.MediaViewHolder>(UniqueItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MediaViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.media_view, parent, false),
@@ -96,6 +98,11 @@ class MediaViewerAdapter(
 
             // Update media gesture listener
             updateMediaGestureListener(isNowVideoPlayer)
+
+            // Update native seek buttons visibility
+            if (isNowVideoPlayer) {
+                updateNativeSeekButtons()
+            }
         }
 
         private val sheetsHeightObserver = { sheetsHeight: Pair<Int, Int> ->
@@ -146,6 +153,15 @@ class MediaViewerAdapter(
             mediaGestureListener.seekTimeSeconds = seekTime
             mediaGestureListener.player =
                 if (isVideoPlayer && isEnabled) localPlayerViewModel.exoPlayer else null
+        }
+
+        @OptIn(androidx.media3.common.util.UnstableApi::class)
+        private fun updateNativeSeekButtons() {
+            val hideButtons = sharedPreferences.hideNativeSeekButtons
+
+            // Update PlayerView to show/hide rewind and fast-forward buttons
+            playerView.setShowRewindButton(!hideButtons)
+            playerView.setShowFastForwardButton(!hideButtons)
         }
 
         fun bind(media: Media) {

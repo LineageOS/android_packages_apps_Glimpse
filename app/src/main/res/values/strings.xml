@@ -155,4 +155,8 @@
         <item>30</item>
     </string-array>
 
+    <!-- Hide native seek buttons -->
+    <string name="hide_native_seek_buttons_title">Hide native seek buttons</string>
+    <string name="hide_native_seek_buttons_description">Hide rewind and fast-forward buttons from video player controls</string>
+
 </resources>
