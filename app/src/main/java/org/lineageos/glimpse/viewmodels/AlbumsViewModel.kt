@@ -1,11 +1,12 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.RequestStatus
 
@@ -44,7 +46,44 @@ class AlbumsViewModel(application: Application) : GlimpseViewModel(application) 
             initialValue = RequestStatus.Loading()
         )
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val virtualAlbums = albumsRequest
+        .filterNotNull()
+        .flatMapLatest { albumsRequest ->
+            mediaRepository.virtualAlbums(
+                albumsRequest.mediaType,
+                albumsRequest.mimeType,
+            )
+        }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = RequestStatus.Loading()
+        )
+
     fun loadAlbums(albumsRequest: AlbumsRequest?) {
         _albumsRequest.value = albumsRequest
+    }
+
+    fun createAlbum(name: String, onCreated: (Uri) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val status = mediaRepository.createAlbum(name)
+            if (status is RequestStatus.Success) {
+                onCreated(status.data)
+            }
+        }
+    }
+
+    fun addMediaToAlbum(albumUri: Uri, mediaUris: List<Uri>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mediaRepository.addMediaToAlbum(albumUri, mediaUris)
+        }
+    }
+
+    fun removeMediaFromAlbum(albumUri: Uri, mediaUris: List<Uri>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mediaRepository.removeMediaFromAlbum(albumUri, mediaUris)
+        }
     }
 }

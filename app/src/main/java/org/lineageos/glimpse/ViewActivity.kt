@@ -50,11 +50,13 @@ import org.lineageos.glimpse.models.AlbumType
 import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.RequestStatus
+import org.lineageos.glimpse.ui.dialogs.AddToAlbumBottomSheetDialog
 import org.lineageos.glimpse.ui.dialogs.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.ui.recyclerview.MediaViewerAdapter
 import org.lineageos.glimpse.utils.MediaDialogsUtils
 import org.lineageos.glimpse.utils.PermissionsChecker
 import org.lineageos.glimpse.utils.PermissionsUtils
+import org.lineageos.glimpse.viewmodels.AlbumsViewModel
 import org.lineageos.glimpse.viewmodels.IntentsViewModel
 import org.lineageos.glimpse.viewmodels.IntentsViewModel.ParsedIntent
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
@@ -67,6 +69,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     // View models
     private val viewModel by viewModels<LocalPlayerViewModel>()
     private val intentsViewModel by viewModels<IntentsViewModel>()
+    private val albumsViewModel by viewModels<AlbumsViewModel>()
 
     // Views
     private val adjustButton by lazy { findViewById<MaterialButton>(R.id.adjustButton) }
@@ -75,6 +78,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val deleteButton by lazy { findViewById<MaterialButton>(R.id.deleteButton) }
     private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
     private val infoButton by lazy { toolbar.menu.findItem(R.id.info) }
+    private val addToAlbumButton by lazy { toolbar.menu.findItem(R.id.addToAlbum) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
     private val useAsButton by lazy { toolbar.menu.findItem(R.id.useAs) }
@@ -203,6 +207,18 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                             it,
                             mediaInfoBottomSheetDialogCallbacks,
                             viewModel.secure.value,
+                        ).show()
+                    }
+                    true
+                }
+
+                R.id.addToAlbum -> {
+                    viewModel.displayedMedia.value?.let {
+                        AddToAlbumBottomSheetDialog(
+                            this@ViewActivity,
+                            this@ViewActivity,
+                            albumsViewModel,
+                            listOf(it)
                         ).show()
                     }
                     true
@@ -423,6 +439,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                     // Update info button
                     infoButton.isVisible = displayedMedia != null
 
+                    // Update add to album button
+                    addToAlbumButton.isVisible = displayedMedia != null && !viewModel.secure.value
+
                     // Update delete button
                     val isTrashed = displayedMedia?.isTrashed ?: false
                     deleteButton.text = when (isTrashed) {
@@ -456,6 +475,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
                     // Update use as button
                     useAsButton.isVisible = !secure
+
+                    // Update add to album button
+                    addToAlbumButton.isVisible = !secure && viewModel.displayedMedia.value != null
                 }
             }
 

@@ -10,6 +10,7 @@ import org.lineageos.generatebp.models.Module
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.lineageos.generatebp)
 }
@@ -62,6 +63,12 @@ android {
     }
 }
 
+kapt {
+    arguments {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
+}
+
 dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.appcompat)
@@ -82,6 +89,10 @@ dependencies {
     implementation(libs.androidx.preference)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.recyclerview.selection)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.viewpager2)
     implementation(libs.glide)
     implementation(libs.glide.okhttp3.integration)

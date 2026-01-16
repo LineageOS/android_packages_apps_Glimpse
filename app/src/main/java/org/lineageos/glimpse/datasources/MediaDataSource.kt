@@ -80,4 +80,48 @@ interface MediaDataSource {
      * Get the media information of the given medias.
      */
     fun medias(mediaUris: List<Uri>): Flow<MediaRequestStatus<List<Media>>>
+
+    /**
+     * Create a new album.
+     *
+     * @param name The name of the album
+     * @return The URI of the created album
+     */
+    suspend fun createAlbum(name: String): MediaRequestStatus<Uri> =
+        RequestStatus.Error(MediaError.NOT_IMPLEMENTED)
+
+    /**
+     * Rename an album.
+     *
+     * @param albumUri The URI of the album to rename
+     * @param name The new name of the album
+     */
+    suspend fun renameAlbum(albumUri: Uri, name: String): MediaRequestStatus<Unit> =
+        RequestStatus.Error(MediaError.NOT_IMPLEMENTED)
+
+    /**
+     * Delete an album.
+     *
+     * @param albumUri The URI of the album to delete
+     */
+    suspend fun deleteAlbum(albumUri: Uri): MediaRequestStatus<Unit> =
+        RequestStatus.Error(MediaError.NOT_IMPLEMENTED)
+
+    /**
+     * Add media to an album.
+     *
+     * @param albumUri The URI of the album to add media to
+     * @param mediaUris The URIs of the media to add
+     */
+    suspend fun addMediaToAlbum(albumUri: Uri, mediaUris: List<Uri>): MediaRequestStatus<Unit> =
+        RequestStatus.Error(MediaError.NOT_IMPLEMENTED)
+
+    /**
+     * Remove media from an album.
+     *
+     * @param albumUri The URI of the album to remove media from
+     * @param mediaUris The URIs of the media to remove
+     */
+    suspend fun removeMediaFromAlbum(albumUri: Uri, mediaUris: List<Uri>): MediaRequestStatus<Unit> =
+        RequestStatus.Error(MediaError.NOT_IMPLEMENTED)
 }

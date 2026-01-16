@@ -90,12 +90,14 @@
     <string name="intent_wallpaper_cannot_be_changed">Wallpaper can\'t be changed</string>
 
     <!-- File actions -->
+    <string name="file_action_add_to_album">Add to album</string>
     <string name="file_action_add_to_favorites">Add to favorites</string>
     <string name="file_action_delete_forever">Delete forever</string>
     <string name="file_action_edit">Edit</string>
     <string name="file_action_empty_trash">Empty trash</string>
     <string name="file_action_information">Information</string>
     <string name="file_action_move_to_trash">Move to trash</string>
+    <string name="file_action_remove_from_album">Remove from album</string>
     <string name="file_action_remove_from_favorites">Remove from favorites</string>
     <string name="file_action_restore_from_trash">Restore from trash</string>
     <string name="file_action_share">Share</string>
@@ -129,4 +131,8 @@
 
     <!-- Warnings and information -->
     <string name="warning_bin_time_period">Files will be permanently deleted after 30 days.</string>
+
+    <!-- Add to album -->
+    <string name="add_to_album_title">Add to album</string>
+    <string name="add_to_album_new_album">New album</string>
 </resources>
