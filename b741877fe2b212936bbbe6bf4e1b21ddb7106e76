@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7ca0e8f_b7eadbd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2026-01-16T12:49:09Z",
+      "side": 1,
+      "message": "As stated, not really useful when you then have to sort your album pictures twice (on device and after PC transfer)",
+      "revId": "b741877fe2b212936bbbe6bf4e1b21ddb7106e76",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
