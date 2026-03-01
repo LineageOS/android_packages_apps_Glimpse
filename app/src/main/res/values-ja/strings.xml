@@ -84,4 +84,6 @@
     <string name="set_wallpaper_lock_screen">ロック画面</string>
     <string name="set_wallpaper_both">ホーム画面とロック画面</string>
     <string name="warning_bin_time_period">ファイルは30日後に完全に削除されます。</string>
+    <string name="motion_photo_show_video">動画を表示</string>
+    <string name="motion_photo_show_photo">写真を表示</string>
 </resources>

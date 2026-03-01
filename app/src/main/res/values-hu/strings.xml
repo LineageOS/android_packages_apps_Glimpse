@@ -95,4 +95,6 @@
     <string name="set_wallpaper_lock_screen">Záróképernyőre</string>
     <string name="set_wallpaper_both">Kezdő- és Záróképernyőre</string>
     <string name="warning_bin_time_period">A fájlok 30 nap elteltével véglegesen törlődnek.</string>
+    <string name="motion_photo_show_video">Videó megjelenítése</string>
+    <string name="motion_photo_show_photo">Fotó megjelenítése</string>
 </resources>

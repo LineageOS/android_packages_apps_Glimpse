@@ -84,4 +84,6 @@
     <string name="set_wallpaper_lock_screen">Màn hình khóa</string>
     <string name="set_wallpaper_both">Màn hình chính và Màn hình khóa</string>
     <string name="warning_bin_time_period">Các tập tin sẽ được xoá vĩnh viễn sau 30 ngày.</string>
+    <string name="motion_photo_show_video">Hiển thị video</string>
+    <string name="motion_photo_show_photo">Hiển thị hình ảnh</string>
 </resources>

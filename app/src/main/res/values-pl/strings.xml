@@ -117,4 +117,6 @@
     <string name="set_wallpaper_lock_screen">Ekranie blokady</string>
     <string name="set_wallpaper_both">Ekranie głównym oraz blokady</string>
     <string name="warning_bin_time_period">Pliki zostaną trwale usunięte po 30 dniach.</string>
+    <string name="motion_photo_show_video">Pokaż wideo</string>
+    <string name="motion_photo_show_photo">Pokaż zdjęcie</string>
 </resources>

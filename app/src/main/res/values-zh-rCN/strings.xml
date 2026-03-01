@@ -84,4 +84,6 @@
     <string name="set_wallpaper_lock_screen">锁屏</string>
     <string name="set_wallpaper_both">主屏和锁屏界面</string>
     <string name="warning_bin_time_period">文件将于 30 天后被永久删除。</string>
+    <string name="motion_photo_show_video">显示视频</string>
+    <string name="motion_photo_show_photo">显示照片</string>
 </resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Galleri</string>
+    <string name="app_permissions_toast">Brukaren gav ikkje løyve.</string>
+    <string name="reels_title">Rullar</string>
+    <string name="albums_title">Album</string>
+    <string name="categories_title">Kategoriar</string>
+    <string name="library_title">Bibliotek</string>
+    <string name="album_favorites">Favorittar</string>
+    <string name="album_trash">Papirkorg</string>
+    <string name="album_reels">Rullar</string>
+    <string name="album_photos">Bilete</string>
+    <string name="album_videos">Videoar</string>
+    <plurals name="album_thumbnail_items">
+        <item quantity="one">%d element</item>
+        <item quantity="other">%d element</item>
+    </plurals>
+    <plurals name="delete_file_forever_confirm_message">
+        <item quantity="one">Er du sikker på at du vil sletta denne fila for godt?</item>
+        <item quantity="other">Er du sikker på at du vil sletta %d filer for godt?</item>
+    </plurals>
+    <plurals name="delete_file_forever_successful">
+        <item quantity="one">Fila er sletta for godt</item>
+        <item quantity="other">%d filer er sletta for godt</item>
+    </plurals>
+    <plurals name="delete_file_forever_unsuccessful">
+        <item quantity="one">Klarte ikkje sletta fila for godt</item>
+        <item quantity="other">Klarte ikkje sletta %d filer for godt</item>
+    </plurals>
+    <plurals name="move_file_to_trash_confirm_message">
+        <item quantity="one">Vil du flytta ei fil til papirkorga?</item>
+        <item quantity="other">Vil du flytta %d filer til papirkorga?</item>
+    </plurals>
+    <plurals name="move_file_to_trash_successful">
+        <item quantity="one">Fila er flytta til papirkorga</item>
+        <item quantity="other">%d filer er flytta til papirkorga</item>
+    </plurals>
+    <plurals name="move_file_to_trash_unsuccessful">
+        <item quantity="one">Klarte ikkje flytta fila til papirkorga</item>
+        <item quantity="other">Klarte ikkje flytta %d filer til papirkorga</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_confirm_message">
+        <item quantity="one">Vil du gjenoppretta ei fil frå papirkorga?</item>
+        <item quantity="other">Vil du gjenoppretta %d filer frå papirkorga?</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_successful">
+        <item quantity="one">Fila er gjenoppretta frå papirkorga</item>
+        <item quantity="other">%d filer er gjenoppretta frå papirkorga</item>
+    </plurals>
+    <plurals name="restore_file_from_trash_unsuccessful">
+        <item quantity="one">Klarte ikkje gjenoppretta fila frå papirkorga</item>
+        <item quantity="other">Klarte ikkje gjenoppretta %d filer frå papirkorga</item>
+    </plurals>
+    <string name="manage_media_permission_title">Handsama medieløyve</string>
+    <string name="manage_media_permission_message">Gje appen løyve til å styra mediefilene dine for betre handsaming av bilete og video</string>
+    <string name="media_info_unknown">Ukjend</string>
+    <string name="media_info_add_description_hint">Legg til skildring</string>
+    <string name="media_info_write_description_failed">Klarte ikkje endra medieskildringa</string>
+    <string name="media_info_location_loading_placeholder">Lastar inn …</string>
+    <string name="media_info_location_open_with">Sjå posisjonen med</string>
+    <string name="intent_action_not_supported">Handlinga er ikkje støtta</string>
+    <string name="intent_media_not_found">Fann ikkje media</string>
+    <string name="intent_media_type_not_found">Fann ikkje medietypen</string>
+    <string name="intent_media_type_not_supported">Medietypen er ikkje støtta</string>
+    <string name="intent_no_system_wallpaper_cropper_available">Ingen systemverktøy for beskjæring tilgjengeleg</string>
+    <string name="intent_wallpaper_cannot_be_changed">Kan ikkje endra bakgrunnsbilete</string>
+    <string name="file_action_add_to_favorites">Legg til i favorittar</string>
+    <string name="file_action_delete_forever">Slett for godt</string>
+    <string name="file_action_edit">Rediger</string>
+    <string name="file_action_empty_trash">Tøm papirkorga</string>
+    <string name="file_action_information">Informasjon</string>
+    <string name="file_action_move_to_trash">Flytt til papirkorga</string>
+    <string name="file_action_remove_from_favorites">Fjern frå favorittar</string>
+    <string name="file_action_restore_from_trash">Gjenopprett frå papirkorga</string>
+    <string name="file_action_share">Del</string>
+    <string name="file_action_use_as">Bruk som</string>
+    <string name="file_action_undo_action">Angra</string>
+    <string name="no_media">Ingen media</string>
+    <plurals name="thumbnail_selection_count">
+        <item quantity="one">%d vald</item>
+        <item quantity="other">%d valde</item>
+    </plurals>
+    <string name="pick_a_photo">Vel eit bilete</string>
+    <string name="pick_a_video">Vel ein video</string>
+    <string name="pick_a_media">Vel ei mediefil</string>
+    <string name="picker_done">Ferdig</string>
+    <string name="set_wallpaper_label">Bakgrunnsbilete</string>
+    <string name="set_wallpaper">Vel bakgrunnsbilete</string>
+    <string name="set_wallpaper_dialog_title">Bruk bakgrunnsbilete på</string>
+    <string name="set_wallpaper_home_screen">Startskjerm</string>
+    <string name="set_wallpaper_lock_screen">Låseskjerm</string>
+    <string name="set_wallpaper_both">Start- og låseskjerm</string>
+    <string name="warning_bin_time_period">Filer vert sletta for godt etter 30 dagar.</string>
+    <string name="motion_photo_show_video">Vis video</string>
+    <string name="motion_photo_show_photo">Vis bilete</string>
+</resources>

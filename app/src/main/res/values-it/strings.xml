@@ -95,4 +95,6 @@
     <string name="set_wallpaper_lock_screen">Schermata di blocco</string>
     <string name="set_wallpaper_both">Schermata iniziale e di blocco</string>
     <string name="warning_bin_time_period">I file verranno eliminati definitivamente dopo 30 giorni.</string>
+    <string name="motion_photo_show_video">Mostra video</string>
+    <string name="motion_photo_show_photo">Mostra foto</string>
 </resources>

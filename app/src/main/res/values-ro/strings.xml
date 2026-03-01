@@ -106,4 +106,6 @@
     <string name="set_wallpaper_lock_screen">Ecranul de blocare</string>
     <string name="set_wallpaper_both">Ecranele Acasă și de blocare</string>
     <string name="warning_bin_time_period">Fișierele vor fi șterse permanent după 30 de zile.</string>
+    <string name="motion_photo_show_video">Arată videoclipul</string>
+    <string name="motion_photo_show_photo">Arată poza</string>
 </resources>

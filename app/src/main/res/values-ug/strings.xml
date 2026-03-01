@@ -95,4 +95,6 @@
     <string name="set_wallpaper_lock_screen">قۇلۇپ ئېكران</string>
     <string name="set_wallpaper_both">باش ئېكران ۋە قۇلۇپ ئېكران</string>
     <string name="warning_bin_time_period">ھۆججەت 30 كۈندىن كېيىن مەڭگۈلۈك ئۆچۈرۈلىدۇ.</string>
+    <string name="motion_photo_show_video">سىن كۆرسەت</string>
+    <string name="motion_photo_show_photo">سۈرەت كۆرسەت</string>
 </resources>
