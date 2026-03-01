@@ -117,4 +117,6 @@
     <string name="set_wallpaper_lock_screen">Zaklenjen zaslon</string>
     <string name="set_wallpaper_both">Domači in zaklenjen zaslon</string>
     <string name="warning_bin_time_period">Datoteke bodo trajno izbrisane po 30 dneh.</string>
+    <string name="motion_photo_show_video">Prikaži videoposnetek</string>
+    <string name="motion_photo_show_photo">Prikaži fotografijo</string>
 </resources>

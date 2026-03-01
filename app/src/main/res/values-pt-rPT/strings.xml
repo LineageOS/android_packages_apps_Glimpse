@@ -95,4 +95,6 @@
     <string name="set_wallpaper_lock_screen">Ecrã de bloqueio</string>
     <string name="set_wallpaper_both">Página Inicial e ecrã de bloqueio</string>
     <string name="warning_bin_time_period">Os ficheiros serão apagados permanentemente passados 30 dias.</string>
+    <string name="motion_photo_show_video">Mostrar vídeo</string>
+    <string name="motion_photo_show_photo">Mostrar foto</string>
 </resources>
