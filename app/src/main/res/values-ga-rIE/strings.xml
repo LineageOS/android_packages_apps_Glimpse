@@ -128,4 +128,6 @@
     <string name="set_wallpaper_lock_screen">Scáileán glas</string>
     <string name="set_wallpaper_both">Scáileán baile agus scáileán glas</string>
     <string name="warning_bin_time_period">Scriosfar comhaid go buan tar éis 30 lá.</string>
+    <string name="motion_photo_show_video">Taispeáin físeán</string>
+    <string name="motion_photo_show_photo">Taispeáin grianghraf</string>
 </resources>

@@ -95,4 +95,6 @@
     <string name="set_wallpaper_lock_screen">Pantalla de bloqueig</string>
     <string name="set_wallpaper_both">Pantalla d\'inici i de bloqueig</string>
     <string name="warning_bin_time_period">Els fitxers se suprimiran permanentment al cap de 30 dies.</string>
+    <string name="motion_photo_show_video">Mostra el vídeo</string>
+    <string name="motion_photo_show_photo">Mostra la foto</string>
 </resources>

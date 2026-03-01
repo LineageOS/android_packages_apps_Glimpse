@@ -117,4 +117,6 @@
     <string name="set_wallpaper_lock_screen">Экран блокировки</string>
     <string name="set_wallpaper_both">Домашний экран и экран блокировки</string>
     <string name="warning_bin_time_period">Файлы будут безвозвратно удалены через 30 дней.</string>
+    <string name="motion_photo_show_video">Показать видео</string>
+    <string name="motion_photo_show_photo">Показать фото</string>
 </resources>
