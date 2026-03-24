@@ -7,12 +7,15 @@ package org.lineageos.glimpse.datasources
 
 import android.content.ContentResolver
 import android.content.ContentUris
+import android.content.ContentValues
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.core.os.bundleOf
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.withContext
 import org.lineageos.glimpse.ext.mapEachRow
 import org.lineageos.glimpse.ext.queryFlow
 import org.lineageos.glimpse.models.Album
@@ -286,6 +289,110 @@ class LocalDataSource(
         ),
     ).mapEachRow(mapMedia).mapLatest {
         RequestStatus.Success<_, MediaError>(it)
+    }
+
+    override suspend fun copyOrMoveMedia(
+        media: Media,
+        targetAlbumName: String,
+        isMove: Boolean
+    ): RequestStatus<Unit, MediaError> = withContext(Dispatchers.IO) {
+        try {
+            // Set the default path for NEW albums
+            var targetPath = "DCIM/MyAlbums/${targetAlbumName.trimEnd('/')}/"
+
+            // Query the MediaStore to see if this album already exists.
+            // If it does, we extract its actual RELATIVE_PATH so we don't duplicate it.
+            try {
+                val projection = arrayOf(MediaStore.MediaColumns.RELATIVE_PATH)
+                val selection = "${MediaStore.MediaColumns.BUCKET_DISPLAY_NAME} = ?"
+                val selectionArgs = arrayOf(targetAlbumName)
+
+                contentResolver.query(
+                    MediaStore.Files.getContentUri(volumeName),
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null
+                )?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        val pathIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.RELATIVE_PATH)
+                        val existingPath = cursor.getString(pathIndex)
+                        if (!existingPath.isNullOrBlank()) {
+                            // Use the existing path and ensure it has a trailing slash
+                            targetPath = if (existingPath.endsWith("/")) existingPath else "$existingPath/"
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            if (isMove) {
+                val moveValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, targetPath)
+                }
+
+                try {
+                    val updatedRows = contentResolver.update(media.uri, moveValues, null, null)
+                    if (updatedRows > 0) {
+                        return@withContext RequestStatus.Success(Unit)
+                    }
+                } catch (e: Exception) {
+                    // Update failed (could be cross-volume move or scoped storage limit).
+                    // We will fall through and attempt the Copy + Delete fallback below.
+                    e.printStackTrace()
+                }
+            }
+
+            // Fallback to Copy (or if it's explicitly a Copy operation)
+            val insertValues = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, media.displayName)
+                put(MediaStore.MediaColumns.RELATIVE_PATH, targetPath)
+                put(MediaStore.MediaColumns.IS_PENDING, 1)
+            }
+
+            val collectionUri = if (media.mediaType == MediaType.IMAGE) imagesUri else videosUri
+            val newUri = contentResolver.insert(collectionUri, insertValues)
+                ?: return@withContext RequestStatus.Error(MediaError.NOT_FOUND)
+
+            var writeSuccessful = false
+            try {
+                contentResolver.openInputStream(media.uri)?.use { input ->
+                    contentResolver.openOutputStream(newUri)?.use { output ->
+                        input.copyTo(output)
+                        writeSuccessful = true
+                    }
+                }
+            } finally {
+                // Unlock the file so the gallery can scan it
+                val releaseValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.IS_PENDING, 0)
+                }
+                contentResolver.update(newUri, releaseValues, null, null)
+            }
+
+            if (!writeSuccessful) {
+                // If the stream failed, clean up the corrupted empty file
+                contentResolver.delete(newUri, null, null)
+                return@withContext RequestStatus.Error(MediaError.NOT_FOUND)
+            }
+
+            if (isMove) {
+                try {
+                    // Delete the original file since we successfully copied it
+                    contentResolver.delete(media.uri, null, null)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    // Note: If deleting fails due to strict Scoped Storage permissions,
+                    // the operation gracefully downgrades to a "Copy".
+                }
+            }
+
+            RequestStatus.Success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            RequestStatus.Error(MediaError.NOT_FOUND)
+        }
     }
 
     companion object {

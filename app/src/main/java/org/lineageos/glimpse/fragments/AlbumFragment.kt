@@ -6,6 +6,7 @@
 package org.lineageos.glimpse.fragments
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.WallpaperManager
 import android.content.ClipData
 import android.content.Intent
@@ -19,6 +20,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -53,6 +55,7 @@ import org.lineageos.glimpse.datasources.MediaError
 import org.lineageos.glimpse.ext.buildShareIntent
 import org.lineageos.glimpse.ext.createDeleteRequest
 import org.lineageos.glimpse.ext.createTrashRequest
+import org.lineageos.glimpse.ext.createWriteRequest
 import org.lineageos.glimpse.ext.getParcelable
 import org.lineageos.glimpse.ext.getSerializable
 import org.lineageos.glimpse.ext.getViewProperty
@@ -140,12 +143,12 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?) = false
 
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?) =
-            selectionTracker?.selection?.toList()?.toTypedArray()?.takeUnless {
+            selectionTracker?.selection?.toList()?.takeUnless {
                 it.isEmpty()
             }?.let { selection ->
                 when (item?.itemId) {
                     R.id.deleteForever -> {
-                        MediaDialogsUtils.openDeleteForeverDialog(requireContext(), *selection) {
+                        MediaDialogsUtils.openDeleteForeverDialog(requireContext(), *selection.toTypedArray()) {
                             deleteForeverContract.launch(
                                 requireContext().contentResolver.createDeleteRequest(
                                     *it.map { media ->
@@ -159,29 +162,39 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                     }
 
                     R.id.restoreFromTrash -> {
-                        MediaDialogsUtils.openRestoreFromTrashDialog(requireContext(), *selection) {
-                            trashMedias(false, *selection)
+                        MediaDialogsUtils.openRestoreFromTrashDialog(requireContext(), *selection.toTypedArray()) {
+                            trashMedias(false, *selection.toTypedArray())
                         }
 
                         true
                     }
 
                     R.id.share -> {
-                        requireActivity().startActivity(buildShareIntent(*selection))
+                        requireActivity().startActivity(buildShareIntent(*selection.toTypedArray()))
 
                         true
                     }
 
                     R.id.moveToTrash -> {
-                        MediaDialogsUtils.openMoveToTrashDialog(requireContext(), *selection) {
-                            trashMedias(true, *selection)
+                        MediaDialogsUtils.openMoveToTrashDialog(requireContext(), *selection.toTypedArray()) {
+                            trashMedias(true, *selection.toTypedArray())
                         }
 
                         true
                     }
 
+                    R.id.copyToAlbum -> {
+                        showAlbumNameDialog(selection, isMove = false)
+                        true
+                    }
+
+                    R.id.moveToAlbum -> {
+                        showAlbumNameDialog(selection, isMove = true)
+                        true
+                    }
+
                     R.id.done -> {
-                        sendResult(*selection)
+                        sendResult(*selection.toTypedArray())
                         true
                     }
 
@@ -250,6 +263,23 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
 
             lastProcessedSelection = null
             selectionTracker?.clearSelection()
+        }
+
+    private var pendingMoveSelection: List<Media>? = null
+    private var pendingMoveAlbumName: String? = null
+
+    private val writeRequestContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            if (it.resultCode != Activity.RESULT_CANCELED) {
+                pendingMoveSelection?.let { selection ->
+                    pendingMoveAlbumName?.let { albumName ->
+                        viewModel.copyOrMoveSelection(selection, albumName, true)
+                        selectionTracker?.clearSelection()
+                    }
+                }
+            }
+            pendingMoveSelection = null
+            pendingMoveAlbumName = null
         }
 
     // Arguments
@@ -542,6 +572,62 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                 trash, *medias.map { it.uri }.toTypedArray()
             )
         )
+    }
+
+    private fun showAlbumNameDialog(selection: List<Media>, isMove: Boolean) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Fetch the existing albums from the ViewModel
+            val existingAlbums = viewModel.getAvailableAlbums()
+
+            // Prepare the options list with the "Create new" action as the first item
+            val options = mutableListOf("+ Create new album")
+            options.addAll(existingAlbums)
+
+            AlertDialog.Builder(requireContext())
+                .setTitle(if (isMove) "Move to Album" else "Copy to Album")
+                .setItems(options.toTypedArray()) { _, which ->
+                    if (which == 0) {
+                        // User chose to create a new album
+                        showCreateNewAlbumDialog(selection, isMove)
+                    } else {
+                        // User chose an existing album
+                        val albumName = options[which]
+                        executeCopyOrMove(selection, albumName, isMove)
+                    }
+                }
+                .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+                .show()
+        }
+    }
+
+    private fun showCreateNewAlbumDialog(selection: List<Media>, isMove: Boolean) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(if (isMove) "Move to Album" else "Copy to Album")
+
+        val input = EditText(requireContext())
+        input.hint = "Album name"
+        builder.setView(input)
+
+        builder.setPositiveButton("OK") { _, _ ->
+            val albumName = input.text.toString()
+            if (albumName.isNotEmpty()) {
+                executeCopyOrMove(selection, albumName, isMove)
+            }
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun executeCopyOrMove(selection: List<Media>, albumName: String, isMove: Boolean) {
+        if (isMove) {
+            pendingMoveSelection = selection
+            pendingMoveAlbumName = albumName
+            val uris = selection.map { it.uri }.toTypedArray()
+            writeRequestContract.launch(requireContext().contentResolver.createWriteRequest(*uris))
+        } else {
+            viewModel.copyOrMoveSelection(selection, albumName, false)
+            selectionTracker?.clearSelection()
+        }
     }
 
     /**
