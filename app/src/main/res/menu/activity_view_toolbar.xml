@@ -14,6 +14,16 @@
 
     <item
         style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/copyToAlbum"
+        android:title="Copy to Album" />
+
+    <item
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/moveToAlbum"
+        android:title="Move to Album" />
+
+    <item
+        style="@style/Theme.Glimpse.TopAppBarOption"
         android:id="@+id/info"
         android:icon="@drawable/ic_info"
         android:title="@string/file_action_information"

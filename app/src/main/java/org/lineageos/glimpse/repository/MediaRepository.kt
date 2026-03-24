@@ -10,6 +10,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import org.lineageos.glimpse.datasources.LocalDataSource
 import org.lineageos.glimpse.datasources.MediaDataSource
+import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 
 /**
@@ -84,4 +85,10 @@ class MediaRepository(
      * @see MediaDataSource.medias
      */
     fun medias(mediaUris: List<Uri>) = localDataSource.medias(mediaUris)
+
+    /**
+     * @see MediaDataSource.copyOrMoveMedia
+     */
+    suspend fun copyOrMoveMedia(media: Media, targetAlbumName: String, isMove: Boolean) =
+        localDataSource.copyOrMoveMedia(media, targetAlbumName, isMove)
 }

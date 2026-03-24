@@ -10,6 +10,7 @@ import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.lineageos.glimpse.datasources.MediaError
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.AlbumType
@@ -150,6 +152,31 @@ class AlbumViewModel(application: Application) : GlimpseViewModel(application) {
 
     fun setInSelectionMode(inSelectionMode: Boolean) {
         _inSelectionMode.value = inSelectionMode
+    }
+
+    /**
+     * Copy or move a selection of media to a specific album.
+     */
+    fun copyOrMoveSelection(medias: List<Media>, albumName: String, isMove: Boolean) {
+        viewModelScope.launch {
+            medias.forEach { media ->
+                mediaRepository.copyOrMoveMedia(media, albumName, isMove)
+            }
+        }
+    }
+
+    /**
+     * Retrieves a list of available album names.
+     */
+    suspend fun getAvailableAlbums(): List<String> {
+        val status = mediaRepository.albums().first {
+            it is RequestStatus.Success || it is RequestStatus.Error
+        }
+        return if (status is RequestStatus.Success) {
+            status.data.mapNotNull { it.name }.distinct().sorted()
+        } else {
+            emptyList()
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

@@ -23,14 +23,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.lineageos.glimpse.ext.applicationContext
 import org.lineageos.glimpse.ext.isPlayingFlow
 import org.lineageos.glimpse.models.AlbumType
+import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType
 import org.lineageos.glimpse.models.MotionPhoto
 import org.lineageos.glimpse.models.RequestStatus
@@ -363,6 +366,29 @@ class LocalPlayerViewModel(
                 seekTo(it / 1000)
             }
             playWhenReady = true
+        }
+    }
+
+    /**
+     * Retrieves a list of available album names.
+     */
+    suspend fun getAvailableAlbums(): List<String> {
+        val status = mediaRepository.albums().first {
+            it is RequestStatus.Success || it is RequestStatus.Error
+        }
+        return if (status is RequestStatus.Success) {
+            status.data.mapNotNull { it.name }.distinct().sorted()
+        } else {
+            emptyList()
+        }
+    }
+
+    /**
+     * Copy or move a single media item to a specific album.
+     */
+    fun copyOrMoveMedia(media: Media, albumName: String, isMove: Boolean) {
+        viewModelScope.launch {
+            mediaRepository.copyOrMoveMedia(media, albumName, isMove)
         }
     }
 
