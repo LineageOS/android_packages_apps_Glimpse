@@ -80,4 +80,17 @@ interface MediaDataSource {
      * Get the media information of the given medias.
      */
     fun medias(mediaUris: List<Uri>): Flow<MediaRequestStatus<List<Media>>>
+
+    /**
+     * Copy or move a media item to a specific album inside DCIM/MyAlbums.
+     *
+     * @param media The media item to process
+     * @param targetAlbumName The name of the destination folder
+     * @param isMove If true, move the file; if false, copy it
+     */
+    suspend fun copyOrMoveMedia(
+        media: Media,
+        targetAlbumName: String,
+        isMove: Boolean
+    ): MediaRequestStatus<Unit>
 }
