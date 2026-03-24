@@ -5,6 +5,7 @@
 
 package org.lineageos.glimpse
 
+import android.app.AlertDialog
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.res.Configuration
@@ -13,6 +14,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -42,6 +44,7 @@ import org.lineageos.glimpse.ext.buildUseAsIntent
 import org.lineageos.glimpse.ext.createDeleteRequest
 import org.lineageos.glimpse.ext.createFavoriteRequest
 import org.lineageos.glimpse.ext.createTrashRequest
+import org.lineageos.glimpse.ext.createWriteRequest
 import org.lineageos.glimpse.ext.fade
 import org.lineageos.glimpse.ext.setBarsVisibility
 import org.lineageos.glimpse.models.Album
@@ -159,6 +162,23 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     // Permissions
     private val permissionsChecker = PermissionsChecker(this, PermissionsUtils.mainPermissions)
 
+    // Write
+    private var pendingMoveMedia: Media? = null
+    private var pendingMoveAlbumName: String? = null
+
+    private val writeRequestContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            if (it.resultCode != RESULT_CANCELED) {
+                pendingMoveMedia?.let { media ->
+                    pendingMoveAlbumName?.let { albumName ->
+                        viewModel.copyOrMoveMedia(media, albumName, true)
+                    }
+                }
+            }
+            pendingMoveMedia = null
+            pendingMoveAlbumName = null
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -212,6 +232,20 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                 R.id.useAs -> {
                     viewModel.displayedMedia.value?.let {
                         startActivity(Intent.createChooser(buildUseAsIntent(it), null))
+                    }
+                    true
+                }
+
+                R.id.copyToAlbum -> {
+                    viewModel.displayedMedia.value?.let { media ->
+                        showAlbumNameDialog(media, isMove = false)
+                    }
+                    true
+                }
+
+                R.id.moveToAlbum -> {
+                    viewModel.displayedMedia.value?.let { media ->
+                        showAlbumNameDialog(media, isMove = true)
                     }
                     true
                 }
@@ -546,6 +580,56 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             appBarLayout.measuredHeight,
             bottomSheetLinearLayout.measuredHeight,
         )
+    }
+
+    private fun showAlbumNameDialog(media: Media, isMove: Boolean) {
+        lifecycleScope.launch {
+            val existingAlbums = viewModel.getAvailableAlbums()
+
+            val options = mutableListOf("+ Create new album")
+            options.addAll(existingAlbums)
+
+            AlertDialog.Builder(this@ViewActivity)
+                .setTitle(if (isMove) "Move to Album" else "Copy to Album")
+                .setItems(options.toTypedArray()) { _, which ->
+                    if (which == 0) {
+                        showCreateNewAlbumDialog(media, isMove)
+                    } else {
+                        val albumName = options[which]
+                        executeCopyOrMove(media, albumName, isMove)
+                    }
+                }
+                .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+                .show()
+        }
+    }
+
+    private fun showCreateNewAlbumDialog(media: Media, isMove: Boolean) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(if (isMove) "Move to Album" else "Copy to Album")
+
+        val input = EditText(this)
+        input.hint = "Album name"
+        builder.setView(input)
+
+        builder.setPositiveButton("OK") { _, _ ->
+            val albumName = input.text.toString()
+            if (albumName.isNotEmpty()) {
+                executeCopyOrMove(media, albumName, isMove)
+            }
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun executeCopyOrMove(media: Media, albumName: String, isMove: Boolean) {
+        if (isMove) {
+            pendingMoveMedia = media
+            pendingMoveAlbumName = albumName
+            writeRequestContract.launch(contentResolver.createWriteRequest(media.uri))
+        } else {
+            viewModel.copyOrMoveMedia(media, albumName, false)
+        }
     }
 
     companion object {

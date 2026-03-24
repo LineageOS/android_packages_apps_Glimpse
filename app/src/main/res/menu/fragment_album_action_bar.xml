@@ -22,4 +22,14 @@
         android:contentDescription="@string/file_action_move_to_trash"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/copyToAlbum"
+        android:title="Copy to album"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/moveToAlbum"
+        android:title="Move to album"
+        app:showAsAction="never" />
+
 </menu>
