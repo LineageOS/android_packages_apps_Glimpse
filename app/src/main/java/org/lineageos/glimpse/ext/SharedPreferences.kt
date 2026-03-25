@@ -6,7 +6,9 @@
 package org.lineageos.glimpse.ext
 
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.core.content.edit
+import java.security.MessageDigest
 
 // All files access dialog dismissed
 private const val MANAGE_MEDIA_PERMISSION_DIALOG_DISMISSED_KEY =
@@ -68,3 +70,34 @@ var SharedPreferences.edgeTapNavigationEnabled: Boolean
     set(value) = edit {
         putBoolean(EDGE_TAP_NAVIGATION_ENABLED_KEY, value)
     }
+
+// Remember last playback position for videos
+private const val REMEMBER_VIDEO_PLAYBACK_POSITION_ENABLED_KEY =
+    "remember_video_playback_position_enabled"
+private const val REMEMBER_VIDEO_PLAYBACK_POSITION_ENABLED_DEFAULT = false
+private const val VIDEO_PLAYBACK_POSITION_PREFIX = "video_playback_position_"
+var SharedPreferences.rememberVideoPlaybackPositionEnabled: Boolean
+    get() = getBoolean(
+        REMEMBER_VIDEO_PLAYBACK_POSITION_ENABLED_KEY,
+        REMEMBER_VIDEO_PLAYBACK_POSITION_ENABLED_DEFAULT
+    )
+    set(value) = edit {
+        putBoolean(REMEMBER_VIDEO_PLAYBACK_POSITION_ENABLED_KEY, value)
+    }
+
+fun SharedPreferences.getVideoPlaybackPosition(uri: Uri): Long =
+    getLong(videoPlaybackPositionKey(uri), 0L)
+
+fun SharedPreferences.setVideoPlaybackPosition(uri: Uri, positionMs: Long) = edit {
+    putLong(videoPlaybackPositionKey(uri), positionMs)
+}
+
+fun SharedPreferences.removeVideoPlaybackPosition(uri: Uri) = edit {
+    remove(videoPlaybackPositionKey(uri))
+}
+
+private fun videoPlaybackPositionKey(uri: Uri): String {
+    val digest = MessageDigest.getInstance("SHA-256").digest(uri.toString().toByteArray())
+    val hash = digest.joinToString(separator = "") { byte -> "%02x".format(byte) }
+    return "$VIDEO_PLAYBACK_POSITION_PREFIX$hash"
+}
