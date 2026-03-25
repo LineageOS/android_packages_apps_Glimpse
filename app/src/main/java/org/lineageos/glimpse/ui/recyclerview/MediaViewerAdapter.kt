@@ -8,6 +8,7 @@ package org.lineageos.glimpse.ui.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.core.view.isVisible
@@ -69,6 +70,7 @@ class MediaViewerAdapter(
         private val playerControlView =
             view.findViewById<PlayerControlView>(androidx.media3.ui.R.id.exo_controller)
         private val playerView = view.findViewById<PlayerView>(R.id.playerView)
+        private val fullscreenButton = view.findViewById<ImageButton>(R.id.fullscreenButton)
 
         private var media: Media? = null
         private var motionPhoto: MotionPhoto? = null
@@ -85,6 +87,7 @@ class MediaViewerAdapter(
 
             imageView.isVisible = !isNowVideoPlayer
             playerView.isVisible = isNowVideoPlayer
+            fullscreenButton.isVisible = isNowVideoPlayer
 
             if (!isNowVideoPlayer || localPlayerViewModel.fullscreenMode.value) {
                 playerControlView.hideImmediately()
@@ -145,6 +148,9 @@ class MediaViewerAdapter(
                 localPlayerViewModel.toggleFullscreenMode()
             }
             playerView.setOnClickListener {
+                localPlayerViewModel.toggleFullscreenMode()
+            }
+            fullscreenButton.setOnClickListener {
                 localPlayerViewModel.toggleFullscreenMode()
             }
         }

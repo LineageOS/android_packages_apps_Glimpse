@@ -30,4 +30,17 @@
         app:show_subtitle_button="true"
         app:show_timeout="0" />
 
+    <ImageButton
+        android:id="@+id/fullscreenButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/video_fullscreen"
+        android:padding="8dp"
+        android:src="@drawable/ic_fullscreen_enter"
+        android:tint="@android:color/white"
+        android:visibility="gone" />
+
 </FrameLayout>
