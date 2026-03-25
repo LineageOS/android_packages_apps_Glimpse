@@ -44,7 +44,11 @@ import org.lineageos.glimpse.ext.createDeleteRequest
 import org.lineageos.glimpse.ext.createFavoriteRequest
 import org.lineageos.glimpse.ext.createTrashRequest
 import org.lineageos.glimpse.ext.fade
+import org.lineageos.glimpse.ext.getVideoPlaybackPosition
+import org.lineageos.glimpse.ext.removeVideoPlaybackPosition
+import org.lineageos.glimpse.ext.rememberVideoPlaybackPositionEnabled
 import org.lineageos.glimpse.ext.setBarsVisibility
+import org.lineageos.glimpse.ext.setVideoPlaybackPosition
 import org.lineageos.glimpse.models.Album
 import org.lineageos.glimpse.models.AlbumType
 import org.lineageos.glimpse.models.Media
@@ -313,12 +317,14 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     }
 
     override fun onPause() {
+        saveCurrentVideoPosition()
         viewModel.pause()
 
         super.onPause()
     }
 
     override fun onDestroy() {
+        saveCurrentVideoPosition()
         removeOnNewIntentListener(intentListener)
 
         viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
@@ -521,14 +527,43 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private fun updateExoPlayer(media: Media, motionPhoto: MotionPhoto?) {
         if (media.mediaType == MediaType.VIDEO) {
             if (media.uri != lastVideoUriPlayed) {
+                saveCurrentVideoPosition()
                 lastVideoUriPlayed = media.uri
-                viewModel.setCurrentVideoUri(media.uri)
+
+                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+                val startPositionMs = when (sharedPreferences.rememberVideoPlaybackPositionEnabled) {
+                    true -> sharedPreferences.getVideoPlaybackPosition(media.uri)
+                    false -> 0L
+                }
+
+                viewModel.setCurrentVideoUri(media.uri, startPositionMs)
             }
         } else {
+            saveCurrentVideoPosition()
             motionPhoto?.also(viewModel::playMotionPhoto) ?: viewModel.stop()
 
             // Make sure we will forcefully reload and restart the video
             lastVideoUriPlayed = null
+        }
+    }
+
+    private fun saveCurrentVideoPosition() {
+        val currentVideoUri = lastVideoUriPlayed ?: return
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (!sharedPreferences.rememberVideoPlaybackPositionEnabled) {
+            return
+        }
+
+        val currentPosition = viewModel.exoPlayer.currentPosition
+        val duration = viewModel.exoPlayer.duration
+        val nearEnd = duration > 0L &&
+            currentPosition >= duration - FINISHED_VIDEO_POSITION_TOLERANCE_MS
+
+        when {
+            currentPosition <= 0L -> sharedPreferences.removeVideoPlaybackPosition(currentVideoUri)
+            nearEnd -> sharedPreferences.removeVideoPlaybackPosition(currentVideoUri)
+            else -> sharedPreferences.setVideoPlaybackPosition(currentVideoUri, currentPosition)
         }
     }
 
@@ -571,6 +606,7 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         val EXTRA_ALBUM_URI = "${ViewActivity::class.qualifiedName}.album_uri"
         val EXTRA_MEDIA_TYPE = "${ViewActivity::class.qualifiedName}.media_type"
         val EXTRA_MIME_TYPE = "${ViewActivity::class.qualifiedName}.mime_type"
+        private const val FINISHED_VIDEO_POSITION_TOLERANCE_MS = 2_000L
 
         /**
          * Create a [Bundle] to use as the extras for this activity.

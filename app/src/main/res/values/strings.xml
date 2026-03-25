@@ -163,4 +163,8 @@
     <string name="edge_tap_navigation_title">Edge tap navigation</string>
     <string name="edge_tap_navigation_description">Tap left or right edge of screen to navigate between media</string>
 
+    <!-- Remember playback position -->
+    <string name="remember_playback_position_title">Remember playback position</string>
+    <string name="remember_playback_position_description">Resume videos from the last stopped position</string>
+
 </resources>

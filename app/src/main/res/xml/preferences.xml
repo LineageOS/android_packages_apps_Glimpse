@@ -34,6 +34,12 @@
             app:summary="@string/edge_tap_navigation_description"
             app:defaultValue="false" />
 
+        <SwitchPreferenceCompat
+            app:key="remember_video_playback_position_enabled"
+            app:title="@string/remember_playback_position_title"
+            app:summary="@string/remember_playback_position_description"
+            app:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
