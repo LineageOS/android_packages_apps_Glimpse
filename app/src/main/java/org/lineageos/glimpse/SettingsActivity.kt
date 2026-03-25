@@ -18,6 +18,7 @@ import org.lineageos.glimpse.ext.doubleTapSeekEnabled
 import org.lineageos.glimpse.ext.doubleTapSeekTime
 import org.lineageos.glimpse.ext.edgeTapNavigationEnabled
 import org.lineageos.glimpse.ext.hideNativeSeekButtons
+import org.lineageos.glimpse.ext.rememberVideoPlaybackPositionEnabled
 
 /**
  * Settings activity for configuration options.
@@ -30,6 +31,9 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
     private val seekTimeSummary by lazy { findViewById<TextView>(R.id.seekTimeSummary) }
     private val hideNativeSeekButtonsSwitch by lazy { findViewById<MaterialSwitch>(R.id.hideNativeSeekButtonsSwitch) }
     private val edgeTapNavigationSwitch by lazy { findViewById<MaterialSwitch>(R.id.edgeTapNavigationSwitch) }
+    private val rememberPlaybackPositionSwitch by lazy {
+        findViewById<MaterialSwitch>(R.id.rememberPlaybackPositionSwitch)
+    }
     
     private val seekTimeOptions = intArrayOf(5, 10, 15, 30)
     
@@ -72,6 +76,13 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         edgeTapNavigationSwitch.isChecked = sharedPreferences.edgeTapNavigationEnabled
         edgeTapNavigationSwitch.setOnCheckedChangeListener { _, isChecked ->
             sharedPreferences.edgeTapNavigationEnabled = isChecked
+        }
+
+        // Set up remember playback position switch
+        rememberPlaybackPositionSwitch.isChecked =
+            sharedPreferences.rememberVideoPlaybackPositionEnabled
+        rememberPlaybackPositionSwitch.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.rememberVideoPlaybackPositionEnabled = isChecked
         }
     }
     
