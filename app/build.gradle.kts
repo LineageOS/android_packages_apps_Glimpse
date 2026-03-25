@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.lifecycle.service)
     implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.androidx.media3.decoder.ffmpeg)
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.exoplayer.dash)
     implementation(libs.androidx.media3.exoplayer.hls)

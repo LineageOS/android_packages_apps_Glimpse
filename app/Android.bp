@@ -48,6 +48,7 @@ android_app {
         "androidx.lifecycle_lifecycle-service",
         "androidx.lifecycle_lifecycle-viewmodel-savedstate",
         "Glimpse_androidx.media3_media3-common-ktx",
+        "Glimpse_androidx.media3_media3-decoder-ffmpeg",
         "Glimpse_androidx.media3_media3-exoplayer",
         "Glimpse_androidx.media3_media3-exoplayer-dash",
         "Glimpse_androidx.media3_media3-exoplayer-hls",

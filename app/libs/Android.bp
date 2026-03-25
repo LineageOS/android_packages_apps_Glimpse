@@ -102,6 +102,24 @@ android_library_import {
 }
 
 android_library_import {
+    name: "Glimpse_androidx.media3_media3-decoder-ffmpeg",
+    aars: ["androidx/media3/media3-decoder-ffmpeg/1.5.0/media3-decoder-ffmpeg-1.5.0.aar"],
+    sdk_version: "36",
+    min_sdk_version: "30",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "androidx.annotation_annotation",
+        "Glimpse_androidx.media3_media3-common",
+        "Glimpse_androidx.media3_media3-decoder",
+        "Glimpse_androidx.media3_media3-exoplayer",
+    ],
+    extract_jni: true,
+}
+
+android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer",
     aars: ["androidx/media3/media3-exoplayer/1.5.0/media3-exoplayer-1.5.0.aar"],
     sdk_version: "36",

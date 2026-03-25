@@ -22,3 +22,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Media3 FFmpeg extension — loaded via reflection by DefaultRenderersFactory
+-keep class androidx.media3.decoder.ffmpeg.FfmpegAudioRenderer
+-keep class androidx.media3.decoder.ffmpeg.FfmpegLibrary

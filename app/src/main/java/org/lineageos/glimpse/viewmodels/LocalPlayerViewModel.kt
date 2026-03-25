@@ -13,6 +13,7 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +45,11 @@ class LocalPlayerViewModel(
 ) : GlimpseViewModel(application) {
     // ExoPlayer
     val exoPlayer = ExoPlayer.Builder(applicationContext)
+        .setRenderersFactory(
+            DefaultRenderersFactory(applicationContext)
+                .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER)
+                .setEnableDecoderFallback(true)
+        )
         .setAudioAttributes(
             AudioAttributes.Builder()
                 .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
