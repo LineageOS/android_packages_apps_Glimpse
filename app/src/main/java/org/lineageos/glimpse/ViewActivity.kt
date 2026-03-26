@@ -9,12 +9,16 @@ import android.app.AlertDialog
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -55,6 +59,7 @@ import org.lineageos.glimpse.models.MotionPhoto
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.ui.dialogs.MediaInfoBottomSheetDialog
 import org.lineageos.glimpse.ui.recyclerview.MediaViewerAdapter
+import org.lineageos.glimpse.ui.views.SwipeDismissFrameLayout
 import org.lineageos.glimpse.utils.MediaDialogsUtils
 import org.lineageos.glimpse.utils.PermissionsChecker
 import org.lineageos.glimpse.utils.PermissionsUtils
@@ -79,7 +84,9 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val favoriteButton by lazy { findViewById<MaterialButton>(R.id.favoriteButton) }
     private val infoButton by lazy { toolbar.menu.findItem(R.id.info) }
     private val motionPhotoToggleButton by lazy { findViewById<MaterialButton>(R.id.motionPhotoToggleButton) }
+    private val rootLayout by lazy { findViewById<FrameLayout>(R.id.rootLayout) }
     private val shareButton by lazy { findViewById<MaterialButton>(R.id.shareButton) }
+    private val swipeDismissLayout by lazy { findViewById<SwipeDismissFrameLayout>(R.id.swipeDismissLayout) }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
     private val useAsButton by lazy { toolbar.menu.findItem(R.id.useAs) }
     private val viewPager by lazy { findViewById<ViewPager2>(R.id.viewPager) }
@@ -185,6 +192,16 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
         // Enable edge-to-edge
         enableEdgeToEdge()
 
+        // Set initial background to solid black
+        rootLayout.setBackgroundColor(Color.BLACK)
+
+        // On Android 12+, blur the activity behind this one
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+            window.attributes.blurBehindRadius = 60 // Adjust for stronger/softer blur
+            window.attributes = window.attributes
+        }
+
         // We only want to show this activity on top of the keyguard if we're being launched with
         // the ACTION_REVIEW_SECURE intent and the system is currently locked.
         if (keyguardManager.isKeyguardLocked && intent.action == MediaStore.ACTION_REVIEW_SECURE) {
@@ -210,6 +227,26 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             }
 
             windowInsets
+        }
+
+        swipeDismissLayout.callback = object : SwipeDismissFrameLayout.Callback {
+            override fun onDismissed() {
+                finish()
+                // Avoids the default slide animation to make the dismissal look natural
+                overridePendingTransition(0, android.R.anim.fade_out)
+            }
+
+            override fun onDrag(progress: Float) {
+                val isFullscreen = viewModel.fullscreenMode.value
+                val alpha = if (isFullscreen) 0f else 1f - (progress * 3f).coerceIn(0f, 1f)
+
+                appBarLayout.alpha = alpha
+                bottomSheetLinearLayout.alpha = alpha
+
+                // Accelerate the background fade (multiplied by 1.5) to reveal the blur quicker
+                val bgAlpha = (255 * (1f - (progress * 1.5f).coerceIn(0f, 1f))).toInt()
+                rootLayout.setBackgroundColor(Color.argb(bgAlpha, 0, 0, 0))
+            }
         }
 
         // Attach the adapter to the view pager
