@@ -23,6 +23,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -63,6 +64,7 @@ import org.lineageos.glimpse.ui.views.SwipeDismissFrameLayout
 import org.lineageos.glimpse.utils.MediaDialogsUtils
 import org.lineageos.glimpse.utils.PermissionsChecker
 import org.lineageos.glimpse.utils.PermissionsUtils
+import org.lineageos.glimpse.utils.SecureVaultManager
 import org.lineageos.glimpse.viewmodels.IntentsViewModel
 import org.lineageos.glimpse.viewmodels.IntentsViewModel.ParsedIntent
 import org.lineageos.glimpse.viewmodels.LocalPlayerViewModel
@@ -90,6 +92,17 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
     private val useAsButton by lazy { toolbar.menu.findItem(R.id.useAs) }
     private val viewPager by lazy { findViewById<ViewPager2>(R.id.viewPager) }
+
+    private val deleteOriginalLauncher = registerForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            Toast.makeText(this, "Moved to Secure Vault!", Toast.LENGTH_SHORT).show()
+            finish() // Close the viewer since the photo is now hidden
+        } else {
+            Toast.makeText(this, "Copied to vault, but failed to delete original.", Toast.LENGTH_LONG).show()
+        }
+    }
 
     // System services
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
@@ -283,6 +296,38 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
                 R.id.moveToAlbum -> {
                     viewModel.displayedMedia.value?.let { media ->
                         showAlbumNameDialog(media, isMove = true)
+                    }
+                    true
+                }
+
+                R.id.lockInVault -> {
+                    viewModel.displayedMedia.value?.let { media ->
+                        lifecycleScope.launch {
+                            val vaultManager = SecureVaultManager(this@ViewActivity)
+                            val copySuccess = vaultManager.copyToVault(media)
+                            
+                            if (copySuccess) {
+                                // Ask MediaStore for the exact original path!
+                                val prefs = getSharedPreferences("VaultPrefs", android.content.Context.MODE_PRIVATE)
+                                var originalPath = "DCIM/Restored/"
+
+                                contentResolver.query(media.uri, arrayOf(MediaStore.MediaColumns.RELATIVE_PATH), null, null, null)?.use { cursor ->
+                                    if (cursor.moveToFirst()) {
+                                        originalPath = cursor.getString(0) ?: originalPath
+                                    }
+                                }
+
+                                media.displayName?.let { fileName ->
+                                    prefs.edit().putString(fileName, originalPath).apply()
+                                }
+
+                                val deleteRequest = MediaStore.createDeleteRequest(contentResolver, listOf(media.uri))
+                                val request = IntentSenderRequest.Builder(deleteRequest.intentSender).build()
+                                deleteOriginalLauncher.launch(request)
+                            } else {
+                                Toast.makeText(this@ViewActivity, "Failed to move file.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                     true
                 }
@@ -624,7 +669,8 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             val existingAlbums = viewModel.getAvailableAlbums()
 
             val options = mutableListOf("+ Create new album")
-            options.addAll(existingAlbums)
+            // Filter out the Secure Vault so it cannot be selected
+            options.addAll(existingAlbums.filter { it != "Secure Vault" })
 
             AlertDialog.Builder(this@ViewActivity)
                 .setTitle(if (isMove) "Move to Album" else "Copy to Album")

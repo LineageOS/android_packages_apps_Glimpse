@@ -32,4 +32,9 @@
         android:title="Move to album"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/lockInVault"
+        android:title="Lock"
+        app:showAsAction="never" />
+
 </menu>

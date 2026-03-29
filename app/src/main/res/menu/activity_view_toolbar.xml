@@ -24,6 +24,11 @@
 
     <item
         style="@style/Theme.Glimpse.TopAppBarOption"
+        android:id="@+id/lockInVault"
+        android:title="Lock" />
+
+    <item
+        style="@style/Theme.Glimpse.TopAppBarOption"
         android:id="@+id/info"
         android:icon="@drawable/ic_info"
         android:title="@string/file_action_information"

@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -36,11 +37,13 @@ import org.lineageos.glimpse.ext.getViewProperty
 import org.lineageos.glimpse.ext.loadThumbnail
 import org.lineageos.glimpse.ext.updatePadding
 import org.lineageos.glimpse.models.Album
+import org.lineageos.glimpse.models.AlbumType
 import org.lineageos.glimpse.models.RequestStatus
 import org.lineageos.glimpse.models.Thumbnail
 import org.lineageos.glimpse.ui.recyclerview.AlbumThumbnailLayoutManager
 import org.lineageos.glimpse.ui.recyclerview.SimpleListAdapter
 import org.lineageos.glimpse.ui.recyclerview.UniqueItemDiffCallback
+import org.lineageos.glimpse.utils.BiometricHelper
 import org.lineageos.glimpse.utils.PermissionsChecker
 import org.lineageos.glimpse.utils.PermissionsUtils
 import org.lineageos.glimpse.viewmodels.AlbumsViewModel
@@ -80,17 +83,38 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
 
             override fun ViewHolder.onPrepareView() {
                 view.setOnClickListener {
-                    item?.let {
-                        when (intentsViewModel.isPicking.value) {
-                            true -> findNavController().navigate(
-                                R.id.action_albumsFragment_to_fragment_album,
-                                AlbumFragment.createBundle(albumUri = it.uri)
-                            )
+                    item?.let { album ->
+                        // Intercept the click using our custom URI
+                        if (album.uri.toString() == "glimpse://secure_vault") {
+                            BiometricHelper.authenticate(
+                                fragment = this@AlbumsFragment,
+                                onSuccess = {
+                                    // Ask the Navigation Controller where we currently are
+                                    val currentDest = findNavController().currentDestination?.id
 
-                            false -> findNavController().navigate(
-                                R.id.action_mainFragment_to_fragment_album,
-                                AlbumFragment.createBundle(albumUri = it.uri)
+                                    if (currentDest == R.id.mainFragment) {
+                                        findNavController().navigate(R.id.action_mainFragment_to_vaultFragment)
+                                    } else {
+                                        findNavController().navigate(R.id.action_albumsFragment_to_vaultFragment)
+                                    }
+                                },
+                                onError = { errorMsg ->
+                                    Toast.makeText(requireContext(), "Auth Failed: $errorMsg", Toast.LENGTH_SHORT).show()
+                                }
                             )
+                        } else {
+                            // Normal album behavior
+                            when (intentsViewModel.isPicking.value) {
+                                true -> findNavController().navigate(
+                                    R.id.action_albumsFragment_to_fragment_album,
+                                    AlbumFragment.createBundle(albumUri = album.uri)
+                                )
+
+                                false -> findNavController().navigate(
+                                    R.id.action_mainFragment_to_fragment_album,
+                                    AlbumFragment.createBundle(albumUri = album.uri)
+                                )
+                            }
                         }
                     }
                 }

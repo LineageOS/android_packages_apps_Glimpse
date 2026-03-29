@@ -147,6 +147,52 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
                 it.isEmpty()
             }?.let { selection ->
                 when (item?.itemId) {
+                    R.id.lockInVault -> {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val vaultManager = org.lineageos.glimpse.utils.SecureVaultManager(requireContext())
+                            val urisToDelete = mutableListOf<android.net.Uri>()
+                            val prefs = requireContext().getSharedPreferences("VaultPrefs", android.content.Context.MODE_PRIVATE)
+
+                            // Copy every selected item to the Vault
+                            for (media in selection) {
+                                if (vaultManager.copyToVault(media)) {
+                                    urisToDelete.add(media.uri) // Keep track of successes
+
+                                    // Ask MediaStore for the exact original path!
+                                    var originalPath = "DCIM/Restored/"
+                                    requireContext().contentResolver.query(
+                                        media.uri,
+                                        arrayOf(android.provider.MediaStore.MediaColumns.RELATIVE_PATH),
+                                        null,
+                                        null,
+                                        null
+                                    )?.use { cursor ->
+                                        if (cursor.moveToFirst()) {
+                                            originalPath = cursor.getString(0) ?: originalPath
+                                        }
+                                    }
+
+                                    // Save the exact path to the Logbook
+                                    media.displayName?.let { fileName ->
+                                        prefs.edit().putString(fileName, originalPath).apply()
+                                    }
+                                }
+                            }
+
+                            // Ask Android to delete the successfully copied originals
+                            if (urisToDelete.isNotEmpty()) {
+                                lockInVaultContract.launch(
+                                    requireContext().contentResolver.createDeleteRequest(
+                                        *urisToDelete.toTypedArray()
+                                    )
+                                )
+                            } else {
+                                endSelectionMode()
+                            }
+                        }
+                        true
+                    }
+
                     R.id.deleteForever -> {
                         MediaDialogsUtils.openDeleteForeverDialog(requireContext(), *selection.toTypedArray()) {
                             deleteForeverContract.launch(
@@ -209,6 +255,17 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
 
     // Contracts
     private var lastProcessedSelection: Array<out Media>? = null
+
+    private val lockInVaultContract =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+            if (it.resultCode != Activity.RESULT_CANCELED) {
+                Toast.makeText(requireContext(), "Locked in Secure Vault!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Failed to delete original files.", Toast.LENGTH_SHORT).show()
+            }
+            selectionTracker?.clearSelection()
+            endSelectionMode()
+        }
 
     private val deleteForeverContract =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
@@ -581,7 +638,9 @@ class AlbumFragment : Fragment(R.layout.fragment_album) {
 
             // Prepare the options list with the "Create new" action as the first item
             val options = mutableListOf("+ Create new album")
-            options.addAll(existingAlbums)
+
+            // Filter out the Secure Vault so it cannot be selected
+            options.addAll(existingAlbums.filter { it != "Secure Vault" })
 
             AlertDialog.Builder(requireContext())
                 .setTitle(if (isMove) "Move to Album" else "Copy to Album")

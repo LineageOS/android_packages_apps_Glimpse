@@ -222,8 +222,17 @@ class LocalDataSource(
                 "${MediaStore.Files.FileColumns.DATE_MODIFIED} DESC",
             ),
         )
-    ).mapEachRow(mapAlbum).mapLatest {
-        RequestStatus.Success<_, MediaError>(it)
+    ).mapEachRow(mapAlbum).mapLatest { queriedAlbums ->
+        val secureVaultAlbum = Album(
+            uri = Uri.parse("glimpse://secure_vault"), // We use a custom URI to identify it
+            name = "Secure Vault",
+            thumbnail = Thumbnail(uri = Uri.EMPTY),
+            mediaCount = 0
+        )
+
+        val combinedList = listOf(secureVaultAlbum) + queriedAlbums
+
+        RequestStatus.Success<_, MediaError>(combinedList)
     }
 
     override fun album(albumUri: Uri) = contentResolver.queryFlow(
