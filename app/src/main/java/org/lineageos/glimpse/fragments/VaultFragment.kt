@@ -10,6 +10,7 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,8 @@ class VaultFragment : Fragment(R.layout.fragment_vault) {
 
     private var actionMode: ActionMode? = null
     private var vaultAdapter: VaultAdapter? = null
+
+    private var needsReauth = false
 
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
@@ -83,6 +86,24 @@ class VaultFragment : Fragment(R.layout.fragment_vault) {
             }
             recyclerView.adapter = vaultAdapter
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Secure the grid view so it cannot be screenshotted or seen in Recents
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
+        if (needsReauth) {
+            vaultAdapter?.closeActiveDialog()
+            findNavController().navigateUp()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+
+        needsReauth = true
     }
 
     private fun restoreSelectedFiles() {

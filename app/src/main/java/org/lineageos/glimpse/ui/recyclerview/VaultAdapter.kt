@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.Toast
@@ -36,6 +37,8 @@ class VaultAdapter(
 
     val selectedFiles = mutableSetOf<File>()
     var isSelectionMode = false
+
+    private var activeDialog: Dialog? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.vaultImageView)
@@ -93,8 +96,16 @@ class VaultAdapter(
         notifyDataSetChanged()
     }
 
+    fun closeActiveDialog() {
+        activeDialog?.dismiss()
+        activeDialog = null
+    }
+
     private fun showMediaDialog(context: Context, initialPosition: Int) {
         val dialog = Dialog(context, com.google.android.material.R.style.Theme_Material3_DayNight_NoActionBar)
+        activeDialog = dialog
+        dialog.setOnDismissListener { activeDialog = null }
+
         dialog.setContentView(R.layout.dialog_vault_viewer)
 
         // Force edge-to-edge drawing
@@ -102,6 +113,7 @@ class VaultAdapter(
             WindowCompat.setDecorFitsSystemWindows(window, false)
             window.statusBarColor = Color.TRANSPARENT
             window.navigationBarColor = Color.TRANSPARENT
+            window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         }
 
         val appBarLayout = dialog.findViewById<AppBarLayout>(R.id.appBarLayout)
