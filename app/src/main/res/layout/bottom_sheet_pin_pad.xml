@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="24dp"
+    android:background="?attr/colorSurface">
+
+    <TextView
+        android:id="@+id/pinTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Vault PIN"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnSurface"
+        android:layout_marginBottom="24dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp">
+
+        <ImageView
+            android:id="@+id/dot1"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_pin_dot"
+            app:tint="?attr/colorOnSurfaceVariant"
+            android:layout_marginHorizontal="8dp" />
+
+        <ImageView
+            android:id="@+id/dot2"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_pin_dot"
+            app:tint="?attr/colorOnSurfaceVariant"
+            android:layout_marginHorizontal="8dp" />
+
+        <ImageView
+            android:id="@+id/dot3"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_pin_dot"
+            app:tint="?attr/colorOnSurfaceVariant"
+            android:layout_marginHorizontal="8dp" />
+
+        <ImageView
+            android:id="@+id/dot4"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_pin_dot"
+            app:tint="?attr/colorOnSurfaceVariant"
+            android:layout_marginHorizontal="8dp" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="4"
+        android:alignmentMode="alignMargins">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn1"
+            android:text="1"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn2"
+            android:text="2"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn3"
+            android:text="3"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn4"
+            android:text="4"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn5"
+            android:text="5"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn6"
+            android:text="6"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn7"
+            android:text="7"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn8"
+            android:text="8"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn9"
+            android:text="9"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <Space
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btn0"
+            android:text="0"
+            android:textSize="28sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/btnBackspace"
+            app:icon="@drawable/ic_back"
+            app:iconSize="28dp"
+            app:iconGravity="textStart"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+    </GridLayout>
+</LinearLayout>

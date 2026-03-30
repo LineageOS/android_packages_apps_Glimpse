@@ -86,22 +86,33 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
                     item?.let { album ->
                         // Intercept the click using our custom URI
                         if (album.uri.toString() == "glimpse://secure_vault") {
-                            BiometricHelper.authenticate(
-                                fragment = this@AlbumsFragment,
-                                onSuccess = {
-                                    // Ask the Navigation Controller where we currently are
-                                    val currentDest = findNavController().currentDestination?.id
+                            val pinManager = org.lineageos.glimpse.utils.VaultPinManager(requireContext())
 
-                                    if (currentDest == R.id.mainFragment) {
-                                        findNavController().navigate(R.id.action_mainFragment_to_vaultFragment)
-                                    } else {
-                                        findNavController().navigate(R.id.action_albumsFragment_to_vaultFragment)
-                                    }
-                                },
-                                onError = { errorMsg ->
-                                    Toast.makeText(requireContext(), "Auth Failed: $errorMsg", Toast.LENGTH_SHORT).show()
+                            val navigateToVault = {
+                                val currentDest = findNavController().currentDestination?.id
+                                if (currentDest == R.id.mainFragment) {
+                                    findNavController().navigate(R.id.action_mainFragment_to_vaultFragment)
+                                } else {
+                                    findNavController().navigate(R.id.action_albumsFragment_to_vaultFragment)
                                 }
-                            )
+                            }
+
+                            if (!pinManager.hasPinSet()) {
+                                // First time opening the vault! Force them to create a PIN.
+                                showPinPad(pinManager, isSetup = true, onSuccess = navigateToVault)
+                            } else {
+                                // Normal usage: Ask for fingerprint, fallback to custom PIN.
+                                org.lineageos.glimpse.utils.BiometricHelper.authenticate(
+                                    fragment = this@AlbumsFragment,
+                                    onSuccess = navigateToVault,
+                                    onUseCustomPin = {
+                                        showPinPad(pinManager, isSetup = false, onSuccess = navigateToVault)
+                                    },
+                                    onError = { errorMsg ->
+                                        android.widget.Toast.makeText(requireContext(), "Auth Failed: $errorMsg", android.widget.Toast.LENGTH_SHORT).show()
+                                    }
+                                )
+                            }
                         } else {
                             // Normal album behavior
                             when (intentsViewModel.isPicking.value) {
@@ -255,5 +266,94 @@ class AlbumsFragment : Fragment(R.layout.fragment_albums) {
 
     companion object {
         private val LOG_TAG = AlbumsFragment::class.simpleName!!
+    }
+
+    private fun showPinPad(pinManager: org.lineageos.glimpse.utils.VaultPinManager, isSetup: Boolean, onSuccess: () -> Unit) {
+        val bottomSheet = com.google.android.material.bottomsheet.BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_pin_pad, null)
+        bottomSheet.setContentView(view)
+
+        val titleText = view.findViewById<android.widget.TextView>(R.id.pinTitleText)
+        val dots = listOf(
+            view.findViewById<android.widget.ImageView>(R.id.dot1),
+            view.findViewById<android.widget.ImageView>(R.id.dot2),
+            view.findViewById<android.widget.ImageView>(R.id.dot3),
+            view.findViewById<android.widget.ImageView>(R.id.dot4)
+        )
+
+        var currentPin = ""
+        var firstPin = ""
+        var setupPhase = if (isSetup) 1 else 0
+
+        titleText.text = if (isSetup) "Create 4-Digit PIN" else "Enter Vault PIN"
+
+        fun updateDots() {
+            for (i in 0..3) {
+                dots[i].alpha = if (i < currentPin.length) 1.0f else 0.3f
+            }
+        }
+        updateDots()
+
+        // Map buttons to their numbers
+        val buttons = mapOf(
+            R.id.btn0 to "0", R.id.btn1 to "1", R.id.btn2 to "2",
+            R.id.btn3 to "3", R.id.btn4 to "4", R.id.btn5 to "5",
+            R.id.btn6 to "6", R.id.btn7 to "7", R.id.btn8 to "8",
+            R.id.btn9 to "9"
+        )
+
+        buttons.forEach { (id, number) ->
+            view.findViewById<View>(id).setOnClickListener {
+                if (currentPin.length < 4) {
+                    currentPin += number
+                    updateDots()
+
+                    if (currentPin.length == 4) {
+                        // Tiny delay so the user actually sees the 4th dot fill in
+                        view.postDelayed({
+                            if (setupPhase == 1) {
+                                firstPin = currentPin
+                                currentPin = ""
+                                setupPhase = 2
+                                titleText.text = "Confirm New PIN"
+                                updateDots()
+                            } else if (setupPhase == 2) {
+                                if (currentPin == firstPin) {
+                                    pinManager.savePin(currentPin)
+                                    android.widget.Toast.makeText(requireContext(), "PIN Saved!", android.widget.Toast.LENGTH_SHORT).show()
+                                    bottomSheet.dismiss()
+                                    onSuccess()
+                                } else {
+                                    android.widget.Toast.makeText(requireContext(), "PINs do not match. Try again.", android.widget.Toast.LENGTH_SHORT).show()
+                                    currentPin = ""
+                                    firstPin = ""
+                                    setupPhase = 1
+                                    titleText.text = "Create 4-Digit PIN"
+                                    updateDots()
+                                }
+                            } else {
+                                if (pinManager.verifyPin(currentPin)) {
+                                    bottomSheet.dismiss()
+                                    onSuccess()
+                                } else {
+                                    android.widget.Toast.makeText(requireContext(), "Incorrect PIN", android.widget.Toast.LENGTH_SHORT).show()
+                                    currentPin = ""
+                                    updateDots()
+                                }
+                            }
+                        }, 150)
+                    }
+                }
+            }
+        }
+
+        view.findViewById<View>(R.id.btnBackspace).setOnClickListener {
+            if (currentPin.isNotEmpty()) {
+                currentPin = currentPin.dropLast(1)
+                updateDots()
+            }
+        }
+
+        bottomSheet.show()
     }
 }
