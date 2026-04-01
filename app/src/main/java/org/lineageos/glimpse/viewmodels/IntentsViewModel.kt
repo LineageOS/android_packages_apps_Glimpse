@@ -7,8 +7,11 @@ package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +44,14 @@ import java.util.Date
  * A view model used by activities to handle intents.
  */
 class IntentsViewModel(application: Application) : GlimpseViewModel(application) {
+    private data class UriMetadata(
+        val mimeType: String,
+        val displayName: String?,
+        val width: Int,
+        val height: Int,
+        val sizeBytes: Long,
+    )
+
     sealed class ParsedIntent {
         /**
          * Open the app's home page.
@@ -284,26 +295,26 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                     )
                     when (type) {
                         MediaType.IMAGE,
-                        MediaType.VIDEO ->
+                        MediaType.VIDEO -> {
+                            val metadata = extractUriMetadata(uri, type) ?: return null
+
                             Media(
                                 uri,
                                 type,
-                                applicationContext.contentResolver.getType(uri) ?: run {
-                                    Log.e(LOG_TAG, "Cannot get media type of $uri")
-                                    return null
-                                },
+                                metadata.mimeType,
                                 uri,
                                 albumName = null,
-                                displayName = null,
+                                displayName = metadata.displayName,
                                 isFavorite = false,
                                 isTrashed = false,
                                 dateAdded = Date(),
                                 dateModified = Date(),
-                                width = 0,
-                                height = 0,
+                                width = metadata.width,
+                                height = metadata.height,
                                 orientation = 0,
-                                sizeBytes = 0,
+                                sizeBytes = metadata.sizeBytes,
                             )
+                        }
 
                         else -> {
                             Log.e(LOG_TAG, "Cannot build media object for $uri")
@@ -313,6 +324,92 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                 }
             }
         }
+    }
+
+    private fun extractUriMetadata(uri: Uri, mediaType: MediaType): UriMetadata? {
+        val contentResolver = applicationContext.contentResolver
+
+        val mimeType = contentResolver.getType(uri) ?: run {
+            Log.e(LOG_TAG, "Cannot get media type of $uri")
+            return null
+        }
+
+        var displayName: String? = null
+        var sizeBytes = 0L
+
+        contentResolver.query(
+            uri,
+            arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+            null,
+            null,
+            null
+        )?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val displayNameColumn = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                val sizeColumn = cursor.getColumnIndex(OpenableColumns.SIZE)
+
+                if (displayNameColumn != -1 && !cursor.isNull(displayNameColumn)) {
+                    displayName = cursor.getString(displayNameColumn)
+                }
+
+                if (sizeColumn != -1 && !cursor.isNull(sizeColumn)) {
+                    sizeBytes = cursor.getLong(sizeColumn)
+                }
+            }
+        }
+
+        if (sizeBytes <= 0L) {
+            contentResolver.openAssetFileDescriptor(uri, "r")?.use { afd ->
+                val statSize = afd.length
+                if (statSize > 0L) {
+                    sizeBytes = statSize
+                }
+            }
+        }
+
+        val dimensions = when (mediaType) {
+            MediaType.VIDEO -> runCatching {
+                MediaMetadataRetriever().use { mmr ->
+                    mmr.setDataSource(applicationContext, uri)
+
+                    val width = mmr.extractMetadata(
+                        MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH
+                    )?.toIntOrNull() ?: 0
+                    val height = mmr.extractMetadata(
+                        MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT
+                    )?.toIntOrNull() ?: 0
+
+                    width to height
+                }
+            }.getOrElse {
+                Log.w(LOG_TAG, "Cannot read video metadata for $uri", it)
+                0 to 0
+            }
+
+            MediaType.IMAGE -> runCatching {
+                val options = BitmapFactory.Options().apply {
+                    inJustDecodeBounds = true
+                }
+                contentResolver.openInputStream(uri)?.use { inputStream ->
+                    BitmapFactory.decodeStream(inputStream, null, options)
+                }
+                (options.outWidth.takeIf { it > 0 } ?: 0) to
+                        (options.outHeight.takeIf { it > 0 } ?: 0)
+            }.getOrElse {
+                Log.w(LOG_TAG, "Cannot read image metadata for $uri", it)
+                0 to 0
+            }
+
+            else -> 0 to 0
+        }
+
+        return UriMetadata(
+            mimeType = mimeType,
+            displayName = displayName,
+            width = dimensions.first,
+            height = dimensions.second,
+            sizeBytes = sizeBytes,
+        )
     }
 
     /**
