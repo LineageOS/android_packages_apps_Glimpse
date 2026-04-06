@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d01c067_67fe7b8d",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ui/recyclerview/MediaViewerAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2026-04-06T19:55:46Z",
+      "side": 1,
+      "message": "I think rather than creating 2 different listeners create a single one that handles both features, so that you only have a single GestureDetector",
+      "revId": "e663be599b7ab6770ee6f22140b490b7b14eb1e4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
