@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ebcd5b3_f3244568",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ui/recyclerview/MediaViewerAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2026-04-06T19:53:28Z",
+      "side": 1,
+      "message": "you probably want to pass sharedPrefences here when creating the class, so that you can tie it to the parent Activity",
+      "revId": "21b2aa7c1a9eb2c0b5390392b6eb628f624c0804",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
