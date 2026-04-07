@@ -16,6 +16,24 @@
       "message": "you probably want to pass sharedPrefences here when creating the class, so that you can tie it to the parent Activity",
       "revId": "21b2aa7c1a9eb2c0b5390392b6eb628f624c0804",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32e603c1_74719263",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ui/recyclerview/MediaViewerAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 35995
+      },
+      "writtenOn": "2026-04-07T01:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ebcd5b3_f3244568",
+      "revId": "21b2aa7c1a9eb2c0b5390392b6eb628f624c0804",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
