@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b5a34da_6b6e69b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36773
+      },
+      "writtenOn": "2026-04-07T16:17:32Z",
+      "side": 1,
+      "message": "I know it\u0027s WIP but stumbled upon it trying to do my own take on this feature",
+      "revId": "173d7b50cf00165b22bc3a80822d97bc763e1c6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42359a9b_0917991c",
+        "filename": "app/src/main/java/org/lineageos/glimpse/datasources/LocalDataSource.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 36773
+      },
+      "writtenOn": "2026-04-07T16:17:32Z",
+      "side": 1,
+      "message": "does not take into account if the album is on an external storage medium (sdcard, usb, etc). this results in duplicates",
+      "revId": "173d7b50cf00165b22bc3a80822d97bc763e1c6c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
