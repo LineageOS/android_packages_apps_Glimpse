@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bef5af67_28569bd8",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ui/recyclerview/MediaViewerAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 35995
+      },
+      "writtenOn": "2026-04-07T01:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa11b33_e624ad28",
+      "revId": "536dfd6c8d1b11fe7bf3efb20d3b82e60e51dd21",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f94bd7b_5f1ea103",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-06T19:52:23Z",
       "side": 1,
       "message": "no need for those messages, callback can be removed",
+      "revId": "536dfd6c8d1b11fe7bf3efb20d3b82e60e51dd21",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2805bac1_5a96b9ed",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ui/recyclerview/MediaViewerAdapter.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 35995
+      },
+      "writtenOn": "2026-04-07T01:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f94bd7b_5f1ea103",
       "revId": "536dfd6c8d1b11fe7bf3efb20d3b82e60e51dd21",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
