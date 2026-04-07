@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac2b16f8_04e8335c",
+        "filename": "app/src/main/java/org/lineageos/glimpse/SettingsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 35995
+      },
+      "writtenOn": "2026-04-07T01:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9bb3e9e_bcf3eee7",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 3
+      },
+      "revId": "ff6b3e53377dd89983a13064862fa82fb1cc4f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a7480d5_93cb1e39",
@@ -41,6 +65,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c48c2e13_e7080313",
+        "filename": "app/src/main/java/org/lineageos/glimpse/SettingsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 35995
+      },
+      "writtenOn": "2026-04-07T01:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a7480d5_93cb1e39",
+      "revId": "ff6b3e53377dd89983a13064862fa82fb1cc4f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab2edf4e_57945d06",
@@ -54,6 +96,24 @@
       "writtenOn": "2026-04-06T19:45:02Z",
       "side": 1,
       "message": "don\u0027t add this entry at all, I\u0027m fine with having a wholly empty setting entry.\n\nWith that said you should try to use Preferences, see https://developer.android.com/develop/ui/views/components/settings",
+      "revId": "ff6b3e53377dd89983a13064862fa82fb1cc4f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8d13c8c_3b510505",
+        "filename": "app/src/main/res/layout/activity_settings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 35995
+      },
+      "writtenOn": "2026-04-07T01:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab2edf4e_57945d06",
       "revId": "ff6b3e53377dd89983a13064862fa82fb1cc4f79",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
