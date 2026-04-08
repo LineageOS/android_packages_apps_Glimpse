@@ -7,19 +7,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        style="@style/Theme.Glimpse.TopAppBarOption"
         android:id="@+id/share"
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:contentDescription="@string/file_action_share"
         android:icon="@drawable/ic_share"
         android:title="@string/file_action_share"
-        android:contentDescription="@string/file_action_share"
         app:showAsAction="ifRoom" />
 
     <item
-        style="@style/Theme.Glimpse.TopAppBarOption"
         android:id="@+id/moveToTrash"
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:contentDescription="@string/file_action_move_to_trash"
         android:icon="@drawable/ic_delete"
         android:title="@string/file_action_move_to_trash"
-        android:contentDescription="@string/file_action_move_to_trash"
         app:showAsAction="ifRoom" />
 
 </menu>

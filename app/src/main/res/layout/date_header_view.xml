@@ -7,7 +7,7 @@
     android:id="@+id/dateTextView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="18dp"
     android:paddingHorizontal="12dp"
+    android:paddingVertical="18dp"
     android:textAppearance="?attr/textAppearanceTitleSmall"
     android:textColor="?attr/colorOnSurface" />

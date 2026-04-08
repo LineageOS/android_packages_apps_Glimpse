@@ -6,17 +6,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        style="@style/Theme.Glimpse.TopAppBarOption"
         android:id="@+id/useAs"
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:contentDescription="@string/file_action_use_as"
         android:icon="@drawable/ic_contact_page"
-        android:title="@string/file_action_use_as"
-        android:contentDescription="@string/file_action_use_as" />
+        android:title="@string/file_action_use_as" />
 
     <item
-        style="@style/Theme.Glimpse.TopAppBarOption"
         android:id="@+id/info"
+        style="@style/Theme.Glimpse.TopAppBarOption"
+        android:contentDescription="@string/file_action_information"
         android:icon="@drawable/ic_info"
-        android:title="@string/file_action_information"
-        android:contentDescription="@string/file_action_information" />
+        android:title="@string/file_action_information" />
 
 </menu>

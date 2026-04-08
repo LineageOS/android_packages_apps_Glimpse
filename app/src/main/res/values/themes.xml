@@ -3,7 +3,7 @@
      SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme -->
     <style name="Theme.Glimpse" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowLayoutInDisplayCutoutMode">always</item>
