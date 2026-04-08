@@ -82,6 +82,8 @@ dependencies {
 generateBp {
     targetSdk = android.defaultConfig.targetSdk!!
     minSdk = android.defaultConfig.minSdk!!
+    versionCode = android.defaultConfig.versionCode!!
+    versionName = android.defaultConfig.versionName!!
     availableInAOSP = { module ->
         when {
             module.group.startsWith("androidx") -> {
