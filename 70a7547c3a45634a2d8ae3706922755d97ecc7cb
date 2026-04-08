@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7149e4cd_cc3095ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-04-08T17:27:50Z",
+      "side": 1,
+      "message": "Possibly licensing issues, plus we increase the app size, we originally decided to not include it",
+      "revId": "70a7547c3a45634a2d8ae3706922755d97ecc7cb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
