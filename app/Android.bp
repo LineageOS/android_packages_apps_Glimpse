@@ -31,10 +31,6 @@ android_app {
         "preinstalled-packages-org.lineageos.glimpse",
     ],
 
-    kotlin_plugins: [
-        "kotlin-parcelize-compiler-plugin",
-    ],
-
     static_libs: [
         // DO NOT EDIT THIS SECTION MANUALLY
         "androidx.activity_activity",
@@ -70,7 +66,6 @@ android_app {
         "Glimpse_com.squareup.okhttp3_okhttp",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-glide",
-        "kotlin-parcelize-runtime",
         "kotlin-stdlib",
     ],
 
