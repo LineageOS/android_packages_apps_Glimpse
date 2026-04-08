@@ -4,8 +4,7 @@
 #
 
 [versions]
-agp = "8.13.0"
-kotlin = "2.1.10"
+agp = "9.1.0"
 activity = "1.9.2"
 appcompat = "1.7.0"
 constraintlayout = "2.1.4"
@@ -56,5 +55,4 @@ zoomimage-view-glide = { group = "io.github.panpf.zoomimage", name = "zoomimage-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 lineageos-generatebp = { id = "org.lineageos.generatebp", version.ref = "generateBp" }
