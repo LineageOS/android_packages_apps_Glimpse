@@ -7,7 +7,7 @@
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-common",
-    aars: ["androidx/media3/media3-common/1.5.0/media3-common-1.5.0.aar"],
+    aars: ["androidx/media3/media3-common/1.10.0/media3-common-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -23,7 +23,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-common-ktx",
-    aars: ["androidx/media3/media3-common-ktx/1.5.0/media3-common-ktx-1.5.0.aar"],
+    aars: ["androidx/media3/media3-common-ktx/1.10.0/media3-common-ktx-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -33,8 +33,7 @@ android_library_import {
     static_libs: [
         "androidx.core_core",
         "Glimpse_androidx.media3_media3-common",
-        "Glimpse_androidx.media3_media3-exoplayer",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
         "kotlinx-coroutines-android",
         "kotlinx-coroutines-core",
     ],
@@ -42,7 +41,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-container",
-    aars: ["androidx/media3/media3-container/1.5.0/media3-container-1.5.0.aar"],
+    aars: ["androidx/media3/media3-container/1.10.0/media3-container-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -57,7 +56,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-database",
-    aars: ["androidx/media3/media3-database/1.5.0/media3-database-1.5.0.aar"],
+    aars: ["androidx/media3/media3-database/1.10.0/media3-database-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -72,7 +71,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-datasource",
-    aars: ["androidx/media3/media3-datasource/1.5.0/media3-datasource-1.5.0.aar"],
+    aars: ["androidx/media3/media3-datasource/1.10.0/media3-datasource-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -89,7 +88,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-decoder",
-    aars: ["androidx/media3/media3-decoder/1.5.0/media3-decoder-1.5.0.aar"],
+    aars: ["androidx/media3/media3-decoder/1.10.0/media3-decoder-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -104,7 +103,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer",
-    aars: ["androidx/media3/media3-exoplayer/1.5.0/media3-exoplayer-1.5.0.aar"],
+    aars: ["androidx/media3/media3-exoplayer/1.10.0/media3-exoplayer-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -113,8 +112,6 @@ android_library_import {
     ],
     static_libs: [
         "androidx.annotation_annotation",
-        "androidx.collection_collection",
-        "androidx.core_core",
         "androidx.exifinterface_exifinterface",
         "Glimpse_androidx.media3_media3-common",
         "Glimpse_androidx.media3_media3-container",
@@ -122,12 +119,13 @@ android_library_import {
         "Glimpse_androidx.media3_media3-datasource",
         "Glimpse_androidx.media3_media3-decoder",
         "Glimpse_androidx.media3_media3-extractor",
+        "kotlin-stdlib",
     ],
 }
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-dash",
-    aars: ["androidx/media3/media3-exoplayer-dash/1.5.0/media3-exoplayer-dash-1.5.0.aar"],
+    aars: ["androidx/media3/media3-exoplayer-dash/1.10.0/media3-exoplayer-dash-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -142,7 +140,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-hls",
-    aars: ["androidx/media3/media3-exoplayer-hls/1.5.0/media3-exoplayer-hls-1.5.0.aar"],
+    aars: ["androidx/media3/media3-exoplayer-hls/1.10.0/media3-exoplayer-hls-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -157,7 +155,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-rtsp",
-    aars: ["androidx/media3/media3-exoplayer-rtsp/1.5.0/media3-exoplayer-rtsp-1.5.0.aar"],
+    aars: ["androidx/media3/media3-exoplayer-rtsp/1.10.0/media3-exoplayer-rtsp-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -172,7 +170,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-exoplayer-smoothstreaming",
-    aars: ["androidx/media3/media3-exoplayer-smoothstreaming/1.5.0/media3-exoplayer-smoothstreaming-1.5.0.aar"],
+    aars: ["androidx/media3/media3-exoplayer-smoothstreaming/1.10.0/media3-exoplayer-smoothstreaming-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -187,7 +185,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-extractor",
-    aars: ["androidx/media3/media3-extractor/1.5.0/media3-extractor-1.5.0.aar"],
+    aars: ["androidx/media3/media3-extractor/1.10.0/media3-extractor-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -204,7 +202,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_androidx.media3_media3-ui",
-    aars: ["androidx/media3/media3-ui/1.5.0/media3-ui-1.5.0.aar"],
+    aars: ["androidx/media3/media3-ui/1.10.0/media3-ui-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -213,7 +211,6 @@ android_library_import {
     ],
     static_libs: [
         "androidx.annotation_annotation",
-        "androidx.media_media",
         "Glimpse_androidx.media3_media3-common",
         "androidx.recyclerview_recyclerview",
     ],
