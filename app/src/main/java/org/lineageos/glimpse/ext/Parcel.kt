@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,15 +14,15 @@ import kotlin.reflect.safeCast
 
 fun <T : Parcelable> Parcel.readParcelable(clazz: KClass<T>) =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        readParcelable((clazz.java::getClassLoader)(), clazz.java)
+        readParcelable(clazz.java.classLoader, clazz.java)
     } else {
         @Suppress("DEPRECATION")
-        readParcelable((clazz.java::getClassLoader)())
+        readParcelable(clazz.java.classLoader)
     }
 
 inline fun <reified T : Serializable> Parcel.readSerializable(clazz: KClass<T>) =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        readSerializable((clazz.java::getClassLoader)(), clazz.java)
+        readSerializable(clazz.java.classLoader, clazz.java)
     } else {
         @Suppress("DEPRECATION")
         T::class.safeCast(readSerializable())
