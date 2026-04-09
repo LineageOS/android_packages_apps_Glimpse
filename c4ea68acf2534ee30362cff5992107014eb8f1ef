@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8698aa05_1422c5c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-04-09T01:56:56Z",
+      "side": 1,
+      "message": "Needs testing on AOSP, also needs new generatebp release",
+      "revId": "c4ea68acf2534ee30362cff5992107014eb8f1ef",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
