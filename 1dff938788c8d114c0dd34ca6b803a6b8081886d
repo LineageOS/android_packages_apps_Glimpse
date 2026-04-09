@@ -16,6 +16,23 @@
       "message": "AOSP+AGP",
       "revId": "1dff938788c8d114c0dd34ca6b803a6b8081886d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bd6b201_9d23953b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-04-09T14:05:59Z",
+      "side": 1,
+      "message": "Tested AOSP as well",
+      "revId": "1dff938788c8d114c0dd34ca6b803a6b8081886d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
