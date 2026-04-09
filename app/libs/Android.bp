@@ -231,7 +231,7 @@ java_import {
 
 java_import {
     name: "Glimpse_com.github.bumptech.glide_annotations",
-    jars: ["com/github/bumptech/glide/annotations/4.15.1/annotations-4.15.1.jar"],
+    jars: ["com/github/bumptech/glide/annotations/5.0.5/annotations-5.0.5.jar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -242,9 +242,9 @@ java_import {
     ],
 }
 
-java_import {
+android_library_import {
     name: "Glimpse_com.github.bumptech.glide_disklrucache",
-    jars: ["com/github/bumptech/glide/disklrucache/4.15.1/disklrucache-4.15.1.jar"],
+    aars: ["com/github/bumptech/glide/disklrucache/5.0.5/disklrucache-5.0.5.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -257,7 +257,7 @@ java_import {
 
 android_library_import {
     name: "Glimpse_com.github.bumptech.glide_gifdecoder",
-    aars: ["com/github/bumptech/glide/gifdecoder/4.15.1/gifdecoder-4.15.1.aar"],
+    aars: ["com/github/bumptech/glide/gifdecoder/5.0.5/gifdecoder-5.0.5.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -271,7 +271,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_com.github.bumptech.glide_glide",
-    aars: ["com/github/bumptech/glide/glide/4.15.1/glide-4.15.1.aar"],
+    aars: ["com/github/bumptech/glide/glide/5.0.5/glide-5.0.5.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -291,7 +291,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_com.github.bumptech.glide_okhttp3-integration",
-    aars: ["com/github/bumptech/glide/okhttp3-integration/4.14.2/okhttp3-integration-4.14.2.aar"],
+    aars: ["com/github/bumptech/glide/okhttp3-integration/5.0.5/okhttp3-integration-5.0.5.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -338,9 +338,8 @@ android_library_import {
     ],
 }
 
-java_import {
+java_library_static {
     name: "Glimpse_com.squareup.okhttp3_okhttp",
-    jars: ["com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -348,8 +347,24 @@ java_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
+        "Glimpse_com.squareup.okhttp3_okhttp-android",
+    ],
+}
+
+android_library_import {
+    name: "Glimpse_com.squareup.okhttp3_okhttp-android",
+    aars: ["com/squareup/okhttp3/okhttp-android/5.3.2/okhttp-release.aar"],
+    sdk_version: "36",
+    min_sdk_version: "30",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "androidx.annotation_annotation",
+        "androidx.startup_startup-runtime",
         "Glimpse_com.squareup.okio_okio",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 }
 
@@ -368,7 +383,7 @@ java_library_static {
 
 java_import {
     name: "Glimpse_com.squareup.okio_okio-jvm",
-    jars: ["com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar"],
+    jars: ["com/squareup/okio/okio-jvm/3.16.4/okio-jvm-3.16.4.jar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -377,7 +392,6 @@ java_import {
     ],
     static_libs: [
         "kotlin-stdlib",
-        "kotlin-stdlib-jdk8",
     ],
 }
 
@@ -396,7 +410,7 @@ java_library_static {
 
 android_library_import {
     name: "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android",
-    aars: ["io/github/panpf/zoomimage/zoomimage-core-android/1.0.2/zoomimage-core-release.aar"],
+    aars: ["io/github/panpf/zoomimage/zoomimage-core-android/1.4.0/zoomimage-core-release.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -404,11 +418,10 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
-        "androidx.annotation_annotation",
         "androidx.exifinterface_exifinterface",
+        "Glimpse_com.squareup.okio_okio",
         "androidx.lifecycle_lifecycle-common",
         "kotlin-stdlib",
-        "kotlin-stdlib-jdk8",
         "kotlinx-coroutines-android",
         "kotlinx-coroutines-core",
     ],
@@ -416,7 +429,7 @@ android_library_import {
 
 android_library_import {
     name: "Glimpse_io.github.panpf.zoomimage_zoomimage-core-glide",
-    aars: ["io/github/panpf/zoomimage/zoomimage-core-glide/1.0.2/zoomimage-core-glide-1.0.2.aar"],
+    aars: ["io/github/panpf/zoomimage/zoomimage-core-glide/1.4.0/zoomimage-core-glide-1.4.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -426,13 +439,13 @@ android_library_import {
     static_libs: [
         "Glimpse_com.github.bumptech.glide_glide",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-core",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 }
 
 android_library_import {
     name: "Glimpse_io.github.panpf.zoomimage_zoomimage-view",
-    aars: ["io/github/panpf/zoomimage/zoomimage-view/1.0.2/zoomimage-view-1.0.2.aar"],
+    aars: ["io/github/panpf/zoomimage/zoomimage-view/1.4.0/zoomimage-view-1.4.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -441,16 +454,15 @@ android_library_import {
     ],
     static_libs: [
         "androidx.appcompat_appcompat",
-        "androidx.core_core-ktx",
-        "androidx.lifecycle_lifecycle-runtime-ktx",
+        "androidx.lifecycle_lifecycle-runtime",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-core",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 }
 
 android_library_import {
     name: "Glimpse_io.github.panpf.zoomimage_zoomimage-view-glide",
-    aars: ["io/github/panpf/zoomimage/zoomimage-view-glide/1.0.2/zoomimage-view-glide-1.0.2.aar"],
+    aars: ["io/github/panpf/zoomimage/zoomimage-view-glide/1.4.0/zoomimage-view-glide-1.4.0.aar"],
     sdk_version: "36",
     min_sdk_version: "30",
     apex_available: [
@@ -460,6 +472,6 @@ android_library_import {
     static_libs: [
         "Glimpse_io.github.panpf.zoomimage_zoomimage-core-glide",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 }

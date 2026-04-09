@@ -74,6 +74,7 @@ android_app {
         "Glimpse_com.github.bumptech.glide_okhttp3-integration",
         "Glimpse_com.google.android.material_material",
         "Glimpse_com.squareup.okhttp3_okhttp",
+        "Glimpse_com.squareup.okhttp3_okhttp-android",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-core-android",
         "Glimpse_io.github.panpf.zoomimage_zoomimage-view-glide",
         "kotlin-stdlib",
