@@ -5,94 +5,94 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">படத்தொகுப்பு</string>
-    <string name="app_permissions_toast">பயனரால் அனுமதிகள் வழங்கப்படவில்லை.</string>
-    <string name="reels_title">குறும்படங்கள்</string>
-    <string name="albums_title">தொகுப்புகள்</string>
-    <string name="categories_title">வகைகள்</string>
+    <string name="app_permissions_toast">தேவையான அனுமதிகள் வழங்கப்படவில்லை.</string>
+    <string name="reels_title">குறும்படம்</string>
+    <string name="albums_title">தொகுப்பு</string>
+    <string name="categories_title">வகை</string>
     <string name="library_title">தரவகம்</string>
     <string name="album_favorites">பிடித்தவை</string>
-    <string name="album_trash">நீக்கியவை</string>
-    <string name="album_reels">குறும்படங்கள்</string>
-    <string name="album_photos">ஒளிப்படங்கள்</string>
-    <string name="album_videos">காணொளிகள்</string>
+    <string name="album_trash">குப்பை</string>
+    <string name="album_reels">குறும்படம்</string>
+    <string name="album_photos">ஒளிப்படம்</string>
+    <string name="album_videos">காணொளி</string>
     <plurals name="album_thumbnail_items">
         <item quantity="one">%d உருப்படி</item>
         <item quantity="other">%d உருப்படி</item>
     </plurals>
     <plurals name="delete_file_forever_confirm_message">
-        <item quantity="one">இந்தக் கோப்பை நிலையாக நீக்க விரும்புகிறீரா?</item>
-        <item quantity="other">%d கோப்பை நிலையாக நீக்க விரும்புகிறீரா?</item>
+        <item quantity="one">இந்தக் கோப்பை முழுமையாக நீக்க விரும்புகிறீரா?</item>
+        <item quantity="other">%d கோப்புகளை முழுமையாக நீக்க விரும்புகிறீரா?</item>
     </plurals>
     <plurals name="delete_file_forever_successful">
-        <item quantity="one">கோப்பு நிலையாக நீக்கப்பட்டது</item>
-        <item quantity="other">%d கோப்பு நிலையாக நீக்கப்பட்டன</item>
+        <item quantity="one">கோப்பு முழுமையாக நீக்கப்பட்டது</item>
+        <item quantity="other">%d கோப்புகள் முழுமையாக நீக்கப்பட்டன</item>
     </plurals>
     <plurals name="delete_file_forever_unsuccessful">
-        <item quantity="one">கோப்பை நிலையாக நீக்க முடியவில்லை</item>
-        <item quantity="other">%d கோப்பை நிலையாக நீக்க முடியவில்லை</item>
+        <item quantity="one">கோப்பை முழுமையாக நீக்க இயலவில்லை</item>
+        <item quantity="other">%d கோப்புகளை முழுமையாக நீக்க இயலவில்லை</item>
     </plurals>
     <plurals name="move_file_to_trash_confirm_message">
-        <item quantity="one">ஒரு கோப்பை குப்பைக்கு நகர்த்த உறுதியாக விரும்புகிறீரா?</item>
-        <item quantity="other">%d கோப்பை குப்பைக்கு நகர்த்த உறுதியாக விரும்புகிறீரா?</item>
+        <item quantity="one">இந்தக் கோப்பைக் குப்பைக்கு நகர்த்த விரும்புகிறீரா?</item>
+        <item quantity="other">%d கோப்புகளைக் குப்பைக்கு நகர்த்த விரும்புகிறீரா?</item>
     </plurals>
     <plurals name="move_file_to_trash_successful">
-        <item quantity="one">குப்பைக்குக் கோப்பு நகர்த்தப்பட்டது</item>
-        <item quantity="other">குப்பைக்குக் கோப்பு நகர்த்தப்பட்டன</item>
+        <item quantity="one">கோப்பு குப்பைக்கு நகர்த்தப்பட்டது</item>
+        <item quantity="other">%d கோப்புகள் குப்பைக்கு நகர்த்தப்பட்டன</item>
     </plurals>
     <plurals name="move_file_to_trash_unsuccessful">
-        <item quantity="one">குப்பைக்குக் கோப்பை நகர்த்த முடியவில்லை</item>
-        <item quantity="other">குப்பைக்கு %d கோப்பை நகர்த்த முடியவில்லை</item>
+        <item quantity="one">கோப்பைக் குப்பைக்கு நகர்த்த இயலவில்லை</item>
+        <item quantity="other">%d கோப்புகளைக் குப்பைக்கு நகர்த்த இயலவில்லை</item>
     </plurals>
     <plurals name="restore_file_from_trash_confirm_message">
-        <item quantity="one">ஒரு கோப்பை குப்பையிலிருந்து மீட்டமைக்க உறுதியாக விரும்புகிறீரா?</item>
-        <item quantity="other"> %d கோப்பை குப்பையிலிருந்து மீட்டமைக்க உறுதியாக விரும்புகிறீரா?</item>
+        <item quantity="one">இந்தக் கோப்பை மீட்டெடுக்க விரும்புகிறீரா?</item>
+        <item quantity="other">%d கோப்புகளை மீட்டெடுக்க விரும்புகிறீரா?</item>
     </plurals>
     <plurals name="restore_file_from_trash_successful">
-        <item quantity="one">குப்பையிலிருந்து கோப்பு மீட்டெடுக்கப்பட்டது</item>
-        <item quantity="other">குப்பையிலிருந்து %d கோப்பு மீட்டெடுக்கப்பட்டன</item>
+        <item quantity="one">கோப்பு மீட்டெடுக்கப்பட்டது</item>
+        <item quantity="other">%d கோப்புகள் மீட்டெடுக்கப்பட்டன</item>
     </plurals>
     <plurals name="restore_file_from_trash_unsuccessful">
-        <item quantity="one">கோப்பை குப்பையிலிருந்து மீட்டமைக்க முடியவில்லை</item>
-        <item quantity="other">%d கோப்பை குப்பையிலிருந்து மீட்டமைக்க முடியவில்லை</item>
+        <item quantity="one">கோப்பை மீட்டெடுக்க இயலவில்லை</item>
+        <item quantity="other">%d கோப்புகளை மீட்டெடுக்க இயலவில்லை</item>
     </plurals>
-    <string name="manage_media_permission_title">ஊடக அனுமதியை நிர்வகிக்க</string>
-    <string name="manage_media_permission_message">உங்கள் படங்களையும், காணொளிகளையும் சிறப்பாக நிர்வகிக்க, செயலியை உங்கள் ஊடகக் கோப்புகளை நிர்வகிக்க அனுமதிக்க</string>
+    <string name="manage_media_permission_title">ஊடக அனுமதி மேலாண்மை</string>
+    <string name="manage_media_permission_message">ஒளிப்படங்களையும், காணொளிகளையும் சிறப்பாக நிர்வகிக்க, ஊடகக் கோப்புகளை அணுக அனுமதிக்கவும்</string>
     <string name="media_info_unknown">அறியா</string>
-    <string name="media_info_add_description_hint">விளக்கத்தைச் சேர்க்க</string>
-    <string name="media_info_write_description_failed">ஊடக விளக்கத்தை மாற்றுவதில் தோல்வியுற்றது</string>
-    <string name="media_info_location_loading_placeholder">ஏற்றுகின்றது…</string>
-    <string name="media_info_location_open_with">இருப்பிடத்தைக் காண்க</string>
-    <string name="intent_action_not_supported">செய்கை ஒத்துழைக்கவில்லை</string>
-    <string name="intent_media_not_found">ஊடகம் கிடைக்கவில்லை</string>
-    <string name="intent_media_type_not_found">ஊடக வகை கிடைக்கவில்லை</string>
+    <string name="media_info_add_description_hint">விளக்கம் சேர்க்க</string>
+    <string name="media_info_write_description_failed">ஊடக விளக்கத்தை மாற்ற இயலவில்லை</string>
+    <string name="media_info_location_loading_placeholder">ஏற்றுகிறது…</string>
+    <string name="media_info_location_open_with">இருப்பிடத்தை இதன் மூலம் காண்க</string>
+    <string name="intent_action_not_supported">இச்செயலுக்கு ஆதரவில்லை</string>
+    <string name="intent_media_not_found">ஊடகம் கண்டறியப்படவில்லை</string>
+    <string name="intent_media_type_not_found">ஊடக வகை கண்டறியப்படவில்லை</string>
     <string name="intent_media_type_not_supported">ஊடக வகை ஆதரிக்கப்படவில்லை</string>
-    <string name="intent_no_system_wallpaper_cropper_available">முறைமை வெட்டி இல்லை</string>
-    <string name="intent_wallpaper_cannot_be_changed">திரைப்பின்னணியை மாற்ற முடியாது</string>
+    <string name="intent_no_system_wallpaper_cropper_available">முறைமை வெட்டுக் கருவி இல்லை</string>
+    <string name="intent_wallpaper_cannot_be_changed">திரைப்பின்னணியை மாற்ற இயலவில்லை</string>
     <string name="file_action_add_to_favorites">பிடித்தனவையில் சேர்க்க</string>
-    <string name="file_action_delete_forever">நிலையாக நீக்குக</string>
+    <string name="file_action_delete_forever">முழுமையாக நீக்குக</string>
     <string name="file_action_edit">திருத்துக</string>
-    <string name="file_action_empty_trash">குப்பையை வெறுமையாக்குக</string>
+    <string name="file_action_empty_trash">குப்பையை நீக்குக</string>
     <string name="file_action_information">தகவல்</string>
     <string name="file_action_move_to_trash">குப்பைக்கு நகர்த்துக</string>
-    <string name="file_action_remove_from_favorites">பிடித்தவையிலிருந்து அகற்றுக</string>
-    <string name="file_action_restore_from_trash">குப்பையிலிருந்து கோப்பை மீட்டெடுக்க</string>
+    <string name="file_action_remove_from_favorites">பிடித்தவையிலிருந்து நீக்குக</string>
+    <string name="file_action_restore_from_trash">குப்பையிலிருந்து மீட்டெடுக்க</string>
     <string name="file_action_share">பகிர்க</string>
     <string name="file_action_use_as">பயன்படுத்துக</string>
-    <string name="file_action_undo_action">செயற்தவிர்க்க</string>
+    <string name="file_action_undo_action">செயல்தவிர்</string>
     <string name="no_media">ஊடகமில்லை</string>
     <plurals name="thumbnail_selection_count">
-        <item quantity="one">%d தேர்ந்தெடுக்கப்பட்டது</item>
-        <item quantity="other">%d தேர்ந்தெடுக்கப்பட்டன</item>
+        <item quantity="one">%d தேர்வானது</item>
+        <item quantity="other">%d தேர்வாகின</item>
     </plurals>
-    <string name="pick_a_photo">ஒர் ஒளிப்படத்தை எடுக்க</string>
-    <string name="pick_a_video">ஒரு காணொளியை எடுக்க</string>
-    <string name="pick_a_media">ஒர் ஊடகத்தை எடுக்க</string>
+    <string name="pick_a_photo">ஒளிப்படம் தேர்வு செய்க</string>
+    <string name="pick_a_video">காணொளி தேர்வு செய்க</string>
+    <string name="pick_a_media">ஊடகம் தேர்வு செய்க</string>
     <string name="picker_done">முடிந்தது</string>
     <string name="set_wallpaper_label">திரைப்பின்னணி</string>
     <string name="set_wallpaper">திரைப்பின்னணியை அமைக்க</string>
-    <string name="set_wallpaper_dialog_title">திரைப்பின்னணியை இதன்மீது அமைக்க</string>
+    <string name="set_wallpaper_dialog_title">திரைப்பின்னணியை இதில் அமைக்க</string>
     <string name="set_wallpaper_home_screen">முகப்புத் திரை</string>
     <string name="set_wallpaper_lock_screen">பூட்டுத் திரை</string>
-    <string name="set_wallpaper_both">முகப்புத் திரையும், பூட்டுத் திரையும்</string>
-    <string name="warning_bin_time_period">30 நாளுக்குப் பிறகு கோப்புகள் நிலையாக நீக்கப்படும்.</string>
+    <string name="set_wallpaper_both">முகப்பு, பூட்டுத் திரைகள்</string>
+    <string name="warning_bin_time_period">30 நாளுக்குப் பின் கோப்புகள் முழுமையாக நீக்கப்படும்.</string>
 </resources>
