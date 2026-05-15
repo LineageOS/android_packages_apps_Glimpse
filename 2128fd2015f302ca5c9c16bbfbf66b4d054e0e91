@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e8f5d58_19b61a80",
+        "filename": "app/src/main/java/org/lineageos/glimpse/ViewActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2026-05-15T19:39:35Z",
+      "side": 1,
+      "message": "I\u0027d just copy the method we have on Aperture\n\n```kt\n    private fun dismissKeyguardAndRun(runnable: () -\u003e Unit) {\n        if (!keyguardManager.isKeyguardLocked) {\n            runnable()\n            return\n        }\n\n        keyguardManager.requestDismissKeyguard(\n            this,\n            object : KeyguardManager.KeyguardDismissCallback() {\n                override fun onDismissSucceeded() {\n                    super.onDismissSucceeded()\n                    runnable()\n                }\n            }\n        )\n    }\n```",
+      "revId": "2128fd2015f302ca5c9c16bbfbf66b4d054e0e91",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
