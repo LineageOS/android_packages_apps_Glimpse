@@ -7,6 +7,7 @@ package org.lineageos.glimpse
 
 import android.app.Activity
 import android.app.KeyguardManager
+import android.app.KeyguardManager.KeyguardDismissCallback
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
@@ -235,12 +236,14 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         shareButton.setOnClickListener {
             viewModel.displayedMedia.value?.let {
-                startActivity(
-                    Intent.createChooser(
-                        buildShareIntent(it),
-                        null
+                doOrUnlockFirst {
+                    startActivity(
+                        Intent.createChooser(
+                            buildShareIntent(it),
+                            null
+                        )
                     )
-                )
+                }
             }
         }
 
@@ -451,9 +454,6 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
             launch {
                 viewModel.secure.collectLatest { secure ->
-                    // Update share button
-                    shareButton.isVisible = !secure
-
                     // Update use as button
                     useAsButton.isVisible = !secure
                 }
@@ -519,6 +519,21 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
             appBarLayout.measuredHeight,
             bottomSheetLinearLayout.measuredHeight,
         )
+    }
+
+    private fun doOrUnlockFirst(block: () -> Unit) {
+        // check if device is locked, not using viewModel.secure.value because that depends on launch intent only
+        // and may get stale when app stays active and device gets unlocked in the meantime
+        if (keyguardManager.isDeviceLocked) {
+            // we are on secure lockscreen, so and block() action requires unlocking, so ask user for it
+            keyguardManager.requestDismissKeyguard(this, object : KeyguardDismissCallback() {
+                override fun onDismissSucceeded() {
+                    block()
+                }
+            })
+        } else {
+            block()
+        }
     }
 
     companion object {
