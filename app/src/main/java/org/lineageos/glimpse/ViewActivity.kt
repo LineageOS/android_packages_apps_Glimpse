@@ -249,18 +249,22 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
 
         adjustButton.setOnClickListener {
             viewModel.displayedMedia.value?.let {
-                startActivity(
-                    Intent.createChooser(
-                        buildEditIntent(it),
-                        null
+                doOrUnlockFirst {
+                    startActivity(
+                        Intent.createChooser(
+                            buildEditIntent(it),
+                            null
+                        )
                     )
-                )
+                }
             }
         }
 
         deleteButton.setOnClickListener {
             viewModel.displayedMedia.value?.let {
-                trashMedia(it)
+                doOrUnlockFirst {
+                    trashMedia(it)
+                }
             }
         }
 
