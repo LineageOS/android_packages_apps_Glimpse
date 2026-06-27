@@ -16,6 +16,24 @@
       "message": "uh, but if that fails...what happens next?",
       "revId": "3536e7909f56e63d6fbcb11a67a0f1a86cecef14",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5f837c7_73696ac0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2026-06-27T17:45:34Z",
+      "side": 1,
+      "message": "...it\u0027s only used to read file size?",
+      "parentUuid": "f3bfe3c8_aafc218c",
+      "revId": "3536e7909f56e63d6fbcb11a67a0f1a86cecef14",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
