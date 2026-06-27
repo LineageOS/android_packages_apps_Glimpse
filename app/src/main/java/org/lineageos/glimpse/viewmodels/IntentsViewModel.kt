@@ -359,11 +359,15 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
         }
 
         if (sizeBytes <= 0L) {
-            contentResolver.openAssetFileDescriptor(uri, "r")?.use { afd ->
-                val statSize = afd.length
-                if (statSize > 0L) {
-                    sizeBytes = statSize
+            runCatching {
+                contentResolver.openAssetFileDescriptor(uri, "r")?.use { afd ->
+                    val statSize = afd.length
+                    if (statSize > 0L) {
+                        sizeBytes = statSize
+                    }
                 }
+            }.onFailure {
+                Log.w(LOG_TAG, "Cannot open file descriptor for uri $uri", it)
             }
         }
 
