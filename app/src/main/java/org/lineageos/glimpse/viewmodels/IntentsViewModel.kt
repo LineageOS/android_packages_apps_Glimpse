@@ -359,11 +359,15 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
         }
 
         if (sizeBytes <= 0L) {
-            contentResolver.openAssetFileDescriptor(uri, "r")?.use { afd ->
-                val statSize = afd.length
-                if (statSize > 0L) {
-                    sizeBytes = statSize
+            try {
+                contentResolver.openAssetFileDescriptor(uri, "r")?.use { afd ->
+                    val statSize = afd.length
+                    if (statSize > 0L) {
+                        sizeBytes = statSize
+                    }
                 }
+            } catch (e: Exception) {
+                Log.w(LOG_TAG, "Failed to read file descriptor for size fallback: $uri", e)
             }
         }
 
