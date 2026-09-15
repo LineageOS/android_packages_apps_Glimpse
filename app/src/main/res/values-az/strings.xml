@@ -74,7 +74,7 @@
     <string name="file_action_empty_trash">Tullantı qutusunu boşalt</string>
     <string name="file_action_information">Məlumat</string>
     <string name="file_action_move_to_trash">Tullantı qutusuna daşı</string>
-    <string name="file_action_remove_from_favorites">Sevimlilərdən sil</string>
+    <string name="file_action_remove_from_favorites">Sevimlilərdən çıxart</string>
     <string name="file_action_restore_from_trash">Tullantı qutusundan bərpa et</string>
     <string name="file_action_share">Paylaş</string>
     <string name="file_action_use_as">İstifadə et</string>
