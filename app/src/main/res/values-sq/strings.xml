@@ -94,7 +94,6 @@
     <string name="set_wallpaper_home_screen">Ekrani kryesor</string>
     <string name="set_wallpaper_lock_screen">Ekrani i kyçjes </string>
     <string name="set_wallpaper_both">Ekrani kryesor dhe ekrani kyçjes</string>
-    <string name="warning_bin_time_period">Skedarët do të fshihen përgjithmonë pas 30 ditësh.</string>
     <string name="motion_photo_show_video">Shfaq videon</string>
     <string name="motion_photo_show_photo">Shfaq foton</string>
 </resources>

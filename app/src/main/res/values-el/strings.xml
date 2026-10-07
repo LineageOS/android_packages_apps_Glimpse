@@ -95,4 +95,19 @@
     <string name="set_wallpaper_lock_screen">Οθόνη κλειδώματος</string>
     <string name="set_wallpaper_both">Αρχική και οθόνη κλειδώματος</string>
     <string name="warning_bin_time_period">Τα αρχεία θα διαγραφούν οριστικά μετά από 30 ημέρες.</string>
+    <string name="motion_photo_show_video">Προβολή βίντεο</string>
+    <string name="motion_photo_show_photo">Προβολή φωτογραφίας</string>
+    <string name="title_activity_settings">Ρυθμίσεις</string>
+    <string name="general_header">Γενικά</string>
+    <string name="video_header">Βίντεο</string>
+    <string name="edge_tap_navigation_enable_title">Πλοήγηση με πάτημα στις άκρες</string>
+    <string name="edge_tap_navigation_enabled_description">Πατήστε στο αριστερό ή το δεξί άκρο της οθόνης για πλοήγηση μεταξύ πολυμέσων</string>
+    <string name="double_tap_to_seek_enabled_title">Ενεργοποίηση διπλού πατήματος για αναζήτηση</string>
+    <string name="double_tap_to_seek_enabled_description">Πατήστε δύο φορές στην αριστερή ή δεξιά πλευρά του βίντεο για παράλειψη προς τα πίσω ή προς τα εμπρός</string>
+    <string name="double_tap_to_seek_seconds_title">Διάρκεια παράληψης διπλού πατήματος για αναζήτηση</string>
+    <string name="double_tap_to_seek_seconds_description">Δευτερόλεπτα που παραλείπονται κατά το διπλό πάτημα του βίντεο</string>
+    <string name="hide_native_seek_buttons_title">Απόκρυψη κουμπιών αναζήτησης συστήματος</string>
+    <string name="hide_native_seek_buttons_description">Απόκρυψη κουμπιών επαναφοράς και γρήγορης προώθησης από τα στοιχεία ελέγχου του βίντεο</string>
+    <string name="remember_video_playback_position_enabled_title">Απομνημόνευση θέσης αναπαραγωγής</string>
+    <string name="remember_video_playback_position_enabled_description">Συνέχιση των βίντεο από την τελευταία θέση παύσης</string>
 </resources>
