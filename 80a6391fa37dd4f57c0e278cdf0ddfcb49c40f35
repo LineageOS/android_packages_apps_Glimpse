@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64355a29_1ed18a6a",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/IntentsViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2026-10-11T08:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47c13492_76c0b3a5",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 9
+      },
+      "revId": "80a6391fa37dd4f57c0e278cdf0ddfcb49c40f35",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e3e2f96_792bdb8d",
@@ -47,6 +71,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3f8e720_725a27e8",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/IntentsViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2026-10-11T08:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e3e2f96_792bdb8d",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 0
+      },
+      "revId": "80a6391fa37dd4f57c0e278cdf0ddfcb49c40f35",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fd54d8c_403dbaee",
@@ -60,6 +108,24 @@
       "writtenOn": "2026-10-11T08:43:37Z",
       "side": 1,
       "message": "use runCatching{}.getOrNull()\n\nIf we get a CancellationException just return null, we don\u0027t handle it.",
+      "revId": "80a6391fa37dd4f57c0e278cdf0ddfcb49c40f35",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cafb1299_b4972aa9",
+        "filename": "app/src/main/java/org/lineageos/glimpse/viewmodels/IntentsViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2026-10-11T08:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fd54d8c_403dbaee",
       "revId": "80a6391fa37dd4f57c0e278cdf0ddfcb49c40f35",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
