@@ -6,6 +6,8 @@
 package org.lineageos.glimpse.viewmodels
 
 import android.app.Application
+import android.content.ContentResolver
+import android.content.ContentUris
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
@@ -150,7 +152,14 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                         }
 
                     clipData.asArray().forEach { item ->
-                        uriToContent(item.uri, mediaType)?.let {
+                        val itemUri = item.uri ?: return@forEach
+
+                        // Skip the URI already handled via intent.data
+                        if (itemUri == intent.data) {
+                            return@forEach
+                        }
+
+                        uriToContent(itemUri, mediaType)?.let {
                             add(it)
                         }
                     }
@@ -288,14 +297,19 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                 is RequestStatus.Success -> it.data
 
                 is RequestStatus.Error -> {
-                    // Build a `Media` object with the available data
-                    Log.i(
-                        LOG_TAG,
-                        "Cannot get media object from media provider, trying manual fallback"
-                    )
                     when (type) {
                         MediaType.IMAGE,
                         MediaType.VIDEO -> {
+                            uriToMediaStoreMedia(uri, type)?.let { media ->
+                                return media
+                            }
+
+                            // Build a `Media` object with the available data
+                            Log.i(
+                                LOG_TAG,
+                                "Cannot get media object from media provider, trying manual fallback"
+                            )
+
                             val metadata = extractUriMetadata(uri, type) ?: return null
 
                             Media(
@@ -326,55 +340,134 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
         }
     }
 
-    private fun extractUriMetadata(uri: Uri, mediaType: MediaType): UriMetadata? {
-        val contentResolver = applicationContext.contentResolver
+    private suspend fun uriToMediaStoreMedia(uri: Uri, mediaType: MediaType): MediaItem<*>? {
+        val path = uriToFilePath(uri) ?: return null
 
-        val mimeType = contentResolver.getType(uri) ?: run {
-            Log.e(LOG_TAG, "Cannot get media type of $uri")
+        val mediaStoreUri = pathToMediaStoreUri(path, mediaType) ?: run {
+            Log.i(LOG_TAG, "$path is not indexed by MediaStore")
             return null
         }
 
-        var displayName: String? = null
-        var sizeBytes = 0L
+        Log.i(LOG_TAG, "Resolved $uri to $mediaStoreUri")
 
-        contentResolver.query(
-            uri,
-            arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
-            null,
-            null,
-            null
-        )?.use { cursor ->
-            if (cursor.moveToFirst()) {
-                val displayNameColumn = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                val sizeColumn = cursor.getColumnIndex(OpenableColumns.SIZE)
+        return when (val it = mediaRepository.media(mediaStoreUri).first()) {
+            is RequestStatus.Success -> it.data
+            else -> null
+        }
+    }
 
-                if (displayNameColumn != -1 && !cursor.isNull(displayNameColumn)) {
-                    displayName = cursor.getString(displayNameColumn)
-                }
+    private fun uriToFilePath(uri: Uri): String? {
+        val rawPath = when (uri.scheme) {
+            ContentResolver.SCHEME_FILE -> uri.path
 
-                if (sizeColumn != -1 && !cursor.isNull(sizeColumn)) {
-                    sizeBytes = cursor.getLong(sizeColumn)
-                }
+            ContentResolver.SCHEME_CONTENT -> uri.path?.let {
+                if (it.contains('%')) Uri.decode(it) else it
             }
+
+            else -> null
+        } ?: return null
+
+        val path = STORAGE_PATH_PREFIXES.firstNotNullOfOrNull { (prefix, replacement) ->
+            rawPath.indexOf(prefix).takeIf { it >= 0 }?.let { index ->
+                replacement + rawPath.substring(index + prefix.length)
+            }
+        } ?: return null
+
+        if (path.split('/').any { it == ".." }) {
+            return null
         }
 
-        if (sizeBytes <= 0L) {
-            runCatching {
-                contentResolver.openAssetFileDescriptor(uri, "r")?.use { afd ->
-                    val statSize = afd.length
-                    if (statSize > 0L) {
-                        sizeBytes = statSize
+        return path
+    }
+
+    private fun pathToMediaStoreUri(path: String, mediaType: MediaType): Uri? {
+        val collection = when (mediaType) {
+            MediaType.IMAGE -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            MediaType.VIDEO -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+            else -> return null
+        }
+
+        return runCatching {
+            applicationContext.contentResolver.query(
+                collection,
+                arrayOf(MediaStore.MediaColumns._ID),
+                "${MediaStore.MediaColumns.DATA} = ?",
+                arrayOf(path),
+                null
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    ContentUris.withAppendedId(collection, cursor.getLong(0))
+                } else {
+                    null
+                }
+            }
+        }.onFailure {
+            Log.w(LOG_TAG, "Cannot query MediaStore for $path", it)
+        }.getOrNull()
+    }
+
+    private fun extractUriMetadata(uri: Uri, mediaType: MediaType): UriMetadata? {
+        val contentResolver = applicationContext.contentResolver
+
+        val mimeType = runCatching { contentResolver.getType(uri) }
+            .onFailure { Log.w(LOG_TAG, "Cannot query MIME type of $uri", it) }
+            .getOrNull()
+            ?: run {
+                Log.e(LOG_TAG, "Cannot get media type of $uri")
+                return null
+            }
+
+        var displayName: String? = null
+        var sizeBytes = 0L
+        var canOpen = false
+
+        runCatching {
+            contentResolver.query(
+                uri,
+                arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+                null,
+                null,
+                null
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val displayNameColumn = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    val sizeColumn = cursor.getColumnIndex(OpenableColumns.SIZE)
+
+                    if (displayNameColumn != -1 && !cursor.isNull(displayNameColumn)) {
+                        displayName = cursor.getString(displayNameColumn)
+                    }
+
+                    if (sizeColumn != -1 && !cursor.isNull(sizeColumn)) {
+                        sizeBytes = cursor.getLong(sizeColumn)
                     }
                 }
-            }.onFailure {
-                Log.w(LOG_TAG, "Cannot open file descriptor for uri $uri", it)
             }
+        }.onFailure {
+            Log.w(LOG_TAG, "Cannot query metadata of $uri", it)
+        }
+
+        if (displayName == null) {
+            displayName = uri.lastPathSegment?.substringAfterLast('/')
+        }
+
+        runCatching {
+            contentResolver.openAssetFileDescriptor(uri, "r")?.use { afd ->
+                canOpen = true
+
+                val statSize = afd.length
+                if (sizeBytes <= 0L && statSize > 0L) {
+                    sizeBytes = statSize
+                }
+            }
+        }.onFailure {
+            Log.w(LOG_TAG, "Cannot open file descriptor for uri $uri", it)
         }
 
         val dimensions = when (mediaType) {
             MediaType.VIDEO -> runCatching {
                 MediaMetadataRetriever().use { mmr ->
                     mmr.setDataSource(applicationContext, uri)
+                    canOpen = true
 
                     val width = mmr.extractMetadata(
                         MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH
@@ -395,6 +488,7 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
                     inJustDecodeBounds = true
                 }
                 contentResolver.openInputStream(uri)?.use { inputStream ->
+                    canOpen = true
                     BitmapFactory.decodeStream(inputStream, null, options)
                 }
                 (options.outWidth.takeIf { it > 0 } ?: 0) to
@@ -405,6 +499,11 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
             }
 
             else -> 0 to 0
+        }
+
+        if (!canOpen && uri.scheme in LOCAL_SCHEMES) {
+            Log.e(LOG_TAG, "No read access to $uri, the sender didn't grant it")
+            return null
         }
 
         return UriMetadata(
@@ -432,20 +531,26 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
             )
 
             when (uri.scheme) {
-                "content", "file" -> applicationContext.contentResolver.getType(uri)?.let { type ->
+                "content", "file" -> runCatching {
+                    applicationContext.contentResolver.getType(uri)
+                }.onFailure { e ->
+                    Log.w(LOG_TAG, "Cannot query MIME type of $uri", e)
+                }.getOrNull()?.let { type ->
                     MimeUtils.mimeTypeToMediaType(type)
                 }
 
-                "http", "https" -> okHttpClient.newCall(
-                    Request.Builder()
-                        .url(uri.toString())
-                        .head()
-                        .build()
-                ).executeAsync().use { response ->
-                    response.header("Content-Type")?.let { type ->
-                        MimeUtils.mimeTypeToMediaType(type)
+                "http", "https" -> runCatching {
+                    okHttpClient.newCall(
+                        Request.Builder()
+                            .url(uri.toString())
+                            .head()
+                            .build()
+                    ).executeAsync().use { response ->
+                        response.header("Content-Type")?.let { type ->
+                            MimeUtils.mimeTypeToMediaType(type)
+                        }
                     }
-                }
+                }.getOrNull()
 
                 "rtsp" -> MediaType.VIDEO // This is either audio-only or A/V, fine either way
 
@@ -459,5 +564,15 @@ class IntentsViewModel(application: Application) : GlimpseViewModel(application)
 
     companion object {
         private val LOG_TAG = IntentsViewModel::class.simpleName!!
+
+        private val LOCAL_SCHEMES = setOf(
+            ContentResolver.SCHEME_CONTENT,
+            ContentResolver.SCHEME_FILE,
+        )
+
+        private val STORAGE_PATH_PREFIXES = listOf(
+            "/storage/" to "/storage/",
+            "/sdcard/" to "/storage/emulated/0/",
+        )
     }
 }
