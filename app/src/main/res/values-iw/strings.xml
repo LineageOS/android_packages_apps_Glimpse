@@ -117,8 +117,8 @@
     <string name="double_tap_to_seek_enabled_description">הקשה כפולה על הצד השמאלי או הימני של הוידיאו כדי לדלג אחורה או קדימה</string>
     <string name="double_tap_to_seek_seconds_title">הקשה כפולה להצגת זמן הדילוג</string>
     <string name="double_tap_to_seek_seconds_description">כמה שניות לדלג בכל הקשה כפולה על הוידיאו</string>
-    <string name="hide_native_seek_buttons_title">הסתרת כפתורי תצוגה מקוריים</string>
-    <string name="hide_native_seek_buttons_description">הסתרת הכפתורים אחורה וקדימה מפקדי ניגון המדיה</string>
+    <string name="hide_native_seek_buttons_title">הסתרת לחצני תצוגה מקוריים</string>
+    <string name="hide_native_seek_buttons_description">הסתרת הלחצנים אחורה וקדימה מפקדי ניגון המדיה</string>
     <string name="remember_video_playback_position_enabled_title">זכירת מיקום הניגון</string>
     <string name="remember_video_playback_position_enabled_description">המשך הניגון ממקום העצירה האחרון</string>
 </resources>
