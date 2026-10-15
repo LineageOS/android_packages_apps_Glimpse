@@ -67,7 +67,7 @@
     <string name="intent_media_type_not_found">جۆری مێدیا نەدۆزرایەوە</string>
     <string name="intent_media_type_not_supported">جۆری مێدیا پاڵپشتی ناکرێت</string>
     <string name="intent_no_system_wallpaper_cropper_available">هیچ ئامرازێکی سیستم بۆ بڕینی وێنە نییە</string>
-    <string name="intent_wallpaper_cannot_be_changed">وێنەی پشتێنە ناگۆڕدرێت</string>
+    <string name="intent_wallpaper_cannot_be_changed">وێنەی پاشبنەما ناگۆڕدرێت</string>
     <string name="file_action_add_to_favorites">بیکە بە دڵخواز</string>
     <string name="file_action_delete_forever">بۆ هەمیشە بسڕەوە</string>
     <string name="file_action_edit">دەستکاری بکە</string>
@@ -88,9 +88,9 @@
     <string name="pick_a_video">ڤیدیۆیەک هەڵبژێرە</string>
     <string name="pick_a_media">مێدیایەک هەڵبژێرە</string>
     <string name="picker_done">تەواو</string>
-    <string name="set_wallpaper_label">وێنەی پشتێنە</string>
-    <string name="set_wallpaper">وێنەی پشتێنە دابنێ</string>
-    <string name="set_wallpaper_dialog_title">دانانی وێنەی پشتێنە لەسەر</string>
+    <string name="set_wallpaper_label">وێنەی پاشبنەما</string>
+    <string name="set_wallpaper">دانانی وێنەی پاشبنەما</string>
+    <string name="set_wallpaper_dialog_title">دانانی وێنەی پاشبنەما لەسەر</string>
     <string name="set_wallpaper_home_screen">ڕوونمای سەرەکی</string>
     <string name="set_wallpaper_lock_screen">قوفڵی ڕوونما</string>
     <string name="set_wallpaper_both">هەردوو ڕوونمای سەرەکی و قوفڵ</string>
