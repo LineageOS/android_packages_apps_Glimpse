@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.util.Consumer
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -180,8 +181,10 @@ class ViewActivity : AppCompatActivity(R.layout.activity_view) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Enable edge-to-edge
+        // Enable edge-to-edge with light status bar icons
         enableEdgeToEdge()
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightStatusBars = false
 
         // We only want to show this activity on top of the keyguard if we're being launched with
         // the ACTION_REVIEW_SECURE intent and the system is currently locked.
