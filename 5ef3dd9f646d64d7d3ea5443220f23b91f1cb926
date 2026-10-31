@@ -34,6 +34,23 @@
       "parentUuid": "c5de86bb_941baaa5",
       "revId": "5ef3dd9f646d64d7d3ea5443220f23b91f1cb926",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d0ccb49_96a3a4de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-10-31T14:22:33Z",
+      "side": 1,
+      "message": "I\u0027m sure you can do this from the style XML",
+      "revId": "5ef3dd9f646d64d7d3ea5443220f23b91f1cb926",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
