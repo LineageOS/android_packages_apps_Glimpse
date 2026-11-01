@@ -91,9 +91,9 @@
     <string name="set_wallpaper_label">Divar kağızı</string>
     <string name="set_wallpaper">Divar kağızını ayarla</string>
     <string name="set_wallpaper_dialog_title">Divar kağızını ayarla</string>
-    <string name="set_wallpaper_home_screen">Əsas ekran</string>
+    <string name="set_wallpaper_home_screen">Ana ekran</string>
     <string name="set_wallpaper_lock_screen">Kilid ekranı</string>
-    <string name="set_wallpaper_both">Əsas ekran və Kilid ekranı</string>
+    <string name="set_wallpaper_both">Ana ekran və Kilid ekranı</string>
     <string name="warning_bin_time_period">Fayllar, 30 gün sonra həmişəlik silinəcək.</string>
     <string name="motion_photo_show_video">Videonu göstər</string>
     <string name="motion_photo_show_photo">Fotonu göstər</string>
