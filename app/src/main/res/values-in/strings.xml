@@ -6,8 +6,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Galeri</string>
     <string name="app_permissions_toast">Izin tidak diberikan oleh pengguna</string>
+    <string name="reels_title">Reels</string>
     <string name="albums_title">Album</string>
     <string name="categories_title">Kategori</string>
+    <string name="library_title">Pustaka</string>
     <string name="album_favorites">Favorit</string>
     <string name="album_trash">Sampah</string>
     <string name="album_reels">Reels</string>
