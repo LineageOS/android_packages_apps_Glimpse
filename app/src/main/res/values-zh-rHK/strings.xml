@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_permissions_toast">使用者未授予權限。</string>
+    <string name="album_favorites">我的最愛</string>
+    <string name="album_trash">垃圾桶</string>
+    <string name="album_reels">Reels</string>
+    <string name="album_photos">相片</string>
+    <string name="media_info_unknown">未知</string>
+    <string name="media_info_add_description_hint">新增描述</string>
+    <string name="media_info_location_loading_placeholder">正在載入…</string>
+    <string name="file_action_add_to_favorites">加入我的最愛</string>
+    <string name="file_action_edit">編輯</string>
+    <string name="file_action_restore_from_trash">從垃圾桶中還原</string>
+    <string name="file_action_share">分享</string>
+    <string name="file_action_undo_action">復原</string>
+    <string name="pick_a_photo">選擇相片</string>
+    <string name="pick_a_video">選擇影片</string>
+    <string name="pick_a_media">選擇媒體</string>
+    <string name="picker_done">完成</string>
+    <string name="set_wallpaper_home_screen">主畫面</string>
+    <string name="set_wallpaper_both">主畫面和鎖定畫面</string>
+    <string name="motion_photo_show_video">顯示影片</string>
+    <string name="motion_photo_show_photo">顯示相片</string>
+    <string name="title_activity_settings">設定</string>
+    <string name="general_header">一般</string>
+    <string name="video_header">影片</string>
+    <string name="remember_video_playback_position_enabled_title">記住播放位置</string>
+    <string name="remember_video_playback_position_enabled_description">從上次停止的位置繼續播放影片</string>
+</resources>
